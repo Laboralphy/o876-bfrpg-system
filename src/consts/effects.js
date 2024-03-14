@@ -1,0 +1,8 @@
+// AUTOMATIC GENERATION : DO NOT MODIFY !
+// Date : 2024-03-14T16:15:34.449Z
+// List of files in ./src/effects
+
+module.exports = {
+  "EFFECT_DAMAGE_MODIFIER": "EFFECT_DAMAGE_MODIFIER",
+  "EFFECT_HEAL": "EFFECT_HEAL"
+}

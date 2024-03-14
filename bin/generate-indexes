@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo const-effects
+node ./bin/generate-indexes.js ./src/effects TYPE_GENERATE_CONSTS_PREFIXED EFFECT > ./src/consts/effects.js
+
+echo constants
+node ./bin/generate-indexes.js ./src/consts TYPE_SPREAD > ./src/consts/index.js
+
+echo getters
+node ./bin/generate-indexes.js ./src/store/getters TYPE_KEY_BASED > ./src/store/getters/index.js
+
+echo mutations
+node ./bin/generate-indexes.js ./src/store/mutations TYPE_KEY_BASED > ./src/store/mutations/index.js
+
+echo data
+node ./bin/generate-indexes.js ./src/data TYPE_KEY_BASED > ./src/data/index.js
+
+echo effects
+node ./bin/generate-indexes.js ./src/effects TYPE_UPPER_KEY_PREFIXED EFFECT > ./src/effects/index.js
+
