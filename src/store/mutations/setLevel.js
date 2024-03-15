@@ -1,6 +1,6 @@
 /**
- * changes character class type.
- * @param state
+ * changes creture level.
+ * @param state {BFStoreState}
  * @param value {number}
  */
 module.exports = ({ state }, { value}) => {

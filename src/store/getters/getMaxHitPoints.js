@@ -2,9 +2,9 @@ const CONSTS = require('../../consts')
 
 /**
  * returns the amount of maximum hit points a character may have
- * @param state
- * @param getters
- * @param externals
+ * @param state {BFStoreState}
+ * @param getters {BFStoreGetters}
+ * @param externals {{}}
  * @returns {number}
  */
 module.exports = (state, getters, externals) => {

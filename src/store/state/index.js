@@ -1,5 +1,21 @@
 const CONSTS = require('../../consts')
 
+/**
+ * @typedef BFStoreStateGauges {Object}
+ * @property hitPoints {number}
+ *
+ * @typedef BFStoreState {object}
+ * @property abilities {Object<string, number>}
+ * @property classType {string}
+ * @property level {number}
+ * @property gauges {BFStoreStateGauges}
+ * @property effect {[]}
+ */
+
+/**
+ *
+ * @returns {BFStoreState}
+ */
 module.exports = () => ({
     abilities: {
         [CONSTS.ABILITY_STRENGTH]: 1,

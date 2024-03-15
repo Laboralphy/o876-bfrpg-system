@@ -45,8 +45,8 @@ function getMaxModifier (data) {
 }
 /**
  * List of all ability modifiers
- * @param state
- * @param getters
+ * @param state {BFStoreState}
+ * @param getters {BFStoreGetters}
  * @param externals {{}}
  * @returns {Object<string, number>}
  */

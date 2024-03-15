@@ -18,3 +18,8 @@ node ./bin/generate-indexes.js ./src/data TYPE_KEY_BASED > ./src/data/index.js
 echo effects
 node ./bin/generate-indexes.js ./src/effects TYPE_UPPER_KEY_PREFIXED EFFECT > ./src/effects/index.js
 
+echo getters
+node ./bin/generate-jsdoc-getters.js ./src/store/getters > ./src/store/getters.doc.js
+
+echo mutations
+node ./bin/generate-jsdoc-mutations.js ./src/store/mutations > ./src/store/mutations.doc.js

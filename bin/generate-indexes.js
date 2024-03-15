@@ -9,6 +9,7 @@ const TYPES = {
     TYPE_GENERATE_CONSTS_PREFIXED: 'TYPE_GENERATE_CONSTS_PREFIXED'
 }
 
+
 function buildLine (sFile, sType) {
     switch (sType) {
         case TYPES.TYPE_KEY_BASED: {

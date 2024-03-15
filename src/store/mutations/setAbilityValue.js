@@ -1,6 +1,6 @@
 /**
  * changes value of an ability
- * @param state
+ * @param state {BFStoreState}
  * @param ability {string}
  * @param value {number}
  */

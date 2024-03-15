@@ -1,77 +1,85 @@
 const Events = require('node:events')
 const { v4: uuidv4 } = require('uuid')
-const EFFECTS = require('./effects')
+const CONSTS = require('./consts')
+require('./effect.doc')
 
 class EffectProcessor {
     constructor () {
         this._events = new Events()
-        this._horde = null
+        this._effectPrograms = {}
     }
 
-    get horde () {
-        return this._horde
+    get events () {
+        return this._events
     }
 
-    set horde (value) {
-        this._horde = value
+    get effectPrograms () {
+        return this._effectPrograms
+    }
+
+    set effectPrograms (value) {
+        this._effectPrograms = value
     }
 
     getEffectEngine (sType) {
-        const ee = EFFECTS[sType]
+        const ee = this._effectPrograms[sType]
         if (!ee) {
             throw new Error('Unknown effect type : ' + sType)
         }
         return ee
     }
 
-    getEffectTarget(oEffect) {
-        return this._horde.creatures[oEffect.target]
-    }
-
-    getEffectSource(oEffect) {
-        return this._horde.creatures[oEffect.source]
-    }
-
-    invokeEffectMethod (oEffect, sMethod) {
+    invokeEffectMethod (oEffect, sMethod, target, source) {
         const ee = this.getEffectEngine(oEffect.type)
         if (sMethod in ee) {
-            const target = this.getEffectTarget(oEffect)
-            const source = this.getEffectSource(oEffect)
             return ee[sMethod]({ effect: oEffect, target, source })
         }
         return undefined
     }
 
-    processEffect (oEffect) {
-        const target = this.getEffectTarget(oEffect)
-        const source = this.getEffectSource(oEffect)
-        if (target && source) {
-            this.invokeEffectMethod(oEffect, 'mutate')
-            const nNewDuration = oEffect.duration - 1
-            target.store.mutations.setEffectDuration({ effect: oEffect, duration: nNewDuration })
-            if (nNewDuration <= 0) {
-                this.invokeEffectMethod(oEffect, 'dispose')
-            }
-        } else {
-            // The effect has no source or target, look like someone got kicked from the horde
-            // -> ending effect
-            target.store.mutations.setEffectDuration({ effect: oEffect, duration: 0 })
-            this.invokeEffectMethod(oEffect, 'dispose')
+    setEffectDuration (oEffect, nDuration, target, source) {
+        target.mutations.setEffectDuration({ effect: oEffect, duration: Math.max(0, nDuration) })
+        if (nDuration <= 0) {
+            this.invokeEffectMethod(oEffect, 'dispose', target, source)
+            this._events.emit('effect-disposed', {
+                effect: oEffect,
+                target,
+                source
+            })
         }
     }
 
-    createEffect (sType, oParams) {
-        if (EFFECTS[sType]) {
+    killEffect (oEffect, target, source) {
+        this.setEffectDuration(oEffect, 0, target, source)
+    }
+
+    processEffect (oEffect, target, source) {
+        if (target && source) {
+            this.invokeEffectMethod(oEffect, 'mutate', target, source)
+            this.setEffectDuration(oEffect, oEffect.duration - 1, target, source)
+        } else {
+            this.killEffect(oEffect, target, source)
+        }
+    }
+
+    /**
+     *
+     * @param sType
+     * @param oParams
+     * @returns {BFEffect}
+     */
+    createEffect (sType, oParams = null) {
+        if (this._effectPrograms[sType]) {
             const oEffect = {
                 id: uuidv4({}, null, 0),
-                type: '',
+                type: sType,
+                subtype: CONSTS.EFFECT_SUBTYPE_MAGICAL,
                 amp: 0,
                 duration: 0,
                 source: null,
-                target: null,
                 data: {}
             }
-            EFFECTS[sType].create(oEffect, oParams)
+            this._effectPrograms[sType].create(oEffect, oParams)
             return oEffect
         } else {
             throw new Error('Unknown effect type : ' + sType)
@@ -79,17 +87,22 @@ class EffectProcessor {
     }
 
     applyEffect(oEffect, target, duration = 0, source = null) {
-        oEffect.target = target.id
+        if (!source) {
+            source = target
+        }
         oEffect.duration = duration
-        oEffect.source = (source || target).id
+        oEffect.source = source.id
         if (oEffect.duration > 0) {
-            target.store.mutations.addEffect({ effect: oEffect })
+            oEffect = target.mutations.addEffect({ effect: oEffect })
         } else {
-            this.invokeEffectMethod(oEffect, 'mutate')
+            this.invokeEffectMethod(oEffect, 'mutate', target, source)
         }
         this._events.emit('effect-applied', {
-            effect: oEffect
+            effect: oEffect,
+            target,
+            source
         })
+        return oEffect
     }
 }
 

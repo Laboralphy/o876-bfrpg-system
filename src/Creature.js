@@ -1,18 +1,31 @@
-const CONSTS = require('./consts')
-const DATA = require('./data')
-
 const { v4: uuidv4 } = require('uuid')
-
 const { buildStore } = require('./store')
-const EffectProcessor = require("./EffectProcessor");
 
 
+/**
+ * @class Creature
+ */
 class Creature {
     constructor () {
-        this._id = uuidv4({}, null, 0),
+        this._id = uuidv4({}, null, 0)
         this._name = this._id
         this._store = buildStore()
-        this._effectProcessor = new EffectProcessor()
+    }
+
+    /**
+     * Creature store getters
+     * @returns {BFStoreGetters}
+     */
+    get getters () {
+        return this._store.getters
+    }
+
+    /**
+     * Creature store mutations
+     * @returns {BFStoreMutations}
+     */
+    get mutations () {
+        return this._store.mutations
     }
 
     get id () {
@@ -21,17 +34,6 @@ class Creature {
 
     set id (value) {
         this._id = value
-    }
-
-    /**
-     * @returns {Reactor}
-     */
-    get store () {
-        return this._store
-    }
-
-    get effectProcessor () {
-        return this._effectProcessor
     }
 }
 
