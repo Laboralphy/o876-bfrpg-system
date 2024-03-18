@@ -1,5 +1,5 @@
 {
-  "type": "ENTITY_TYPE_ITEM",
+  "entityType": "ENTITY_TYPE_ITEM",
   "itemType": "ITEM_TYPE_AMMO",
   "ammoType": "AMMO_TYPE_ARROW",
   "properties": []

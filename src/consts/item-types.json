@@ -1,138 +1,36 @@
 {
-  "ITEM_TYPE_NATURAL_ARMOR": {
-    "slots": ["EQUIPMENT_SLOT_NATURAL_ARMOR"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_NATURAL_WEAPON": {
-    "slots": ["EQUIPMENT_SLOT_NATURAL_WEAPON"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_WEAPON": {
-    "slots": ["EQUIPMENT_SLOT_WEAPON_MELEE", "EQUIPMENT_SLOT_WEAPON_RANGED"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_AMMO": {
-    "slots": ["EQUIPMENT_SLOT_AMMO"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_ARMOR": {
-    "slots": ["EQUIPMENT_SLOT_CHEST"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_SHIELD": {
-    "slots": ["EQUIPMENT_SLOT_SHIELD"],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_HELM": {
-    "slots": ["EQUIPMENT_SLOT_HEAD"],
-    "defaultWeight": 4
-  },
-  "ITEM_TYPE_NECKLACE": {
-    "slots": ["EQUIPMENT_SLOT_NECK"],
-    "defaultWeight": 0.05
-  },
-  "ITEM_TYPE_CLOAK": {
-    "slots": ["EQUIPMENT_SLOT_BACK"],
-    "defaultWeight": 10
-  },
-  "ITEM_TYPE_GAUNTLETS": {
-    "slots": ["EQUIPMENT_SLOT_ARMS"],
-    "defaultWeight": 4
-  },
-  "ITEM_TYPE_GLOVES": {
-    "slots": ["EQUIPMENT_SLOT_ARMS"],
-    "defaultWeight": 2
-  },
-  "ITEM_TYPE_RING": {
-    "slots": ["EQUIPMENT_SLOT_LEFT_FINGER", "EQUIPMENT_SLOT_RIGHT_FINGER"],
-    "defaultWeight": 0.02
-  },
-  "ITEM_TYPE_BELT": {
-    "slots": ["EQUIPMENT_SLOT_WAIST"],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_BOOTS": {
-    "slots": ["EQUIPMENT_SLOT_FEET"],
-    "defaultWeight": 2
-  },
-  "ITEM_TYPE_TORCH": {
-    "slots": ["EQUIPMENT_SLOT_SHIELD"],
-    "defaultWeight": 1
-  },
-  "ITEM_TYPE_HEALERSKIT": {
-    "slots": [],
-    "defaultWeight": 3
-  },
-  "ITEM_TYPE_MAGICROD": {
-    "slots": [],
-    "defaultWeight": 1
-  },
-  "ITEM_TYPE_MAGICWAND": {
-    "slots": [],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_POTION": {
-    "slots": [],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_THIEVESTOOLS": {
-    "slots": [],
-    "defaultWeight": 1
-  },
-  "ITEM_TYPE_KEY": {
-    "slots": [],
-    "defaultWeight": 0.25
-  },
-  "ITEM_TYPE_BOX": {
-    "slots": [],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_BAG": {
-    "slots": [],
-    "defaultWeight": 1
-  },
-  "ITEM_TYPE_BOOK": {
-    "slots": [],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_SCROLL": {
-    "slots": [],
-    "defaultWeight": 0.02
-  },
-  "ITEM_TYPE_GOLD": {
-    "slots": [],
-    "defaultWeight": 0.015
-  },
-  "ITEM_TYPE_GEM": {
-    "slots": [],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_GRENADE": {
-    "slots": [],
-    "defaultWeight": 0.5
-  },
-  "ITEM_TYPE_ENCAMPMENT": {
-    "slots": [],
-    "defaultWeight": 50
-  },
-  "ITEM_TYPE_CREATUREITEM": {
-    "slots": [],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_CRAFTMATERIAL": {
-    "slots": [],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_MISCSMALL": {
-    "slots": [],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_MISCMEDIUM": {
-    "slots": [],
-    "defaultWeight": 0
-  },
-  "ITEM_TYPE_MISCLARGE": {
-    "slots": [],
-    "defaultWeight": 0
-  }
+  "ITEM_TYPE_NATURAL_ARMOR": "ITEM_TYPE_NATURAL_ARMOR",
+  "ITEM_TYPE_NATURAL_WEAPON": "ITEM_TYPE_NATURAL_WEAPON",
+  "ITEM_TYPE_WEAPON": "ITEM_TYPE_WEAPON",
+  "ITEM_TYPE_AMMO": "ITEM_TYPE_AMMO",
+  "ITEM_TYPE_ARMOR": "ITEM_TYPE_ARMOR",
+  "ITEM_TYPE_SHIELD": "ITEM_TYPE_SHIELD",
+  "ITEM_TYPE_HELM": "ITEM_TYPE_HELM",
+  "ITEM_TYPE_NECKLACE": "ITEM_TYPE_NECKLACE",
+  "ITEM_TYPE_CLOAK": "ITEM_TYPE_CLOAK",
+  "ITEM_TYPE_GAUNTLETS": "ITEM_TYPE_GAUNTLETS",
+  "ITEM_TYPE_GLOVES": "ITEM_TYPE_GLOVES",
+  "ITEM_TYPE_RING": "ITEM_TYPE_RING",
+  "ITEM_TYPE_BELT": "ITEM_TYPE_BELT",
+  "ITEM_TYPE_BOOTS": "ITEM_TYPE_BOOTS",
+  "ITEM_TYPE_TORCH": "ITEM_TYPE_TORCH",
+  "ITEM_TYPE_HEALERSKIT": "ITEM_TYPE_HEALERSKIT",
+  "ITEM_TYPE_MAGICROD": "ITEM_TYPE_MAGICROD",
+  "ITEM_TYPE_MAGICWAND": "ITEM_TYPE_MAGICWAND",
+  "ITEM_TYPE_POTION": "ITEM_TYPE_POTION",
+  "ITEM_TYPE_THIEVESTOOLS": "ITEM_TYPE_THIEVESTOOLS",
+  "ITEM_TYPE_KEY": "ITEM_TYPE_KEY",
+  "ITEM_TYPE_BOX": "ITEM_TYPE_BOX",
+  "ITEM_TYPE_BAG": "ITEM_TYPE_BAG",
+  "ITEM_TYPE_BOOK": "ITEM_TYPE_BOOK",
+  "ITEM_TYPE_SCROLL": "ITEM_TYPE_SCROLL",
+  "ITEM_TYPE_GOLD": "ITEM_TYPE_GOLD",
+  "ITEM_TYPE_GEM": "ITEM_TYPE_GEM",
+  "ITEM_TYPE_GRENADE": "ITEM_TYPE_GRENADE",
+  "ITEM_TYPE_ENCAMPMENT": "ITEM_TYPE_ENCAMPMENT",
+  "ITEM_TYPE_CREATUREITEM": "ITEM_TYPE_CREATUREITEM",
+  "ITEM_TYPE_CRAFTMATERIAL": "ITEM_TYPE_CRAFTMATERIAL",
+  "ITEM_TYPE_MISCSMALL": "ITEM_TYPE_MISCSMALL",
+  "ITEM_TYPE_MISCMEDIUM": "ITEM_TYPE_MISCMEDIUM",
+  "ITEM_TYPE_MISCLARGE" : "ITEM_TYPE_MISCLARGE"
 }

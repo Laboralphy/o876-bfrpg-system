@@ -1,0 +1,7 @@
+{
+  "SHIELD_TYPE_SMALL": {
+    "weight": 5,
+    "ac": 1,
+    "material": "MATERIAL_WOOD"
+  }
+}

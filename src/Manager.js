@@ -1,10 +1,38 @@
 const Horde = require("./Horde");
 const Creature = require("./Creature");
+const ItemProperties = require('./ItemProperties')
 require('./store/getters.doc')
 require('./store/mutations.doc')
 const EffectProcessor = require("./EffectProcessor");
 const EFFECTS = require('./effects')
+const CONSTS = require('./consts')
+const DATA = require('./data')
+const ItemBuilder = require("./ItemBuilder");
+const { getId } = require('./unique-id')
 
+/**
+ * @typedef BFItem {object}
+ * @property id {string}
+ * @property ref {string} blueprint reference
+ * @property entityType {string}
+ * @property itemType {string}
+ * @property [armorType] {string}
+ * @property [weaponType] {string}
+ * @property [shieldType] {string}
+ * @property [ammoType] {string}
+ * @property properties {[]}
+ * @property data {{}}
+ * @property equipmentSlots {string[]}
+ * @property weight {number}
+ * @property [size] {string}
+ * @property [ac] {string}
+ * @property [damage] {string}
+ * @property material {string}
+ */
+
+/**
+ * @class
+ */
 class Manager {
     constructor () {
         const h = new Horde()
@@ -12,12 +40,14 @@ class Manager {
         ep.effectPrograms = EFFECTS
         ep.events.on('effect-applied', ev => this.effectApplied(ev))
         ep.events.on('effect-disposed', ev => this.effectDisposed(ev))
+        const ib = new ItemBuilder()
 
         this._horde = h
         this._effectProcessor = ep
         this._effectOptimRegistry = {}
-        this._data = {}
+        this._data = Object.assign({}, DATA)
         this._blueprints = {}
+        this._itemBuilder = ib
     }
 
     /**
@@ -25,6 +55,14 @@ class Manager {
      */
     get horde () {
         return this._horde
+    }
+
+    get data () {
+        return this._data
+    }
+
+    get blueprints () {
+        return this._blueprints
     }
 
     /**
@@ -56,8 +94,21 @@ class Manager {
         return oCreature
     }
 
-    createItem (oBlueprint) {
-
+    createItem ({ id = '', ref }) {
+        const ib = this._itemBuilder
+        const sTypeOfRef = typeof ref
+        const oBlueprint = sTypeOfRef === 'string'
+            ? this._blueprints[ref]
+            : sTypeOfRef === 'object'
+                ? ref
+                : null
+        if (!oBlueprint) {
+            throw new Error('Could not evaluate blueprint ' + ref)
+        }
+        const oItem = ib.createItem(oBlueprint, this._data)
+        oItem.id = id || getId()
+        oItem.ref = sTypeOfRef === '' ? ref  : ''
+        return oItem
     }
 
     /**
@@ -110,7 +161,6 @@ class Manager {
     effectDisposed ({ effect, target, source }) {
         delete this._effectOptimRegistry[effect.id]
     }
-
 }
 
 module.exports = Manager

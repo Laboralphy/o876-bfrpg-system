@@ -1,0 +1,12 @@
+{
+  "entityType": "ENTITY_TYPE_ITEM",
+  "itemType": "ITEM_TYPE_WEAPON",
+  "weaponType": "WEAPON_TYPE_DAGGER",
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+      "value": 1,
+      "type": "DAMAGE_TYPE_WEAPON"
+    }
+  ]
+}

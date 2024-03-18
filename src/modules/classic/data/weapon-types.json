@@ -3,19 +3,24 @@
     "size": "WEAPON_SIZE_SMALL",
     "weight": 5,
     "damage": "1d6",
-    "attributes": []
+    "attributes": [],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_BATTLE_AXE": {
     "size": "WEAPON_SIZE_MEDIUM",
     "weight": 7,
     "damage": "1d8",
-    "attributes": []
+    "attributes": [],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_GREAT_AXE": {
     "size": "WEAPON_SIZE_LARGE",
     "weight": 15,
     "damage": "1d10",
-    "attributes": []
+    "attributes": [
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
+    ],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_SHORTBOW": {
     "size": "WEAPON_SIZE_MEDIUM",
@@ -23,9 +28,11 @@
     "damage": "1d6",
     "attributes": [
       "WEAPON_ATTRIBUTE_RANGED",
-      "WEAPON_ATTRIBUTE_AMMUNITION"
+      "WEAPON_ATTRIBUTE_AMMUNITION",
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
     ],
-    "ammoType": "AMMO_TYPE_ARROW"
+    "ammoType": "AMMO_TYPE_ARROW",
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_LONGBOW": {
     "size": "WEAPON_SIZE_LARGE",
@@ -33,9 +40,11 @@
     "damage": "1d8",
     "attributes": [
       "WEAPON_ATTRIBUTE_RANGED",
-      "WEAPON_ATTRIBUTE_AMMUNITION"
+      "WEAPON_ATTRIBUTE_AMMUNITION",
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
     ],
-    "ammoType": "AMMO_TYPE_ARROW"
+    "ammoType": "AMMO_TYPE_ARROW",
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_LIGHT_CROSSBOW": {
     "size": "WEAPON_SIZE_MEDIUM",
@@ -43,9 +52,12 @@
     "damage": "1d6",
     "attributes": [
       "WEAPON_ATTRIBUTE_RANGED",
-      "WEAPON_ATTRIBUTE_AMMUNITION"
+      "WEAPON_ATTRIBUTE_AMMUNITION",
+      "WEAPON_ATTRIBUTE_LOADING",
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
     ],
-    "ammoType": "AMMO_TYPE_QUARREL"
+    "ammoType": "AMMO_TYPE_QUARREL",
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_HEAVY_CROSSBOW": {
     "size": "WEAPON_SIZE_LARGE",
@@ -53,9 +65,12 @@
     "damage": "1d8",
     "attributes": [
       "WEAPON_ATTRIBUTE_RANGED",
-      "WEAPON_ATTRIBUTE_AMMUNITION"
+      "WEAPON_ATTRIBUTE_AMMUNITION",
+      "WEAPON_ATTRIBUTE_LOADING",
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
     ],
-    "ammoType": "AMMO_TYPE_QUARREL"
+    "ammoType": "AMMO_TYPE_QUARREL",
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_DAGGER": {
     "size": "WEAPON_SIZE_SMALL",
@@ -63,7 +78,8 @@
     "damage": "1d4",
     "attributes": [
       "WEAPON_ATTRIBUTE_FINESSE"
-    ]
+    ],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_SHORTSWORD": {
     "size": "WEAPON_SIZE_SMALL",
@@ -71,39 +87,73 @@
     "damage": "1d6",
     "attributes": [
       "WEAPON_ATTRIBUTE_FINESSE"
-    ]
+    ],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_LONGSWORD": {
     "size": "WEAPON_SIZE_MEDIUM",
     "weight": 4,
     "damage": "1d8",
-    "attributes": []
+    "attributes": [],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_TWO_HANDED_SWORD": {
     "size": "WEAPON_SIZE_LARGE",
     "weight": 10,
     "damage": "1d10",
-    "attributes": []
+    "attributes": [
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
+    ],
+    "material": "MATERIAL_STEEL"
+  },
+  "WEAPON_TYPE_WARHAMMER": {
+    "size": "WEAPON_SIZE_SMALL",
+    "weight": 6,
+    "damage": "1d6",
+    "attributes": [],
+    "material": "MATERIAL_STEEL"
+  },
+  "WEAPON_TYPE_MACE": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 10,
+    "damage": "1d8",
+    "attributes": [],
+    "material": "MATERIAL_STEEL"
+  },
+  "WEAPON_TYPE_MAUL": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 16,
+    "damage": "1d10",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
+    ],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_CLUB": {
     "size": "WEAPON_SIZE_MEDIUM",
     "weight": 1,
     "damage": "1d4",
-    "attributes": []
+    "attributes": [],
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_QUATERSTAFF": {
     "size": "WEAPON_SIZE_MEDIUM",
     "weight": 4,
     "damage": "1d6",
-    "attributes": []
+    "attributes": [
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
+    ],
+    "material": "MATERIAL_WOOD"
   },
   "WEAPON_TYPE_POLE_ARM": {
     "size": "WEAPON_SIZE_LARGE",
     "weight": 15,
     "damage": "1d10",
     "attributes": [
-      "WEAPON_ATTRIBUTE_REACH"
-    ]
+      "WEAPON_ATTRIBUTE_REACH",
+      "WEAPON_ATTRIBUTE_TWO_HANDED"
+    ],
+    "material": "MATERIAL_STEEL"
   },
   "WEAPON_TYPE_SLING": {
     "size": "WEAPON_SIZE_SMALL",
@@ -111,7 +161,8 @@
     "damage": "1d4",
     "attributes": [
       "WEAPON_ATTRIBUTE_RANGED"
-    ]
+    ],
+    "material": "MATERIAL_LEATHER"
   },
   "WEAPON_TYPE_SPEAR": {
     "size": "WEAPON_SIZE_MEDIUM",
@@ -119,6 +170,7 @@
     "damage": "1d6",
     "attributes": [
       "WEAPON_ATTRIBUTE_REACH"
-    ]
+    ],
+    "material": "MATERIAL_STEEL"
   }
 }

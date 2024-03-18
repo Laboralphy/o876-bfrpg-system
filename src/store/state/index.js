@@ -30,5 +30,21 @@ module.exports = () => ({
     gauges: {
         hitPoints: 1
     },
-    effects: []
+    effects: [],
+    properties: [],
+    equipment: {
+        [CONSTS.EQUIPMENT_SLOT_HEAD]: null,
+        [CONSTS.EQUIPMENT_SLOT_NECK]: null,
+        [CONSTS.EQUIPMENT_SLOT_CHEST]: null,
+        [CONSTS.EQUIPMENT_SLOT_BACK]: null,
+        [CONSTS.EQUIPMENT_SLOT_ARMS]: null,
+        [CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]: null,
+        [CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]: null,
+        [CONSTS.EQUIPMENT_SLOT_SHIELD]: null,
+        [CONSTS.EQUIPMENT_SLOT_LEFT_FINGER]: null,
+        [CONSTS.EQUIPMENT_SLOT_RIGHT_FINGER]: null,
+        [CONSTS.EQUIPMENT_SLOT_AMMO]: null,
+        [CONSTS.EQUIPMENT_SLOT_WAIST]: null,
+        [CONSTS.EQUIPMENT_SLOT_FEET]: null
+    }
 })

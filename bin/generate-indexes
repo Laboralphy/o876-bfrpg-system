@@ -3,6 +3,9 @@
 echo const-effects
 node ./bin/generate-indexes.js ./src/effects TYPE_GENERATE_CONSTS_PREFIXED EFFECT > ./src/consts/effects.js
 
+echo const-item-properties
+node ./bin/generate-indexes.js ./src/item-properties TYPE_GENERATE_CONSTS_PREFIXED ITEM_PROPERTY > ./src/consts/item-properties.js
+
 echo constants
 node ./bin/generate-indexes.js ./src/consts TYPE_SPREAD > ./src/consts/index.js
 
@@ -17,6 +20,9 @@ node ./bin/generate-indexes.js ./src/data TYPE_KEY_BASED > ./src/data/index.js
 
 echo effects
 node ./bin/generate-indexes.js ./src/effects TYPE_UPPER_KEY_PREFIXED EFFECT > ./src/effects/index.js
+
+echo item properties
+node ./bin/generate-indexes.js ./src/item-properties TYPE_UPPER_KEY_PREFIXED ITEM_PROPERTY > ./src/item-properties/index.js
 
 echo getters
 node ./bin/generate-jsdoc-getters.js ./src/store/getters > ./src/store/getters.doc.js

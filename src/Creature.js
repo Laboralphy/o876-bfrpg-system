@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid')
+const { getId } = require('./unique-id')
 const { buildStore } = require('./store')
 const Dice = require('./libs/dice')
 
@@ -7,7 +7,7 @@ const Dice = require('./libs/dice')
  */
 class Creature {
     constructor () {
-        this._id = uuidv4({}, null, 0)
+        this._id = getId()
         this._name = this._id
         this._dice = new Dice()
         this._store = buildStore()

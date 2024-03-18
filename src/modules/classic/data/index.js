@@ -1,8 +1,10 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-03-16T14:58:58.603Z
+// Date : 2024-03-18T14:39:19.175Z
 // List of files in ./src/modules/classic/data
 
 module.exports = {
   'ammo-types': require('./ammo-types.json'),
+  'armor-types': require('./armor-types.json'),
+  'shield-types': require('./shield-types.json'),
   'weapon-types': require('./weapon-types.json')
 }

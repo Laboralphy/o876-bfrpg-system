@@ -1,4 +1,4 @@
-modules.exports = {
+module.exports = {
     BLUEPRINTS: require('./blueprints'),
-    DATA: require('./blueprints')
+    DATA: require('./data')
 }
