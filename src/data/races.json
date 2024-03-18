@@ -1,0 +1,61 @@
+{
+  "RACE_HUMAN": {
+    "specie": "SPECIE_HUMANOID"
+  },
+  "RACE_ELF": {
+    "specie": "SPECIE_HUMANOID",
+    "abilityRestrictions": {
+      "ABILITY_INTELLIGENCE": {
+        "min": 9
+      },
+      "ABILITY_CONSTITUTION": {
+        "max": 17
+      }
+    },
+    "maxHitDice": 6,
+    "savingThrows": {
+      "SAVING_THROW_PARALYSIS_PETRIFY": 1,
+      "SAVING_THROW_MAGIC_WAND": 2,
+      "SAVING_THROW_SPELL": 2
+    }
+  },
+  "RACE_DWARF": {
+    "specie": "SPECIE_HUMANOID",
+    "abilityRestrictions": {
+      "ABILITY_CONSTITUTION": {
+        "min": 9
+      },
+      "ABILITY_CHARISMA": {
+        "max": 17
+      }
+    },
+    "savingThrows": {
+      "SAVING_THROW_DEATH_RAY": 4,
+      "SAVING_THROW_POISON": 4,
+      "SAVING_THROW_PARALYSIS_PETRIFY": 4,
+      "SAVING_THROW_MAGIC_WAND": 4,
+      "SAVING_THROW_SPELL": 4,
+      "SAVING_THROW_DRAGON_BREATH": 3
+    }
+  },
+  "RACE_HALFLING": {
+    "specie": "SPECIE_HUMANOID",
+    "abilityRestrictions": {
+      "ABILITY_DEXTERITY": {
+        "min": 9
+      },
+      "ABILITY_STRENGTH": {
+        "max": 17
+      }
+    },
+    "maxHitDice": 6,
+    "savingThrows": {
+      "SAVING_THROW_DEATH_RAY": 4,
+      "SAVING_THROW_POISON": 4,
+      "SAVING_THROW_PARALYSIS_PETRIFY": 4,
+      "SAVING_THROW_MAGIC_WAND": 4,
+      "SAVING_THROW_SPELL": 4,
+      "SAVING_THROW_DRAGON_BREATH": 3
+    }
+  }
+}

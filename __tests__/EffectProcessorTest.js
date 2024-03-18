@@ -15,7 +15,7 @@ describe('apply-effect', function () {
         effectProcessor.effectPrograms = EFFECTS
         expect(oCreature.getters.getMaxHitPoints).toBe(5)
         expect(oCreature.getters.getHitPoints).toBe(1)
-        const eHeal = effectProcessor.createEffect(CONSTS.EFFECT_HEAL, { amount: 2 })
+        const eHeal = effectProcessor.createEffect(CONSTS.EFFECT_HEAL, 2)
         effectProcessor.applyEffect(eHeal, oCreature, 0)
         expect(oCreature.getters.getHitPoints).toBe(3)
     })
@@ -28,7 +28,7 @@ describe('processEffect', function () {
         ep.effectPrograms = EFFECTS
         const aLog = []
         ep.effectPrograms.EFFECT_TESTING = {
-            create: function (oEffect) {
+            init: function (oEffect) {
                 aLog.push('create effect testing')
             },
             mutate: function (oEffect, target, source) {

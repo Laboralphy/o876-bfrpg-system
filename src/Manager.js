@@ -16,6 +16,8 @@ class Manager {
         this._horde = h
         this._effectProcessor = ep
         this._effectOptimRegistry = {}
+        this._data = {}
+        this._blueprints = {}
     }
 
     /**
@@ -33,6 +35,16 @@ class Manager {
     }
 
     /**
+     * Load a module of additionnal assets (blueprints and data)
+     * @param module {string} name of module (classic, modern, future)
+     */
+    loadModule (module) {
+        const { DATA, BLUEPRINTS } = require('./modules/' + module)
+        Object.assign(this._data, DATA)
+        Object.assign(this._blueprints, BLUEPRINTS)
+    }
+
+    /**
      * Create a new creature
      * @param id {string}
      * @returns {Creature}
@@ -42,6 +54,10 @@ class Manager {
         oCreature.id = id
         this._horde.linkCreature(oCreature)
         return oCreature
+    }
+
+    createItem (oBlueprint) {
+
     }
 
     /**

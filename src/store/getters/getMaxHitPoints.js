@@ -8,7 +8,7 @@ const CONSTS = require('../../consts')
  * @returns {number}
  */
 module.exports = (state, getters, externals) => {
-    const { hitDice, hitPointBonus, hitDiceMaxLevel } = externals['character-advancement'][state.classType]
+    const { hitDice, hitPointBonus, hitDiceMaxLevel } = externals['class-types'][state.classType]
     const nLevelBelow9 = Math.min(hitDiceMaxLevel, state.level)
     const nLevelOver9 = Math.max(state.level - hitDiceMaxLevel, 0)
     const nHPPerLevelBelow9 = Math.max(1, hitDice + getters.getAbilityModifiers[CONSTS.ABILITY_CONSTITUTION])

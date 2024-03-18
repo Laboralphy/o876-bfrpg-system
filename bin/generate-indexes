@@ -23,3 +23,9 @@ node ./bin/generate-jsdoc-getters.js ./src/store/getters > ./src/store/getters.d
 
 echo mutations
 node ./bin/generate-jsdoc-mutations.js ./src/store/mutations > ./src/store/mutations.doc.js
+
+echo module classic - blueprints
+node ./bin/generate-indexes.js ./src/modules/classic/blueprints TYPE_KEY_BASED > ./src/modules/classic/blueprints/index.js
+
+echo module classic - data
+node ./bin/generate-indexes.js ./src/modules/classic/data TYPE_KEY_BASED > ./src/modules/classic/data/index.js

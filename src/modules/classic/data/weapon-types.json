@@ -1,0 +1,124 @@
+{
+  "WEAPON_TYPE_HAND_AXE": {
+    "size": "WEAPON_SIZE_SMALL",
+    "weight": 5,
+    "damage": "1d6",
+    "attributes": []
+  },
+  "WEAPON_TYPE_BATTLE_AXE": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 7,
+    "damage": "1d8",
+    "attributes": []
+  },
+  "WEAPON_TYPE_GREAT_AXE": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 15,
+    "damage": "1d10",
+    "attributes": []
+  },
+  "WEAPON_TYPE_SHORTBOW": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 2,
+    "damage": "1d6",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED",
+      "WEAPON_ATTRIBUTE_AMMUNITION"
+    ],
+    "ammoType": "AMMO_TYPE_ARROW"
+  },
+  "WEAPON_TYPE_LONGBOW": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 3,
+    "damage": "1d8",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED",
+      "WEAPON_ATTRIBUTE_AMMUNITION"
+    ],
+    "ammoType": "AMMO_TYPE_ARROW"
+  },
+  "WEAPON_TYPE_LIGHT_CROSSBOW": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 7,
+    "damage": "1d6",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED",
+      "WEAPON_ATTRIBUTE_AMMUNITION"
+    ],
+    "ammoType": "AMMO_TYPE_QUARREL"
+  },
+  "WEAPON_TYPE_HEAVY_CROSSBOW": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 14,
+    "damage": "1d8",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED",
+      "WEAPON_ATTRIBUTE_AMMUNITION"
+    ],
+    "ammoType": "AMMO_TYPE_QUARREL"
+  },
+  "WEAPON_TYPE_DAGGER": {
+    "size": "WEAPON_SIZE_SMALL",
+    "weight": 1,
+    "damage": "1d4",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_FINESSE"
+    ]
+  },
+  "WEAPON_TYPE_SHORTSWORD": {
+    "size": "WEAPON_SIZE_SMALL",
+    "weight": 3,
+    "damage": "1d6",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_FINESSE"
+    ]
+  },
+  "WEAPON_TYPE_LONGSWORD": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 4,
+    "damage": "1d8",
+    "attributes": []
+  },
+  "WEAPON_TYPE_TWO_HANDED_SWORD": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 10,
+    "damage": "1d10",
+    "attributes": []
+  },
+  "WEAPON_TYPE_CLUB": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 1,
+    "damage": "1d4",
+    "attributes": []
+  },
+  "WEAPON_TYPE_QUATERSTAFF": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 4,
+    "damage": "1d6",
+    "attributes": []
+  },
+  "WEAPON_TYPE_POLE_ARM": {
+    "size": "WEAPON_SIZE_LARGE",
+    "weight": 15,
+    "damage": "1d10",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_REACH"
+    ]
+  },
+  "WEAPON_TYPE_SLING": {
+    "size": "WEAPON_SIZE_SMALL",
+    "weight": "0.1",
+    "damage": "1d4",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED"
+    ]
+  },
+  "WEAPON_TYPE_SPEAR": {
+    "size": "WEAPON_SIZE_MEDIUM",
+    "weight": 5,
+    "damage": "1d6",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_REACH"
+    ]
+  }
+}

@@ -1,10 +1,7 @@
-const CONSTS = require('../consts')
-
-function create (oEffect, { value, type: sDamageType }) {
-    oEffect.amp = value
+function init (oEffect, value, { type: sDamageType }) {
     oEffect.data.type = sDamageType
 }
 
 module.exports = {
-    create
+    init
 }

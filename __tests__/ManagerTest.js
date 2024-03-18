@@ -22,7 +22,7 @@ describe('destroyCreature', function () {
         const m = new Manager()
         const c1 = m.createCreature({ id: 'c1' })
         const c2 = m.createCreature({ id: 'c2' })
-        const e1 = m.effectProcessor.createEffect(CONSTS.EFFECT_HEAL, { amount: 1 })
+        const e1 = m.effectProcessor.createEffect(CONSTS.EFFECT_HEAL, 1)
         m.effectProcessor.applyEffect(e1, c2, 100, c1)
         expect(c2.getters.getEffects.length).toBe(1)
         expect(c2.getters.getEffects[0].type).toBe(CONSTS.EFFECT_HEAL)

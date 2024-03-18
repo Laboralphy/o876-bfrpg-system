@@ -65,21 +65,25 @@ class EffectProcessor {
     /**
      *
      * @param sType
+     * @param amp {number | string}
      * @param oParams
      * @returns {BFEffect}
      */
-    createEffect (sType, oParams = null) {
-        if (this._effectPrograms[sType]) {
+    createEffect (sType, amp = 0, oParams = null) {
+        const ept = this._effectPrograms[sType]
+        if (ept) {
             const oEffect = {
                 id: uuidv4({}, null, 0),
                 type: sType,
                 subtype: CONSTS.EFFECT_SUBTYPE_MAGICAL,
-                amp: 0,
+                amp,
                 duration: 0,
                 source: null,
                 data: {}
             }
-            this._effectPrograms[sType].create(oEffect, oParams)
+            if ('init' in ept) {
+                ept.init(oEffect, oParams)
+            }
             return oEffect
         } else {
             throw new Error('Unknown effect type : ' + sType)
