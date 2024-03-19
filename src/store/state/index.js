@@ -32,6 +32,7 @@ module.exports = () => ({
     },
     effects: [],
     properties: [],
+    offensiveSlot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE,
     equipment: {
         [CONSTS.EQUIPMENT_SLOT_HEAD]: null,
         [CONSTS.EQUIPMENT_SLOT_NECK]: null,
@@ -41,10 +42,13 @@ module.exports = () => ({
         [CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]: null,
         [CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]: null,
         [CONSTS.EQUIPMENT_SLOT_SHIELD]: null,
-        [CONSTS.EQUIPMENT_SLOT_LEFT_FINGER]: null,
-        [CONSTS.EQUIPMENT_SLOT_RIGHT_FINGER]: null,
+        [CONSTS.EQUIPMENT_SLOT_FINGER_LEFT]: null,
+        [CONSTS.EQUIPMENT_SLOT_FINGER_RIGHT]: null,
         [CONSTS.EQUIPMENT_SLOT_AMMO]: null,
         [CONSTS.EQUIPMENT_SLOT_WAIST]: null,
-        [CONSTS.EQUIPMENT_SLOT_FEET]: null
+        [CONSTS.EQUIPMENT_SLOT_FEET]: null,
+        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_0]: null,
+        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_1]: null,
+        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_2]: null
     }
 })

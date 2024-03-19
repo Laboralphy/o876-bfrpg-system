@@ -4,7 +4,8 @@
  * @param item {BFItem}
  * @param slot {string}
  * @returns {BFEffect}
- */module.exports = ({ state, externals }, { item, slot = '' }) => {
+ */
+module.exports = ({ state, externals }, { item, slot = '' }) => {
     const oItemTypes = externals['item-types']
     const aAllowedSlots = oItemTypes.slots
     let sUseSlot = aAllowedSlots.includes(slot) ? slot : ''

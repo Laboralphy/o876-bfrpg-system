@@ -4,7 +4,7 @@
     "defaultWeight": 0
   },
   "ITEM_TYPE_NATURAL_WEAPON": {
-    "slots": ["EQUIPMENT_SLOT_NATURAL_WEAPON"],
+    "slots": ["EQUIPMENT_SLOT_NATURAL_WEAPON_0", "EQUIPMENT_SLOT_NATURAL_WEAPON_1", "EQUIPMENT_SLOT_NATURAL_WEAPON_2"],
     "defaultWeight": 0
   },
   "ITEM_TYPE_WEAPON": {
