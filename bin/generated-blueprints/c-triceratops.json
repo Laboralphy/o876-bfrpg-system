@@ -1,0 +1,25 @@
+{
+  "name": "c-triceratops",
+  "specie": "animal",
+  "naturalArmorClass": 19,
+  "saveAsLevel": "fighter",
+  "level": 11,
+  "hpBonus": 9,
+  "actions": [
+    {
+      "name": "gore",
+      "count": 1,
+      "amp": "3d6",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "trample",
+      "count": 1,
+      "amp": "3d6",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 30
+}

@@ -1,0 +1,24 @@
+{
+  "name": "c-auroch",
+  "specie": "animal",
+  "naturalArmorClass": 16,
+  "saveAsLevel": "fighter",
+  "level": 3,
+  "actions": [
+    {
+      "name": "horn",
+      "count": 1,
+      "amp": "1d6",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "trample",
+      "count": 1,
+      "amp": "2d4",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 50
+}

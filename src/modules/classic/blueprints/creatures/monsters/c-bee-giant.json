@@ -1,0 +1,17 @@
+{
+  "name": "c-bee-giant",
+  "specie": "vermin",
+  "naturalArmorClass": 13,
+  "saveAsLevel": "tourist",
+  "level": 1,
+  "actions": [
+    {
+      "name": "sting",
+      "count": 1,
+      "amp": "1d4",
+      "script": "poison",
+      "data": []
+    }
+  ],
+  "saveAsClass": 50
+}

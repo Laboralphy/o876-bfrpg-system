@@ -1,0 +1,27 @@
+{
+  "name": "c-bugbear",
+  "specie": "humanoid",
+  "naturalArmorClass": 13,
+  "armorClassBonus": 2,
+  "saveAsLevel": "fighter",
+  "level": 3,
+  "hpBonus": 1,
+  "actions": [
+    {
+      "name": "unarmed",
+      "count": 1,
+      "amp": "1d8",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "weapon",
+      "count": 1,
+      "amp": "0",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "damageBonus": 1,
+  "saveAsClass": 30
+}

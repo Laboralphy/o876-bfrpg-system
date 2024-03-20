@@ -1,5 +1,5 @@
 /**
- * Change an effect duration. Setting duration to 0 will remove effect from creature
+ * Change an effect duration. Setting duration to 0 will remove effect from creatures
  * @param state {BFStoreState}
  * @param effect {BFEffect}
  * @param duration {number}

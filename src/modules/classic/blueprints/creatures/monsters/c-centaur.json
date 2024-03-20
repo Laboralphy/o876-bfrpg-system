@@ -1,0 +1,25 @@
+{
+  "name": "c-centaur",
+  "specie": "magical-beast",
+  "naturalArmorClass": 13,
+  "armorClassBonus": 2,
+  "saveAsLevel": "fighter",
+  "level": 4,
+  "actions": [
+    {
+      "name": "hoove",
+      "count": 2,
+      "amp": "1d6",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "weapon",
+      "count": 1,
+      "amp": "0",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 50
+}

@@ -1,0 +1,26 @@
+#!/bin/bash
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+if [ -f "$SCRIPT_DIR/../.env" ]
+then
+  source "$SCRIPT_DIR/../.env"
+  sURL="$DOWNLOAD_MONSTER_URL"
+
+  echo "using document : $DOWNLOAD_MONSTER_URL"
+  echo downloading data...
+  wget -qO "$SCRIPT_DIR/monsters.csv" "$sURL"
+  mkdir -p "$SCRIPT_DIR"/generated-blueprints
+  sEmptyDir=`ls -A "$SCRIPT_DIR"/generated-blueprints`
+  if [ -n "$sEmptyDir" ]
+  then
+    echo removing previous blueprints...
+    rm -r "$SCRIPT_DIR"/generated-blueprints/*.json
+  fi
+  echo generating blueprints...
+  node "$SCRIPT_DIR/generate-monster-blueprints.js"
+  echo copying blueprint...
+  cp "$SCRIPT_DIR"/generated-blueprints/*.json "$SCRIPT_DIR"/../src/modules/classic/blueprints/creatures/monsters
+  echo done.
+else
+  echo ".env file not found in project root dir."
+  echo "Please create an .env file with a 'URL_MONSTERS' variable referencing an online csv document containing monster data."
+fi

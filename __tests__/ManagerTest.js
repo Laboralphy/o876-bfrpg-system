@@ -2,7 +2,7 @@ const Manager = require('../src/Manager')
 const CONSTS = require('../src/consts')
 
 describe('createCreature', function () {
-    it('should create a creature when calling the function', function () {
+    it('should create a creatures when calling the function', function () {
         const m = new Manager()
         expect(m.horde.creatures['c1']).toBeUndefined()
         m.createCreature({ id: 'c1' })
@@ -11,7 +11,7 @@ describe('createCreature', function () {
 })
 
 describe('destroyCreature', function () {
-    it('should destroy a creature when calling the function', function () {
+    it('should destroy a creatures when calling the function', function () {
         const m = new Manager()
         const c1 = m.createCreature({ id: 'c1' })
         expect(m.horde.creatures['c1']).toBeDefined()

@@ -1,5 +1,5 @@
 /**
- * change creature hit points
+ * change creatures hit points
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
  * @param value {number}

@@ -1,0 +1,31 @@
+{
+  "name": "c-deceiver-greater",
+  "specie": "monstrosity",
+  "naturalArmorClass": 16,
+  "saveAsLevel": "fighter",
+  "level": 16,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 2,
+      "amp": "1d6",
+      "script": "poison",
+      "data": []
+    },
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "2d6",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "decoy",
+      "count": 1,
+      "amp": "0",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 40
+}

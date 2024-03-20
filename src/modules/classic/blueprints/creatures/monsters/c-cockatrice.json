@@ -1,0 +1,17 @@
+{
+  "name": "c-cockatrice",
+  "specie": "monstrosity",
+  "naturalArmorClass": 14,
+  "saveAsLevel": "fighter",
+  "level": 5,
+  "actions": [
+    {
+      "name": "beak",
+      "count": 1,
+      "amp": "1d6",
+      "script": "petrify",
+      "data": []
+    }
+  ],
+  "saveAsClass": 30
+}

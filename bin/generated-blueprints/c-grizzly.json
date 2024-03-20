@@ -1,0 +1,25 @@
+{
+  "name": "c-grizzly",
+  "specie": "animal",
+  "naturalArmorClass": 15,
+  "saveAsLevel": "fighter",
+  "level": 5,
+  "actions": [
+    {
+      "name": "claw",
+      "count": 2,
+      "amp": "1d4",
+      "script": "hug",
+      "data": []
+    },
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d8",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "speed": "2d8",
+  "saveAsClass": 40
+}

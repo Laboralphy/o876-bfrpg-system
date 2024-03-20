@@ -1,0 +1,24 @@
+{
+  "name": "c-basilisk-greater",
+  "specie": "monstrosity",
+  "naturalArmorClass": 17,
+  "saveAsLevel": "fighter",
+  "level": 8,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d12",
+      "script": "poison",
+      "data": []
+    },
+    {
+      "name": "gaze",
+      "count": 1,
+      "amp": "0",
+      "script": "petrify",
+      "data": []
+    }
+  ],
+  "saveAsClass": 20
+}

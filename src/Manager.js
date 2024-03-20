@@ -83,7 +83,7 @@ class Manager {
     }
 
     /**
-     * Create a new creature
+     * Create a new creatures
      * @param id {string}
      * @returns {Creature}
      */
@@ -112,11 +112,11 @@ class Manager {
     }
 
     /**
-     * Destroy a creature
+     * Destroy a creatures
      * @param oCreature {Creature}
      */
     destroyCreature (oCreature) {
-        // all effects cast by this creature must be ended immediatly
+        // all effects cast by this creatures must be ended immediatly
         this._horde.forEach(creature => {
             const aEffects = creature
                 .getters
@@ -141,7 +141,7 @@ class Manager {
     }
 
     /**
-     * A new effect has been applied on a creature. The manager must keep track of this effect if duration is > 0
+     * A new effect has been applied on a creatures. The manager must keep track of this effect if duration is > 0
      * @param effect {BFEffect}
      * @param target {Creature}
      * @param source {Creature}

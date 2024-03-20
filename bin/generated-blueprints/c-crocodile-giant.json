@@ -1,0 +1,18 @@
+{
+  "name": "c-crocodile-giant",
+  "specie": "animal",
+  "naturalArmorClass": 19,
+  "saveAsLevel": "fighter",
+  "level": 15,
+  "hpBonus": 11,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "3d8",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 30
+}

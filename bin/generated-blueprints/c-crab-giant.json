@@ -1,0 +1,17 @@
+{
+  "name": "c-crab-giant",
+  "specie": "animal",
+  "naturalArmorClass": 18,
+  "saveAsLevel": "fighter",
+  "level": 3,
+  "actions": [
+    {
+      "name": "pincer",
+      "count": 2,
+      "amp": "2d6",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 20
+}

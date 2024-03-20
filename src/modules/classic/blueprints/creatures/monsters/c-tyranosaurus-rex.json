@@ -1,0 +1,18 @@
+{
+  "name": "c-tyranosaurus-rex",
+  "specie": "animal",
+  "naturalArmorClass": 23,
+  "saveAsLevel": "fighter",
+  "level": 18,
+  "hpBonus": 12,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "6d6",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 40
+}

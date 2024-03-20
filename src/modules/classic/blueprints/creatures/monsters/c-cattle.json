@@ -1,0 +1,25 @@
+{
+  "name": "c-cattle",
+  "specie": "animal",
+  "naturalArmorClass": 14,
+  "saveAsLevel": "fighter",
+  "level": 2,
+  "hpBonus": 2,
+  "actions": [
+    {
+      "name": "horn",
+      "count": 1,
+      "amp": "1d4",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "trample",
+      "count": 1,
+      "amp": "2d4",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 50
+}

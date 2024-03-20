@@ -1,0 +1,17 @@
+{
+  "name": "c-caecilia-giant",
+  "specie": "vermin",
+  "naturalArmorClass": 14,
+  "saveAsLevel": "fighter",
+  "level": 6,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d8",
+      "script": "swallow",
+      "data": []
+    }
+  ],
+  "saveAsClass": 20
+}

@@ -1,0 +1,31 @@
+{
+  "name": "c-cave-locust",
+  "specie": "vermin",
+  "naturalArmorClass": 16,
+  "saveAsLevel": "fighter",
+  "level": 2,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d2",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "bump",
+      "count": 1,
+      "amp": "1d4",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "spit",
+      "count": 1,
+      "amp": 0,
+      "script": "spit",
+      "data": []
+    }
+  ],
+  "saveAsClass": 20
+}

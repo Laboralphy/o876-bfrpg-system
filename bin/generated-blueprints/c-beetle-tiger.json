@@ -1,0 +1,18 @@
+{
+  "name": "c-beetle-tiger",
+  "specie": "vermin",
+  "naturalArmorClass": 17,
+  "saveAsLevel": "fighter",
+  "level": 3,
+  "hpBonus": 1,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "2d6",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 60
+}

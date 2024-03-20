@@ -4,7 +4,7 @@ const EffectProcessor = require("../src/EffectProcessor");
 const EFFECTS = require('../src/effects')
 
 describe('apply-effect', function () {
-    it('should heal creature when applying heal effect', function () {
+    it('should heal creatures when applying heal effect', function () {
         const oCreature = new Creature()
         const oHorde = {
             creatures: {

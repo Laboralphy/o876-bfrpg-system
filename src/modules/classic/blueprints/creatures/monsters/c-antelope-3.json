@@ -1,0 +1,17 @@
+{
+  "name": "c-antelope-3",
+  "specie": "animal",
+  "naturalArmorClass": 13,
+  "saveAsLevel": "fighter",
+  "level": 3,
+  "actions": [
+    {
+      "name": "butt",
+      "count": 1,
+      "amp": "1d6",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 80
+}

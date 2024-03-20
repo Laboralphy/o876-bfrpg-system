@@ -1,0 +1,17 @@
+{
+  "name": "c-crocodile",
+  "specie": "animal",
+  "naturalArmorClass": 15,
+  "saveAsLevel": "fighter",
+  "level": 2,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d8",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 30
+}

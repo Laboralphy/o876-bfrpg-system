@@ -1,0 +1,32 @@
+{
+  "name": "c-stegosaurus",
+  "specie": "animal",
+  "naturalArmorClass": 17,
+  "saveAsLevel": "fighter",
+  "level": 11,
+  "hpBonus": 9,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d6",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "tail",
+      "count": 1,
+      "amp": "2d8",
+      "script": "damage",
+      "data": []
+    },
+    {
+      "name": "trample",
+      "count": 1,
+      "amp": "2d8",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 20
+}

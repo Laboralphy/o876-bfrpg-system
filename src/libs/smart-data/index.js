@@ -19,7 +19,7 @@ class SmartData {
 
     createContext () {
         const oContext = {
-            c: {},
+            c: null,
             value: '',
             leftValue: '',
             _output: [],
@@ -78,7 +78,9 @@ class SmartData {
                 value = isNaN(+value) ? value : parseInt(value)
                 oContext.value = value
                 try {
-                    aScripts[i].runInContext(oContext)
+                    if (aScripts[i]) {
+                        aScripts[i].runInContext(oContext)
+                    }
                 } catch (e) {
                     console.error(aRow)
                     console.error('COLUMN ' + i + ' : ' + value)
@@ -92,6 +94,9 @@ class SmartData {
 
     run (aRows) {
         const [aHeader, aScripts, ...aData] = aRows
+        if (!aHeader) {
+            throw new Error('no header defined')
+        }
         const oScripts = aHeader.reduce((prev, curr, i) => {
             if (aScripts[i].trim() !== '') {
                 prev[curr] = aScripts[i]

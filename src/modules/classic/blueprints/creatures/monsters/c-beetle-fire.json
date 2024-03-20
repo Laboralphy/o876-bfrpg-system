@@ -1,0 +1,18 @@
+{
+  "name": "c-beetle-fire",
+  "specie": "vermin",
+  "naturalArmorClass": 16,
+  "saveAsLevel": "fighter",
+  "level": 1,
+  "hpBonus": 2,
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "2d4",
+      "script": "damage",
+      "data": []
+    }
+  ],
+  "saveAsClass": 40
+}
