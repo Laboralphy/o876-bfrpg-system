@@ -15,11 +15,15 @@ describe('test1', function () {
         })
     })
 
-    it('should create complex struct', function () {
+    it('should create a array of struct when using kv', function () {
         const s = new SmartData()
-        const aCodes = s.compile({
-            c1: 'c.name=value',
-            prop: ''
-        })
+        const o = s.run([
+            ['name', 'actions', 'param', 'value'],
+            ['output(); c={ actions: [], name: value }', 'c.actions.push({ opcode: value, data: {} })', '', 'kv(last(c.actions).data)'],
+            ['', '', '', ''],
+            ['atk', 'damage',   'type', 'fire'],
+            [   '',       '', 'amount', '3d6']
+        ])
+        expect(o).toEqual([{ name: 'atk', actions:[{ opcode: 'damage', data: { type: 'fire', amount: '3d6' } }] }])
     })
 })

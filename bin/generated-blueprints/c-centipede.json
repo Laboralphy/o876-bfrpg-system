@@ -1,18 +1,23 @@
 {
   "name": "c-centipede",
-  "specie": "vermin",
-  "naturalArmorClass": 11,
-  "saveAsLevel": "tourist",
-  "level": 1,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": 0,
       "script": "poison",
-      "data": []
+      "data": {
+        "power": -2
+      }
     }
   ],
-  "speed": -2,
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 1,
+    "classType": "tourist"
+  },
+  "ac": 11,
+  "properties": [],
+  "specie": "vermin",
+  "level": 1,
+  "speed": 40
 }

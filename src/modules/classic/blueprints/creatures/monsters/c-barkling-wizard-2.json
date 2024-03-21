@@ -1,31 +1,42 @@
 {
   "name": "c-barkling-wizard-2",
-  "specie": "humanoid",
-  "naturalArmorClass": 11,
-  "saveAsLevel": "magic-user",
-  "level": 1,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "weapon",
       "count": 1,
       "amp": "0",
-      "script": "damage",
-      "data": []
+      "script": "attack",
+      "data": {}
     },
     {
       "name": "spell",
       "count": 1,
       "amp": "0",
-      "script": "damage",
-      "data": []
+      "script": "spell",
+      "data": {}
     }
   ],
-  "saveAsClass": 20
+  "saveAs": {
+    "level": 1,
+    "classType": "magic-user"
+  },
+  "ac": 11,
+  "properties": [
+    {
+      "property": "spellcasting",
+      "data": {
+        "level": 2
+      }
+    }
+  ],
+  "specie": "humanoid",
+  "level": 1,
+  "speed": 20
 }

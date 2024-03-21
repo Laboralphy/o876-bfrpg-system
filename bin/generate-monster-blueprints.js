@@ -7,7 +7,6 @@ function main() {
     const sd = new SmartData()
     const t = loadCSV(path.join(__dirname, 'monsters.csv'))
     const output = sd.run(t)
-    console.log(output)
     output.forEach(o => {
         if (o.name) {
             fs

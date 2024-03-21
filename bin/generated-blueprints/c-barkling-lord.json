@@ -1,26 +1,29 @@
 {
   "name": "c-barkling-lord",
-  "specie": "humanoid",
-  "naturalArmorClass": 11,
-  "armorClassBonus": 4,
-  "saveAsLevel": "fighter",
-  "level": 3,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "weapon",
       "count": 1,
       "amp": "0",
-      "script": "damage",
-      "data": []
+      "script": "attack",
+      "data": {}
     }
   ],
+  "saveAs": {
+    "level": 3,
+    "classType": "fighter"
+  },
+  "ac": 11,
+  "properties": [],
+  "specie": "humanoid",
+  "level": 3,
   "damageBonus": 1,
-  "saveAsClass": 20
+  "speed": 20
 }

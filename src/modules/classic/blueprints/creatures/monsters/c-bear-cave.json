@@ -1,25 +1,30 @@
 {
   "name": "c-bear-cave",
-  "specie": "animal",
-  "naturalArmorClass": 15,
-  "saveAsLevel": "fighter",
-  "level": 7,
   "actions": [
     {
       "name": "claw",
       "count": 2,
       "amp": "1d8",
       "script": "hug",
-      "data": []
+      "data": {
+        "amount": "2d8"
+      }
     },
     {
       "name": "bite",
       "count": 1,
       "amp": "2d6",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "speed": "2d8",
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 7,
+    "classType": "fighter"
+  },
+  "ac": 15,
+  "properties": [],
+  "specie": "animal",
+  "level": 7,
+  "speed": 40
 }

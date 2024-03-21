@@ -1,0 +1,35 @@
+{
+  "name": "c-efreeti",
+  "actions": [
+    {
+      "name": "weapon",
+      "count": 1,
+      "amp": "0",
+      "script": "damage",
+      "data": {}
+    }
+  ],
+  "saveAs": {
+    "level": 15,
+    "classType": "fighter"
+  },
+  "ac": 21,
+  "properties": [
+    {
+      "property": "immunity",
+      "data": {
+        "damageType": "fire"
+      }
+    },
+    {
+      "property": "vulnerability",
+      "data": {
+        "damageType": "cold"
+      }
+    }
+  ],
+  "specie": "elemental",
+  "level": 10,
+  "atkMod": 9,
+  "speed": 30
+}

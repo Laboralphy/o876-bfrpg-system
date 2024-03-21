@@ -1,17 +1,21 @@
 {
   "name": "c-pterodactyl",
-  "specie": "animal",
-  "naturalArmorClass": 12,
-  "saveAsLevel": "fighter",
-  "level": 1,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 60
+  "saveAs": {
+    "level": 1,
+    "classType": "fighter"
+  },
+  "ac": 12,
+  "properties": [],
+  "specie": "animal",
+  "level": 1,
+  "speed": 60
 }

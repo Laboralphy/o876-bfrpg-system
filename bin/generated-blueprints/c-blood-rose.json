@@ -1,31 +1,42 @@
 {
   "name": "c-blood-rose",
-  "specie": "plant",
-  "naturalArmorClass": 13,
-  "saveAsLevel": "fighter",
-  "level": 2,
   "actions": [
     {
       "name": "cane1",
       "count": 1,
       "amp": "1d6",
       "script": "blood-drain",
-      "data": []
+      "data": {}
     },
     {
       "name": "cane2",
       "count": 2,
       "amp": "1d6",
       "script": "blood-drain",
-      "data": []
+      "data": {}
     },
     {
       "name": "cane3",
       "count": 3,
       "amp": "1d6",
       "script": "blood-drain",
-      "data": []
+      "data": {}
+    },
+    {
+      "name": "special",
+      "count": 1,
+      "amp": "0",
+      "script": "calm",
+      "data": {}
     }
   ],
-  "saveAsClass": 1
+  "saveAs": {
+    "level": 2,
+    "classType": "fighter"
+  },
+  "ac": 13,
+  "properties": [],
+  "specie": "plant",
+  "level": 2,
+  "speed": 1
 }

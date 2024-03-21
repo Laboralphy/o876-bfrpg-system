@@ -7,9 +7,9 @@ then
 
   echo "using document : $DOWNLOAD_MONSTER_URL"
   echo downloading data...
-  wget -qO "$SCRIPT_DIR/monsters.csv" "$sURL"
+  curl -L --max-redir 5 "$sURL" --output "$SCRIPT_DIR/monsters.csv"
   mkdir -p "$SCRIPT_DIR"/generated-blueprints
-  sEmptyDir=`ls -A "$SCRIPT_DIR"/generated-blueprints`
+  sEmptyDir=$(ls -A "$SCRIPT_DIR"/generated-blueprints)
   if [ -n "$sEmptyDir" ]
   then
     echo removing previous blueprints...
@@ -22,5 +22,6 @@ then
   echo done.
 else
   echo ".env file not found in project root dir."
-  echo "Please create an .env file with a 'URL_MONSTERS' variable referencing an online csv document containing monster data."
+  echo "Please create an .env file with a 'DOWNLOAD_MONSTER_URL=\"...\"' variable referencing an online csv document containing monster data."
+  echo "(URL should be inside double quotes because characters like '&' or ';' will mess with shell in commands where this variable is used)"
 fi

@@ -1,0 +1,22 @@
+{
+  "name": "c-dog",
+  "actions": [
+    {
+      "name": "bite",
+      "count": 1,
+      "amp": "1d4",
+      "script": "hold",
+      "data": {}
+    }
+  ],
+  "saveAs": {
+    "level": 1,
+    "classType": "fighter"
+  },
+  "ac": 14,
+  "properties": [],
+  "specie": "animal",
+  "level": 1,
+  "hpBonus": 1,
+  "speed": 50
+}

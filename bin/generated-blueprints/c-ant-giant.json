@@ -1,17 +1,21 @@
 {
   "name": "c-ant-giant",
-  "specie": "vermin",
-  "naturalArmorClass": 17,
-  "saveAsLevel": "fighter",
-  "level": 4,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "2d6",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 60
+  "saveAs": {
+    "level": 4,
+    "classType": "fighter"
+  },
+  "ac": 17,
+  "properties": [],
+  "specie": "vermin",
+  "level": 4,
+  "speed": 60
 }

@@ -1,17 +1,21 @@
 {
   "name": "c-pteranodon",
-  "specie": "animal",
-  "naturalArmorClass": 13,
-  "saveAsLevel": "fighter",
-  "level": 5,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "2d6",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 60
+  "saveAs": {
+    "level": 5,
+    "classType": "fighter"
+  },
+  "ac": 13,
+  "properties": [],
+  "specie": "animal",
+  "level": 5,
+  "speed": 60
 }

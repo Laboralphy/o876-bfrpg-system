@@ -1,17 +1,21 @@
 {
   "name": "c-bat",
-  "specie": "animal",
-  "naturalArmorClass": 14,
-  "saveAsLevel": "tourist",
-  "level": 1,
   "actions": [
     {
       "name": "special",
       "count": 1,
       "amp": "0",
       "script": "confusion",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 1,
+    "classType": "tourist"
+  },
+  "ac": 14,
+  "properties": [],
+  "specie": "animal",
+  "level": 1,
+  "speed": 40
 }

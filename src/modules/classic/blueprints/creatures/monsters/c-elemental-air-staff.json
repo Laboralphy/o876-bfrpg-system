@@ -1,0 +1,21 @@
+{
+  "name": "c-elemental-air-staff",
+  "actions": [
+    {
+      "name": "whirlwind",
+      "count": 1,
+      "amp": "1d12",
+      "script": "damage",
+      "data": {}
+    }
+  ],
+  "saveAs": {
+    "level": 8,
+    "classType": "fighter"
+  },
+  "ac": 18,
+  "properties": [],
+  "specie": "elemental",
+  "level": 8,
+  "speed": 120
+}

@@ -1,17 +1,21 @@
 {
   "name": "c-boar",
-  "specie": "animal",
-  "naturalArmorClass": 13,
-  "saveAsLevel": "fighter",
-  "level": 3,
   "actions": [
     {
       "name": "tusk",
       "count": 1,
       "amp": "2d4",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 50
+  "saveAs": {
+    "level": 3,
+    "classType": "fighter"
+  },
+  "ac": 13,
+  "properties": [],
+  "specie": "animal",
+  "level": 3,
+  "speed": 50
 }

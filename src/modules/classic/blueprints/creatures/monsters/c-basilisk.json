@@ -1,24 +1,28 @@
 {
   "name": "c-basilisk",
-  "specie": "monstrosity",
-  "naturalArmorClass": 16,
-  "saveAsLevel": "fighter",
-  "level": 6,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d10",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "gaze",
       "count": 1,
       "amp": 0,
       "script": "petrify",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 20
+  "saveAs": {
+    "level": 6,
+    "classType": "fighter"
+  },
+  "ac": 16,
+  "properties": [],
+  "specie": "monstrosity",
+  "level": 6,
+  "speed": 20
 }

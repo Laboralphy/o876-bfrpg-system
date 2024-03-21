@@ -1,0 +1,22 @@
+{
+  "name": "c-elemental-air-device",
+  "actions": [
+    {
+      "name": "whirlwind",
+      "count": 1,
+      "amp": "2d8",
+      "script": "damage",
+      "data": {}
+    }
+  ],
+  "saveAs": {
+    "level": 12,
+    "classType": "fighter"
+  },
+  "ac": 20,
+  "properties": [],
+  "specie": "elemental",
+  "level": 12,
+  "atkMod": 10,
+  "speed": 120
+}

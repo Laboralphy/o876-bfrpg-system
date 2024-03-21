@@ -1,17 +1,21 @@
 {
   "name": "c-ape-carnivorous",
-  "specie": "humanoid",
-  "naturalArmorClass": 14,
-  "saveAsLevel": "fighter",
-  "level": 4,
   "actions": [
     {
       "name": "claw",
       "count": 2,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 4,
+    "classType": "fighter"
+  },
+  "ac": 14,
+  "properties": [],
+  "specie": "humanoid",
+  "level": 4,
+  "speed": 40
 }

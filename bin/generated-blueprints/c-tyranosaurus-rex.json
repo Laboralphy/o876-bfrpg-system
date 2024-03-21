@@ -1,18 +1,22 @@
 {
   "name": "c-tyranosaurus-rex",
-  "specie": "animal",
-  "naturalArmorClass": 23,
-  "saveAsLevel": "fighter",
-  "level": 18,
-  "hpBonus": 12,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "6d6",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 18,
+    "classType": "fighter"
+  },
+  "ac": 23,
+  "properties": [],
+  "specie": "animal",
+  "level": 18,
+  "atkMod": 12,
+  "speed": 40
 }

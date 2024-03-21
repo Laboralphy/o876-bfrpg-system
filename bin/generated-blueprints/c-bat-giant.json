@@ -1,24 +1,28 @@
 {
   "name": "c-bat-giant",
-  "specie": "animal",
-  "naturalArmorClass": 14,
-  "saveAsLevel": "fighter",
-  "level": 2,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "saveAsClass": 60
+  "saveAs": {
+    "level": 2,
+    "classType": "fighter"
+  },
+  "ac": 14,
+  "properties": [],
+  "specie": "animal",
+  "level": 2,
+  "speed": 60
 }

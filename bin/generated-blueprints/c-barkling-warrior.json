@@ -1,25 +1,28 @@
 {
   "name": "c-barkling-warrior",
-  "specie": "humanoid",
-  "naturalArmorClass": 11,
-  "armorClassBonus": 4,
-  "saveAsLevel": "fighter",
-  "level": 1,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "weapon",
       "count": 1,
       "amp": "0",
-      "script": "damage",
-      "data": []
+      "script": "attack",
+      "data": {}
     }
   ],
-  "saveAsClass": 20
+  "saveAs": {
+    "level": 1,
+    "classType": "fighter"
+  },
+  "ac": 11,
+  "properties": [],
+  "specie": "humanoid",
+  "level": 1,
+  "speed": 20
 }

@@ -1,25 +1,30 @@
 {
   "name": "c-bear-polar",
-  "specie": "animal",
-  "naturalArmorClass": 15,
-  "saveAsLevel": "fighter",
-  "level": 6,
   "actions": [
     {
       "name": "claw",
       "count": 2,
       "amp": "1d6",
       "script": "hug",
-      "data": []
+      "data": {
+        "amount": "2d8"
+      }
     },
     {
       "name": "bite",
       "count": 1,
       "amp": "1d10",
       "script": "damage",
-      "data": []
+      "data": {}
     }
   ],
-  "speed": "2d8",
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 6,
+    "classType": "fighter"
+  },
+  "ac": 15,
+  "properties": [],
+  "specie": "animal",
+  "level": 6,
+  "speed": 40
 }

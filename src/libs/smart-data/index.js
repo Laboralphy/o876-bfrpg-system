@@ -82,6 +82,7 @@ class SmartData {
                         aScripts[i].runInContext(oContext)
                     }
                 } catch (e) {
+                    console.error(e)
                     console.error(aRow)
                     console.error('COLUMN ' + i + ' : ' + value)
                     throw e
@@ -98,9 +99,7 @@ class SmartData {
             throw new Error('no header defined')
         }
         const oScripts = aHeader.reduce((prev, curr, i) => {
-            if (aScripts[i].trim() !== '') {
-                prev[curr] = aScripts[i]
-            }
+            prev[curr] = aScripts[i]
             return prev
         }, {})
         const oCompiledScripts = this.compile(oScripts)

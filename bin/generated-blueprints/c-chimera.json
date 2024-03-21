@@ -1,40 +1,45 @@
 {
   "name": "c-chimera",
-  "specie": "monstrosity",
-  "naturalArmorClass": 16,
-  "saveAsLevel": "fighter",
-  "level": 9,
-  "hpBonus": 8,
   "actions": [
     {
       "name": "claw",
       "count": 2,
       "amp": "1d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "bite",
       "count": 1,
       "amp": "2d4",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "horn",
       "count": 1,
       "amp": "1d8",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
       "name": "breath",
       "count": 1,
       "amp": "3d6",
       "script": "dragon-breath",
-      "data": []
+      "data": {
+        "damageType": "fire"
+      }
     }
   ],
-  "saveAsClass": 40,
-  "speed": "fire"
+  "saveAs": {
+    "level": 9,
+    "classType": "fighter"
+  },
+  "ac": 16,
+  "properties": [],
+  "specie": "monstrosity",
+  "level": 9,
+  "atkMod": 8,
+  "speed": 40
 }

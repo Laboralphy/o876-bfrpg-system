@@ -1,0 +1,22 @@
+{
+  "name": "c-elemental-air-spell",
+  "actions": [
+    {
+      "name": "whirlwind",
+      "count": 1,
+      "amp": "3d6",
+      "script": "damage",
+      "data": {}
+    }
+  ],
+  "saveAs": {
+    "level": 16,
+    "classType": "fighter"
+  },
+  "ac": 22,
+  "properties": [],
+  "specie": "elemental",
+  "level": 16,
+  "atkMod": 12,
+  "speed": 120
+}

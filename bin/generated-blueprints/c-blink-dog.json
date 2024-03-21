@@ -1,24 +1,28 @@
 {
   "name": "c-blink-dog",
-  "specie": "magical-beast",
-  "naturalArmorClass": 15,
-  "saveAsLevel": "fighter",
-  "level": 4,
   "actions": [
     {
       "name": "bite",
       "count": 1,
       "amp": "1d6",
       "script": "damage",
-      "data": []
+      "data": {}
     },
     {
-      "name": "teleport",
+      "name": "special",
       "count": 1,
-      "amp": 0,
-      "script": "damage",
-      "data": []
+      "amp": "0",
+      "script": "teleport",
+      "data": {}
     }
   ],
-  "saveAsClass": 40
+  "saveAs": {
+    "level": 4,
+    "classType": "fighter"
+  },
+  "ac": 15,
+  "properties": [],
+  "specie": "magical-beast",
+  "level": 4,
+  "speed": 40
 }
