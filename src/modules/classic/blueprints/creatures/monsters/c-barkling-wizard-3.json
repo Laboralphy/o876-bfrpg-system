@@ -1,33 +1,36 @@
 {
   "name": "c-barkling-wizard-3",
+  "ac": 11,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d4",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d4"
     },
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
-      "script": "attack",
+      "script": "damage",
       "data": {}
     },
     {
       "name": "spell",
       "count": 1,
-      "amp": "0",
       "script": "spell",
       "data": {}
     }
   ],
   "saveAs": {
     "level": 1,
-    "classType": "magic-user"
+    "classType": "fighter"
   },
-  "ac": 11,
   "properties": [
     {
       "property": "spellcasting",
@@ -36,6 +39,7 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "humanoid",
   "level": 1,
   "speed": 20

@@ -1,20 +1,26 @@
 {
   "name": "c-antelope-3",
+  "ac": 13,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "butt",
       "count": 1,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     }
   ],
   "saveAs": {
     "level": 3,
     "classType": "fighter"
   },
-  "ac": 13,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 3,
   "speed": 80

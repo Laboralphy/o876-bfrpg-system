@@ -1,26 +1,31 @@
 {
   "name": "c-beettle-bombardier",
+  "ac": 16,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "spray",
       "count": 1,
-      "amp": "2d6",
       "script": "toxic-blast",
-      "data": {}
+      "data": {},
+      "amp": "2d6"
     }
   ],
   "saveAs": {
     "level": 2,
     "classType": "fighter"
   },
-  "ac": 16,
   "properties": [
     {
       "property": "immunity",
@@ -29,6 +34,7 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "vermin",
   "level": 2,
   "speed": 40

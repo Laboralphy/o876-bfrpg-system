@@ -1,21 +1,26 @@
 {
   "name": "c-elemental-ice-staff",
+  "ac": 18,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
-      "name": "special",
+      "name": "fist",
       "count": 1,
-      "amp": "1d12",
       "script": "damage",
       "data": {
         "damageType": "cold"
-      }
+      },
+      "amp": "1d12"
     }
   ],
   "saveAs": {
     "level": 8,
     "classType": "fighter"
   },
-  "ac": 18,
   "properties": [
     {
       "property": "damage-aura",
@@ -37,6 +42,7 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "elemental",
   "level": 8,
   "speed": 40

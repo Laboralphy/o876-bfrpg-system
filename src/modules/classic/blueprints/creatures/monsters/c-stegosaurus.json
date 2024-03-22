@@ -1,36 +1,41 @@
 {
   "name": "c-stegosaurus",
+  "ac": 17,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 9
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "tail",
       "count": 1,
-      "amp": "2d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d8"
     },
     {
       "name": "trample",
       "count": 1,
-      "amp": "2d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d8"
     }
   ],
   "saveAs": {
     "level": 6,
     "classType": "fighter"
   },
-  "ac": 17,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 11,
-  "atkMod": 9,
   "speed": 20
 }

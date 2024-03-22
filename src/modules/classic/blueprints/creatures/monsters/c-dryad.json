@@ -1,24 +1,28 @@
 {
   "name": "c-dryad",
+  "ac": 15,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "first",
       "count": 1,
-      "amp": "1d4",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d4"
     },
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
-      "script": "attack",
+      "script": "damage",
       "data": {}
     },
     {
       "name": "special",
       "count": 1,
-      "amp": "0",
       "script": "calm",
       "data": {}
     }
@@ -27,8 +31,10 @@
     "level": 4,
     "classType": "magic-user"
   },
-  "ac": 15,
   "properties": [],
+  "equipment": [
+    "wpn-dagger"
+  ],
   "specie": "fey",
   "level": 2,
   "speed": 40

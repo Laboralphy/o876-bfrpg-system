@@ -1,24 +1,29 @@
 {
   "name": "c-deceiver-greater",
+  "ac": 16,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 2,
-      "amp": "1d6",
       "script": "poison",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "bite",
       "count": 1,
-      "amp": "2d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d6"
     },
     {
       "name": "special",
       "count": 1,
-      "amp": "0",
       "script": "decoy",
       "data": {}
     }
@@ -27,8 +32,8 @@
     "level": 16,
     "classType": "fighter"
   },
-  "ac": 16,
   "properties": [],
+  "equipment": [],
   "specie": "monstrosity",
   "level": 16,
   "speed": 40

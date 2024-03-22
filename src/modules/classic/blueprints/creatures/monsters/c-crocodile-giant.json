@@ -1,22 +1,27 @@
 {
   "name": "c-crocodile-giant",
+  "ac": 19,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 11
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "3d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "3d8"
     }
   ],
   "saveAs": {
     "level": 15,
     "classType": "fighter"
   },
-  "ac": 19,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 15,
-  "atkMod": 11,
   "speed": 30
 }

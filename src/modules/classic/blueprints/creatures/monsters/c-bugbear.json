@@ -1,18 +1,23 @@
 {
   "name": "c-bugbear",
+  "ac": 13,
+  "modifiers": {
+    "hp": 1,
+    "damage": 1,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "unarmed",
       "count": 1,
-      "amp": "1d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d8"
     },
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
-      "script": "attack",
+      "script": "damage",
       "data": {}
     }
   ],
@@ -20,11 +25,11 @@
     "level": 3,
     "classType": "fighter"
   },
-  "ac": 13,
   "properties": [],
+  "equipment": [
+    "arm-leather"
+  ],
   "specie": "humanoid",
   "level": 3,
-  "hpBonus": 1,
-  "damageBonus": 1,
   "speed": 30
 }

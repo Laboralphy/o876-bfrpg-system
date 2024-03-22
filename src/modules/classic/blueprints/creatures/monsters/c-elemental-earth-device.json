@@ -1,24 +1,29 @@
 {
   "name": "c-elemental-earth-device",
+  "ac": 20,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 10
+  },
   "actions": [
     {
-      "name": "special",
+      "name": "fist",
       "count": 1,
-      "amp": "2d8",
       "script": "tremor-punch",
       "data": {
         "amount": "1d8"
-      }
+      },
+      "amp": "2d8"
     }
   ],
   "saveAs": {
     "level": 12,
     "classType": "fighter"
   },
-  "ac": 20,
   "properties": [],
+  "equipment": [],
   "specie": "elemental",
   "level": 12,
-  "atkMod": 10,
   "speed": 20
 }

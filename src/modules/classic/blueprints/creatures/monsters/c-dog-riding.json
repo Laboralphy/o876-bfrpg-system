@@ -1,22 +1,27 @@
 {
   "name": "c-dog-riding",
+  "ac": 14,
+  "modifiers": {
+    "hp": 0,
+    "damage": 1,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d4",
       "script": "hold",
-      "data": {}
+      "data": {},
+      "amp": "1d4"
     }
   ],
   "saveAs": {
     "level": 2,
     "classType": "fighter"
   },
-  "ac": 14,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 2,
-  "damageBonus": 1,
   "speed": 50
 }

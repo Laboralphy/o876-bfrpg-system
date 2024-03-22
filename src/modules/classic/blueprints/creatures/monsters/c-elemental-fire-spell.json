@@ -1,19 +1,24 @@
 {
   "name": "c-elemental-fire-spell",
+  "ac": 22,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 12
+  },
   "actions": [
     {
       "name": "special",
       "count": 1,
-      "amp": "3d6",
       "script": "flame-thrower",
-      "data": {}
+      "data": {},
+      "amp": "3d6"
     }
   ],
   "saveAs": {
     "level": 16,
     "classType": "fighter"
   },
-  "ac": 22,
   "properties": [
     {
       "property": "immunity",
@@ -34,8 +39,8 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "elemental",
   "level": 16,
-  "atkMod": 12,
   "speed": 40
 }

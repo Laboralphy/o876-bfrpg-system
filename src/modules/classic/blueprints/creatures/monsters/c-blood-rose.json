@@ -1,31 +1,36 @@
 {
   "name": "c-blood-rose",
+  "ac": 13,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "cane1",
       "count": 1,
-      "amp": "1d6",
-      "script": "blood-drain",
-      "data": {}
+      "script": "vampyre",
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "cane2",
       "count": 2,
-      "amp": "1d6",
       "script": "blood-drain",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "cane3",
       "count": 3,
-      "amp": "1d6",
-      "script": "blood-drain",
-      "data": {}
+      "script": "vampyre",
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "special",
       "count": 1,
-      "amp": "0",
       "script": "calm",
       "data": {}
     }
@@ -34,8 +39,8 @@
     "level": 2,
     "classType": "fighter"
   },
-  "ac": 13,
   "properties": [],
+  "equipment": [],
   "specie": "plant",
   "level": 2,
   "speed": 1

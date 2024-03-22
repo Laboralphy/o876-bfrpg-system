@@ -1,10 +1,15 @@
 {
   "name": "c-efreeti",
+  "ac": 21,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 9
+  },
   "actions": [
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
       "script": "damage",
       "data": {}
     }
@@ -13,7 +18,6 @@
     "level": 15,
     "classType": "fighter"
   },
-  "ac": 21,
   "properties": [
     {
       "property": "immunity",
@@ -28,8 +32,10 @@
       }
     }
   ],
+  "equipment": [
+    "wpn-great-sword"
+  ],
   "specie": "elemental",
   "level": 10,
-  "atkMod": 9,
   "speed": 30
 }

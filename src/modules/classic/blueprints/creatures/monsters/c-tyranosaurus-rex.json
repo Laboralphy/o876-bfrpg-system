@@ -1,22 +1,27 @@
 {
   "name": "c-tyranosaurus-rex",
+  "ac": 23,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 12
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "6d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "6d6"
     }
   ],
   "saveAs": {
     "level": 18,
     "classType": "fighter"
   },
-  "ac": 23,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 18,
-  "atkMod": 12,
   "speed": 40
 }

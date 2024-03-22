@@ -1,6 +1,6 @@
 {
-  "name": "c-cheetah",
-  "ac": 14,
+  "name": "c-ghast",
+  "ac": 15,
   "modifiers": {
     "hp": 0,
     "damage": 0,
@@ -10,16 +10,22 @@
     {
       "name": "claw",
       "count": 2,
-      "script": "damage",
+      "script": "paralysis",
       "data": {},
       "amp": "1d4"
     },
     {
       "name": "bite",
       "count": 1,
-      "script": "damage",
+      "script": "paralysis",
       "data": {},
-      "amp": "2d4"
+      "amp": "1d4"
+    },
+    {
+      "name": "stench",
+      "count": 1,
+      "script": "ghast-stench",
+      "data": {}
     }
   ],
   "saveAs": {
@@ -28,7 +34,6 @@
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
-  "level": 2,
-  "speed": 100
+  "specie": "undead",
+  "level": 2
 }

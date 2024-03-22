@@ -1,24 +1,29 @@
 {
   "name": "c-djinni",
+  "ac": 15,
+  "modifiers": {
+    "hp": 1,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "fist",
       "count": 1,
-      "amp": "2d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d8"
     },
     {
       "name": "whirlind",
       "count": 1,
-      "amp": "2d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d6"
     },
     {
       "name": "special",
       "count": 1,
-      "amp": "0",
       "script": "gazeous-form",
       "data": {}
     }
@@ -27,10 +32,9 @@
     "level": 12,
     "classType": "fighter"
   },
-  "ac": 15,
   "properties": [],
+  "equipment": [],
   "specie": "elemental",
   "level": 7,
-  "hpBonus": 1,
   "speed": 30
 }

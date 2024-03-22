@@ -1,42 +1,47 @@
 {
   "name": "c-dragon",
+  "ac": 21,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 9
+  },
   "actions": [
     {
       "name": "claw",
       "count": 2,
-      "amp": "1d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d8"
     },
     {
       "name": "bite",
       "count": 1,
-      "amp": "4d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "4d8"
     },
     {
       "name": "tail",
       "count": 1,
-      "amp": "1d8",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d8"
     },
     {
       "name": "breath",
       "count": 1,
-      "amp": "4d8",
       "script": "dragon-breath",
       "data": {
         "damageType": "fire"
-      }
+      },
+      "amp": "4d8"
     }
   ],
   "saveAs": {
     "level": 10,
     "classType": "fighter"
   },
-  "ac": 21,
   "properties": [
     {
       "property": "immunity",
@@ -51,8 +56,8 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "dragon",
   "level": 10,
-  "atkMod": 9,
   "speed": 30
 }

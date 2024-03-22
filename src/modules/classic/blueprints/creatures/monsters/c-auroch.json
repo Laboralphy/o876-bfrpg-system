@@ -1,27 +1,33 @@
 {
   "name": "c-auroch",
+  "ac": 16,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "horn",
       "count": 1,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "trample",
       "count": 1,
-      "amp": "2d4",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d4"
     }
   ],
   "saveAs": {
     "level": 3,
     "classType": "fighter"
   },
-  "ac": 16,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 3,
   "speed": 50

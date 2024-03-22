@@ -1,20 +1,26 @@
 {
   "name": "c-bee-giant",
+  "ac": 13,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "sting",
       "count": 1,
-      "amp": "1d4",
       "script": "poison",
-      "data": {}
+      "data": {},
+      "amp": "1d4"
     }
   ],
   "saveAs": {
     "level": 1,
     "classType": "tourist"
   },
-  "ac": 13,
   "properties": [],
+  "equipment": [],
   "specie": "vermin",
   "level": 1,
   "speed": 50

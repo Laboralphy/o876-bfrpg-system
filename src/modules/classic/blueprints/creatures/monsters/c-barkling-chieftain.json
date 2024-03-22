@@ -1,18 +1,23 @@
 {
   "name": "c-barkling-chieftain",
+  "ac": 11,
+  "modifiers": {
+    "hp": 0,
+    "damage": 1,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d4",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d4"
     },
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
-      "script": "attack",
+      "script": "damage",
       "data": {}
     }
   ],
@@ -20,10 +25,11 @@
     "level": 2,
     "classType": "fighter"
   },
-  "ac": 11,
   "properties": [],
+  "equipment": [
+    "arm-chain-mail"
+  ],
   "specie": "humanoid",
   "level": 2,
-  "damageBonus": 1,
   "speed": 20
 }

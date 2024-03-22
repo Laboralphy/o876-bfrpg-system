@@ -1,19 +1,24 @@
 {
   "name": "c-beetle-oil",
+  "ac": 16,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "bite",
       "count": 1,
-      "amp": "2d4",
       "script": "irritating-oil",
-      "data": {}
+      "data": {},
+      "amp": "2d4"
     }
   ],
   "saveAs": {
     "level": 2,
     "classType": "fighter"
   },
-  "ac": 16,
   "properties": [
     {
       "property": "immunity",
@@ -22,6 +27,7 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "vermin",
   "level": 2,
   "speed": 40

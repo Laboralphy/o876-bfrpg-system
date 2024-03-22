@@ -1,18 +1,23 @@
 {
   "name": "c-centaur",
+  "ac": 13,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "hoove",
       "count": 2,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     },
     {
       "name": "weapon",
       "count": 1,
-      "amp": "0",
-      "script": "attack",
+      "script": "damage",
       "data": {}
     }
   ],
@@ -20,8 +25,10 @@
     "level": 4,
     "classType": "fighter"
   },
-  "ac": 13,
   "properties": [],
+  "equipment": [
+    "arm-leather"
+  ],
   "specie": "magical-beast",
   "level": 4,
   "speed": 50

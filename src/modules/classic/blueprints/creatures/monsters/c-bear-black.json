@@ -1,29 +1,35 @@
 {
   "name": "c-bear-black",
+  "ac": 14,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "claw",
       "count": 2,
-      "amp": "1d4",
       "script": "hug",
       "data": {
         "amount": "2d6"
-      }
+      },
+      "amp": "1d4"
     },
     {
       "name": "bite",
       "count": 1,
-      "amp": "1d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "1d6"
     }
   ],
   "saveAs": {
     "level": 4,
     "classType": "fighter"
   },
-  "ac": 14,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 4,
   "speed": 40

@@ -1,19 +1,24 @@
 {
   "name": "c-elemental-fire-staff",
+  "ac": 18,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "special",
       "count": 1,
-      "amp": "1d12",
       "script": "flame-thrower",
-      "data": {}
+      "data": {},
+      "amp": "1d12"
     }
   ],
   "saveAs": {
     "level": 8,
     "classType": "fighter"
   },
-  "ac": 18,
   "properties": [
     {
       "property": "immunity",
@@ -34,6 +39,7 @@
       }
     }
   ],
+  "equipment": [],
   "specie": "elemental",
   "level": 8,
   "speed": 40

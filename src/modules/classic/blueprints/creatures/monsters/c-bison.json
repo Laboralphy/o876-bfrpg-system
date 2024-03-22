@@ -1,27 +1,33 @@
 {
   "name": "c-bison",
+  "ac": 16,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "horn",
       "count": 1,
-      "amp": "2d4",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d4"
     },
     {
       "name": "trample",
       "count": 1,
-      "amp": "2d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "2d6"
     }
   ],
   "saveAs": {
     "level": 4,
     "classType": "fighter"
   },
-  "ac": 16,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 4,
   "speed": 50

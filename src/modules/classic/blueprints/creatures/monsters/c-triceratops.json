@@ -1,29 +1,34 @@
 {
   "name": "c-triceratops",
+  "ac": 19,
+  "modifiers": {
+    "hp": 0,
+    "damage": 0,
+    "attack": 9
+  },
   "actions": [
     {
       "name": "gore",
       "count": 1,
-      "amp": "3d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "3d6"
     },
     {
       "name": "trample",
       "count": 1,
-      "amp": "3d6",
       "script": "damage",
-      "data": {}
+      "data": {},
+      "amp": "3d6"
     }
   ],
   "saveAs": {
     "level": 7,
     "classType": "fighter"
   },
-  "ac": 19,
   "properties": [],
+  "equipment": [],
   "specie": "animal",
   "level": 11,
-  "atkMod": 9,
   "speed": 30
 }
