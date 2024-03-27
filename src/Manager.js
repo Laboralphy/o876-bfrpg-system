@@ -1,14 +1,17 @@
 const Horde = require("./Horde");
 const Creature = require("./Creature");
-const ItemProperties = require('./ItemProperties')
+const EffectProcessor = require("./EffectProcessor");
+const ItemBuilder = require("./ItemBuilder");
+const SchemaValidator = require('./SchemaValidator')
+
+const EFFECTS = require('./effects')
+const DATA = require('./data')
+const CONSTS = require('./consts')
+
+const { getId } = require('./unique-id')
+
 require('./store/getters.doc')
 require('./store/mutations.doc')
-const EffectProcessor = require("./EffectProcessor");
-const EFFECTS = require('./effects')
-const CONSTS = require('./consts')
-const DATA = require('./data')
-const ItemBuilder = require("./ItemBuilder");
-const { getId } = require('./unique-id')
 
 /**
  * @typedef BFItem {object}
@@ -47,7 +50,14 @@ class Manager {
         this._effectOptimRegistry = {}
         this._data = Object.assign({}, DATA)
         this._blueprints = {}
+        this._validBlueprints = {}
         this._itemBuilder = ib
+        this._schemaValidator = null
+    }
+
+    async init () {
+        this._schemaValidator = new SchemaValidator()
+        await this._schemaValidator.init()
     }
 
     /**
@@ -59,10 +69,6 @@ class Manager {
 
     get data () {
         return this._data
-    }
-
-    get blueprints () {
-        return this._blueprints
     }
 
     /**
@@ -83,7 +89,52 @@ class Manager {
     }
 
     /**
-     * Create a new creatures
+     *
+     * @param sRef {string|object}
+     * @returns {object}
+     */
+    getBlueprint (sRef) {
+        const sType = typeof sRef
+        if (sType === 'object') {
+            this._schemaValidator.validate(sRef, 'blueprint-item')
+            this._validBlueprints[sRef] = sRef
+            return sRef
+        }
+        if (typeof sRef !== 'string') {
+            throw new TypeError('reference must be a string')
+        }
+        if (sRef in this._validBlueprints) {
+            return this._validBlueprints[sRef]
+        }
+        if (sRef in this._blueprints) {
+            const bp = this._blueprints[sRef]
+            if (!this._schemaValidator) {
+                throw new Error('schema validator has not been initialized (did you forgot to call Manager.init() ?)')
+            }
+            switch (bp.entityType) {
+                case CONSTS.ENTITY_TYPE_ITEM: {
+                    this._schemaValidator.validate(bp, 'blueprint-item')
+                    break
+                }
+
+                case CONSTS.ENTITY_TYPE_ACTOR: {
+                    this._schemaValidator.validate(bp, 'blueprint-actor')
+                    break
+                }
+
+                default: {
+                    throw new Error('this entity type is invalid : "' + bp.entityType + '"')
+                }
+            }
+            this._validBlueprints[sRef] = bp
+            return bp
+        } else {
+            throw new Error('this reference "' + sRef + '" is not in blueprint collection')
+        }
+    }
+
+    /**
+     * Create a new creature
      * @param id {string}
      * @returns {Creature}
      */
@@ -98,7 +149,7 @@ class Manager {
         const ib = this._itemBuilder
         const sTypeOfRef = typeof ref
         const oBlueprint = sTypeOfRef === 'string'
-            ? this._blueprints[ref]
+            ? this.getBlueprint(ref)
             : sTypeOfRef === 'object'
                 ? ref
                 : null

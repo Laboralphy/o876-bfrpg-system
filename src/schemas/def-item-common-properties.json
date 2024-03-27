@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "required": [
+    "entityType",
+    "itemType",
+    "properties"
+  ],
+  "properties": {
+    "entityType": {
+      "type": "string",
+      "const": "ENTITY_TYPE_ITEM"
+    },
+    "itemType": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "array"
+    },
+    "identified": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

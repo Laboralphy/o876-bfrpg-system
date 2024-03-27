@@ -15,7 +15,7 @@
       "amp": "2d8"
     },
     {
-      "name": "whirlind",
+      "name": "whirlwind",
       "count": 1,
       "script": "damage",
       "data": {},

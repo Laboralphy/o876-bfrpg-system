@@ -1,6 +1,6 @@
 const path = require('node:path')
 const fs = require('node:fs')
-const TreeSync = require('../src/libs/tree-sync')
+const TreeSync = require('../src/libs/o876-xtree/sync')
 
 function getLastReturnTagOfFile (sFile) {
     const regType = /@returns? +(.*)$/

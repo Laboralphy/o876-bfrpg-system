@@ -40,8 +40,9 @@ describe('Data', function () {
 })
 
 describe('createItem', function () {
-    it('should create a dagger with id', function () {
+    it('should create a dagger with id', async function () {
         const m = new Manager()
+        await m.init()
         m.loadModule('classic')
         const oDagger = m.createItem({ id: 'dag1', ref: 'wpn-dagger' })
         expect(oDagger.id).toBe('dag1')

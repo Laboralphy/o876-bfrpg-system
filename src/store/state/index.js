@@ -25,7 +25,7 @@ module.exports = () => ({
         [CONSTS.ABILITY_WISDOM]: 10,
         [CONSTS.ABILITY_CHARISMA]: 10,
     },
-    classType: 'CLASS_TYPE_FIGHTER',
+    classType: 'CLASS_TYPE_TOURIST',
     specie: 'SPECIE_HUMANOID',
     race: 'RACE_HUMAN',
     naturalArmorClass: 10,

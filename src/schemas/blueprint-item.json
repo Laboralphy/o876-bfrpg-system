@@ -1,0 +1,69 @@
+{
+  "description": "Définition des items",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./def-item-common-properties"
+    },
+    {
+      "if": {
+        "properties": {
+          "itemType": {
+            "const": "ITEM_TYPE_WEAPON"
+          }
+        }
+      },
+      "then": {
+        "$ref": "./def-item-type-weapon"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "itemType": {
+            "const": "ITEM_TYPE_NATURAL_WEAPON"
+          }
+        }
+      },
+      "then": {
+        "$ref": "./def-item-type-natural-weapon"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "itemType": {
+            "const": "ITEM_TYPE_ARMOR"
+          }
+        }
+      },
+      "then": {
+        "$ref": "./def-item-type-armor"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "itemType": {
+            "const": "ITEM_TYPE_SHIELD"
+          }
+        }
+      },
+      "then": {
+        "$ref": "./def-item-type-shield"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "itemType": {
+            "const": "ITEM_TYPE_AMMO"
+          }
+        }
+      },
+      "then": {
+        "$ref": "./def-item-type-ammo"
+      }
+    }
+  ]
+}

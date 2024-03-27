@@ -1,0 +1,11 @@
+{
+  "description": "Amplitude de l'effet. Si l'amplitude est une chaine, elle correspond à un nom de getter, ce getter sera interrogé chaque fois que l'on souhaite obtenir la valeur de l'amplitude de l'effet.",
+  "oneOf": [
+    {
+      "type": "number"
+    },
+    {
+      "type": "string"
+    }
+  ]
+}

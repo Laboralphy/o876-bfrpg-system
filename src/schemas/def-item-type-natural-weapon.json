@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": [
+    "damage",
+    "damageType"
+  ],
+  "properties": {
+    "damage": {
+      "type": "string"
+    },
+    "damageType": {
+      "type": "string",
+      "pattern": "^DAMAGE_TYPE_"
+    },
+    "attributes": {
+      "$ref": "./def-weapon-attributes"
+    }
+  }
+}

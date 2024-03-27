@@ -2,7 +2,6 @@ const ItemProperties = require("./ItemProperties");
 const CONSTS = require("./consts");
 
 class ItemBuilder {
-
     /**
      * Combine blueprint data and item type data
      * @param oBlueprint

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "required": [
+    "armorType"
+  ],
+  "properties": {
+    "armorType": {
+      "type": "string",
+      "pattern": "^ARMOR_TYPE_"
+    },
+    "material": {
+      "type": "string",
+      "pattern": "^MATERIAL_"
+    }
+  }
+}

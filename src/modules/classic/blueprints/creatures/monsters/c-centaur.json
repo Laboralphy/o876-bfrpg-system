@@ -27,7 +27,10 @@
   },
   "properties": [],
   "equipment": [
-    "arm-leather"
+    "arm-leather",
+    "wpn-spear",
+    "wpn-longbow",
+    "ammo-arrow"
   ],
   "specie": "magical-beast",
   "level": 4,

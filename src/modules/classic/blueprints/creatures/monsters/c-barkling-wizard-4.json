@@ -23,7 +23,7 @@
     {
       "name": "spell",
       "count": 1,
-      "script": "spell",
+      "script": "damage",
       "data": {}
     }
   ],

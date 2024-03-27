@@ -8,7 +8,7 @@ describe('test1', function () {
             c2: 'c.age=value|0'
         })
         const oContext = s.createContext()
-        s.run(['ifrit', 10000], aCodes, oContext)
+        s.runRow(['ifrit', 10000], aCodes, oContext)
         expect(oContext.c).toEqual({
             name: 'ifrit',
             age: 10000
@@ -19,7 +19,7 @@ describe('test1', function () {
         const s = new SmartData()
         const o = s.run([
             ['name', 'actions', 'param', 'value'],
-            ['output(); c={ actions: [], name: value }', 'c.actions.push({ opcode: value, data: {} })', '', 'kv(last(c.actions).data)'],
+            ['c={ actions: [], name: value }', 'c.actions.push({ opcode: value, data: {} })', '', 'kv(last(c.actions).data)'],
             ['', '', '', ''],
             ['atk', 'damage',   'type', 'fire'],
             [   '',       '', 'amount', '3d6']

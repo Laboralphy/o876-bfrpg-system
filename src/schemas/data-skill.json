@@ -1,0 +1,36 @@
+{
+  "description": "Définition d'une compétence.",
+  "type": "object",
+  "required": [
+    "description",
+    "ability",
+    "getters"
+  ],
+  "allowAdditionalProperties": false,
+  "properties": {
+    "description": {
+      "description": "Description de la compétence, de ses cas d'utilisation",
+      "type": "string"
+    },
+    "ability": {
+      "description": "caractéristique associée à la compétence",
+      "type": "string",
+      "pattern": "^ABILITY_"
+    },
+    "getters": {
+      "description": "reference des getters associés à la compétence",
+      "type": "object",
+      "allowAdditionalProperties": false,
+      "properties": {
+        "advantages": {
+          "type": "string",
+          "description": "référence du getters permettant d'obtenir l'avantage de la compétence"
+        },
+        "disadvantages": {
+          "type": "string",
+          "description": "référence du getters permettant d'obtenir le désavantage de la compétence"
+        }
+      }
+    }
+  }
+}

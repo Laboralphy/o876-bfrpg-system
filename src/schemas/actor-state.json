@@ -1,0 +1,177 @@
+{
+  "description": "Structure import/export d'une creature",
+  "type": "object",
+  "allowAdditionalProperties": false,
+  "required": [
+    "id",
+    "ref",
+    "name",
+    "abilities",
+    "alignment",
+    "specie",
+    "size",
+    "offensiveSlot",
+    "proficiencies",
+    "speed",
+    "effects",
+    "classes",
+    "gauges",
+    "recentDamageTypes",
+    "feats",
+    "equipment",
+    "encumbrance",
+    "counters"
+  ],
+  "properties": {
+    "id": {
+      "description": "Identifiant",
+      "type": "string"
+    },
+    "ref": {
+      "description": "Reference du blueprint utilisé pour concevoir la créature",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom éventuel de la créature",
+      "type": "string"
+    },
+    "abilities": {
+      "description": "Liste des caractéristique de la créature",
+      "type": "object",
+      "patternProperties": {
+        "^ABILITY_": {
+          "type": "number"
+        }
+      },
+      "allowAdditionalProperties": "false"
+    },
+    "alignment": {
+      "description": "alignement (loyal/neutre ; chaotique bon; etc...)",
+      "type": "object",
+      "required": ["morality", "entropy"],
+      "properties": {
+        "morality": {
+          "description": "moralité bien/mal entre -1 (mal) et +1 (bien) en passant par 0 (neutre)",
+          "type": "number"
+        },
+        "entropy": {
+          "description": "entropie loyal/chaos entre -1 (loyal) et +1 (chaotique) en passant par 0 (neutre)",
+          "type": "number"
+        }
+      },
+      "allowAdditionalProperties": "false"
+    },
+    "specie": {
+      "description": "Espèce à laquelle appartient la créature",
+      "type": "string",
+      "pattern": "^SPECIE_"
+    },
+    "size": {
+      "description": "Catégorie de taille de la créature",
+      "type": "string",
+      "pattern": "^CREATURE_SIZE_"
+    },
+    "offensiveSlot": {
+      "description": "Slot offensif actuellement sélectionné",
+      "type": "string",
+      "pattern": "^EQUIPMENT_SLOT_"
+    },
+    "proficiencies": {
+      "description": "Liste des proficiencies",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "speed": {
+      "description": "vitesse",
+      "type": "number"
+    },
+    "effects": {
+      "description": "Liste des effets",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "levels"
+        ],
+        "allowAdditionalProperties": false,
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "levels": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "gauge": {
+      "descriptions": "differentes jauges",
+      "type": "object",
+      "required": ["damage"],
+      "properties": {
+        "damage": {
+          "type": "number"
+        }
+      },
+      "allowAdditionalProperties": "false"
+    },
+    "recentDamageTypes": {
+      "description": "liste des différent type de dégâts recus récement",
+      "type": "object"
+    },
+    "feats": {
+      "description": "Liste des feats débloqués",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "equipment": {
+      "type": "object",
+      "patternProperties": {
+        "^EQUIPMENT_SLOT": {
+          "anyOf": [
+            {
+              "const": null
+            },
+            {
+              "type": "object"
+            }
+          ]
+        },
+        "allowAdditionalProperties": "false"
+      }
+    },
+    "encumbrance": {
+      "description": "Encombrement de la créature",
+      "type": "number"
+    },
+    "counters": {
+      "description": "liste de compteurs numériques",
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }
+}

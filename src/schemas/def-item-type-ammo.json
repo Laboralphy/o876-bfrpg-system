@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "required": [
+    "ammoType"
+  ],
+  "properties": {
+    "ammoType": {
+      "type": "string",
+      "pattern": "^AMMO_TYPE"
+    },
+    "material": {
+      "type": "string",
+      "pattern": "^MATERIAL_"
+    }
+  }
+}

@@ -8,7 +8,7 @@
   },
   "actions": [
     {
-      "name": "first",
+      "name": "fist",
       "count": 1,
       "script": "damage",
       "data": {},

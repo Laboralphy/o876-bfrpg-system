@@ -13,7 +13,7 @@ describe('apply-effect', function () {
         oHorde.creatures[oCreature.id] = oCreature
         const effectProcessor = new EffectProcessor()
         effectProcessor.effectPrograms = EFFECTS
-        expect(oCreature.getters.getMaxHitPoints).toBe(5)
+        expect(oCreature.getters.getMaxHitPoints).toBe(4)
         expect(oCreature.getters.getHitPoints).toBe(1)
         const eHeal = effectProcessor.createEffect(CONSTS.EFFECT_HEAL, 2)
         effectProcessor.applyEffect(eHeal, oCreature, 0)

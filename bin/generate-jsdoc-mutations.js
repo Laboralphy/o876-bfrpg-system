@@ -1,6 +1,6 @@
 const path = require('node:path')
 const fs = require('node:fs')
-const TreeSync = require('../src/libs/tree-sync')
+const TreeSync = require('../src/libs/o876-xtree/sync')
 
 const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
@@ -12,7 +12,7 @@ function getAllParams (sFile) {
         .filter(s => s.includes('@param') || s.includes('@return'))
     const nToDelete = aParams.findLastIndex(s => s.includes('state {BFStoreState}') || s.includes('getters {BFStoreGetters}') || s.includes('externals'))
     if (nToDelete < 0) {
-        throw new Error('Need tag @param state {BFStoreState} || getters {BFStoreGetters} || externals')
+        throw new Error('Need tag @param state {BFStoreState} || getters {BFStoreGetters} || externals in file ' + sFile)
     }
     const p = aParams
         .slice(nToDelete + 1)

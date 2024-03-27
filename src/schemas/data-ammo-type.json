@@ -1,0 +1,21 @@
+{
+  "description": "Définition des données concernant le type de munition",
+  "type": "object",
+  "required": [
+    "weight"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^EQUIPMENT_SLOT_"
+      }
+    }
+  }
+}

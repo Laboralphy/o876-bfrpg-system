@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "required": [
+    "shieldType"
+  ],
+  "properties": {
+    "shieldType": {
+      "type": "string",
+      "pattern": "^SHIELD_TYPE_"
+    },
+    "material": {
+      "type": "string",
+      "pattern": "^MATERIAL_"
+    }
+  }
+}

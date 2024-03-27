@@ -1,0 +1,41 @@
+{
+  "description": "Définition des données concernant le type d'armure",
+  "type": "object",
+  "required": [
+    "proficiency",
+    "ac",
+    "weight"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "proficiency": {
+      "oneOf": [
+        {
+          "$ref": "const-empty-string"
+        },
+        {
+          "type": "string",
+          "pattern": "^PROFICIENCY_SHIELD$"
+        },
+        {
+          "type": "string",
+          "pattern": "^PROFICIENCY_SHIELD_"
+        }
+      ]
+    },
+    "ac": {
+      "type": "number"
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^EQUIPMENT_SLOT_"
+      }
+    }
+  }
+}

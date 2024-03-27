@@ -1,0 +1,70 @@
+{
+  "description": "Définition des données concernant le type d'arme",
+  "type": "object",
+  "required": [
+    "proficiency",
+    "damage",
+    "versatileDamage",
+    "damageType",
+    "weight",
+    "attributes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "proficiency": {
+      "oneOf": [
+        {
+          "$ref": "const-empty-string"
+        },
+        {
+          "type": "string",
+          "pattern": "^PROFICIENCY_WEAPON_"
+        }
+      ]
+    },
+    "damage": {
+      "type": "string"
+    },
+    "versatileDamage": {
+      "type": "string"
+    },
+    "damageType": {
+      "type": "string",
+      "pattern": "^DAMAGE_TYPE_"
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    },
+    "ammo": {
+      "oneOf": [
+        {
+          "const": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "pattern": "^ammo-type-"
+            },
+            "count": {
+              "type": "number",
+              "minimum": "0"
+            }
+          }
+        }
+      ]
+    },
+    "attributes": {
+      "$ref": "def-weapon-attributes"
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^EQUIPMENT_SLOT_"
+      }
+    }
+  }
+}

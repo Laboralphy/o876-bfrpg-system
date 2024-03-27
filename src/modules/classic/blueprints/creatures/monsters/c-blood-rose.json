@@ -8,21 +8,21 @@
   },
   "actions": [
     {
-      "name": "cane1",
+      "name": "cane",
       "count": 1,
       "script": "vampyre",
       "data": {},
       "amp": "1d6"
     },
     {
-      "name": "cane2",
+      "name": "cane",
       "count": 2,
       "script": "blood-drain",
       "data": {},
       "amp": "1d6"
     },
     {
-      "name": "cane3",
+      "name": "cane",
       "count": 3,
       "script": "vampyre",
       "data": {},

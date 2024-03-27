@@ -64,6 +64,7 @@ class SmartData {
         oContext.kv = kv
         oContext.output = output
         oContext.last = last
+        oContext.c = {}
 
         return vm.createContext(oContext)
     }

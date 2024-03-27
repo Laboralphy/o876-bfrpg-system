@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "theses templates are used to define optimal archetypes for automatique evolution",
+      "type": "string"
+    },
+    "abilities": {
+      "description": "Abilities initial values",
+      "type": "object",
+      "properties": {
+        "ABILITY_STRENGTH": {
+          "type": "number"
+        },
+        "ABILITY_DEXTERITY": {
+          "type": "number"
+        },
+        "ABILITY_CONSTITUTION": {
+          "type": "number"
+        },
+        "ABILITY_INTELLIGENCE": {
+          "type": "number"
+        },
+        "ABILITY_WISDOM": {
+          "type": "number"
+        },
+        "ABILITY_CHARISMA": {
+          "type": "number"
+        }
+      }
+    },
+    "class": {
+      "description": "base class of this template",
+      "type": "string"
+    },
+    "multiclass": {
+      "type": "object",
+      "description": "multiclass data",
+      "required": ["skillCount"],
+      "properties": {
+        "skillCount": {
+          "description": "number of skills that can be selected when multiclass",
+          "type": "number"
+        }
+      }
+    },
+    "levels": {
+      "description": "list of things to select when reaching each level",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "description": "level rank of the class",
+            "type": "number"
+          },
+          "skills": {
+            "description": "list of skills to select (if multiclassing then first skill are selected first)",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "feats": {
+            "description": "list of feat to select this level",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ability": {
+            "description": "ability to raise this level",
+            "type": "string",
+            "pattern": "^ABILITY_"
+          }
+        }
+      }
+    }
+  }
+}
