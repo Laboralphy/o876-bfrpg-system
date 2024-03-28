@@ -1,4 +1,6 @@
-const Combat = require('../src/Combat')
+const Combat = require('../src/combat/Combat')
+const CombatAction = require('../src/combat/CombatAction')
+const Creature = require('../src/Creature')
 
 describe ('computePlanning', function () {
     it('should return [1, 0, 0, 0, 0, 0] when planning one attack over 6 ticks', function () {
@@ -36,5 +38,73 @@ describe ('computePlanning', function () {
     it('should return [0, 1, 0, 1, 0, 1] when planning 3 attacks over 6 ticks', function () {
         expect(Combat.computePlanning(3, 6, true))
             .toEqual([0, 1, 0, 1, 0, 1])
+    })
+})
+
+describe('fullcombat', function () {
+    it('should send combat.action event when it is time for creature to attack and actions are defined', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        c.attacker.nextAction = new CombatAction({
+            name: 'claw',
+            script: 'damage',
+            amp: '1d4',
+            count: 2,
+            data: {}
+        })
+        c.defender.nextAction = new CombatAction({
+            name: 'bite',
+            script: 'damage',
+            amp: '1d6',
+            count: 1,
+            data: {}
+        })
+        const aLogs = []
+        c.events.on('combat.action', ev => {
+            aLogs.push({ event: 'combat.action', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+        })
+        c.events.on('combat.turn', ev => {
+            aLogs.push({ event: 'combat.turn', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
+        })
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        c.advance()
+        expect(aLogs).toEqual([
+            { event: 'combat.turn', attacker: 'f1', target: 'f2', turn: 0 },
+            {
+                event: 'combat.action',
+                attacker: 'f1',
+                target: 'f2',
+                tick: 2,
+                action: 'claw'
+            },
+            {
+                event: 'combat.action',
+                attacker: 'f1',
+                target: 'f2',
+                tick: 5,
+                action: 'claw'
+            },
+            {
+                event: 'combat.action',
+                attacker: 'f2',
+                target: 'f1',
+                tick: 5,
+                action: 'bite'
+            }
+        ])
     })
 })
