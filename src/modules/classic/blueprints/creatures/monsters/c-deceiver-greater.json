@@ -17,7 +17,7 @@
     {
       "name": "bite",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "2d6"
     },

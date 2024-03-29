@@ -10,14 +10,14 @@
     {
       "name": "unarmed",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "1d8"
     },
     {
       "name": "weapon",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {}
     }
   ],

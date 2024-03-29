@@ -10,7 +10,7 @@
     {
       "name": "pincer",
       "count": 2,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "2d6"
     }

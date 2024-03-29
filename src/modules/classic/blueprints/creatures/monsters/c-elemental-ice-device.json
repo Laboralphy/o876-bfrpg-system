@@ -10,7 +10,7 @@
     {
       "name": "fist",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {
         "damageType": "cold"
       },

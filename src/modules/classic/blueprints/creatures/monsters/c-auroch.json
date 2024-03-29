@@ -10,14 +10,14 @@
     {
       "name": "horn",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "1d6"
     },
     {
       "name": "trample",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "2d4"
     }

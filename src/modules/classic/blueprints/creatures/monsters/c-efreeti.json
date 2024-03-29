@@ -10,7 +10,7 @@
     {
       "name": "weapon",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {}
     }
   ],

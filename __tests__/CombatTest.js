@@ -107,4 +107,118 @@ describe('fullcombat', function () {
             }
         ])
     })
+    it('should switch to action a2 during turn 2 when defining a1 then a2', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        const a1 = new CombatAction({
+            name: 'claw',
+            script: 'damage',
+            amp: '1d4',
+            count: 2,
+            data: {}
+        })
+        const a2 = new CombatAction({
+            name: 'stomp',
+            script: 'damage',
+            amp: '1d6',
+            count: 1,
+            data: {}
+        })
+        c.attacker.nextAction = a1
+        c.defender.nextAction = new CombatAction({
+            name: 'bite',
+            script: 'damage',
+            amp: '1d6',
+            count: 1,
+            data: {}
+        })
+        const aLogs = []
+        c.events.on('combat.action', ev => {
+            aLogs.push({ event: 'combat.action', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+        })
+        c.events.on('combat.turn', ev => {
+            aLogs.push({ event: 'combat.turn', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
+        })
+        // tick 0
+        c.advance()
+        c.advance()
+        // tick 1
+        c.advance()
+        c.advance()
+        // tick 2
+        c.attacker.nextAction = a2
+        c.advance()
+        c.advance()
+        // tick 3
+        c.advance()
+        c.advance()
+        // tick 4
+        c.advance()
+        c.advance()
+        // tick 5
+        c.advance()
+        c.advance()
+        // tick 0
+        c.advance()
+        c.advance()
+        // tick 1
+        c.advance()
+        c.advance()
+        // tick 2
+        c.advance()
+        c.advance()
+        // tick 3
+        c.advance()
+        c.advance()
+        // tick 4
+        c.advance()
+        c.advance()
+        // tick 5
+        c.advance()
+        c.advance()
+
+        expect(aLogs).toEqual([
+            { event: 'combat.turn', attacker: 'f1', target: 'f2', turn: 0 },
+            {
+                event: 'combat.action',
+                attacker: 'f1',
+                target: 'f2',
+                tick: 2,
+                action: 'claw'
+            },
+            {
+                event: 'combat.action',
+                attacker: 'f1',
+                target: 'f2',
+                tick: 5,
+                action: 'claw'
+            },
+            {
+                event: 'combat.action',
+                attacker: 'f2',
+                target: 'f1',
+                tick: 5,
+                action: 'bite'
+            },
+            { event: 'combat.turn', attacker: 'f1', target: 'f2', turn: 1 },
+            {
+                event: 'combat.action',
+                attacker: 'f1',
+                target: 'f2',
+                tick: 5,
+                action: 'stomp'
+            },
+            {
+                event: 'combat.action',
+                attacker: 'f2',
+                target: 'f1',
+                tick: 5,
+                action: 'bite'
+            }
+        ])
+    })
 })

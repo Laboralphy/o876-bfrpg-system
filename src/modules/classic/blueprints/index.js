@@ -3,7 +3,7 @@
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
-  ' c-djinni': require('./creatures/monsters/ c-djinni.json'),
+  ' c-djinni': require('./creatures/monsters/c-djinni.json'),
   'c-ant-giant': require('./creatures/monsters/c-ant-giant.json'),
   'c-ant-huge': require('./creatures/monsters/c-ant-huge.json'),
   'c-ant-large': require('./creatures/monsters/c-ant-large.json'),

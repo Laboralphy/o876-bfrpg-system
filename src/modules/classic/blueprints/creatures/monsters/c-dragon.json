@@ -10,21 +10,21 @@
     {
       "name": "claw",
       "count": 2,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "1d8"
     },
     {
       "name": "bite",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "4d8"
     },
     {
       "name": "tail",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "1d8"
     },

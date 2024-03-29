@@ -10,20 +10,20 @@
     {
       "name": "bite",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "1d4"
     },
     {
       "name": "weapon",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {}
     },
     {
       "name": "spell",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {}
     }
   ],

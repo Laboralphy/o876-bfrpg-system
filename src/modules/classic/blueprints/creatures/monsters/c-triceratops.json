@@ -10,14 +10,14 @@
     {
       "name": "gore",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "3d6"
     },
     {
       "name": "trample",
       "count": 1,
-      "script": "damage",
+      "script": "attack",
       "data": {},
       "amp": "3d6"
     }
