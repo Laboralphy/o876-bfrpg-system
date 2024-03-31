@@ -1,8 +1,5 @@
 const vm = require('node:vm')
 
-// const { parse } = require('csv-parse/sync')
-
-
 class SmartData {
     /**
      *
