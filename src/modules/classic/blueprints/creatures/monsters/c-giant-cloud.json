@@ -9,17 +9,29 @@
   "actions": [
     {
       "name": "giant-weapon",
+      "damage": "6d6",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "6d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "throw",
+      "damage": "3d6",
       "count": 1,
-      "script": "throw-giant-rock",
-      "data": {},
-      "amp": "3d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "throw-giant-rock",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

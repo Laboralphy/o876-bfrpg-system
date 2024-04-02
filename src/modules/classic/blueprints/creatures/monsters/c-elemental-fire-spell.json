@@ -9,10 +9,18 @@
   "actions": [
     {
       "name": "special",
+      "damage": "3d6",
       "count": 1,
-      "script": "flame-thrower",
-      "data": {},
-      "amp": "3d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "flame-thrower",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

@@ -9,10 +9,14 @@
   "actions": [
     {
       "name": "claw",
+      "damage": "1d4",
       "count": 2,
-      "script": "attack",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

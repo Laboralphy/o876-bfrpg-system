@@ -9,10 +9,18 @@
   "actions": [
     {
       "name": "bite",
+      "damage": "1d8",
       "count": 1,
-      "script": "swallow",
-      "data": {},
-      "amp": "1d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "swallow",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

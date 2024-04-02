@@ -9,22 +9,40 @@
   "actions": [
     {
       "name": "fist",
+      "damage": "1d4",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "weapon",
+      "damage": "",
       "count": 1,
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "special",
+      "damage": "",
       "count": 1,
-      "script": "calm",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "calm",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

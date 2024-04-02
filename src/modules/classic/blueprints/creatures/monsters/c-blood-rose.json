@@ -9,30 +9,63 @@
   "actions": [
     {
       "name": "cane",
+      "damage": "1d6",
       "count": 1,
-      "script": "vampyre",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "vampyre",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "cane",
+      "damage": "1d6",
       "count": 2,
-      "script": "blood-drain",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "vampyre",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "cane",
+      "damage": "1d6",
       "count": 3,
-      "script": "vampyre",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "vampyre",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "special",
+      "damage": "",
       "count": 1,
-      "script": "calm",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "calm",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

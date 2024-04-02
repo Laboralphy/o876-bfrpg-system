@@ -9,10 +9,18 @@
   "actions": [
     {
       "name": "beak",
+      "damage": "1d6",
       "count": 1,
-      "script": "petrify",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "petrify",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

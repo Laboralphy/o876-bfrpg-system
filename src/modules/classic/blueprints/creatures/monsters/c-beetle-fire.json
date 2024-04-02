@@ -9,10 +9,14 @@
   "actions": [
     {
       "name": "bite",
+      "damage": "2d4",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "2d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

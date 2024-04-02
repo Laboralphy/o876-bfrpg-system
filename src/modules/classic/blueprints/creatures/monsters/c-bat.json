@@ -9,9 +9,18 @@
   "actions": [
     {
       "name": "special",
+      "damage": "",
       "count": 1,
-      "script": "confusion",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "confusion",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

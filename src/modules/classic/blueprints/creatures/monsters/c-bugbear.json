@@ -9,16 +9,25 @@
   "actions": [
     {
       "name": "unarmed",
+      "damage": "1d8",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "weapon",
+      "damage": "",
       "count": 1,
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

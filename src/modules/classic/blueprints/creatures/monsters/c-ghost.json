@@ -9,14 +9,24 @@
   "actions": [
     {
       "name": "touch",
+      "damage": "1d8",
       "count": 1,
-      "script": "vampyre",
-      "data": {
-        "ability": "constitution",
-        "amount": 1,
-        "factor": 1
-      },
-      "amp": "1d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "damage-ability",
+          "data": {
+            "ability": "constitution"
+          }
+        },
+        {
+          "script": "vampyre",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

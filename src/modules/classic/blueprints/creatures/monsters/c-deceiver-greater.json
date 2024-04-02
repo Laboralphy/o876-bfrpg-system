@@ -9,23 +9,44 @@
   "actions": [
     {
       "name": "bite",
+      "damage": "1d6",
       "count": 2,
-      "script": "poison",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "atk-poison",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "bite",
+      "damage": "2d6",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "2d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "special",
+      "damage": "",
       "count": 1,
-      "script": "decoy",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "decoy",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

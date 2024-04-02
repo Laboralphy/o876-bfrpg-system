@@ -9,10 +9,18 @@
   "actions": [
     {
       "name": "sting",
+      "damage": "1d4",
       "count": 1,
-      "script": "poison",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "poison",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

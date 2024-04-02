@@ -1,29 +1,57 @@
 {
-  "name": " c-djinni",
+  "name": "c-djinni",
+  "ac": 15,
+  "modifiers": {
+    "hp": 1,
+    "damage": 0,
+    "attack": 0
+  },
   "actions": [
     {
       "name": "fist",
+      "damage": "2d8",
       "count": 1,
-      "amp": "2d8",
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "whirlwind",
+      "damage": "2d6",
       "count": 1,
-      "amp": "2d6",
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
+    },
+    {
+      "name": "special",
+      "damage": "",
+      "count": 1,
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "gazeous-form",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {
     "level": 12,
     "classType": "fighter"
   },
-  "ac": 15,
   "properties": [],
+  "equipment": [],
   "specie": "elemental",
   "level": 7,
-  "hpBonus": 1,
   "speed": 30
 }

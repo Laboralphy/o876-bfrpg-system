@@ -9,12 +9,20 @@
   "actions": [
     {
       "name": "fist",
+      "damage": "3d6",
       "count": 1,
-      "script": "tremor-punch",
-      "data": {
-        "amount": "1d8"
-      },
-      "amp": "3d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "tremor-punch",
+          "data": {
+            "amount": "1d8"
+          }
+        }
+      ]
     }
   ],
   "saveAs": {

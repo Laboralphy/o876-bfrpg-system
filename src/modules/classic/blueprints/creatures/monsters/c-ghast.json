@@ -9,23 +9,48 @@
   "actions": [
     {
       "name": "claw",
+      "damage": "1d4",
       "count": 2,
-      "script": "paralysis",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "paralysis",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "bite",
+      "damage": "1d4",
       "count": 1,
-      "script": "paralysis",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "paralysis",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "stench",
+      "damage": "",
       "count": 1,
-      "script": "ghast-stench",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "ghast-stench",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

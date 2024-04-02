@@ -9,16 +9,33 @@
   "actions": [
     {
       "name": "bite",
+      "damage": "1d12",
       "count": 1,
-      "script": "poison",
-      "data": {},
-      "amp": "1d12"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "poison",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "gaze",
+      "damage": "",
       "count": 1,
-      "script": "petrify",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "petrify",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

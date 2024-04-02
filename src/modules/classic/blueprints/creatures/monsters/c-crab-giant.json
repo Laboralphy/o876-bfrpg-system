@@ -9,10 +9,14 @@
   "actions": [
     {
       "name": "pincer",
+      "damage": "2d6",
       "count": 2,
-      "script": "attack",
-      "data": {},
-      "amp": "2d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

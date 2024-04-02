@@ -9,10 +9,18 @@
   "actions": [
     {
       "name": "special",
+      "damage": "2d8",
       "count": 1,
-      "script": "flame-thrower",
-      "data": {},
-      "amp": "2d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "flame-thrower",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

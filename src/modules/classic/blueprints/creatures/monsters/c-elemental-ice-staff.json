@@ -9,12 +9,16 @@
   "actions": [
     {
       "name": "fist",
+      "damage": "1d12",
       "count": 1,
-      "script": "attack",
-      "data": {
-        "damageType": "cold"
-      },
-      "amp": "1d12"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {
+            "damageType": "cold"
+          }
+        }
+      ]
     }
   ],
   "saveAs": {

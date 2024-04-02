@@ -9,10 +9,14 @@
   "actions": [
     {
       "name": "whirlwind",
+      "damage": "2d8",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "2d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

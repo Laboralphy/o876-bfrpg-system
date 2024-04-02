@@ -9,9 +9,14 @@
   "actions": [
     {
       "name": "weapon",
+      "damage": "",
       "count": 1,
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

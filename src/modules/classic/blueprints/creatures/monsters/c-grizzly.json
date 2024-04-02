@@ -9,19 +9,29 @@
   "actions": [
     {
       "name": "claw",
+      "damage": "1d4",
       "count": 2,
-      "script": "hug",
-      "data": {
-        "amount": "2d8"
-      },
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "hug",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "bite",
+      "damage": "1d8",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

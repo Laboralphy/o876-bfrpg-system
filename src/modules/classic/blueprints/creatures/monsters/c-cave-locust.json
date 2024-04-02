@@ -9,24 +9,40 @@
   "actions": [
     {
       "name": "bite",
+      "damage": "1d2",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d2"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "bump",
+      "damage": "1d4",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d4"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "spit",
+      "damage": 0,
       "count": 1,
-      "script": "spit",
-      "data": {},
-      "amp": 0
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        },
+        {
+          "script": "spit-daze",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

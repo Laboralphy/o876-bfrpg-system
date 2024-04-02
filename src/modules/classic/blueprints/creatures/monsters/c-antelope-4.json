@@ -9,10 +9,14 @@
   "actions": [
     {
       "name": "butt",
+      "damage": "1d8",
       "count": 1,
-      "script": "attack",
-      "data": {},
-      "amp": "1d8"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {

@@ -9,16 +9,25 @@
   "actions": [
     {
       "name": "hoove",
+      "damage": "1d6",
       "count": 2,
-      "script": "attack",
-      "data": {},
-      "amp": "1d6"
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     },
     {
       "name": "weapon",
+      "damage": "",
       "count": 1,
-      "script": "attack",
-      "data": {}
+      "scripts": [
+        {
+          "script": "attack",
+          "data": {}
+        }
+      ]
     }
   ],
   "saveAs": {
