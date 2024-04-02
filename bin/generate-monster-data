@@ -28,10 +28,34 @@ doTransferBlueprints () {
   cp "$SCRIPT_DIR"/generated-blueprints/*.json "$SCRIPT_DIR"/../src/modules/classic/blueprints/creatures/monsters
 }
 
+printHelp () {
+  echo usage: $(basename "$0") [-d] [-h]
+  echo " -d : prevent downloading CSV data."
+  echo "hint: Don't forget to create your .env file (see .env.dist for syntax)."
+}
+
 if [ -f "$SCRIPT_DIR/../.env" ]
 then
   source "$SCRIPT_DIR/../.env"
-  doDownload
+  bDoDownload=1
+  while getopts 'dh' opt
+  do
+    case "$opt" in
+      d)
+        # no download
+        bDoDownload=0
+        ;;
+      h|?)
+        printHelp
+        exit 1
+        ;;
+    esac
+  done
+  shift "$((OPTIND -1))"
+  if [ $bDoDownload -eq 1 ]
+  then
+    doDownload
+  fi
   doPrepareFolder
   doGenerateBlueprints
   doTransferBlueprints

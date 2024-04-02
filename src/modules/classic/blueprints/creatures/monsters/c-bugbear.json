@@ -1,11 +1,6 @@
 {
   "name": "c-bugbear",
   "ac": 13,
-  "modifiers": {
-    "hp": 1,
-    "damage": 1,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "unarmed",
@@ -32,13 +27,28 @@
   ],
   "saveAs": {
     "level": 3,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
-  "properties": [],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+      "data": {
+        "damageType": "DAMAGE_TYPE_WEAPON",
+        "value": 1
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
+      }
+    }
+  ],
   "equipment": [
     "arm-leather"
   ],
-  "specie": "humanoid",
+  "specie": "SPECIE_HUMANOID",
   "level": 3,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

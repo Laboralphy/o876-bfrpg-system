@@ -1,11 +1,6 @@
 {
   "name": "c-beetle-oil",
   "ac": 16,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -36,18 +31,19 @@
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-threat-immunity",
       "data": {
         "threat": "sneak-attack"
       }
     }
   ],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 2,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

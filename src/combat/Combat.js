@@ -5,13 +5,16 @@ class Combat {
     constructor () {
         this._attacker = null
         this._defender = null
-        this._bAttackerTurn = true
         this._turn = 0
         this._tick = 0
         this._tickCount = 6
         this._events = new Events()
+        this._distance = 0
     }
 
+    /**
+     * @returns {Events}
+     */
     get events () {
         return this._events
     }
@@ -24,12 +27,19 @@ class Combat {
         return this._defender
     }
 
+    set distance (value) {
+        this._distance = value
+    }
+
+    get distance () {
+        return this._distance
+    }
+
     setFighters (attacker, defender) {
-        // TODO compute initiaive here
+        // TODO compute initiative here
         this._attacker = new CombatFighterState()
         this._attacker.creature = attacker
-        this._defender = new CombatFighterState()
-        this._defender.creature = defender
+        this._defender = defender
     }
 
     static computePlanning (nAttackPerTurn, nTurnTickCount, reverseOrder = false) {
@@ -68,47 +78,41 @@ class Combat {
     /**
      *
      * @param attacker {CombatFighterState}
-     * @param defender {CombatFighterState}
+     * @param defender {Creature}
      */
     playFighterAction (attacker, defender) {
         const nAttackCount = attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
             const action = attacker.nextAction
-            this._events.emit('combat.action', {
-                turn: this._turn,
-                tick: this._tick,
-                attacker: attacker.creature,
-                target: defender.creature,
-                action: action.name,
-                script: action.script,
-                amp: action.amp,
-                data: action.data,
-                count: nAttackCount
+            action.scripts.forEach(script => {
+                this._events.emit('combat.action', {
+                    turn: this._turn,
+                    tick: this._tick,
+                    attacker: attacker.creature,
+                    target: defender,
+                    action: action.name,
+                    script: script,
+                    amp: action.amp,
+                    data: script.data,
+                    count: nAttackCount
+                })
             })
         }
     }
 
     advance () {
-        if (this._tick === 0 && this._bAttackerTurn) {
+        if (this._tick === 0) {
             // Start of turn
             // attack planning
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 attacker: this._attacker.creature,
-                target: this._defender.creature,
+                target: this._defender,
             })
             this.prepareTurn(this._attacker)
-            this.prepareTurn(this._defender)
         }
-        if (this._bAttackerTurn) {
-            this.playFighterAction(this._attacker, this._defender)
-        } else {
-            this.playFighterAction(this._defender, this._attacker)
-        }
-        this._bAttackerTurn = !this._bAttackerTurn
-        if (this._bAttackerTurn) {
-            this.nextTick()
-        }
+        this.playFighterAction(this._attacker, this._defender)
+        this.nextTick()
     }
 }
 

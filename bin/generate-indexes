@@ -35,3 +35,6 @@ node ./bin/generate-indexes.js ./src/modules/classic/blueprints TYPE_KEY_BASED >
 
 echo module classic - data
 node ./bin/generate-indexes.js ./src/modules/classic/data TYPE_KEY_BASED > ./src/modules/classic/data/index.js
+
+echo attack scripts
+node ./bin/generate-indexes.js ./src/attack-scripts TYPE_KEY_BASED > ./src/attack-scripts/index.js

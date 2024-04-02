@@ -1,11 +1,6 @@
 {
   "name": "c-blink-dog",
   "ac": 15,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -36,11 +31,12 @@
   ],
   "saveAs": {
     "level": 4,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "magical-beast",
+  "specie": "SPECIE_MAGICAL_BEAST",
   "level": 4,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

@@ -1,11 +1,6 @@
 {
   "name": "c-centaur",
   "ac": 13,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "hoove",
@@ -32,7 +27,7 @@
   ],
   "saveAs": {
     "level": 4,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [
@@ -41,7 +36,8 @@
     "wpn-longbow",
     "ammo-arrow"
   ],
-  "specie": "magical-beast",
+  "specie": "SPECIE_MAGICAL_BEAST",
   "level": 4,
-  "speed": 50
+  "speed": 50,
+  "classType": "CLASS_TYPE_MONSTER"
 }

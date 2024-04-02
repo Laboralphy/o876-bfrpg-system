@@ -3,6 +3,7 @@ const fs = require('node:fs')
 const TreeSync = require('../src/libs/o876-xtree/sync')
 
 const TYPES = {
+    RAW: 'RAW',
     TYPE_KEY_BASED: 'TYPE_KEY_BASED',
     TYPE_SPREAD: 'TYPE_SPREAD',
     TYPE_UPPER_KEY_PREFIXED: 'TYPE_UPPER_KEY_PREFIXED',

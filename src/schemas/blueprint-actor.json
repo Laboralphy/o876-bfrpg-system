@@ -1,45 +1,28 @@
 {
-  "description": "Définition des actors",
+  "description": "Actor definition",
   "type": "object",
   "allowAdditionalProperties": false,
   "required": [
+    "ac",
     "entityType",
-    "abilities",
-    "size",
+    "classType",
+    "level",
     "specie",
     "speed",
     "equipment"
   ],
   "properties": {
     "entityType": {
-      "description": "Type d'entité",
+      "description": "Entity type, always ENTITY_TYPE_ACTOR",
       "const": "ENTITY_TYPE_ACTOR"
     },
-    "class": {
-      "description": "Classe de base de l'acteur",
-      "type": "string"
-    },
-    "classes": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "class",
-          "levels"
-        ],
-        "allowAdditionalProperties": false,
-        "properties": {
-          "class": {
-            "type": "string"
-          },
-          "levels": {
-            "type": "number"
-          }
-        }
-      }
+    "classType": {
+      "description": "actor class type, usually CLASS_TYPE_MONSTER, but not always",
+      "type": "string",
+      "pattern": "^CLASS_TYPE_"
     },
     "level": {
-      "description": "Niveau de la créature",
+      "description": "Creature level",
       "type": "number"
     },
     "abilities": {
@@ -80,9 +63,9 @@
         }
       }
     },
-    "size": {
-      "description": "Size of creature",
-      "enum": ["CREATURE_SIZE_TINY", "CREATURE_SIZE_SMALL", "CREATURE_SIZE_MEDIUM", "CREATURE_SIZE_LARGE", "CREATURE_SIZE_HUGE", "CREATURE_SIZE_GARGANTUAN"]
+    "ac": {
+      "type": "number",
+      "description": "Natural armor class"
     },
     "specie": {
       "description": "Specie of creature",
@@ -110,33 +93,68 @@
       "type": "array",
       "description": "List of possible actions",
       "items": {
-        "type": "string",
-        "description": "action reference"
-      }
-    },
-    "skills": {
-      "type": "array",
-      "description": "List of skill proficiencies",
-      "items": {
-        "type": "string",
-        "description": "skill reference"
-      }
-    },
-    "feats": {
-      "type": "array",
-      "description": "List of feats",
-      "items": {
         "type": "object",
-        "description": "feat reference and uses",
+        "description": "action definition",
         "properties": {
-          "feat": {
+          "name": {
             "type": "string",
-            "description": "feat reference"
+            "description": "action name"
           },
-          "uses": {
+          "count": {
             "type": "number",
-            "description": "number of feat action uses"
+            "description": "number of times the creature may call the associated script with this action"
+          },
+          "script": {
+            "type": "string",
+            "description": "when used, this action will call this script"
+          },
+          "data": {
+            "type": "object",
+            "description": "a simple objet to customize script behavior"
+          },
+          "amp": {
+            "oneOf": [
+              {
+                "type": "number",
+                "description": "numeric value of the action amplitude"
+              },
+              {
+                "type": "string",
+                "description": "random value of the action amplitude, using dice notation 1d6, 2d8, 1d6+2 etc..."
+              }
+            ]
           }
+        }
+      }
+    },
+    "saveAs": {
+      "type": "object",
+      "description": "specifies which class and level used for resolving saving throws",
+      "required": [
+        "classType"
+      ],
+      "allowAdditionalProperties": false,
+      "properties": {
+        "level": {
+          "type": "number"
+        },
+        "classType": {
+          "type": "string"
+        }
+      }
+    },
+    "modifiers": {
+      "type": "object",
+      "description": "Adjustments made specific to monster blueprints, when abilities are not specified",
+      "allowAdditionalProperties": false,
+      "properties": {
+        "hp": {
+          "type": "number",
+          "description": "hit points modifier"
+        },
+        "attack": {
+          "type": "number",
+          "description": "attack modifier"
         }
       }
     }

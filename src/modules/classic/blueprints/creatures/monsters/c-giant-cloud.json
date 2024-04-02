@@ -1,11 +1,6 @@
 {
   "name": "c-giant-cloud",
   "ac": 13,
-  "modifiers": {
-    "hp": 3,
-    "damage": 0,
-    "attack": 10
-  },
   "actions": [
     {
       "name": "giant-weapon",
@@ -36,10 +31,24 @@
   ],
   "saveAs": {
     "level": 12,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
-  "properties": [],
+  "properties": [
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 3
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "data": {
+        "value": 10
+      }
+    }
+  ],
   "equipment": [],
-  "specie": "giant",
-  "level": 12
+  "specie": "SPECIE_GIANT",
+  "level": 12,
+  "classType": "CLASS_TYPE_MONSTER"
 }

@@ -1,11 +1,6 @@
 {
   "name": "c-bison",
   "ac": 16,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "horn",
@@ -32,11 +27,12 @@
   ],
   "saveAs": {
     "level": 4,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 4,
-  "speed": 50
+  "speed": 50,
+  "classType": "CLASS_TYPE_MONSTER"
 }

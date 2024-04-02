@@ -1,11 +1,6 @@
 {
   "name": "c-beetle-fire",
   "ac": 16,
-  "modifiers": {
-    "hp": 2,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -21,18 +16,25 @@
   ],
   "saveAs": {
     "level": 1,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-threat-immunity",
       "data": {
         "threat": "sneak-attack"
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 2
       }
     }
   ],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 1,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

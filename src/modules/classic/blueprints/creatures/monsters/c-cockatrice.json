@@ -1,11 +1,6 @@
 {
   "name": "c-cockatrice",
   "ac": 14,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "beak",
@@ -25,11 +20,12 @@
   ],
   "saveAs": {
     "level": 5,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "monstrosity",
+  "specie": "SPECIE_MONSTROSITY",
   "level": 5,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

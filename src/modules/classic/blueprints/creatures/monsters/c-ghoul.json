@@ -1,11 +1,6 @@
 {
   "name": "c-ghoul",
   "ac": 14,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "claw",
@@ -40,30 +35,31 @@
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "sleep"
       }
     },
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "charm"
       }
     },
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "hold"
       }
     }
   ],
   "equipment": [],
-  "specie": "undead",
+  "specie": "SPECIE_UNDEAD",
   "level": 2,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

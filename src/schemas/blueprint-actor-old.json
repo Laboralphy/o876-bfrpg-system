@@ -1,0 +1,144 @@
+{
+  "description": "Définition des actors",
+  "type": "object",
+  "allowAdditionalProperties": false,
+  "required": [
+    "entityType",
+    "abilities",
+    "size",
+    "specie",
+    "speed",
+    "equipment"
+  ],
+  "properties": {
+    "entityType": {
+      "description": "Type d'entité",
+      "const": "ENTITY_TYPE_ACTOR"
+    },
+    "class": {
+      "description": "Classe de base de l'acteur",
+      "type": "string"
+    },
+    "classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "class",
+          "levels"
+        ],
+        "allowAdditionalProperties": false,
+        "properties": {
+          "class": {
+            "type": "string"
+          },
+          "levels": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "level": {
+      "description": "Niveau de la créature",
+      "type": "number"
+    },
+    "abilities": {
+      "type": "object",
+      "required": [
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma"
+      ],
+      "allowAdditionalProperties": false,
+      "properties": {
+        "strength": {
+          "description": "Strength measures bodily power, athletic training, and the extent to which you can exert raw physical force.",
+          "type": "number"
+        },
+        "dexterity": {
+          "description": "Dexterity measures agility, reflexes, and balance.",
+          "type": "number"
+        },
+        "constitution": {
+          "description": "Constitution measures health, stamina, and vital force.",
+          "type": "number"
+        },
+        "intelligence": {
+          "description": "Intelligence measures mental acuity, accuracy of recall, and the ability to reason.",
+          "type": "number"
+        },
+        "wisdom": {
+          "description": "Wisdom reflects how attuned you are to the world around you and represents perceptiveness and intuition.",
+          "type": "number"
+        },
+        "charisma": {
+          "description": "Charisma measures your ability to interact effectively with others. It includes such factors as confidence and eloquence, and it can represent a charming or commanding personality.",
+          "type": "number"
+        }
+      }
+    },
+    "size": {
+      "description": "Size of creature",
+      "enum": ["CREATURE_SIZE_TINY", "CREATURE_SIZE_SMALL", "CREATURE_SIZE_MEDIUM", "CREATURE_SIZE_LARGE", "CREATURE_SIZE_HUGE", "CREATURE_SIZE_GARGANTUAN"]
+    },
+    "specie": {
+      "description": "Specie of creature",
+      "type": "string",
+      "pattern": "^SPECIE_"
+    },
+    "speed": {
+      "description": "Speed of the creature",
+      "type": "number"
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "/blueprint-item"
+          }
+        ]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "List of possible actions",
+      "items": {
+        "type": "string",
+        "description": "action reference"
+      }
+    },
+    "skills": {
+      "type": "array",
+      "description": "List of skill proficiencies",
+      "items": {
+        "type": "string",
+        "description": "skill reference"
+      }
+    },
+    "feats": {
+      "type": "array",
+      "description": "List of feats",
+      "items": {
+        "type": "object",
+        "description": "feat reference and uses",
+        "properties": {
+          "feat": {
+            "type": "string",
+            "description": "feat reference"
+          },
+          "uses": {
+            "type": "number",
+            "description": "number of feat action uses"
+          }
+        }
+      }
+    }
+  }
+}

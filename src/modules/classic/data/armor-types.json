@@ -1,22 +1,22 @@
 {
   "ARMOR_TYPE_CLOTHING": {
     "weight": 1,
-    "ac": 11,
+    "ac": 1,
     "material": "MATERIAL_FABRIC"
   },
   "ARMOR_TYPE_LEATHER": {
     "weight": 15,
-    "ac": 13,
+    "ac": 3,
     "material": "MATERIAL_LEATHER"
   },
   "ARMOR_TYPE_CHAIN_MAIL": {
     "weight": 40,
-    "ac": 15,
+    "ac": 5,
     "material": "MATERIAL_IRON"
   },
   "ARMOR_TYPE_PLATE_MAIL": {
     "weight": 50,
-    "ac": 17,
+    "ac": 7,
     "material": "MATERIAL_STEEL"
   }
 }

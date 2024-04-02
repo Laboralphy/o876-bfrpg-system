@@ -1,11 +1,6 @@
 {
   "name": "c-centipede",
   "ac": 11,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -27,11 +22,12 @@
   ],
   "saveAs": {
     "level": 1,
-    "classType": "tourist"
+    "classType": "CLASS_TYPE_TOURIST"
   },
   "properties": [],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 1,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

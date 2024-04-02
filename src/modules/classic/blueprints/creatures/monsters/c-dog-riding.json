@@ -1,11 +1,6 @@
 {
   "name": "c-dog-riding",
   "ac": 14,
-  "modifiers": {
-    "hp": 0,
-    "damage": 1,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -18,18 +13,21 @@
         },
         {
           "script": "hold",
-          "data": {}
+          "data": {
+            "damageBonus": 1
+          }
         }
       ]
     }
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 2,
-  "speed": 50
+  "speed": 50,
+  "classType": "CLASS_TYPE_MONSTER"
 }

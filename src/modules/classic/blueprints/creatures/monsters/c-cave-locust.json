@@ -1,11 +1,6 @@
 {
   "name": "c-cave-locust",
   "ac": 16,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -47,11 +42,12 @@
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 2,
-  "speed": 20
+  "speed": 20,
+  "classType": "CLASS_TYPE_MONSTER"
 }

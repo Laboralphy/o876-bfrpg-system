@@ -1,11 +1,6 @@
 {
   "name": "c-eagle-giant",
   "ac": 15,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "claw",
@@ -32,11 +27,12 @@
   ],
   "saveAs": {
     "level": 4,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "magical-beast",
+  "specie": "SPECIE_MAGICAL_BEAST",
   "level": 4,
-  "speed": 90
+  "speed": 90,
+  "classType": "CLASS_TYPE_MONSTER"
 }

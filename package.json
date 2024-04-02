@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "generate-indexes": "bash ./bin/generate-indexes",
-    "generate-monster-data": "bash ./bin/generate-monster-data"
+    "monsters:download-build-blueprints": "bash ./bin/generate-monster-data",
+    "monsters:build-blueprints": "bash ./bin/generate-monster-data -d"
   },
   "keywords": [],
   "author": "",

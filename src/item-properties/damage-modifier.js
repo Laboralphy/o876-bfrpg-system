@@ -1,6 +1,8 @@
-function init (oItemProperty, { value, type: sDamageType }) {
-    if (!sDamageType) {
-        throw new Error('item property damage-modifier, damage type not specified')
+const CONSTS = require('../consts')
+
+function init (oItemProperty, { value, damageType: sDamageType = CONSTS.DAMAGE_TYPE_WEAPON }) {
+    if (!CONSTS[sDamageType]) {
+        throw new Error('unknown damage type ' + sDamageType)
     }
     oItemProperty.amp = value
     oItemProperty.data.type = sDamageType

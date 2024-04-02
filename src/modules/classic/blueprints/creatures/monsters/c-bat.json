@@ -1,11 +1,6 @@
 {
   "name": "c-bat",
   "ac": 14,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "special",
@@ -25,11 +20,12 @@
   ],
   "saveAs": {
     "level": 1,
-    "classType": "tourist"
+    "classType": "CLASS_TYPE_TOURIST"
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 1,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

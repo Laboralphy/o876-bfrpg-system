@@ -1,11 +1,6 @@
 {
   "name": "c-elemental-fire-staff",
   "ac": 18,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "special",
@@ -25,30 +20,31 @@
   ],
   "saveAs": {
     "level": 8,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-damage-immunity",
       "data": {
-        "damageType": "fire"
+        "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
-      "property": "vulnerability",
+      "property": "property-damage-vulnerability",
       "data": {
-        "damageType": "cold"
+        "damageType": "DAMAGE_TYPE_COLD"
       }
     },
     {
-      "property": "damage-aura",
+      "property": "property-damage-aura",
       "data": {
-        "damageType": "fire"
+        "damageType": "DAMAGE_TYPE_FIRE"
       }
     }
   ],
   "equipment": [],
-  "specie": "elemental",
+  "specie": "SPECIE_ELEMENTAL",
   "level": 8,
-  "speed": 40
+  "speed": 40,
+  "classType": "CLASS_TYPE_MONSTER"
 }

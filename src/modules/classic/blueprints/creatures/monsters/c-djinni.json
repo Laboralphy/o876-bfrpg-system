@@ -1,11 +1,6 @@
 {
   "name": "c-djinni",
   "ac": 15,
-  "modifiers": {
-    "hp": 1,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "fist",
@@ -47,11 +42,19 @@
   ],
   "saveAs": {
     "level": 12,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
-  "properties": [],
+  "properties": [
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
+      }
+    }
+  ],
   "equipment": [],
-  "specie": "elemental",
+  "specie": "SPECIE_ELEMENTAL",
   "level": 7,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

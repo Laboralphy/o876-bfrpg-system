@@ -1,11 +1,6 @@
 {
   "name": "c-beetle-tiger",
   "ac": 17,
-  "modifiers": {
-    "hp": 1,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -21,18 +16,25 @@
   ],
   "saveAs": {
     "level": 3,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-threat-immunity",
       "data": {
         "threat": "sneak-attack"
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
       }
     }
   ],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 3,
-  "speed": 60
+  "speed": 60,
+  "classType": "CLASS_TYPE_MONSTER"
 }

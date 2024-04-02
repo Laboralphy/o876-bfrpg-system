@@ -1,11 +1,6 @@
 {
   "name": "c-ghast",
   "ac": 15,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "claw",
@@ -55,10 +50,11 @@
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "undead",
-  "level": 2
+  "specie": "SPECIE_UNDEAD",
+  "level": 2,
+  "classType": "CLASS_TYPE_MONSTER"
 }

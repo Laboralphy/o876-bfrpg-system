@@ -1,11 +1,6 @@
 {
   "name": "c-dragon",
   "ac": 21,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 9
-  },
   "actions": [
     {
       "name": "claw",
@@ -52,7 +47,7 @@
         {
           "script": "dragon-breath",
           "data": {
-            "damageType": "fire"
+            "damageType": "DAMAGE_TYPE_FIRE"
           }
         }
       ]
@@ -60,24 +55,31 @@
   ],
   "saveAs": {
     "level": 10,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-damage-immunity",
       "data": {
-        "damageType": "fire"
+        "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
-      "property": "spellcasting",
+      "property": "property-spellcasting",
       "data": {
         "level": 5
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "data": {
+        "value": 9
       }
     }
   ],
   "equipment": [],
-  "specie": "dragon",
+  "specie": "SPECIE_DRAGON",
   "level": 10,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

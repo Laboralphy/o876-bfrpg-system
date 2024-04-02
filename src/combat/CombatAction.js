@@ -1,9 +1,11 @@
+/**
+ * @class
+ */
 class CombatAction {
-    constructor ({ name = '', count = 1, script = '', data = {}, amp = 0 }) {
+    constructor ({ name = '', count = 1, scripts = '', amp = 0 }) {
         this._name = name
         this._count = count
-        this._script = script
-        this._data = data
+        this._scripts = scripts
         this._amp = amp
     }
 
@@ -15,12 +17,8 @@ class CombatAction {
         return this._count
     }
 
-    get script () {
-        return this._script
-    }
-
-    get data () {
-        return this._data
+    get scripts () {
+        return this._scripts
     }
 
     get amp () {

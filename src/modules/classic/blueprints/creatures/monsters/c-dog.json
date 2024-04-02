@@ -1,11 +1,6 @@
 {
   "name": "c-dog",
   "ac": 14,
-  "modifiers": {
-    "hp": 1,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -25,11 +20,19 @@
   ],
   "saveAs": {
     "level": 1,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
-  "properties": [],
+  "properties": [
+    {
+      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
+      }
+    }
+  ],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 1,
-  "speed": 50
+  "speed": 50,
+  "classType": "CLASS_TYPE_MONSTER"
 }

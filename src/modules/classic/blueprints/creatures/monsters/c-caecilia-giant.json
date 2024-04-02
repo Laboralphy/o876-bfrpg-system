@@ -1,11 +1,6 @@
 {
   "name": "c-caecilia-giant",
   "ac": 14,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -25,11 +20,12 @@
   ],
   "saveAs": {
     "level": 6,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "vermin",
+  "specie": "SPECIE_VERMIN",
   "level": 6,
-  "speed": 20
+  "speed": 20,
+  "classType": "CLASS_TYPE_MONSTER"
 }

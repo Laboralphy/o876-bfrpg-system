@@ -3,6 +3,7 @@ const Creature = require("./Creature");
 const EffectProcessor = require("./EffectProcessor");
 const ItemBuilder = require("./ItemBuilder");
 const SchemaValidator = require('./SchemaValidator')
+const CombatManager = require('./combat/CombatManager')
 
 const EFFECTS = require('./effects')
 const DATA = require('./data')
@@ -41,8 +42,8 @@ class Manager {
         const h = new Horde()
         const ep = new EffectProcessor()
         ep.effectPrograms = EFFECTS
-        ep.events.on('effect-applied', ev => this.effectApplied(ev))
-        ep.events.on('effect-disposed', ev => this.effectDisposed(ev))
+        ep.events.on('effect-applied', ev => this._effectApplied(ev))
+        ep.events.on('effect-disposed', ev => this._effectDisposed(ev))
         const ib = new ItemBuilder()
 
         this._horde = h
@@ -53,6 +54,66 @@ class Manager {
         this._validBlueprints = {}
         this._itemBuilder = ib
         this._schemaValidator = null
+        this._combatManager = new CombatManager()
+    }
+
+    /**
+     * A new effect has been applied on a creatures. The manager must keep track of this effect if duration is > 0
+     * @param effect {BFEffect}
+     * @param target {Creature}
+     * @param source {Creature}
+     */
+    _effectApplied ({ effect, target, source }) {
+        if (effect.duration > 0) {
+            this._effectOptimRegistry[effect.id] = { effect, target, source }
+        }
+    }
+
+    /**
+     * An effect has expired (duration reached 0)
+     * @param effect {BFEffect}
+     * @param target {Creature}
+     * @param source {Creature}
+     */
+    _effectDisposed ({ effect, target, source }) {
+        delete this._effectOptimRegistry[effect.id]
+    }
+
+    /**
+     * A new turn for a combat
+     * @param turn {number}
+     * @param attacker {Creature}
+     * @param target {Creature}
+     * @private
+     */
+    _combatTurn ({ turn, attacker, target }) {
+        // New combat turn
+    }
+
+    /**
+     * An action occurred in a combat
+     * @param turn {number}
+     * @param tick {number}
+     * @param attacker {Creature}
+     * @param target {Creature}
+     * @param action {string}
+     * @param script {string}
+     * @param amp {string|number}
+     * @param data {object}
+     * @param count {number}
+     * @private
+     */
+    _combatAction ({   turn,
+       tick,
+       attacker,
+       target,
+       action,
+       script,
+       amp,
+       data,
+       count
+    }) {
+        // New combat action
     }
 
     async init () {
@@ -76,6 +137,10 @@ class Manager {
      */
     get effectProcessor () {
         return this._effectProcessor
+    }
+
+    get combatManager () {
+        return this._combatManager
     }
 
     /**
@@ -179,6 +244,7 @@ class Manager {
                     .setEffectDuration({ effect: effectToBeDispelled, value: 0 })
             })
         })
+        this._combatManager.removeFighter(oCreature)
         this._horde.unlinkCreature(oCreature)
     }
 
@@ -189,28 +255,6 @@ class Manager {
         Object.values(this._effectOptimRegistry).forEach(({ effect, target, source }) => {
             this._effectProcessor.processEffect(effect, target, source)
         })
-    }
-
-    /**
-     * A new effect has been applied on a creatures. The manager must keep track of this effect if duration is > 0
-     * @param effect {BFEffect}
-     * @param target {Creature}
-     * @param source {Creature}
-     */
-    effectApplied ({ effect, target, source }) {
-        if (effect.duration > 0) {
-            this._effectOptimRegistry[effect.id] = { effect, target, source }
-        }
-    }
-
-    /**
-     * An effect has expired (duration reached 0)
-     * @param effect {BFEffect}
-     * @param target {Creature}
-     * @param source {Creature}
-     */
-    effectDisposed ({ effect, target, source }) {
-        delete this._effectOptimRegistry[effect.id]
     }
 }
 

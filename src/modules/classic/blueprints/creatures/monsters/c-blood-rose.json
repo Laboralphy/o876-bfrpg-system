@@ -1,11 +1,6 @@
 {
   "name": "c-blood-rose",
   "ac": 13,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "cane",
@@ -70,11 +65,12 @@
   ],
   "saveAs": {
     "level": 2,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "plant",
+  "specie": "SPECIE_PLANT",
   "level": 2,
-  "speed": 1
+  "speed": 1,
+  "classType": "CLASS_TYPE_MONSTER"
 }

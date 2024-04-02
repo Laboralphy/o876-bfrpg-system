@@ -1,3 +1,5 @@
+const CombatAction = require("./CombatAction");
+
 class CombatFighterState {
     constructor () {
         /**
@@ -51,9 +53,17 @@ class CombatFighterState {
     }
 
     set nextAction (value) {
-        this._nextAction = value
+        if (value === null || (value instanceof CombatAction)) {
+            this._nextAction = value
+        } else {
+            throw new TypeError('action must be null, or instance of CombatAction')
+        }
     }
 
+    /**
+     *
+     * @returns {null|CombatAction}
+     */
     get nextAction () {
         if (!this._currentAction) {
             this._currentAction = this._nextAction

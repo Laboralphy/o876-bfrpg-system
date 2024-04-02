@@ -1,11 +1,6 @@
 {
   "name": "c-crocodile-large",
   "ac": 17,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -21,11 +16,12 @@
   ],
   "saveAs": {
     "level": 6,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 6,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

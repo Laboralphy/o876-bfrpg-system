@@ -99,7 +99,7 @@ describe('createItem', function () {
             properties: [],
             data: {},
             weight: 40,
-            ac: 15,
+            ac: 5,
             material: 'MATERIAL_IRON',
             entityType: 'ENTITY_TYPE_ITEM',
             itemType: 'ITEM_TYPE_ARMOR',

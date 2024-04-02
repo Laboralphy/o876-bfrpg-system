@@ -1,11 +1,6 @@
 {
   "name": "c-ghost",
   "ac": 20,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 9
-  },
   "actions": [
     {
       "name": "touch",
@@ -19,7 +14,7 @@
         {
           "script": "damage-ability",
           "data": {
-            "ability": "constitution"
+            "ability": "ABILITY_CONSTITUTION"
           }
         },
         {
@@ -31,30 +26,37 @@
   ],
   "saveAs": {
     "level": 10,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "sleep"
       }
     },
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "charm"
       }
     },
     {
-      "property": "immunity",
+      "property": "property-condition-immunity",
       "data": {
         "condition": "hold"
+      }
+    },
+    {
+      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "data": {
+        "value": 9
       }
     }
   ],
   "equipment": [],
-  "specie": "undead",
+  "specie": "SPECIE_UNDEAD",
   "level": 10,
-  "speed": 30
+  "speed": 30,
+  "classType": "CLASS_TYPE_MONSTER"
 }

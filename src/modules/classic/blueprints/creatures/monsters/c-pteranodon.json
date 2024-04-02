@@ -1,11 +1,6 @@
 {
   "name": "c-pteranodon",
   "ac": 13,
-  "modifiers": {
-    "hp": 0,
-    "damage": 0,
-    "attack": 0
-  },
   "actions": [
     {
       "name": "bite",
@@ -21,11 +16,12 @@
   ],
   "saveAs": {
     "level": 5,
-    "classType": "fighter"
+    "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [],
   "equipment": [],
-  "specie": "animal",
+  "specie": "specie-animal",
   "level": 5,
-  "speed": 60
+  "speed": 60,
+  "classType": "CLASS_TYPE_MONSTER"
 }
