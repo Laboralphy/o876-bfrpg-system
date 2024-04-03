@@ -4,12 +4,24 @@ const CONSTS = require('../../consts')
  * @typedef BFStoreStateGauges {Object}
  * @property hitPoints {number}
  *
+ * @typedef BFStoreStateMonsterData {object}
+ * @property actions {{}}
+ * @property saveAs {{ classType: string, level: number }}
+ *
  * @typedef BFStoreState {object}
  * @property abilities {Object<string, number>}
  * @property classType {string}
+ * @property specie {string}
+ * @property race {string}
+ * @property naturalArmorClass {number}
  * @property level {number}
+ * @property monsterData {{}}
+ *
  * @property gauges {BFStoreStateGauges}
- * @property effect {[]}
+ * @property effect {BFEffect[]}
+ * @property properties {BFItemProperty[]}
+ * @property offensiveSlot {string}
+ * @property equipment {{}}
  */
 
 /**
@@ -56,9 +68,6 @@ module.exports = () => ({
         [CONSTS.EQUIPMENT_SLOT_FINGER_RIGHT]: null,
         [CONSTS.EQUIPMENT_SLOT_AMMO]: null,
         [CONSTS.EQUIPMENT_SLOT_WAIST]: null,
-        [CONSTS.EQUIPMENT_SLOT_FEET]: null,
-        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_0]: null,
-        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_1]: null,
-        [CONSTS.EQUIPMENT_SLOT_NATURAL_WEAPON_2]: null
+        [CONSTS.EQUIPMENT_SLOT_FEET]: null
     }
 })

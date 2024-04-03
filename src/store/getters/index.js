@@ -1,11 +1,20 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-02T14:56:16.721Z
+// Date : 2024-04-03T11:19:05.908Z
 // List of files in ./src/store/getters
 
 module.exports = {
   'getAbilities': require('./getAbilities.js'),
   'getAbilityModifiers': require('./getAbilityModifiers.js'),
+  'getActions': require('./getActions.js'),
+  'getDefensiveEquipmentProperties': require('./getDefensiveEquipmentProperties.js'),
   'getEffects': require('./getEffects.js'),
+  'getEquipment': require('./getEquipment.js'),
   'getHitPoints': require('./getHitPoints.js'),
-  'getMaxHitPoints': require('./getMaxHitPoints.js')
+  'getMaxHitPoints': require('./getMaxHitPoints.js'),
+  'getOffensiveEquipmentProperties': require('./getOffensiveEquipmentProperties.js'),
+  'getOffensiveSlot': require('./getOffensiveSlot.js'),
+  'getProperties': require('./getProperties.js'),
+  'getSelectedWeapon': require('./getSelectedWeapon.js'),
+  'getSpeed': require('./getSpeed.js'),
+  'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js')
 }

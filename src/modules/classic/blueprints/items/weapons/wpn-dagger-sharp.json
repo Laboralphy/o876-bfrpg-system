@@ -5,7 +5,7 @@
   "properties": [
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
-      "value": 1,
+      "amp": 1,
       "type": "DAMAGE_TYPE_WEAPON"
     }
   ]

@@ -86,7 +86,7 @@ class EffectProcessor {
             }
             return oEffect
         } else {
-            throw new Error('Unknown effect type : ' + sType)
+            throw new Error('Unknown effect type : ' + sType + ' - maybe effectPrograms not initialized')
         }
     }
 

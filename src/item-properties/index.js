@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-02T14:56:16.866Z
+// Date : 2024-04-03T11:19:06.045Z
 // List of files in ./src/item-properties
 
 module.exports = {
@@ -11,5 +11,6 @@ module.exports = {
   'ITEM_PROPERTY_DAMAGE_RESISTANCE': require('./damage-resistance.js'),
   'ITEM_PROPERTY_DAMAGE_VULNERABILITY': require('./damage-vulnerability.js'),
   'ITEM_PROPERTY_EXTRA_HITPOINTS': require('./extra-hitpoints.js'),
-  'ITEM_PROPERTY_EXTRA_WEIGHT': require('./extra-weight.js')
+  'ITEM_PROPERTY_EXTRA_WEIGHT': require('./extra-weight.js'),
+  'ITEM_PROPERTY_SPEED_MODIFIER': require('./speed-modifier.js')
 }

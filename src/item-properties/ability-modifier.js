@@ -1,10 +1,9 @@
 const CONSTS = require("../consts");
 
-function init (oItemProperty, { ability, value }) {
+function init (oItemProperty, { ability }) {
     if (!CONSTS[ability]) {
         throw new Error('unknown ability ' + ability)
     }
-    oItemProperty.amp = value
     oItemProperty.data.ability = ability
 }
 

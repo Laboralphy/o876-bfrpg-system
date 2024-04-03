@@ -7,7 +7,7 @@
  */
 module.exports = ({ state, externals }, { item, slot = '' }) => {
     const oItemTypes = externals['item-types']
-    const aAllowedSlots = oItemTypes.slots
+    const aAllowedSlots = oItemTypes[item.itemType].slots
     let sUseSlot = aAllowedSlots.includes(slot) ? slot : ''
     for (const s of aAllowedSlots) {
         if (!state.equipment[s]) {

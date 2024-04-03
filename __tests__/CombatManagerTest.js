@@ -1,5 +1,6 @@
 const CombatManagerTest = require('../src/combat/CombatManager')
 const Creature = require('../src/Creature')
+const CONSTS = require('../src/consts')
 
 describe('isCreatureFighting', function () {
     it('should return true when adding a creature', function () {
@@ -69,5 +70,235 @@ describe('combat.length', function () {
         cm.endCombat(c1, false)
         cm.startCombat(c1, c2)
         expect(cm.combats.length).toBe(2)
+    })
+})
+
+describe('combat distance', function () {
+    it('should set a default distance of 30 when starting combat', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        const c2 = new Creature()
+        cm.startCombat(c1, c2)
+        expect(cm.getCombat(c1).distance).toBe(30)
+    })
+    it('should synchronize distance changes when attacker and target fight each other', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        const c2 = new Creature()
+        cm.startCombat(c1, c2)
+        expect(cm.getCombat(c1).distance).toBe(30)
+        expect(cm.getCombat(c2).distance).toBe(30)
+        cm.getCombat(c1).distance = 15
+        expect(cm.getCombat(c1).distance).toBe(15)
+        expect(cm.getCombat(c2).distance).toBe(15)
+    })
+    it('should not synchronize distance changes when attacker and target don\'t fight each other', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const c3 = new Creature()
+        cm.events
+        cm.startCombat(c1, c2)
+        cm.startCombat(c3, c2) // c2 is already fighting c1
+        expect(cm.getCombat(c1).distance).toBe(30)
+        expect(cm.getCombat(c2).distance).toBe(30)
+        expect(cm.getCombat(c3).distance).toBe(30)
+        cm.getCombat(c3).distance = 10
+        cm.getCombat(c2).distance = 16
+        expect(cm.getCombat(c1).distance).toBe(16)
+        expect(cm.getCombat(c2).distance).toBe(16)
+        expect(cm.getCombat(c3).distance).toBe(10)
+    })
+})
+
+describe('combat with weapon', function () {
+    const ItemBuilder = require('../src/ItemBuilder')
+    const DATA = {
+        "weapon-types": {
+            "WEAPON_TYPE_LONGSWORD": {
+                "size": "WEAPON_SIZE_MEDIUM",
+                "weight": 4,
+                "damage": "1d8",
+                "attributes": [],
+                "material": "MATERIAL_STEEL"
+            },
+            "WEAPON_TYPE_SHORTBOW": {
+                "size": "WEAPON_SIZE_MEDIUM",
+                "weight": 2,
+                "damage": "1d6",
+                "attributes": [
+                    "WEAPON_ATTRIBUTE_RANGED",
+                    "WEAPON_ATTRIBUTE_AMMUNITION",
+                    "WEAPON_ATTRIBUTE_TWO_HANDED"
+                ],
+                "ammoType": "AMMO_TYPE_ARROW",
+                "material": "MATERIAL_WOOD"
+            }
+        },
+        "ammo-types": {
+            "AMMO_TYPE_ARROW": {
+                "weight": 0.1
+            }
+        },
+        "item-types": {
+            "ITEM_TYPE_WEAPON": {
+                "slots": ["EQUIPMENT_SLOT_WEAPON_MELEE", "EQUIPMENT_SLOT_WEAPON_RANGED"],
+                "defaultWeight": 0
+            },
+            "ITEM_TYPE_AMMO": {
+                "slots": ["EQUIPMENT_SLOT_AMMO"],
+                "defaultWeight": 0
+            }
+        }
+    }
+    const BLUEPRINTS = {
+        sword: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_LONGSWORD",
+            "properties": []
+        },
+        bow: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_SHORTBOW",
+            "properties": []
+        },
+        arrow: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_AMMO",
+            "ammoType": "AMMO_TYPE_ARROW",
+            "properties": []
+        }
+    }
+    const oItemBuilder = new ItemBuilder()
+
+    it('should select ranged weapon when distance is 30', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        c1.id = 'c1'
+        const c2 = new Creature()
+        c2.id = 'c2'
+        const sword1 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const sword2 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const bow1 = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
+        const bow2 = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
+        const arrow1 = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
+        const arrow2 = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
+        c1.mutations.equipItem({ item: sword1 })
+        c1.mutations.equipItem({ item: bow1 })
+        c1.mutations.equipItem({ item: arrow1 })
+        c2.mutations.equipItem({ item: sword2 })
+        c2.mutations.equipItem({ item: bow2 })
+        c2.mutations.equipItem({ item: arrow2 })
+        const aLog = []
+        cm.events.on('combat.offensive-slot', ev => {
+            aLog.push({
+                a: ev.attacker.id,
+                d: ev.target.id,
+                slot: ev.slot
+            })
+        })
+        cm.startCombat(c1, c2)
+        cm.getCombat(c1).equipSuitableWeapon()
+        cm.getCombat(c2).equipSuitableWeapon()
+        expect(aLog).toEqual([
+            {
+                a: 'c1',
+                d: 'c2',
+                slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
+            },
+            {
+                a: 'c2',
+                d: 'c1',
+                slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
+            }
+        ])
+    })
+    it('c1 should select ranged, c2 should select melee', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        c1.id = 'c1'
+        const c2 = new Creature()
+        c2.id = 'c2'
+        const sword1 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const sword2 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const bow1 = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
+        const arrow1 = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
+        c1.mutations.equipItem({ item: sword1 })
+        c1.mutations.equipItem({ item: bow1 })
+        c1.mutations.equipItem({ item: arrow1 })
+        c2.mutations.equipItem({ item: sword2 })
+        const aLog = []
+        cm.events.on('combat.offensive-slot', ev => {
+            aLog.push({
+                a: ev.attacker.id,
+                d: ev.target.id,
+                slot: ev.slot
+            })
+        })
+        cm.startCombat(c1, c2)
+        cm.getCombat(c1).equipSuitableWeapon()
+        cm.getCombat(c2).equipSuitableWeapon()
+        cm.getCombat(c2).distance = 5
+        cm.getCombat(c1).equipSuitableWeapon()
+        cm.getCombat(c2).equipSuitableWeapon()
+
+        expect(aLog).toEqual([
+            {
+                a: 'c1',
+                d: 'c2',
+                slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
+            },
+            {
+                a: 'c1',
+                d: 'c2',
+                slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE
+            }
+        ])
+    })
+    it('c1 should not select ranged when not having proper ammo', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        c1.id = 'c1'
+        const c2 = new Creature()
+        c2.id = 'c2'
+        const sword1 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const sword2 = oItemBuilder.createItem(BLUEPRINTS.sword, DATA)
+        const bow1 = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
+        const arrow1 = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
+        c1.mutations.equipItem({ item: sword1 })
+        c1.mutations.equipItem({ item: bow1 })
+        c2.mutations.equipItem({ item: sword2 })
+        const aLog = []
+        cm.events.on('combat.offensive-slot', ev => {
+            aLog.push({
+                a: ev.attacker.id,
+                d: ev.target.id,
+                slot: ev.slot
+            })
+        })
+        cm.startCombat(c1, c2)
+        const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
+        cm.getCombat(c1).equipSuitableWeapon()
+        expect(oWeaponC1.weaponType).toBe('WEAPON_TYPE_LONGSWORD')
+        expect(cm.getCombat(c1).targetInRange.selected).toBeFalsy()
+    })
+    it('c1 should not select anything when not being equipped with weapon', function () {
+        const cm = new CombatManagerTest()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        c1.id = 'c1'
+        const c2 = new Creature()
+        c2.id = 'c2'
+        cm.startCombat(c1, c2)
+        const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
+        expect(oWeaponC1).toBeNull()
     })
 })

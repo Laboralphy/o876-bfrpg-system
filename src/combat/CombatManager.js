@@ -5,6 +5,7 @@ class CombatManager {
     constructor () {
         this._fighters = {}
         this._events = new Events()
+        this._defaultDistance = 0
     }
 
     get events () {
@@ -13,6 +14,14 @@ class CombatManager {
 
     get combats () {
         return Object.values(this._fighters)
+    }
+
+    set defaultDistance (value) {
+        this._defaultDistance = value
+    }
+
+    get defaultDistance () {
+        return this._defaultDistance
     }
 
     processCombats () {
@@ -71,7 +80,20 @@ class CombatManager {
         const combat = new Combat()
         combat.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
         combat.events.on('combat.action', ev => this._events.emit('combat.action', ev))
+        combat.events.on('combat.offensive-slot', ev => this._events.emit('combat.offensive-slot', ev))
+        combat.events.on('combat.distance', ev => {
+            const { attacker, target, distance } = ev
+            this._events.emit('combat.action', ev)
+            if (this.isCreatureFightingWithTarget(attacker, target)) {
+                // also change target distance with attacker if different
+                const oTargetCombat = this.getCombat(oTarget)
+                if (oTargetCombat && oTargetCombat.distance !== distance) {
+                    oTargetCombat.distance = distance
+                }
+            }
+        })
         combat.setFighters(oCreature, oTarget)
+        combat.distance = this._defaultDistance
         return combat
     }
 
@@ -102,22 +124,6 @@ class CombatManager {
             return this._fighters[oCreature.id]
         } else {
             return null
-        }
-    }
-
-    setDistance (oCreature, oTarget, nDistance) {
-        const combat = this.getCombat(oCreature)
-        if (combat) {
-            this._events.emit('combat.distance', {
-                attacker: oCreature,
-                target: oTarget,
-                distance: nDistance
-            })
-            combat.distance = nDistance
-            if (this.isCreatureFightingWithTarget(oCreature, oTarget)) {
-                const c2 = this.getCombat(oTarget)
-                c2.distance = nDistance
-            }
         }
     }
 }

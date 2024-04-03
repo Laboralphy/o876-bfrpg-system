@@ -1,10 +1,19 @@
 const ITEM_PROPERTIES = require('./item-properties')
 
+/**
+ * @typedef BFItemProperty {object}
+ * @property amp {number|string}
+ * @property data {{}}
+ * @property property {string}
+ *
+ * @class
+ */
 class ItemProperties {
-    static build (sProperty, oParameters) {
+    static build (sProperty, amp, oParameters) {
         if (sProperty in ITEM_PROPERTIES) {
             const oItemProperty = {
                 property: sProperty,
+                amp,
                 data: {}
             }
             ItemProperties.runScript(oItemProperty, 'init', oParameters)

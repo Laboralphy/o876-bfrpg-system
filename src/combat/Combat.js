@@ -1,5 +1,7 @@
 const Events = require('events')
 const CombatFighterState = require('./CombatFighterState')
+const CONSTS = require('../consts')
+const DATA = require('../data')
 
 class Combat {
     constructor () {
@@ -28,7 +30,12 @@ class Combat {
     }
 
     set distance (value) {
-        this._distance = value
+        this._distance = Math.max(0, value)
+        this._events.emit('combat.distance', {
+            attacker: this._attacker.creature,
+            target: this._defender,
+            distance: this._distance
+        })
     }
 
     get distance () {
@@ -107,12 +114,74 @@ class Combat {
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 attacker: this._attacker.creature,
+                action: oAction => {
+                    this._attacker.nextAction = oAction
+                },
                 target: this._defender,
             })
             this.prepareTurn(this._attacker)
         }
         this.playFighterAction(this._attacker, this._defender)
         this.nextTick()
+    }
+
+    _isTargetInWeaponRange (weapon) {
+        if (!weapon) {
+            return false
+        }
+        const aWeaponAttributeSet = new Set(weapon.attributes)
+        if (aWeaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)) {
+            return this._distance > DATA['weapon-ranges'].WEAPON_RANGE_MELEE
+        }
+        if (aWeaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_REACH)) {
+            return this._distance <= DATA['weapon-ranges'].WEAPON_RANGE_REACH
+        }
+        return this._distance <= DATA['weapon-ranges'].WEAPON_RANGE_MELEE
+    }
+
+    /**
+     * Returns true if target is in attacker's weapon range
+     */
+    get targetInRange () {
+        const cg = this._attacker.creature.getters
+        const weapon = cg.getSelectedWeapon
+        const meleeWeapon = cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]
+        const rangedWeapon = cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]
+        return {
+            selected: this._isTargetInWeaponRange(weapon),
+            melee: this._isTargetInWeaponRange(meleeWeapon),
+            ranged: this._isTargetInWeaponRange(rangedWeapon)
+        }
+    }
+
+    _switchOffensiveSlot (slot) {
+        const atkr = this._attacker.creature
+        const sOldSlot = atkr.getters.getOffensiveSlot
+        if (sOldSlot !== slot) {
+            atkr.mutations.setOffensiveSlot({ slot })
+            this._events.emit('combat.offensive-slot', {
+                slot,
+                previousSlot: sOldSlot,
+                attacker: atkr,
+                target: this._defender,
+                weapon: atkr.getters.getSelectedWeapon
+            })
+        }
+        return atkr.getters.getSelectedWeapon
+    }
+
+    /**
+     * Equip the most suitable weapon according to target distance
+     * returns null if target is totally out of range
+     * @returns {BFItem|null}
+     */
+    equipSuitableWeapon () {
+        const oTargetInRange = this.targetInRange
+        // will try to attack with ranged weapon whenever possible
+        if (oTargetInRange.ranged && this._attacker.creature.getters.isRangedWeaponLoaded) {
+            return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
+        }
+        return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
     }
 }
 

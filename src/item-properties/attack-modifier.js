@@ -1,7 +1,6 @@
 const CONSTS = require('../consts')
 
-function init (oItemProperty, { value, attackType = CONSTS.ATTACK_TYPE_ANY }) {
-    oItemProperty.amp = value
+function init (oItemProperty, { attackType = CONSTS.ATTACK_TYPE_ANY }) {
     oItemProperty.data = {
         attackType
     }

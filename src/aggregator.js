@@ -41,7 +41,7 @@ function aggregateModifiers (aTags, getters, {
         aFilteredEffects.forEach(effectForEach)
     }
     const aFilteredItemProperties = getters
-        .getEquipmentItemProperties
+        .getProperties
         .filter(ip =>
             aTypeSet.has(ip.property) &&
             (propFilter ? propFilter(ip) : true)

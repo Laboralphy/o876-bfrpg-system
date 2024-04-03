@@ -11,7 +11,7 @@ class ItemBuilder {
      * @returns {BFItem}
      */
     mixData(oBlueprint, oData, slots, defaultWeight) {
-        const properties = oBlueprint.properties.map(ip => ItemProperties.build(ip.property, ip))
+        const properties = oBlueprint.properties.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip))
         let nExtraWeight = 0
         properties.forEach(p => {
             if (!('data' in p)) {

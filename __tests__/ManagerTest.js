@@ -70,7 +70,7 @@ describe('createItem', function () {
             "properties": [
                 {
                     "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
-                    "value": 3,
+                    "amp": 3,
                     "type": "DAMAGE_TYPE_WEAPON"
                 }
             ]
