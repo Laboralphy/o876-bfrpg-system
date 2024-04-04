@@ -2,16 +2,17 @@
  * Add an action to character action list
  * @param state {BFStoreState}
  * @param count {number}
+ * @param attackType {string}
  * @param name {string}
- * @param script {string}
+ * @param scripts {{script: string, data: {}}[]}
  * @param amp {string|number}
- * @param parameters {object}
  */
-module.exports = ({ state }, { count = 1, name, script = 'damage', amp = 0, parameters = {} }) => {
+module.exports = ({ state }, { name, attackType, count = 1, amp = 0, scripts = [] }) => {
     state.monsterData.actions.push({
         name,
+        attackType,
         count,
-        script,
+        scripts,
         amp
     })
 }

@@ -3,7 +3,7 @@ const CombatAction = require('../src/combat/CombatAction')
 const Creature = require('../src/Creature')
 
 describe ('computePlanning', function () {
-    it('should return [1, 0, 0, 0, 0, 0] when planning one attack over 6 ticks', function () {
+    it('should return [1, 0, 0, 0, 0, 0] when planning one attack-types over 6 ticks', function () {
         expect(Combat.computePlanning(1, 6)).toEqual([1, 0, 0, 0, 0, 0])
     })
     it('should return [1, 0, 0, 1, 0, 0] when planning 2 attacks over 6 ticks', function () {
@@ -27,7 +27,7 @@ describe ('computePlanning', function () {
     it('should return [2, 2, 1, 2, 2, 1] when planning 10 attacks over 6 ticks', function () {
         expect(Combat.computePlanning(10, 6)).toEqual([2, 2, 1, 2, 2, 1])
     })
-    it('should return [0, 0, 0, 0, 0, 1] when planning one attack over 6 ticks on reverseRound', function () {
+    it('should return [0, 0, 0, 0, 0, 1] when planning one attack-types over 6 ticks on reverseRound', function () {
         expect(Combat.computePlanning(1, 6, true))
             .toEqual([0, 0, 0, 0, 0, 1])
     })
@@ -42,7 +42,7 @@ describe ('computePlanning', function () {
 })
 
 describe('fullcombat', function () {
-    it('should send combat.action event when it is time for creature to attack and actions are defined', function () {
+    it('should send combat.action event when it is time for creature to attack-types and actions are defined', function () {
         const c = new Combat()
         const f1 = new Creature()
         f1.id = 'f1'

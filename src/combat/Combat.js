@@ -110,7 +110,7 @@ class Combat {
     advance () {
         if (this._tick === 0) {
             // Start of turn
-            // attack planning
+            // attack-types planning
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 attacker: this._attacker.creature,
@@ -177,7 +177,7 @@ class Combat {
      */
     equipSuitableWeapon () {
         const oTargetInRange = this.targetInRange
-        // will try to attack with ranged weapon whenever possible
+        // will try to attack-types with ranged weapon whenever possible
         if (oTargetInRange.ranged && this._attacker.creature.getters.isRangedWeaponLoaded) {
             return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
         }

@@ -40,6 +40,14 @@ class Creature {
     get dice () {
         return this._dice
     }
+
+    /**
+     *
+     * @param oTarget
+     */
+    attack (oTarget) {
+
+    }
 }
 
 module.exports = Creature

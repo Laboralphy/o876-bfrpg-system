@@ -1,0 +1,38 @@
+{
+  "description": "action definition",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "action name - unused for mechanics",
+      "type": "string"
+    },
+    "attackType": {
+      "description": "attack type - script used to determine if attack hits",
+      "type": "string"
+    },
+    "count": {
+      "description": "number of times, the attack is made in a turn",
+      "type": "number"
+    },
+    "amp": {
+      "$ref": "def-effect-amp"
+    },
+    "scripts": {
+      "description": "list of scripts to be run of attack hits",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "description": "script to run if this attack hit",
+            "type": "string"
+          },
+          "data": {
+            "description": "parameters passed to script",
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

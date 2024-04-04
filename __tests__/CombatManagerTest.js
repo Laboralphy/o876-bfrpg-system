@@ -1,10 +1,11 @@
-const CombatManagerTest = require('../src/combat/CombatManager')
+const CombatManager = require('../src/combat/CombatManager')
 const Creature = require('../src/Creature')
 const CONSTS = require('../src/consts')
+const ItemBuilder = require("../src/ItemBuilder");
 
 describe('isCreatureFighting', function () {
     it('should return true when adding a creature', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         expect(cm.isCreatureFighting(c1)).toBeFalsy()
@@ -12,7 +13,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c1)).toBeTruthy()
     })
     it('target should be in combat when targeted bu attacker', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         expect(cm.isCreatureFighting(c2)).toBeFalsy()
@@ -20,7 +21,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c2)).toBeTruthy()
     })
     it('both creature should be not-fighting when combat is done', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -31,7 +32,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c2)).toBeFalsy()
     })
     it('c2 combat should not end when ending c1 combat unilaterally', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -45,7 +46,7 @@ describe('isCreatureFighting', function () {
 
 describe('combat.length', function () {
     it('should register 2 combat when adding one fighter and one target', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         expect(cm.combats.length).toBe(0)
         const c1 = new Creature()
         const c2 = new Creature()
@@ -53,7 +54,7 @@ describe('combat.length', function () {
         expect(cm.combats.length).toBe(2)
     })
     it('should remain 1 combat when adding one fighter and one target and ending combat unilaterally', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         expect(cm.combats.length).toBe(0)
         const c1 = new Creature()
         const c2 = new Creature()
@@ -63,7 +64,7 @@ describe('combat.length', function () {
         expect(cm.combats.length).toBe(1)
     })
     it('should have 2 registered combat when cancelling and resuming combat', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -75,7 +76,7 @@ describe('combat.length', function () {
 
 describe('combat distance', function () {
     it('should set a default distance of 30 when starting combat', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -83,7 +84,7 @@ describe('combat distance', function () {
         expect(cm.getCombat(c1).distance).toBe(30)
     })
     it('should synchronize distance changes when attacker and target fight each other', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -95,7 +96,7 @@ describe('combat distance', function () {
         expect(cm.getCombat(c2).distance).toBe(15)
     })
     it('should not synchronize distance changes when attacker and target don\'t fight each other', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -177,7 +178,7 @@ describe('combat with weapon', function () {
     const oItemBuilder = new ItemBuilder()
 
     it('should select ranged weapon when distance is 30', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -220,7 +221,7 @@ describe('combat with weapon', function () {
         ])
     })
     it('c1 should select ranged, c2 should select melee', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -263,7 +264,7 @@ describe('combat with weapon', function () {
         ])
     })
     it('c1 should not select ranged when not having proper ammo', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -291,7 +292,7 @@ describe('combat with weapon', function () {
         expect(cm.getCombat(c1).targetInRange.selected).toBeFalsy()
     })
     it('c1 should not select anything when not being equipped with weapon', function () {
-        const cm = new CombatManagerTest()
+        const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -300,5 +301,85 @@ describe('combat with weapon', function () {
         cm.startCombat(c1, c2)
         const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
         expect(oWeaponC1).toBeNull()
+    })
+})
+
+describe('combat for real', function () {
+    const ItemBuilder = require('../src/ItemBuilder')
+    const DATA = {
+        "weapon-types": {
+            "WEAPON_TYPE_LONGSWORD": {
+                "size": "WEAPON_SIZE_MEDIUM",
+                "weight": 4,
+                "damage": "1d8",
+                "attributes": [],
+                "material": "MATERIAL_STEEL"
+            },
+            "WEAPON_TYPE_SHORTBOW": {
+                "size": "WEAPON_SIZE_MEDIUM",
+                "weight": 2,
+                "damage": "1d6",
+                "attributes": [
+                    "WEAPON_ATTRIBUTE_RANGED",
+                    "WEAPON_ATTRIBUTE_AMMUNITION",
+                    "WEAPON_ATTRIBUTE_TWO_HANDED"
+                ],
+                "ammoType": "AMMO_TYPE_ARROW",
+                "material": "MATERIAL_WOOD"
+            }
+        },
+        "ammo-types": {
+            "AMMO_TYPE_ARROW": {
+                "weight": 0.1
+            }
+        },
+        "item-types": {
+            "ITEM_TYPE_WEAPON": {
+                "slots": ["EQUIPMENT_SLOT_WEAPON_MELEE", "EQUIPMENT_SLOT_WEAPON_RANGED"],
+                "defaultWeight": 0
+            },
+            "ITEM_TYPE_AMMO": {
+                "slots": ["EQUIPMENT_SLOT_AMMO"],
+                "defaultWeight": 0
+            }
+        }
+    }
+    const BLUEPRINTS = {
+        sword: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_LONGSWORD",
+            "properties": []
+        },
+        bow: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_SHORTBOW",
+            "properties": []
+        },
+        arrow: {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_AMMO",
+            "ammoType": "AMMO_TYPE_ARROW",
+            "properties": []
+        }
+    }
+    const oItemBuilder = new ItemBuilder()
+
+    it('should attack-types target', function () {
+        const cm = new CombatManager()
+        cm.defaultDistance = 30
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.defineAction({
+            name: 'claw',
+            count: 2,
+            attackType: 'melee',
+            amp: '1d6',
+            scripts: []
+        })
+        const c2 = new Creature()
+        c2.id = 'c2'
+        cm.startCombat(c1, c2)
     })
 })
