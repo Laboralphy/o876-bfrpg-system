@@ -9,17 +9,17 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "damage-ability",
+          "script": "damage-ability",
           "data": {
             "ability": "ABILITY_CONSTITUTION"
           }
         },
         {
-          "convey": "vampyre",
+          "script": "vampyre",
           "data": {}
         }
       ]

@@ -9,11 +9,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "tremor-punch",
+          "script": "tremor-punch",
           "data": {
             "amount": "1d8"
           }

@@ -9,11 +9,11 @@
       "count": 2,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "paralysis",
+          "script": "paralysis",
           "data": {}
         }
       ]
@@ -25,11 +25,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "paralysis",
+          "script": "paralysis",
           "data": {}
         }
       ]

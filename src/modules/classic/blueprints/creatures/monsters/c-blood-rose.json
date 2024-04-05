@@ -9,11 +9,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "vampyre",
+          "script": "vampyre",
           "data": {}
         }
       ]
@@ -25,11 +25,11 @@
       "count": 2,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "vampyre",
+          "script": "vampyre",
           "data": {}
         }
       ]
@@ -41,11 +41,11 @@
       "count": 3,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "vampyre",
+          "script": "vampyre",
           "data": {}
         }
       ]
@@ -57,11 +57,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "calm",
+          "script": "calm",
           "data": {}
         }
       ]

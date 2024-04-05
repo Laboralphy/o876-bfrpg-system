@@ -91,16 +91,16 @@ class Combat {
         const nAttackCount = attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
             const action = attacker.nextAction
-            action.scripts.forEach(script => {
+            action.conveys.forEach(convey => {
                 this._events.emit('combat.action', {
                     turn: this._turn,
                     tick: this._tick,
                     attacker: attacker.creature,
                     target: defender,
                     action: action.name,
-                    script: script,
+                    script: convey.script,
                     amp: action.amp,
-                    data: script.data,
+                    data: convey.data,
                     count: nAttackCount
                 })
             })

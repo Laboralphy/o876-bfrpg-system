@@ -9,11 +9,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "confusion",
+          "script": "confusion",
           "data": {}
         }
       ]

@@ -9,11 +9,11 @@
       "count": 2,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "poison",
+          "script": "poison",
           "data": {}
         }
       ]
@@ -25,7 +25,7 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         }
       ]
@@ -37,11 +37,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "decoy",
+          "script": "decoy",
           "data": {}
         }
       ]

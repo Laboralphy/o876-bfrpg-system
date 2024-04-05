@@ -9,7 +9,7 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         }
       ]
@@ -21,11 +21,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "throw-giant-rock",
+          "script": "throw-giant-rock",
           "data": {}
         }
       ]
@@ -37,11 +37,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "cast",
+          "script": "cast",
           "data": {
             "spell": "bestow-curse",
             "charges": 1

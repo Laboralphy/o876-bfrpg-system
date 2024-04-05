@@ -1,9 +1,10 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-04T18:22:47.212Z
+// Date : 2024-04-05T13:07:59.745Z
 // List of files in ./src/item-properties
 
 module.exports = {
   'ITEM_PROPERTY_ABILITY_MODIFIER': require('./ability-modifier.js'),
+  'ITEM_PROPERTY_ARMOR_CLASS_MODIFIER': require('./armor-class-modifier.js'),
   'ITEM_PROPERTY_ATTACK_MODIFIER': require('./attack-modifier.js'),
   'ITEM_PROPERTY_CONDITION_IMMUNITY': require('./condition-immunity.js'),
   'ITEM_PROPERTY_DAMAGE_IMMUNITY': require('./damage-immunity.js'),

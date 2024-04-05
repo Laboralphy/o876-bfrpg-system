@@ -9,7 +9,7 @@
       "count": 2,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         }
       ]
@@ -21,7 +21,7 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         }
       ]
@@ -33,7 +33,7 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         }
       ]
@@ -45,11 +45,11 @@
       "count": 1,
       "conveys": [
         {
-          "convey": "damage",
+          "script": "damage",
           "data": {}
         },
         {
-          "convey": "dragon-breath",
+          "script": "dragon-breath",
           "data": {
             "damageType": "DAMAGE_TYPE_FIRE"
           }

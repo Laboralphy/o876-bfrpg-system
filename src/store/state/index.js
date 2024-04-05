@@ -16,7 +16,6 @@ const CONSTS = require('../../consts')
  * @property naturalArmorClass {number}
  * @property level {number}
  * @property monsterData {{}}
- *
  * @property gauges {BFStoreStateGauges}
  * @property effect {BFEffect[]}
  * @property properties {BFItemProperty[]}

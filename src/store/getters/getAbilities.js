@@ -1,5 +1,5 @@
 const CONSTS = require('../../consts')
-const {aggregateModifiers} = require("../../aggregator");
+const { aggregateModifiers } = require("../../aggregator");
 
 /**
  * List of all ability modifiers

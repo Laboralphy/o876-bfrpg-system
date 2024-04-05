@@ -53,7 +53,7 @@ describe('fullcombat', function () {
         c2.setFighters(f2, f1)
         c.attacker.nextAction = new CombatAction({
             name: 'claw',
-            scripts: [{
+            conveys: [{
                 script: 'damage',
                 data: {}
             }],
@@ -63,7 +63,7 @@ describe('fullcombat', function () {
         })
         c2.attacker.nextAction = new CombatAction({
             name: 'bite',
-            scripts: [{
+            conveys: [{
                 script: 'damage',
                 data: {}
             }],
@@ -133,7 +133,7 @@ describe('fullcombat', function () {
         c2.setFighters(f2, f1)
         const a1 = new CombatAction({
             name: 'claw',
-            scripts: [{
+            conveys: [{
                 script: 'damage',
                 data: {}
             }],
@@ -143,7 +143,7 @@ describe('fullcombat', function () {
         })
         const a2 = new CombatAction({
             name: 'stomp',
-            scripts: [{
+            conveys: [{
                 script: 'damage',
                 data: {}
             }],
@@ -154,7 +154,7 @@ describe('fullcombat', function () {
         c.attacker.nextAction = a1
         c2.attacker.nextAction = new CombatAction({
             name: 'bite',
-            scripts: [{
+            conveys: [{
                 script: 'damage',
                 data: {}
             }],

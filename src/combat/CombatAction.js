@@ -2,7 +2,7 @@
  * @class
  */
 class CombatAction {
-    constructor ({ name = '', attackType, count = 1, conveys = '', amp = 0 }) {
+    constructor ({ name = '', attackType, count = 1, conveys = [], amp = 0 }) {
         this._name = name
         this._count = count
         this._attackType = attackType
