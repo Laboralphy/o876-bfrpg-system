@@ -4,22 +4,24 @@
   "actions": [
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "1d4",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "weapon",
+      "attackType": "weapon",
       "damage": "",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
@@ -32,9 +34,9 @@
   "properties": [
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+      "amp": 1,
       "data": {
-        "damageType": "DAMAGE_TYPE_WEAPON",
-        "value": 1
+        "damageType": "DAMAGE_TYPE_WEAPON"
       }
     }
   ],

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "generate-indexes": "bash ./bin/generate-indexes",
+    "compile-assets": "bash ./bin/generate-indexes",
     "monsters:download-build-blueprints": "bash ./bin/generate-monster-data",
     "monsters:build-blueprints": "bash ./bin/generate-monster-data -d"
   },

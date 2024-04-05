@@ -4,26 +4,28 @@
   "actions": [
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "2d4",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "spray",
+      "attackType": "homing",
       "damage": "",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "irritating-oil",
+          "convey": "irritating-oil",
           "data": {}
         }
       ]
@@ -36,6 +38,7 @@
   "properties": [
     {
       "property": "property-threat-immunity",
+      "amp": 0,
       "data": {
         "threat": "sneak-attack"
       }

@@ -4,22 +4,24 @@
   "actions": [
     {
       "name": "gore",
+      "attackType": "melee",
       "damage": "3d6",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "trample",
+      "attackType": "multi-melee",
       "damage": "3d6",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]

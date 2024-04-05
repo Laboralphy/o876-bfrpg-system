@@ -4,60 +4,64 @@
   "actions": [
     {
       "name": "cane",
+      "attackType": "melee",
       "damage": "1d6",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "vampyre",
+          "convey": "vampyre",
           "data": {}
         }
       ]
     },
     {
       "name": "cane",
+      "attackType": "melee",
       "damage": "1d6",
       "count": 2,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "vampyre",
+          "convey": "vampyre",
           "data": {}
         }
       ]
     },
     {
       "name": "cane",
+      "attackType": "melee",
       "damage": "1d6",
       "count": 3,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "vampyre",
+          "convey": "vampyre",
           "data": {}
         }
       ]
     },
     {
       "name": "special",
+      "attackType": "homing",
       "damage": "",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "calm",
+          "convey": "calm",
           "data": {}
         }
       ]

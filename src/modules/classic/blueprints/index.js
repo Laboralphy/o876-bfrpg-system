@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-03T11:19:06.154Z
+// Date : 2024-04-04T18:22:47.450Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
@@ -77,6 +77,7 @@ module.exports = {
   'c-ghost': require('./creatures/monsters/c-ghost.json'),
   'c-ghoul': require('./creatures/monsters/c-ghoul.json'),
   'c-giant-cloud': require('./creatures/monsters/c-giant-cloud.json'),
+  'c-giant-cyclop': require('./creatures/monsters/c-giant-cyclop.json'),
   'c-grizzly': require('./creatures/monsters/c-grizzly.json'),
   'c-pteranodon': require('./creatures/monsters/c-pteranodon.json'),
   'c-pterodactyl': require('./creatures/monsters/c-pterodactyl.json'),

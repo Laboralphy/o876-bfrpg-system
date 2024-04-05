@@ -4,22 +4,24 @@
   "actions": [
     {
       "name": "horn",
+      "attackType": "melee",
       "damage": "2d4",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "trample",
+      "attackType": "multi-melee",
       "damage": "2d6",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]

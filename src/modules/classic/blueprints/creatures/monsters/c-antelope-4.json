@@ -4,11 +4,12 @@
   "actions": [
     {
       "name": "butt",
+      "attackType": "melee",
       "damage": "1d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]

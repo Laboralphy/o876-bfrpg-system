@@ -4,45 +4,48 @@
   "actions": [
     {
       "name": "claw",
+      "attackType": "melee",
       "damage": "1d4",
       "count": 2,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "paralysis",
+          "convey": "paralysis",
           "data": {}
         }
       ]
     },
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "1d4",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "paralysis",
+          "convey": "paralysis",
           "data": {}
         }
       ]
     },
     {
       "name": "stench",
+      "attackType": "homing",
       "damage": "",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "ghast-stench",
+          "convey": "ghast-stench",
           "data": {}
         }
       ]

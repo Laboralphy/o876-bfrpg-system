@@ -74,8 +74,8 @@ function changeBlueprintConstants (oInput) {
         })
     }
     oInput.actions.forEach(action => {
-        action.scripts.forEach(script => {
-            changeDataConstants(script.data)
+        action.conveys.forEach(convey => {
+            changeDataConstants(convey.data)
         })
     })
     oInput.properties.forEach(ip => {

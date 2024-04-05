@@ -4,48 +4,52 @@
   "actions": [
     {
       "name": "claw",
+      "attackType": "melee",
       "damage": "1d8",
       "count": 2,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "4d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "tail",
+      "attackType": "melee",
       "damage": "1d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "breath",
+      "attackType": "homing",
       "damage": "4d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "dragon-breath",
+          "convey": "dragon-breath",
           "data": {
             "damageType": "DAMAGE_TYPE_FIRE"
           }
@@ -59,13 +63,15 @@
   },
   "properties": [
     {
-      "property": "property-damage-immunity",
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
       "property": "property-spellcasting",
+      "amp": 0,
       "data": {
         "level": 5
       }

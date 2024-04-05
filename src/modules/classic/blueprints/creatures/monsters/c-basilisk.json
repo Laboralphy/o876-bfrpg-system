@@ -4,26 +4,28 @@
   "actions": [
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "1d10",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "gaze",
+      "attackType": "homing",
       "damage": 0,
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "petrify",
+          "convey": "petrify",
           "data": {}
         }
       ]

@@ -1,6 +1,7 @@
 const { getId } = require('./unique-id')
 const { buildStore } = require('./store')
 const Dice = require('./libs/dice')
+const CONSTS = require('./consts')
 
 /**
  * @class Creature
@@ -42,10 +43,32 @@ class Creature {
     }
 
     /**
-     *
-     * @param oTarget
+     * Attack the target using the specified combatAction
+     * @param oTarget {Creature}
+     * @param weapon {BFItem|null}
+     * @param attackType {string}
      */
-    attack (oTarget) {
+    attack (oTarget, {
+        attackType = ''
+    }) {
+        // Détermine if attack is melee or ranged
+        let bRanged = false
+        switch (attackType) {
+
+            case CONSTS.ATTACK_TYPE_ANY: {
+                // use equipped weapon
+                bRanged = this.getters.isRangedWeaponLoaded
+                break
+            }
+
+            case CONSTS.ATTACK_TYPE_RANGED_TOUCH:
+            case CONSTS.ATTACK_TYPE_RANGED: {
+                // attack is naturally ranged (spit, thrown rock...)
+                bRanged = true
+                break
+            }
+
+        }
 
     }
 }

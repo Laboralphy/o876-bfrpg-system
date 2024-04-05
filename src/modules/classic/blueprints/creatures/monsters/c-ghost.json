@@ -4,21 +4,22 @@
   "actions": [
     {
       "name": "touch",
+      "attackType": "touch",
       "damage": "1d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "damage-ability",
+          "convey": "damage-ability",
           "data": {
             "ability": "ABILITY_CONSTITUTION"
           }
         },
         {
-          "script": "vampyre",
+          "convey": "vampyre",
           "data": {}
         }
       ]
@@ -30,19 +31,22 @@
   },
   "properties": [
     {
-      "property": "property-condition-immunity",
+      "property": "ITEM_PROPERTY_CONDITION_IMMUNITY",
+      "amp": 0,
       "data": {
         "condition": "sleep"
       }
     },
     {
-      "property": "property-condition-immunity",
+      "property": "ITEM_PROPERTY_CONDITION_IMMUNITY",
+      "amp": 0,
       "data": {
         "condition": "charm"
       }
     },
     {
-      "property": "property-condition-immunity",
+      "property": "ITEM_PROPERTY_CONDITION_IMMUNITY",
+      "amp": 0,
       "data": {
         "condition": "hold"
       }

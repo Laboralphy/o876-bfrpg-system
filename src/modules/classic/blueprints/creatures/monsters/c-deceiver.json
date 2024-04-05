@@ -4,37 +4,40 @@
   "actions": [
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "1d6",
       "count": 2,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "bite",
+      "attackType": "melee",
       "damage": "1d8",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         }
       ]
     },
     {
       "name": "special",
+      "attackType": "homing",
       "damage": "",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "decoy",
+          "convey": "decoy",
           "data": {}
         }
       ]

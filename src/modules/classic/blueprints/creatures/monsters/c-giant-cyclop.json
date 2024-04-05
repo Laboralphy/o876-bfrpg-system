@@ -1,11 +1,11 @@
 {
-  "name": "c-giant-cloud",
+  "name": "c-giant-cyclop",
   "ac": 13,
   "actions": [
     {
       "name": "giant-weapon",
       "attackType": "melee",
-      "damage": "6d6",
+      "damage": "3d10",
       "count": 1,
       "conveys": [
         {
@@ -29,17 +29,37 @@
           "data": {}
         }
       ]
+    },
+    {
+      "name": "spell",
+      "attackType": "homing",
+      "damage": "",
+      "count": 1,
+      "conveys": [
+        {
+          "convey": "damage",
+          "data": {}
+        },
+        {
+          "convey": "cast",
+          "data": {
+            "spell": "bestow-curse",
+            "charges": 1
+          }
+        }
+      ]
     }
   ],
   "saveAs": {
-    "level": 12,
+    "level": 13,
     "classType": "CLASS_TYPE_FIGHTER"
   },
   "properties": [
     {
-      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+      "amp": -2,
       "data": {
-        "value": 3
+        "attackType": "ATTACK_TYPE_RANGED"
       }
     },
     {
@@ -50,10 +70,10 @@
     }
   ],
   "equipment": [
-    "arm-plate"
+    "arm-leather"
   ],
   "specie": "SPECIE_GIANT",
-  "level": 12,
+  "level": 13,
   "speed": 20,
   "classType": "CLASS_TYPE_MONSTER"
 }

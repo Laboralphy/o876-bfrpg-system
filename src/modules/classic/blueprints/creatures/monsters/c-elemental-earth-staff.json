@@ -4,15 +4,16 @@
   "actions": [
     {
       "name": "fist",
+      "attackType": "melee",
       "damage": "1d12",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
+          "convey": "damage",
           "data": {}
         },
         {
-          "script": "tremor-punch",
+          "convey": "tremor-punch",
           "data": {
             "amount": "1d8"
           }

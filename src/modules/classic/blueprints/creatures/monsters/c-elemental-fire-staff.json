@@ -3,17 +3,16 @@
   "ac": 18,
   "actions": [
     {
-      "name": "special",
+      "name": "fist",
+      "attackType": "melee",
       "damage": "1d12",
       "count": 1,
-      "scripts": [
+      "conveys": [
         {
-          "script": "attack",
-          "data": {}
-        },
-        {
-          "script": "flame-thrower",
-          "data": {}
+          "convey": "damage",
+          "data": {
+            "damageType": "DAMAGE_TYPE_FIRE"
+          }
         }
       ]
     }
@@ -24,19 +23,22 @@
   },
   "properties": [
     {
-      "property": "property-damage-immunity",
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
-      "property": "property-damage-vulnerability",
+      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
+      "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_COLD"
       }
     },
     {
       "property": "property-damage-aura",
+      "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_FIRE"
       }
