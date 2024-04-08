@@ -8,11 +8,10 @@
  * @param amp {string|number}
  */
 module.exports = ({ state }, { name, attackType, count = 1, amp = 0, conveys = [] }) => {
-    state.monsterData.actions.push({
-        name,
+    state.monsterData.actions[name] = {
         attackType,
         count,
         conveys,
         amp
-    })
+    }
 }

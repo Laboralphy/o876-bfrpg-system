@@ -2,6 +2,7 @@ const CONSTS = require("../../consts");
 
 /**
  * Returns list of properties on the selected weapon only
+ * includes ammo properties if ranged weapon is properly loaded with the right ammunition type
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
  * @returns {BFItemProperty[]}

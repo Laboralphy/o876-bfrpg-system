@@ -67,24 +67,33 @@ class Creature {
         }
     }
 
+    _completeAttackOutcomeWeapon (oOutcome, { finesse, ranged }) {
+        const nStrength = this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
+        const nDexterity = this.getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY]
+        const nOffensiveAbilityModifier = ranged
+            ? nDexterity
+            : finesse
+                ? Math.max(nStrength, nDexterity)
+                : nStrength
+        const oAttackModifiers = this.getters.getAttackModifiers
+        const nAttackModifiers = ranged ? oAttackModifiers.ranged : oAttackModifiers.melee
+    }
+
     /**
      * Attack the target using the specified combatAction
      * @param oTarget {Creature}
      */
     attackWithSelectedWeapon (oTarget) {
+        const nAttackBonus =
         // Determine if attack is melee or ranged
         const weapon = this.getters.getSelectedWeapon
-        const bHasWeapon = !!weapon
-        const weaponAttributeSet = bHasWeapon
-            ? new Set(weapon.attributes)
-            : new Set([
-                CONSTS.WEAPON_ATTRIBUTE_FINESSE
-            ])
+        const weaponAttributeSet = new Set(
+            weapon ? weapon.attributes : [CONSTS.WEAPON_ATTRIBUTE_FINESSE]
+        )
         const bRanged = weaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)
         const bFinesse = weaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_FINESSE)
         const nStrength = this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
         const nDexterity = this.getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY]
-        const bUseDexterity = bRanged || bFinesse
         const nOffensiveAbilityModifier = bRanged
             ? nDexterity
             : bFinesse
@@ -93,12 +102,53 @@ class Creature {
         const oAttackModifiers = this.getters.getAttackModifiers
         const nAttackModifiers = bRanged ? oAttackModifiers.ranged : oAttackModifiers.melee
         const oArmorClass = oTarget.getters.getArmorClass
-        const oAttackOutcome = this._createAttackOutcome({
+        return this._createAttackOutcome({
             ac: bRanged ? oArmorClass.ranged : oArmorClass.melee,
-            bonus: this.getters.getAttackBonus + nAttackModifiers,
+            bonus: nAttackModifiers + nOffensiveAbilityModifier,
             target: oTarget,
             weapon
         })
+    }
+
+    /**
+     *
+     * @param oTarget {Creature}
+     * @param oCombatAction {CombatAction}
+     */
+    attackUsingAction (oTarget, oCombatAction) {
+        const { amp, conveys, attackType } = oCombatAction
+        const md = this.getters.getMonsterData
+        const oArmorClass = oTarget.getters.getArmorClass
+        const oAttackOutcome = this._createAttackOutcome({})
+        switch (attackType) {
+            case CONSTS.ATTACK_TYPE_MELEE: {
+                oAttackOutcome.ac = oArmorClass.melee
+                break
+            }
+
+            case CONSTS.ATTACK_TYPE_MELEE_TOUCH: {
+                oAttackOutcome.ac = oArmorClass.natural
+                break
+            }
+
+            case CONSTS.ATTACK_TYPE_RANGED: {
+                oAttackOutcome.ac = oArmorClass.ranged
+                break
+            }
+
+            case CONSTS.ATTACK_TYPE_RANGED_TOUCH: {
+                oAttackOutcome.ac = oArmorClass.natural
+                break
+            }
+        }
+    }
+
+    resolveAttackOutcome (oAttackOutcome) {
+        const nRoll = this._dice.roll(20)
+        oAttackOutcome.roll = nRoll
+        oAttackOutcome.critical = nRoll === 20
+        oAttackOutcome.hit = (nRoll > 1) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        return oAttackOutcome
     }
 }
 

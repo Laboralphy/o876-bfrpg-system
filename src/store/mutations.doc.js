@@ -6,10 +6,12 @@
  * @property equipItem {function(item: BFItem, slot: string): BFEffect}
  * @property removeDeadEffects {function()}
  * @property removeItem {function(slot: string): BFEffect}
+ * @property selectAction {function(action: string)}
  * @property setAbilityValue {function(ability: string, value: number)}
  * @property setClassType {function(value: string)}
  * @property setEffectDuration {function(effect: BFEffect, duration: number)}
  * @property setHitPoints {function(value: number)}
  * @property setLevel {function(value: number)}
+ * @property setMonsterData {function(data: { modifiers: { attack: number, hp: number, saveAs: { classType: string, levelAdjust }}})}
  * @property setOffensiveSlot {function(slot: string)}
  */
