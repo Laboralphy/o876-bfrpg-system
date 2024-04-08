@@ -106,17 +106,19 @@ class CombatManager {
      * if creature already in combat : switch to new combat, discard old combat
      * @param oCreature {Creature}
      * @param oTarget {Creature}
+     * @return {Combat}
      */
     startCombat (oCreature, oTarget) {
         if (this.isCreatureFightingWithTarget(oCreature, oTarget)) {
             // creature is already in fight with target
-            return
+            return this._fighters[oCreature.id]
         }
         this.endCombat(oCreature)
         this._fighters[oCreature.id] = this._createCombat(oCreature, oTarget)
         if (!this.isCreatureFighting(oTarget)) {
             this._fighters[oTarget.id] = this._createCombat(oTarget, oCreature)
         }
+        return this._fighters[oCreature.id]
     }
 
     getCombat (oCreature) {

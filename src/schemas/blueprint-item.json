@@ -21,18 +21,6 @@
       "if": {
         "properties": {
           "itemType": {
-            "const": "ITEM_TYPE_NATURAL_WEAPON"
-          }
-        }
-      },
-      "then": {
-        "$ref": "./def-item-type-natural-weapon"
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "itemType": {
             "const": "ITEM_TYPE_ARMOR"
           }
         }

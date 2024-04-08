@@ -13,18 +13,6 @@
           "data": {}
         }
       ]
-    },
-    {
-      "name": "weapon",
-      "attackType": "any",
-      "damage": "",
-      "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
     }
   ],
   "saveAs": {
@@ -33,7 +21,8 @@
   },
   "properties": [],
   "equipment": [
-    "arm-chain-mail"
+    "arm-chain-mail",
+    "wpn-shortsword"
   ],
   "specie": "SPECIE_HUMANOID",
   "level": 1,

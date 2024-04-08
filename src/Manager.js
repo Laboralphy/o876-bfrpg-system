@@ -13,26 +13,8 @@ const { getId } = require('./unique-id')
 
 require('./store/getters.doc')
 require('./store/mutations.doc')
+require('./types.doc')
 
-/**
- * @typedef BFItem {object}
- * @property id {string}
- * @property ref {string} blueprint reference
- * @property entityType {string}
- * @property itemType {string}
- * @property [armorType] {string}
- * @property [weaponType] {string}
- * @property [shieldType] {string}
- * @property [ammoType] {string}
- * @property properties {[]}
- * @property data {{}}
- * @property equipmentSlots {string[]}
- * @property weight {number}
- * @property [size] {string}
- * @property [ac] {string}
- * @property [damage] {string}
- * @property material {string}
- */
 
 /**
  * @class

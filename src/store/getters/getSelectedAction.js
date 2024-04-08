@@ -1,12 +1,18 @@
 /**
  * Returns current selected action
  * @param state {BFStoreState}
+ * @param getters {BFStoreGetters}
  * @returns {BFStoreStateAction}
  */
-module.exports = state => {
+module.exports = (state, getters) => {
     const md = state.monsterData
     const mdsa = md.selectedAction
-    return mdsa
-        ? md.actions[mdsa]
-        : null
+    if (!mdsa) {
+        return null
+    }
+    const action = getters.getActions[mdsa]
+    if (!action) {
+        return null
+    }
+    return action
 }

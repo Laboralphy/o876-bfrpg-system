@@ -371,13 +371,13 @@ describe('combat for real', function () {
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
-        c1.mutations.defineAction({
+        c1.mutations.defineActions({ actions: [{
             name: 'claw',
             count: 2,
             attackType: 'melee',
             amp: '1d6',
-            scripts: []
-        })
+            conveys: []
+        }]})
         const c2 = new Creature()
         c2.id = 'c2'
         cm.startCombat(c1, c2)

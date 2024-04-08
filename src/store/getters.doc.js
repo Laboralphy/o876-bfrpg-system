@@ -2,9 +2,11 @@
  * @typedef BFStoreGetters {object}
  * @property getAbilities {Object<string, number>}
  * @property getAbilityModifiers {Object<string, number>}
- * @property getActions {{}[]}
+ * @property getActions {CombatAction[]}
  * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number}}
  * @property getAttackBonus {number}
+ * @property getAttackRollCriticalValue {number}
+ * @property getAttackRollFumbleValue {number}
  * @property getClassTypeData {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}
  * @property getEffects {{}[]}

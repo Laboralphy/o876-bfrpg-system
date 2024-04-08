@@ -1,0 +1,23 @@
+{
+  "DEFAULT_ACTION_UNARMED": {
+    "name": "unarmed",
+    "count": 1,
+    "amp": "1d3",
+    "conveys": [],
+    "attackType": "ATTACK_TYPE_MELEE"
+  },
+  "DEFAULT_ACTION_IMPROVISED": {
+    "name": "improvised",
+    "count": 1,
+    "amp": "1d4",
+    "conveys": [],
+    "attackType": "ATTACK_TYPE_MELEE"
+  },
+  "DEFAULT_ACTION_WEAPON": {
+    "name": "weapon",
+    "count": 1,
+    "amp": "",
+    "conveys": [],
+    "attackType": "ATTACK_TYPE_ANY"
+  }
+}

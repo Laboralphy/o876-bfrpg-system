@@ -3,21 +3,9 @@
   "ac": 13,
   "actions": [
     {
-      "name": "unarmed",
+      "name": "fist",
       "attackType": "melee",
       "damage": "1d8",
-      "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
-    },
-    {
-      "name": "weapon",
-      "attackType": "any",
-      "damage": "",
       "count": 1,
       "conveys": [
         {
@@ -47,7 +35,8 @@
     }
   ],
   "equipment": [
-    "arm-leather"
+    "arm-leather",
+    "wpn-club"
   ],
   "specie": "SPECIE_HUMANOID",
   "level": 3,

@@ -15,18 +15,6 @@
       ]
     },
     {
-      "name": "weapon",
-      "attackType": "any",
-      "damage": "",
-      "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
-    },
-    {
       "name": "special",
       "attackType": "homing",
       "damage": "",

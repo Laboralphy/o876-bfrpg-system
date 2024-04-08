@@ -25,13 +25,11 @@ function getMeleeAttackModifiers (getters) {
 }
 
 function getSelectedWeaponAttackBonus (state, getters) {
-    const { attackBonus: nBaseAttackBonus } = getters.getClassTypeData
     const weapon = getters.getSelectedWeapon
-    const ranged = weapon && weapon.attributes.include(CONSTS.WEAPON_ATTRIBUTE_RANGED)
-    const nAttackModifiers = ranged
-        ? getRangedAttackModifiers(getters)
-        : getMeleeAttackModifiers(getters)
-    return nBaseAttackBonus + nAttackModifiers
+    const ranged = weapon && weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+    return ranged
+        ? (getRangedAttackModifiers(getters) + getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY])
+        : (getMeleeAttackModifiers(getters) + getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH])
 }
 
 /**
@@ -42,21 +40,27 @@ function getSelectedWeaponAttackBonus (state, getters) {
  */
 module.exports = (state, getters) => {
     const action = getters.getSelectedAction
+    if (!action) {
+        return 0
+    }
+    // Monster attack bonus adjustment as defined in monster data table
     const nMonsterAttackBonus = state.monsterData.modifiers.attack
+    // Attack bonus gained with level
+    const nLevelAttackBonus = getters.getClassTypeData.attackBonus
     switch (action.attackType) {
         case CONSTS.ATTACK_TYPE_ANY: {
-            return nMonsterAttackBonus + getSelectedWeaponAttackBonus(state, getters)
+            return nLevelAttackBonus + nMonsterAttackBonus + getSelectedWeaponAttackBonus(state, getters)
         }
 
         case CONSTS.ATTACK_TYPE_RANGED:
         case CONSTS.ATTACK_TYPE_RANGED_TOUCH: {
-            return nMonsterAttackBonus + getRangedAttackModifiers(getters)
+            return nLevelAttackBonus + nMonsterAttackBonus + getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] + getRangedAttackModifiers(getters)
         }
 
         case CONSTS.ATTACK_TYPE_MELEE:
         case CONSTS.ATTACK_TYPE_MELEE_TOUCH:
         case CONSTS.ATTACK_TYPE_MULTI_MELEE: {
-            return nMonsterAttackBonus + getMeleeAttackModifiers(getters)
+            return nLevelAttackBonus + nMonsterAttackBonus + getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] + getMeleeAttackModifiers(getters)
         }
 
         default: {

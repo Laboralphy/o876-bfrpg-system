@@ -3,6 +3,6 @@
  * @param state {BFStoreState}
  * @param value {string}
  */
-module.exports = ({ state }, { value}) => {
+module.exports = ({ state }, { value }) => {
     state.classType = value
 }

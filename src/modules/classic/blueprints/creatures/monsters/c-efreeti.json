@@ -1,20 +1,7 @@
 {
   "name": "c-efreeti",
   "ac": 21,
-  "actions": [
-    {
-      "name": "weapon",
-      "attackType": "any",
-      "damage": "",
-      "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
-    }
-  ],
+  "actions": [],
   "saveAs": {
     "level": 15,
     "classType": "CLASS_TYPE_FIGHTER"

@@ -3,6 +3,8 @@ const { buildStore } = require('./store')
 const Dice = require('./libs/dice')
 const CONSTS = require('./consts')
 
+require('./types.doc')
+
 /**
  * @class Creature
  */
@@ -42,6 +44,11 @@ class Creature {
         return this._dice
     }
 
+    /**
+     * @param oDefault
+     * @returns {BFAttackOutcome}
+     * @private
+     */
     _createAttackOutcome (oDefault = {}) {
         return {
             ac: 0, // target armor class
@@ -54,9 +61,11 @@ class Creature {
             roll: 0, // attack roll
             target: null, // target creature
             weapon: null, // weapon involved in attack
+            ammo: null, // ammunition involved in attack
+            action: null, // action involved in attack
             kill: false, // the attack killed the target
-            failed: false, // could not attack
-            failure: '', // reason why attack failed (out of range, condition, etc...)
+            failed: true, // could not attack
+            failure: CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK, // reason why attack failed (out of range, condition, etc...)
             sneakable: false, // This attack is made from behind, a rogue may have damage bonus
             damages: {
                 amount: 0, // amount of damage if attack hit
@@ -67,26 +76,16 @@ class Creature {
         }
     }
 
-    _completeAttackOutcomeWeapon (oOutcome, { finesse, ranged }) {
-        const nStrength = this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
-        const nDexterity = this.getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY]
-        const nOffensiveAbilityModifier = ranged
-            ? nDexterity
-            : finesse
-                ? Math.max(nStrength, nDexterity)
-                : nStrength
-        const oAttackModifiers = this.getters.getAttackModifiers
-        const nAttackModifiers = ranged ? oAttackModifiers.ranged : oAttackModifiers.melee
-    }
-
     /**
      * Attack the target using the specified combatAction
-     * @param oTarget {Creature}
+     * @param oAttackOutcome {BFAttackOutcome}
      */
-    attackWithSelectedWeapon (oTarget) {
-        const nAttackBonus =
+    _attackUsingWeapon (oAttackOutcome) {
         // Determine if attack is melee or ranged
         const weapon = this.getters.getSelectedWeapon
+        const ammo = this.getters.isRangedWeaponLoaded
+            ? this.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_AMMO]
+            : null
         const weaponAttributeSet = new Set(
             weapon ? weapon.attributes : [CONSTS.WEAPON_ATTRIBUTE_FINESSE]
         )
@@ -99,27 +98,22 @@ class Creature {
             : bFinesse
                 ? Math.max(nStrength, nDexterity)
                 : nStrength
-        const oAttackModifiers = this.getters.getAttackModifiers
-        const nAttackModifiers = bRanged ? oAttackModifiers.ranged : oAttackModifiers.melee
+        const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
-        return this._createAttackOutcome({
-            ac: bRanged ? oArmorClass.ranged : oArmorClass.melee,
-            bonus: nAttackModifiers + nOffensiveAbilityModifier,
-            target: oTarget,
-            weapon
-        })
+        oAttackOutcome.ac = bRanged ? oArmorClass.ranged : oArmorClass.melee
+        oAttackOutcome.bonus = this.getters.getAttackBonus + nOffensiveAbilityModifier
+        oAttackOutcome.weapon = weapon
+        oAttackOutcome.ammo = ammo
     }
 
     /**
-     *
-     * @param oTarget {Creature}
-     * @param oCombatAction {CombatAction}
+     * @param oAttackOutcome {BFAttackOutcome}
      */
-    attackUsingAction (oTarget, oCombatAction) {
-        const { amp, conveys, attackType } = oCombatAction
-        const md = this.getters.getMonsterData
+    _attackUsingAction (oAttackOutcome) {
+        const { amp, conveys, attackType } = oAttackOutcome.action
+        const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
-        const oAttackOutcome = this._createAttackOutcome({})
+        oAttackOutcome.bonus = this.getters.getAttackBonus
         switch (attackType) {
             case CONSTS.ATTACK_TYPE_MELEE: {
                 oAttackOutcome.ac = oArmorClass.melee
@@ -143,11 +137,41 @@ class Creature {
         }
     }
 
-    resolveAttackOutcome (oAttackOutcome) {
+    /**
+     * Will roll a die and see if attack hits
+     * @param oAttackOutcome {BFAttackOutcome}
+     * @returns {BFAttackOutcome}
+     */
+    resolveAttackHit (oAttackOutcome) {
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
-        oAttackOutcome.critical = nRoll === 20
-        oAttackOutcome.hit = (nRoll > 1) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        oAttackOutcome.critical = nRoll >= this.getters.getAttackRollCriticalValue
+        oAttackOutcome.hit = (nRoll <= this.getters.getAttackRollFumbleValue) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        return oAttackOutcome
+    }
+
+    /**
+     * Will define which action will be used
+     * @param oTarget {Creature}
+     * @returns {BFAttackOutcome}
+     */
+    attack (oTarget) {
+        const action = this.getters.getSelectedAction
+        const oAttackOutcome = this._createAttackOutcome({
+            target: oTarget,
+            action
+        })
+        if (!action) {
+            oAttackOutcome.failed = true
+            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
+            return oAttackOutcome
+        }
+        if (action.attackType === CONSTS.ATTACK_TYPE_ANY) {
+            this._attackUsingWeapon(oAttackOutcome)
+        } else {
+            this._attackUsingAction(oAttackOutcome)
+        }
+        this.resolveAttackHit(oAttackOutcome)
         return oAttackOutcome
     }
 }

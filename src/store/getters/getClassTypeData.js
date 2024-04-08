@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 function getArrayValue (arr, index) {
-    return arr(Math.min(arr.length, Math.max(1, index)) - 1)
+    return arr[Math.min(arr.length, Math.max(1, index)) - 1]
 }
 
 function extractRegistryLevel (reg, nLevel) {

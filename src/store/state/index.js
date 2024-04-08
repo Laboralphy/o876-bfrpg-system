@@ -53,8 +53,9 @@ module.exports = () => ({
             classType: 'CLASS_TYPE_FIGHTER',
             levelAdjust: 0
         },
-        actions: {},
-        selectedAction: '',
+        actions: {
+        },
+        selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
         modifiers: {
             hp: 0,
             attack: 0

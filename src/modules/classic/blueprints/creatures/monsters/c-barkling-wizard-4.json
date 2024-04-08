@@ -15,18 +15,6 @@
       ]
     },
     {
-      "name": "weapon",
-      "attackType": "any",
-      "damage": "",
-      "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
-    },
-    {
       "name": "spell",
       "attackType": "homing",
       "damage": "",
@@ -52,7 +40,9 @@
       }
     }
   ],
-  "equipment": [],
+  "equipment": [
+    "wpn-quarterstaff"
+  ],
   "specie": "SPECIE_HUMANOID",
   "level": 1,
   "speed": 20,
