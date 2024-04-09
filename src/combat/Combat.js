@@ -146,7 +146,7 @@ class Combat {
         const cg = this._attacker.creature.getters
         const weapon = cg.getSelectedWeapon
         const meleeWeapon = cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]
-        const rangedWeapon = cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]
+        const rangedWeapon = cg.isRangedWeaponLoaded ? cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED] : null
         return {
             selected: this._isTargetInWeaponRange(weapon),
             melee: this._isTargetInWeaponRange(meleeWeapon),

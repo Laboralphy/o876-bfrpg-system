@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-08T16:31:29.941Z
+// Date : 2024-04-09T06:51:05.082Z
 // List of files in ./src/consts
 
 module.exports = {

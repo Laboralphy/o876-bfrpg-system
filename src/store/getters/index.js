@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-08T16:31:29.975Z
+// Date : 2024-04-09T06:51:05.116Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -24,5 +24,6 @@ module.exports = {
   'getSelectedAction': require('./getSelectedAction.js'),
   'getSelectedWeapon': require('./getSelectedWeapon.js'),
   'getSpeed': require('./getSpeed.js'),
-  'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js')
+  'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js'),
+  'isWieldingTwoHandedWeapon': require('./isWieldingTwoHandedWeapon.js')
 }

@@ -46,7 +46,7 @@ module.exports = () => ({
     classType: 'CLASS_TYPE_TOURIST',
     specie: 'SPECIE_HUMANOID',
     race: 'RACE_HUMAN',
-    naturalArmorClass: 10,
+    naturalArmorClass: 11,
     level: 1,
     monsterData: {
         saveAs: {

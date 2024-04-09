@@ -7,12 +7,18 @@ const CONSTS = require('../../consts')
  * @returns {CombatAction[]}
  */
 module.exports = (state, getters, externals) => {
-    const bEquippedRangedWeapon = !!getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]
-    const bEquippedMeleeWeapon = !!getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]
     const mda = state.monsterData.actions
+    const weapon = getters.getSelectedWeapon
+    const bEquippedWeapon = !!weapon
+    const bEquippedRangedWeapon = bEquippedWeapon && weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+    const bEquippedMeleeWeapon = bEquippedWeapon && !bEquippedRangedWeapon
+    // True if weapon is melee, or ranged with ammunition
+    const bWeaponCanBeUsed = bEquippedMeleeWeapon || (bEquippedRangedWeapon && getters.isRangedWeaponLoaded)
+    // True if creature has natural weapon, like claws, or fangs
     const bHasNaturalWeapon = Object.keys(mda).length > 0
-    const bWillUseImprovisedWeapon = !bHasNaturalWeapon && bEquippedRangedWeapon && !getters.isRangedWeaponLoaded
-    const bWillUseUnarmedAttack = !bHasNaturalWeapon && !bEquippedMeleeWeapon && !bEquippedRangedWeapon
+    // True if equipped with weapon but can't use weapon (ammunition)
+    const bWillUseImprovisedWeapon = bEquippedRangedWeapon && !bWeaponCanBeUsed
+    const bWillUseUnarmedAttack = !bHasNaturalWeapon && !bEquippedWeapon
     const oActions = {}
     Object.entries(mda).forEach(([key, value]) => {
         oActions[key] = {
@@ -20,7 +26,7 @@ module.exports = (state, getters, externals) => {
             name: key
         }
     })
-    if (bEquippedMeleeWeapon || (bEquippedRangedWeapon && !bWillUseImprovisedWeapon)) {
+    if (bWeaponCanBeUsed) {
         oActions[CONSTS.DEFAULT_ACTION_WEAPON] = externals['default-actions'][CONSTS.DEFAULT_ACTION_WEAPON]
     }
     if (bWillUseImprovisedWeapon) {

@@ -286,6 +286,7 @@ describe('combat with weapon', function () {
             })
         })
         cm.startCombat(c1, c2)
+        expect(cm.getCombat(c1).distance).toBe(30)
         const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
         cm.getCombat(c1).equipSuitableWeapon()
         expect(oWeaponC1.weaponType).toBe('WEAPON_TYPE_LONGSWORD')

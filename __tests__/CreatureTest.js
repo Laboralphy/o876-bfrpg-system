@@ -14,6 +14,13 @@ const DATA = {
             "attributes": [],
             "material": "MATERIAL_STEEL"
         },
+        "WEAPON_TYPE_DAGGER": {
+            "size": "WEAPON_SIZE_SMALL",
+            "weight": 4,
+            "damage": "1d4",
+            "attributes": [],
+            "material": "MATERIAL_STEEL"
+        },
         "WEAPON_TYPE_SHORTBOW": {
             "size": "WEAPON_SIZE_MEDIUM",
             "weight": 2,
@@ -25,6 +32,28 @@ const DATA = {
             ],
             "ammoType": "AMMO_TYPE_ARROW",
             "material": "MATERIAL_WOOD"
+        }
+    },
+    "shield-types": {
+        "SHIELD_TYPE_SMALL": {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_SHIELD",
+            "shieldType": "SHIELD_TYPE_SMALL",
+            ac: 1
+        }
+    },
+    "armor-types": {
+        "ARMOR_TYPE_LEATHER": {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_ARMOR",
+            "armorType": "ARMOR_TYPE_LEATHER",
+            "ac": 2
+        },
+        "ARMOR_TYPE_PLATE": {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_ARMOR",
+            "armorType": "ARMOR_TYPE_LEATHER",
+            "ac": 6
         }
     },
     "ammo-types": {
@@ -40,6 +69,12 @@ const DATA = {
         "ITEM_TYPE_AMMO": {
             "slots": ["EQUIPMENT_SLOT_AMMO"],
             "defaultWeight": 0
+        },
+        "ITEM_TYPE_SHIELD": {
+            "slots": ["EQUIPMENT_SLOT_SHIELD"]
+        },
+        "ITEM_TYPE_ARMOR": {
+            "slots": ["EQUIPMENT_SLOT_CHEST"]
         }
     }
 }
@@ -60,6 +95,24 @@ const BLUEPRINTS = {
         "entityType": "ENTITY_TYPE_ITEM",
         "itemType": "ITEM_TYPE_AMMO",
         "ammoType": "AMMO_TYPE_ARROW",
+        "properties": []
+    },
+    leather: {
+        "entityType": "ENTITY_TYPE_ITEM",
+        "itemType": "ITEM_TYPE_ARMOR",
+        "armorType": "ARMOR_TYPE_LEATHER",
+        "properties": []
+    },
+    plate: {
+        "entityType": "ENTITY_TYPE_ITEM",
+        "itemType": "ITEM_TYPE_ARMOR",
+        "armorType": "ARMOR_TYPE_PLATE",
+        "properties": []
+    },
+    shield: {
+        "entityType": "ENTITY_TYPE_ITEM",
+        "itemType": "ITEM_TYPE_SHIELD",
+        "shieldType": "SHIELD_TYPE_SMALL",
         "properties": []
     }
 }
@@ -185,6 +238,7 @@ describe('attack', function () {
         const bow = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
         c1.mutations.equipItem({ item: bow })
         c1.mutations.selectAction({ action: CONSTS.DEFAULT_ACTION_WEAPON })
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
         expect(!!c1.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]).toBeTruthy()
         expect(!!c1.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_AMMO]).toBeFalsy()
         expect(c1.getters.getActions).toEqual({
@@ -251,5 +305,107 @@ describe('attack', function () {
         const oAtkOutcome = c1.attack(c2)
         expect(oAtkOutcome.action.name).toBe('weapon')
         expect(oAtkOutcome.action.amp).toBe('')
+    })
+})
+
+describe('armor class', function () {
+    it('should have 11 natural armor when no armor is worn', function () {
+        const c1 = new Creature()
+        c1.id = 'c1'
+        expect(c1.getters.getArmorClass.melee).toBe(11)
+    })
+    it('should have 13 AC when wearing leather armor', function () {
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.leather, DATA) })
+        expect(c1.getters.getArmorClass.melee).toBe(13)
+    })
+    it('should have 18 AC when wearing plate armor and shield', function () {
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.plate, DATA) })
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.shield, DATA) })
+        expect(c1.getters.getArmorClass.melee).toBe(18)
+    })
+    it('should not count shield in ac when using bow', function () {
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.plate, DATA) })
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.shield, DATA) })
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.bow, DATA) })
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(BLUEPRINTS.arrow, DATA) })
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(c1.getters.getArmorClass.melee).toBe(18)
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
+        expect(c1.getters.getArmorClass.melee).toBe(17)
+    })
+    it('should have a BIG ac when wearing top loot enchanted armor', function () {
+        const MEGA_ARMOR_PLUS_3 = {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_ARMOR",
+            "armorType": "ARMOR_TYPE_PLATE",
+            "properties": [
+                {
+                    "property": "ITEM_PROPERTY_ARMOR_CLASS_MODIFIER",
+                    "amp": 3
+                }
+            ]
+        }
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(MEGA_ARMOR_PLUS_3, DATA) })
+        expect(c1.getters.getArmorClass.melee).toBe(20)
+        expect(c1.getters.getArmorClass.ranged).toBe(20)
+    })
+    it('should have different ac ranged/melee when wearing anti missile shield', function () {
+        const ANTI_MISSILE_SHIELD = {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_SHIELD",
+            "shieldType": "SHIELD_TYPE_SMALL",
+            "properties": [
+                {
+                    "property": "ITEM_PROPERTY_ARMOR_CLASS_MODIFIER",
+                    "attackType": "ATTACK_TYPE_RANGED",
+                    "amp": 3
+                }
+            ]
+        }
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.equipItem({ item: oItemBuilder.createItem(ANTI_MISSILE_SHIELD, DATA) })
+        expect(c1.getters.getArmorClass.melee).toBe(12)
+        expect(c1.getters.getArmorClass.ranged).toBe(15)
+    })
+})
+
+describe('attack-bonus', function () {
+    it('should have +2 attack bonus when usin +2 dagger', function () {
+        const DAGGER_PLUS_2 = {
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_DAGGER",
+            "material": "MATERIAL_SILVER",
+            "properties": [
+                {
+                    "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+                    "amp": 2
+                },
+                {
+                    "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+                    "amp": 2
+                }
+            ]
+        }
+        const oDagger = oItemBuilder.createItem(DAGGER_PLUS_2, DATA)
+        expect(oDagger.material).toBe(CONSTS.MATERIAL_SILVER)
+        expect(oDagger.damage).toBe('1d4')
+        const c1 = new Creature()
+        c1.id = 'c1'
+        c1.mutations.setLevel({ value: 5 })
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c1.mutations.setAbilityValue({ ability: CONSTS.ABILITY_STRENGTH, value: 16 })
+        c1.mutations.equipItem({ item: oDagger })
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(c1.getters.getAttackBonus).toBe(8) // 4 AB fighter-level-5 +2 strength +2 dagger
     })
 })
