@@ -409,3 +409,49 @@ describe('attack-bonus', function () {
         expect(c1.getters.getAttackBonus).toBe(8) // 4 AB fighter-level-5 +2 strength +2 dagger
     })
 })
+
+describe('ranged action and melee action', function () {
+    it('should liste ranged action of a bombardier', function () {
+        const c1 = new Creature()
+        c1.mutations.defineActions({ actions: [
+                {
+                    name: 'claws',
+                    amp: '1d4',
+                    count: 2,
+                    attackType: CONSTS.ATTACK_TYPE_MELEE,
+                    conveys: []
+                },
+                {
+                    name: 'bite',
+                    amp: '1d6',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_MELEE,
+                    conveys: []
+                },
+                {
+                    name: 'spit',
+                    amp: '1d6',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_RANGED_TOUCH,
+                    conveys: []
+                },
+                {
+                    name: 'throw',
+                    amp: '1d8',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_RANGED,
+                    conveys: []
+                },
+                {
+                    name: 'drain',
+                    amp: '1d8',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_MELEE_TOUCH,
+                    conveys: []
+                }
+            ]
+        })
+        expect(c1.getters.getMeleeActions).toEqual(['claws', 'bite', 'drain'])
+        expect(c1.getters.getRangedActions).toEqual(['spit', 'throw'])
+    })
+})

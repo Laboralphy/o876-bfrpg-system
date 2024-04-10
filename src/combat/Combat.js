@@ -181,7 +181,12 @@ class Combat {
         if (oTargetInRange.ranged && this._attacker.creature.getters.isRangedWeaponLoaded) {
             return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
         }
+        // if ranged weapon not properly loaded, or no ranged weapon at all, use melee
         return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
+    }
+
+    attackTarget () {
+        // Déterminer s'il y a des attaques naturelle
     }
 }
 

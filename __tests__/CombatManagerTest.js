@@ -2,6 +2,13 @@ const CombatManager = require('../src/combat/CombatManager')
 const Creature = require('../src/Creature')
 const CONSTS = require('../src/consts')
 const ItemBuilder = require("../src/ItemBuilder");
+const DATA = {
+    ...require('../src/data'),
+    ...require('../src/modules/classic/data')
+}
+const BLUEPRINTS = {
+    ...require('../src/modules/classic/blueprints')
+}
 
 describe('isCreatureFighting', function () {
     it('should return true when adding a creature', function () {
@@ -307,64 +314,6 @@ describe('combat with weapon', function () {
 
 describe('combat for real', function () {
     const ItemBuilder = require('../src/ItemBuilder')
-    const DATA = {
-        "weapon-types": {
-            "WEAPON_TYPE_LONGSWORD": {
-                "size": "WEAPON_SIZE_MEDIUM",
-                "weight": 4,
-                "damage": "1d8",
-                "attributes": [],
-                "material": "MATERIAL_STEEL"
-            },
-            "WEAPON_TYPE_SHORTBOW": {
-                "size": "WEAPON_SIZE_MEDIUM",
-                "weight": 2,
-                "damage": "1d6",
-                "attributes": [
-                    "WEAPON_ATTRIBUTE_RANGED",
-                    "WEAPON_ATTRIBUTE_AMMUNITION",
-                    "WEAPON_ATTRIBUTE_TWO_HANDED"
-                ],
-                "ammoType": "AMMO_TYPE_ARROW",
-                "material": "MATERIAL_WOOD"
-            }
-        },
-        "ammo-types": {
-            "AMMO_TYPE_ARROW": {
-                "weight": 0.1
-            }
-        },
-        "item-types": {
-            "ITEM_TYPE_WEAPON": {
-                "slots": ["EQUIPMENT_SLOT_WEAPON_MELEE", "EQUIPMENT_SLOT_WEAPON_RANGED"],
-                "defaultWeight": 0
-            },
-            "ITEM_TYPE_AMMO": {
-                "slots": ["EQUIPMENT_SLOT_AMMO"],
-                "defaultWeight": 0
-            }
-        }
-    }
-    const BLUEPRINTS = {
-        sword: {
-            "entityType": "ENTITY_TYPE_ITEM",
-            "itemType": "ITEM_TYPE_WEAPON",
-            "weaponType": "WEAPON_TYPE_LONGSWORD",
-            "properties": []
-        },
-        bow: {
-            "entityType": "ENTITY_TYPE_ITEM",
-            "itemType": "ITEM_TYPE_WEAPON",
-            "weaponType": "WEAPON_TYPE_SHORTBOW",
-            "properties": []
-        },
-        arrow: {
-            "entityType": "ENTITY_TYPE_ITEM",
-            "itemType": "ITEM_TYPE_AMMO",
-            "ammoType": "AMMO_TYPE_ARROW",
-            "properties": []
-        }
-    }
     const oItemBuilder = new ItemBuilder()
 
     it('should attack-types target', function () {
@@ -382,5 +331,37 @@ describe('combat for real', function () {
         const c2 = new Creature()
         c2.id = 'c2'
         cm.startCombat(c1, c2)
+    })
+
+    it('simulation 1', function () {
+        const oItemBuilder = new ItemBuilder()
+        expect(BLUEPRINTS['wpn-shortsword']).toBeDefined()
+
+        const cm = new CombatManager()
+        cm.defaultDistance = 30
+
+        const c1 = new Creature()
+        c1.id = 'c1'
+        const oShortSword1 = oItemBuilder.createItem(BLUEPRINTS['wpn-shortsword'], DATA)
+        const oArmorLeather1 = oItemBuilder.createItem(BLUEPRINTS['arm-leather'], DATA)
+        c1.mutations.equipItem({ item: oShortSword1 })
+        c1.mutations.equipItem({ item: oArmorLeather1 })
+
+        const c2 = new Creature()
+        c2.id = 'c2'
+        const oShortSword2 = oItemBuilder.createItem(BLUEPRINTS['wpn-shortsword'], DATA)
+        const oArmorLeather2 = oItemBuilder.createItem(BLUEPRINTS['arm-leather'], DATA)
+        c2.mutations.equipItem({ item: oShortSword2 })
+        c2.mutations.equipItem({ item: oArmorLeather2 })
+
+        cm.startCombat(c1, c2)
+        const combat1 = cm.getCombat(c1)
+
+        const w = combat1.equipSuitableWeapon()
+        expect(w).toBeDefined()
+        expect(w.weaponType).toBe('WEAPON_TYPE_SHORTSWORD')
+        const ao = c1.attack(c2)
+        expect(ao.failed).toBeTruthy()
+        expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_TARGET_UNREACHABLE)
     })
 })

@@ -14,10 +14,12 @@
  * @property getHitPoints {number}
  * @property getLevel {number}
  * @property getMaxHitPoints {number}
+ * @property getMeleeActions {string[]}
  * @property getMonsterData {{modifiers: { hp: number, attack: number }, saveAs: {levelAdjust: number, classType: string}, actions: {}[]}}
  * @property getOffensiveEquipmentProperties {BFItemProperty[]}
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
+ * @property getRangedActions {string[]}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpeed {number}
