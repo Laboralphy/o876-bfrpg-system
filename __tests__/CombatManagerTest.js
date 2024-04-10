@@ -333,7 +333,7 @@ describe('combat for real', function () {
         cm.startCombat(c1, c2)
     })
 
-    it('simulation 1', function () {
+    it('simulation 1 when c1 attack c2 with a sword, and being out of melee range', function () {
         const oItemBuilder = new ItemBuilder()
         expect(BLUEPRINTS['wpn-shortsword']).toBeDefined()
 
@@ -362,6 +362,6 @@ describe('combat for real', function () {
         expect(w.weaponType).toBe('WEAPON_TYPE_SHORTSWORD')
         const ao = c1.attack(c2)
         expect(ao.failed).toBeTruthy()
-        expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_TARGET_UNREACHABLE)
+        expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK)
     })
 })

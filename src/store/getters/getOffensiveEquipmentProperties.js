@@ -8,14 +8,13 @@ const CONSTS = require("../../consts");
  * @returns {BFItemProperty[]}
  */
 module.exports = (state, getters) => {
-    const os = state.offensiveSlot
-    const eqs = state.equipment[os]
-    if (eqs) {
-        const aAmmoProperties = eqs.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED) && getters.isRangedWeaponLoaded
+    const weapon = getters.getSelectedWeapon
+    if (weapon && getters.isSelectedWeaponUsable) {
+        const aAmmoProperties = weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
             ? state.equipment[CONSTS.EQUIPMENT_SLOT_AMMO].properties
             : []
         return [
-            ...eqs.properties,
+            ...weapon.properties,
             ...aAmmoProperties
         ]
     } else {

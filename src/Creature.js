@@ -151,7 +151,8 @@ class Creature {
     }
 
     /**
-     * Will define which action will be used
+     * Use selected action to attack.
+     * The attack may fail if action range is insufficient to reach target.
      * @param oTarget {Creature}
      * @returns {BFAttackOutcome}
      */

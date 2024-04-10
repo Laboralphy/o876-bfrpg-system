@@ -454,4 +454,67 @@ describe('ranged action and melee action', function () {
         expect(c1.getters.getMeleeActions).toEqual(['claws', 'bite', 'drain'])
         expect(c1.getters.getRangedActions).toEqual(['spit', 'throw'])
     })
+    it('should liste ranged action of a bombardier', function () {
+        const c1 = new Creature()
+        c1.mutations.defineActions({ actions: [
+                {
+                    name: 'bite',
+                    amp: '1d6',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_MELEE,
+                    conveys: []
+                },
+                {
+                    name: 'spit',
+                    amp: '1d6',
+                    count: 1,
+                    attackType: CONSTS.ATTACK_TYPE_RANGED_TOUCH,
+                    conveys: []
+                }
+            ]
+        })
+        const oDagger = oItemBuilder.createItem({
+            "entityType": "ENTITY_TYPE_ITEM",
+            "itemType": "ITEM_TYPE_WEAPON",
+            "weaponType": "WEAPON_TYPE_DAGGER",
+            "material": "MATERIAL_SILVER",
+            "properties": [
+                {
+                    "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+                    "amp": 2
+                },
+                {
+                    "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+                    "amp": 2
+                }
+            ]
+        }, DATA)
+        const bow = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
+        const arrow = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
+        c1.mutations.equipItem({ item: oDagger })
+        c1.mutations.equipItem({ item: bow })
+        c1.mutations.equipItem({ item: arrow })
+
+        expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
+        expect(c1.getters.getMeleeActions).toEqual(['bite', CONSTS.DEFAULT_ACTION_WEAPON])
+        expect(c1.getters.getRangedActions).toEqual(['spit'])
+
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
+
+        expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
+        expect(c1.getters.getMeleeActions).toEqual(['bite'])
+        expect(c1.getters.getRangedActions).toEqual(['spit', CONSTS.DEFAULT_ACTION_WEAPON])
+
+        // No more ammunition, ranged weapon become improvised melee weapon
+        c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_AMMO })
+        expect(c1.getters.getMeleeActions).toEqual(['bite', CONSTS.DEFAULT_ACTION_WEAPON])
+        expect(c1.getters.isRangedWeaponLoaded).toBeFalsy()
+        expect(c1.getters.getRangedActions).toEqual(['spit'])
+
+        c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
+        c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_AMMO })
+        expect(c1.getters.getMeleeActions).toEqual(['bite'])
+        expect(c1.getters.getRangedActions).toEqual(['spit'])
+    })
 })

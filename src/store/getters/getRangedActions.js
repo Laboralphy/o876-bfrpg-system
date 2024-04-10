@@ -9,9 +9,17 @@ const CONSTS = require('../../consts')
 module.exports = (state, getters) => {
     return Object
         .entries(getters.getActions)
-        .filter(([, action]) => {
-            return action.attackType === CONSTS.ATTACK_TYPE_RANGED ||
-                action.attackType === CONSTS.ATTACK_TYPE_RANGED_TOUCH
+        .filter(([sKey, action]) => {
+            const at = action.attackType
+            if (sKey === CONSTS.DEFAULT_ACTION_WEAPON) {
+                return getters.getSelectedWeapon &&
+                    getters.getSelectedWeapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED) &&
+                    getters.isRangedWeaponLoaded
+
+
+            }
+            return at === CONSTS.ATTACK_TYPE_RANGED ||
+                at === CONSTS.ATTACK_TYPE_RANGED_TOUCH
         })
         .map(([key]) => key)
 }

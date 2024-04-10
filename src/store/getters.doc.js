@@ -24,5 +24,6 @@
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpeed {number}
  * @property isRangedWeaponLoaded {boolean}
+ * @property isSelectedWeaponUsable {boolean}
  * @property isWieldingTwoHandedWeapon {boolean}
  */

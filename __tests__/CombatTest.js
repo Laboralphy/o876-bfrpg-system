@@ -1,6 +1,16 @@
 const Combat = require('../src/combat/Combat')
 const CombatAction = require('../src/combat/CombatAction')
 const Creature = require('../src/Creature')
+const ItemBuilder = require("../src/ItemBuilder");
+const CONSTS = require('../src/consts')
+const DATA = {
+    ...require('../src/data'),
+    ...require('../src/modules/classic/data')
+}
+const BLUEPRINTS = {
+    ...require('../src/modules/classic/blueprints')
+}
+
 
 describe ('computePlanning', function () {
     it('should return [1, 0, 0, 0, 0, 0] when planning one attack-types over 6 ticks', function () {
@@ -253,5 +263,82 @@ describe('fullcombat', function () {
                 action: 'bite'
             }
         ])
+    })
+})
+
+describe('selectSuitableAction', function () {
+    const oItemBuilder = new ItemBuilder()
+    it('select unarmed action when fighter are fresh new creature', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        c.distance = 30
+        const a = c.selectSuitableAction()
+        expect(a).toEqual({
+            name: 'unarmed',
+            count: 1,
+            amp: '1d3',
+            conveys: [],
+            attackType: 'ATTACK_TYPE_MELEE'
+        })
+    })
+    it('select ranged weapon when target is far', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        const bow = oItemBuilder.createItem(BLUEPRINTS["wpn-shortbow"], DATA)
+        const arrow = oItemBuilder.createItem(BLUEPRINTS["ammo-arrow"], DATA)
+        c.distance = 30
+        f1.mutations.equipItem({ item: bow })
+        f1.mutations.equipItem({ item: arrow })
+        f1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(c.targetInRange).toEqual({
+            melee: false,
+            ranged: true,
+            selected: false
+        })
+        // Should use a ranged weapon
+        const a = c.selectSuitableAction()
+        expect(a).toEqual({
+            name: 'weapon',
+            count: 1,
+            amp: '',
+            conveys: [],
+            attackType: 'ATTACK_TYPE_ANY'
+        })
+    })
+    it('should use improvised weapon when having only ranged weapon and target is close', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        const bow = oItemBuilder.createItem(BLUEPRINTS["wpn-shortbow"], DATA)
+        const arrow = oItemBuilder.createItem(BLUEPRINTS["ammo-arrow"], DATA)
+        c.distance = 5
+        f1.mutations.equipItem({ item: bow })
+        f1.mutations.equipItem({ item: arrow })
+        f1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(c.targetInRange).toEqual({
+            melee: false,
+            ranged: false,
+            selected: false
+        })
+        // Should use a ranged weapon
+        const a = c.selectSuitableAction()
+        expect(a).toEqual({
+            name: 'improvised',
+            count: 1,
+            amp: '',
+            conveys: [],
+            attackType: 'ATTACK_TYPE_ANY'
+        })
     })
 })
