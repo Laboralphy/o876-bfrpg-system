@@ -157,20 +157,21 @@ class Creature {
      * @returns {BFAttackOutcome}
      */
     attack (oTarget) {
-        const action = this.getters.getSelectedAction
         const oAttackOutcome = this._createAttackOutcome({
-            target: oTarget,
-            action
+            target: oTarget
         })
-        if (!action) {
-            oAttackOutcome.failed = true
-            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
-            return oAttackOutcome
-        }
-        if (action.attackType === CONSTS.ATTACK_TYPE_ANY) {
+        const weapon = this.getters.getSelectedWeapon
+        if (weapon) {
             this._attackUsingWeapon(oAttackOutcome)
         } else {
-            this._attackUsingAction(oAttackOutcome)
+            const action = this.getters.getSelectedAction
+            oAttackOutcome.action = action
+            if (action) {
+                this._attackUsingAction(oAttackOutcome)
+            } else {
+                oAttackOutcome.failed = true
+                oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
+            }
         }
         this.resolveAttackHit(oAttackOutcome)
         return oAttackOutcome

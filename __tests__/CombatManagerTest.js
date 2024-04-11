@@ -307,8 +307,8 @@ describe('combat with weapon', function () {
         const c2 = new Creature()
         c2.id = 'c2'
         cm.startCombat(c1, c2)
-        const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
-        expect(oWeaponC1).toBeNull()
+        const sOffSlot = cm.getCombat(c1).getMostSuitableOffensiveSlot()
+        expect(sOffSlot).toBe('')
     })
 })
 
@@ -357,9 +357,13 @@ describe('combat for real', function () {
         cm.startCombat(c1, c2)
         const combat1 = cm.getCombat(c1)
 
-        const w = combat1.equipSuitableWeapon()
-        expect(w).toBeDefined()
-        expect(w.weaponType).toBe('WEAPON_TYPE_SHORTSWORD')
+        expect(combat1.targetInRange).toEqual({
+            melee: false,
+            ranged: false,
+            selected: false
+        })
+        const sSlot = combat1.getMostSuitableOffensiveSlot()
+        expect(sSlot).toBe('')
         const ao = c1.attack(c2)
         expect(ao.failed).toBeTruthy()
         expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK)

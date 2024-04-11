@@ -156,10 +156,20 @@ class Combat {
         }
     }
 
+    /**
+     * Will set new offensive slot, and will fire an event.
+     * Does nothing if offensive slot does not change
+     * @param slot {string}
+     * @returns {BFItem}
+     * @private
+     */
     _switchOffensiveSlot (slot) {
         const atkr = this._attacker.creature
+        // we should compare new slot, and previous slot
+        // no need to unecessarly fire an event
         const sOldSlot = atkr.getters.getOffensiveSlot
         if (sOldSlot !== slot) {
+            // new offensive slot is different from previous offensive slot : fire an event
             atkr.mutations.setOffensiveSlot({ slot })
             this._events.emit('combat.offensive-slot', {
                 slot,
@@ -172,72 +182,60 @@ class Combat {
         return atkr.getters.getSelectedWeapon
     }
 
+
     /**
      * Equip the most suitable weapon according to target distance
      * returns null if target is totally out of range
-     * @returns {BFItem|null}
+     * @returns {string}
      */
-    equipSuitableWeapon () {
+    getMostSuitableOffensiveSlot () {
         const oTargetInRange = this.targetInRange
         // will try to attack-types with ranged weapon whenever possible
-        if (oTargetInRange.ranged && this._attacker.creature.getters.isRangedWeaponLoaded) {
-            return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
+        if (oTargetInRange.ranged) {
+            // Ranged weapon is properly loaded, and target is afar : go for ranged
+            return CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
         }
-        // Target is at melee range
-        // Do we have a melee weapon
-        if (this._attacker.creature.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
-            // if ranged weapon not properly loaded, or no ranged weapon at all, use melee
-            return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
-        } else if (this._attacker.creature.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]) {
-            // Will use ranged weapon as an improvised weapon
-            return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
-        } else {
-            // Will use unarmed attack
-            return this._switchOffensiveSlot(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
+        if (oTargetInRange.melee) {
+            // Target is close and melee weapon is available in equipment slot : go for melee
+            return CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE
         }
-
+        // none of our weapon may reach target
+        return ''
     }
 
     /**
      *
      * @returns {CombatAction}
      */
-    selectSuitableAction () {
+    getMostSuitableAction () {
         const atkr = this._attacker.creature
         // are there any usable weapons ?
-        const weapon = this.equipSuitableWeapon()
-        if (weapon) {
-            // attack with weapon
-            return atkr.getters.getActions[CONSTS.DEFAULT_ACTION_WEAPON]
+        const msw = this.getMostSuitableOffensiveSlot()
+        if (msw) {
+            // One of out offensive slot is suitable for attacking target
+            atkr.mutations.setOffensiveSlot({ slot: msw })
+            return DATA['default-actions'].DEFAULT_ACTION_WEAPON
         }
+        // target cannot be attacked by one of our equipped weapons
         // are there any natural attacks ?
         const bTargetIsFar = this.distance > WEAPON_RANGE_MELEE
-        const oSelectedAction = atkr.getters.getSelectedAction
-
-        if (bTargetIsFar) {
-            // The target is far, we must use ranged action
-            const aRangedActions = atkr.getters.getRangedActions
-            if (aRangedActions.length > 0) {
-                if (oSelectedAction.attackType !== CONSTS.ATTACK_TYPE_RANGED &&
-                    oSelectedAction.attackType !== CONSTS.ATTACK_TYPE_RANGED_TOUCH
-                ) {
-                    // if action is not ranged, we must use a ranged action
-                    return atkr.getters.getActions[aRangedActions[0]]
-                }
-            }
-        } else {
-            const aMeleeActions = atkr.getters.getMeleeActions
-            if (aMeleeActions.length > 0) {
-                if (oSelectedAction.attackType !== CONSTS.ATTACK_TYPE_MELEE &&
-                    oSelectedAction.attackType !== CONSTS.ATTACK_TYPE_MELEE_TOUCH &&
-                    oSelectedAction.attackType !== CONSTS.ATTACK_TYPE_MULTI_MELEE
-                ) {
-                    // we must use a melee action
-                    return atkr.getters.getActions[aMeleeActions[0]]
-                }
-            }
+        const aActions = bTargetIsFar
+            ? atkr.getters.getRangedActions
+            : atkr.getters.getMeleeActions
+        if (aActions.length > 0) {
+            const iAction = atkr.dice.roll(aActions.length) - 1
+            return aActions[iAction]
         }
-        return oSelectedAction
+        // Fallback actions
+        // target must be close
+        if (bTargetIsFar) {
+            // target is too far
+            return null
+        }
+        const oRangedWeapon = atkr.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]
+        return !!oRangedWeapon
+            ? DATA['default-actions'].DEFAULT_ACTION_IMPROVISED
+            : DATA['default-actions'].DEFAULT_ACTION_UNARMED
     }
 }
 

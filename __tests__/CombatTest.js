@@ -268,7 +268,7 @@ describe('fullcombat', function () {
 
 describe('selectSuitableAction', function () {
     const oItemBuilder = new ItemBuilder()
-    it('select unarmed action when fighter are fresh new creature', function () {
+    it('select null action when fighter are fresh new creature and target is too far', function () {
         const c = new Combat()
         const f1 = new Creature()
         f1.id = 'f1'
@@ -276,14 +276,19 @@ describe('selectSuitableAction', function () {
         f2.id = 'f2'
         c.setFighters(f1, f2)
         c.distance = 30
-        const a = c.selectSuitableAction()
-        expect(a).toEqual({
-            name: 'unarmed',
-            count: 1,
-            amp: '1d3',
-            conveys: [],
-            attackType: 'ATTACK_TYPE_MELEE'
-        })
+        const a = c.getMostSuitableAction()
+        expect(a).toBeNull()
+    })
+    it('select unarmed action action when fighter are fresh new creature and target is too at melee ranged', function () {
+        const c = new Combat()
+        const f1 = new Creature()
+        f1.id = 'f1'
+        const f2 = new Creature()
+        f2.id = 'f2'
+        c.setFighters(f1, f2)
+        c.distance = 5
+        const a = c.getMostSuitableAction()
+        expect(a).toEqual({"amp": "1d3", "attackType": "ATTACK_TYPE_MELEE", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_UNARMED"})
     })
     it('select ranged weapon when target is far', function () {
         const c = new Combat()
@@ -304,9 +309,9 @@ describe('selectSuitableAction', function () {
             selected: false
         })
         // Should use a ranged weapon
-        const a = c.selectSuitableAction()
+        const a = c.getMostSuitableAction()
         expect(a).toEqual({
-            name: 'weapon',
+            name: 'DEFAULT_ACTION_WEAPON',
             count: 1,
             amp: '',
             conveys: [],
@@ -332,13 +337,13 @@ describe('selectSuitableAction', function () {
             selected: false
         })
         // Should use a ranged weapon
-        const a = c.selectSuitableAction()
+        const a = c.getMostSuitableAction()
         expect(a).toEqual({
-            name: 'improvised',
+            name: 'DEFAULT_ACTION_IMPROVISED',
             count: 1,
-            amp: '',
+            amp: '1d4',
             conveys: [],
-            attackType: 'ATTACK_TYPE_ANY'
+            attackType: 'ATTACK_TYPE_MELEE'
         })
     })
 })

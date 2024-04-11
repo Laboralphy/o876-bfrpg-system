@@ -284,7 +284,7 @@ describe('attack', function () {
         c2.id = 'c2'
         const bow = oItemBuilder.createItem(BLUEPRINTS.bow, DATA)
         c1.mutations.equipItem({ item: bow })
-        c1.mutations.selectAction({ action: CONSTS.DEFAULT_ACTION_WEAPON })
+        c1.mutations.selectAction({ action: '' })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
         const oAtkOutcome = c1.attack(c2)
         expect(oAtkOutcome.action.name).toBe('improvised')
@@ -300,11 +300,10 @@ describe('attack', function () {
         const arrows = oItemBuilder.createItem(BLUEPRINTS.arrow, DATA)
         c1.mutations.equipItem({ item: bow })
         c1.mutations.equipItem({ item: arrows })
-        c1.mutations.selectAction({ action: CONSTS.DEFAULT_ACTION_WEAPON })
+        c1.mutations.selectAction({ action: '' })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
         const oAtkOutcome = c1.attack(c2)
-        expect(oAtkOutcome.action.name).toBe('weapon')
-        expect(oAtkOutcome.action.amp).toBe('')
+        expect(oAtkOutcome.action).toBeNull()
     })
 })
 
@@ -496,18 +495,18 @@ describe('ranged action and melee action', function () {
         c1.mutations.equipItem({ item: arrow })
 
         expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
-        expect(c1.getters.getMeleeActions).toEqual(['bite', CONSTS.DEFAULT_ACTION_WEAPON])
+        expect(c1.getters.getMeleeActions).toEqual(['bite'])
         expect(c1.getters.getRangedActions).toEqual(['spit'])
 
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
 
         expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED)
         expect(c1.getters.getMeleeActions).toEqual(['bite'])
-        expect(c1.getters.getRangedActions).toEqual(['spit', CONSTS.DEFAULT_ACTION_WEAPON])
+        expect(c1.getters.getRangedActions).toEqual(['spit'])
 
         // No more ammunition, ranged weapon become improvised melee weapon
         c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_AMMO })
-        expect(c1.getters.getMeleeActions).toEqual(['bite', CONSTS.DEFAULT_ACTION_WEAPON])
+        expect(c1.getters.getMeleeActions).toEqual(['bite'])
         expect(c1.getters.isRangedWeaponLoaded).toBeFalsy()
         expect(c1.getters.getRangedActions).toEqual(['spit'])
 
