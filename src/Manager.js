@@ -14,6 +14,8 @@ const { getId } = require('./unique-id')
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
+const CreatureBuilder = require("./CreatureBuilder");
+const ItemProperties = require("./ItemProperties");
 
 
 /**
@@ -27,6 +29,7 @@ class Manager {
         ep.events.on('effect-applied', ev => this._effectApplied(ev))
         ep.events.on('effect-disposed', ev => this._effectDisposed(ev))
         const ib = new ItemBuilder()
+        const cb = new CreatureBuilder()
 
         this._horde = h
         this._effectProcessor = ep
@@ -34,7 +37,12 @@ class Manager {
         this._data = Object.assign({}, DATA)
         this._blueprints = {}
         this._validBlueprints = {}
+
+        ib.blueprints = this._blueprints
+        ib.data = this._data
+
         this._itemBuilder = ib
+        this._creatureBuilder = cb
         this._schemaValidator = null
         this._combatManager = new CombatManager()
     }
@@ -183,11 +191,21 @@ class Manager {
     /**
      * Create a new creature
      * @param id {string}
+     * @param ref {string}
      * @returns {Creature}
      */
-    createCreature ({ id }) {
+    createCreature ({ id, ref = '' }) {
         const oCreature = new Creature()
+        if (ref) {
+            const oBlueprint = this.getBlueprint(ref)
+            this._creatureBuilder.buildMonster(oCreature, oBlueprint)
+            oBlueprint.equipment.forEach(eq => {
+                const oItem = this.createItem({ ref: eq })
+                oCreature.mutations.equipItem({ item: oItem })
+            })
+        }
         oCreature.id = id
+        oCreature.mutations.setHitPoints({ value: oCreature.getters.getMaxHitPoints })
         this._horde.linkCreature(oCreature)
         return oCreature
     }

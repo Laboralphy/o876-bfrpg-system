@@ -13,5 +13,9 @@
  * @property setHitPoints {function(value: number)}
  * @property setLevel {function(value: number)}
  * @property setMonsterData {function(data: { modifiers: { attack: number, hp: number, saveAs: { classType: string, levelAdjust }}})}
+ * @property setNaturalArmorClass {function(value: number)}
  * @property setOffensiveSlot {function(slot: string)}
+ * @property setProperties {function(properties: {[]})}
+ * @property setSpecie {function(value: string)}
+ * @property setSpeed {function(value: number)}
  */

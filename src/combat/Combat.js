@@ -2,6 +2,7 @@ const Events = require('events')
 const CombatFighterState = require('./CombatFighterState')
 const CONSTS = require('../consts')
 const DATA = require('../data')
+const CombatAction = require("./CombatAction");
 
 const { WEAPON_RANGE_MELEE, WEAPON_RANGE_REACH } = DATA['weapon-ranges']
 
@@ -32,12 +33,16 @@ class Combat {
     }
 
     set distance (value) {
-        this._distance = Math.max(0, value)
-        this._events.emit('combat.distance', {
-            attacker: this._attacker.creature,
-            target: this._defender,
-            distance: this._distance
-        })
+        const nOldDistance = this._distance
+        if (nOldDistance !== value) {
+            this._distance = Math.max(0, value)
+            this._events.emit('combat.distance', {
+                attacker: this._attacker.creature,
+                target: this._defender,
+                distance: this._distance,
+                previousDistance: nOldDistance
+            })
+        }
     }
 
     get distance () {
@@ -113,6 +118,12 @@ class Combat {
         if (this._tick === 0) {
             // Start of turn
             // attack-types planning
+            if (!this._attacker.nextAction) {
+                const oDecidedAction = this.getMostSuitableAction()
+                if (oDecidedAction) {
+                    this._attacker.nextAction = new CombatAction(oDecidedAction)
+                }
+            }
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 attacker: this._attacker.creature,
@@ -121,6 +132,9 @@ class Combat {
                 },
                 target: this._defender,
             })
+            if (!this._attacker.nextAction) {
+                this.approachTarget()
+            }
             this.prepareTurn(this._attacker)
         }
         this.playFighterAction(this._attacker, this._defender)
@@ -224,18 +238,33 @@ class Combat {
             : atkr.getters.getMeleeActions
         if (aActions.length > 0) {
             const iAction = atkr.dice.roll(aActions.length) - 1
-            return aActions[iAction]
+            return atkr.getters.getActions[aActions[iAction]]
         }
         // Fallback actions
         // target must be close
         if (bTargetIsFar) {
             // target is too far
+            // There is no way to attack
+            // must go closer
             return null
         }
-        const oRangedWeapon = atkr.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]
-        return !!oRangedWeapon
-            ? DATA['default-actions'].DEFAULT_ACTION_IMPROVISED
-            : DATA['default-actions'].DEFAULT_ACTION_UNARMED
+        return DATA['default-actions'].DEFAULT_ACTION_UNARMED
+    }
+
+    /**
+     * If a most suitable offensive slot is available, equip the corresponding weapon
+     * else do nothing
+     */
+    switchToMostSuitableWeapon () {
+        const sSuitabgleSlot = this.getMostSuitableOffensiveSlot()
+        if (sSuitabgleSlot) {
+            this._switchOffensiveSlot(sSuitabgleSlot)
+        }
+    }
+
+    approachTarget () {
+        const nRunSpeed = this._attacker.creature.getters.getSpeed
+        this.distance = Math.max(DATA['weapon-ranges'].WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
     }
 }
 

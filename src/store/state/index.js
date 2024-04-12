@@ -19,6 +19,7 @@ const CONSTS = require('../../consts')
  * @property abilities {Object<string, number>}
  * @property classType {string}
  * @property specie {string}
+ * @property speed {number}
  * @property race {string}
  * @property naturalArmorClass {number}
  * @property level {number}
@@ -45,6 +46,7 @@ module.exports = () => ({
     },
     classType: 'CLASS_TYPE_TOURIST',
     specie: 'SPECIE_HUMANOID',
+    speed: 30,
     race: 'RACE_HUMAN',
     naturalArmorClass: 11,
     level: 1,

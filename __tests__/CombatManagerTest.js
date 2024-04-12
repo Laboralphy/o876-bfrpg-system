@@ -212,8 +212,8 @@ describe('combat with weapon', function () {
             })
         })
         cm.startCombat(c1, c2)
-        cm.getCombat(c1).equipSuitableWeapon()
-        cm.getCombat(c2).equipSuitableWeapon()
+        cm.getCombat(c1).switchToMostSuitableWeapon()
+        cm.getCombat(c2).switchToMostSuitableWeapon()
         expect(aLog).toEqual([
             {
                 a: 'c1',
@@ -251,11 +251,13 @@ describe('combat with weapon', function () {
             })
         })
         cm.startCombat(c1, c2)
-        cm.getCombat(c1).equipSuitableWeapon()
-        cm.getCombat(c2).equipSuitableWeapon()
-        cm.getCombat(c2).distance = 5
-        cm.getCombat(c1).equipSuitableWeapon()
-        cm.getCombat(c2).equipSuitableWeapon()
+        const combat1 = cm.getCombat(c1)
+        const combat2 = cm.getCombat(c2)
+        combat1.switchToMostSuitableWeapon()
+        combat2.switchToMostSuitableWeapon()
+        combat2.distance = 5
+        combat1.switchToMostSuitableWeapon()
+        combat2.switchToMostSuitableWeapon()
 
         expect(aLog).toEqual([
             {
@@ -270,7 +272,7 @@ describe('combat with weapon', function () {
             }
         ])
     })
-    it('c1 should not select ranged when not having proper ammo', function () {
+    it('c1 should use NO weapon when not having proper ammo and target being out of melee ranged', function () {
         const cm = new CombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
@@ -294,9 +296,8 @@ describe('combat with weapon', function () {
         })
         cm.startCombat(c1, c2)
         expect(cm.getCombat(c1).distance).toBe(30)
-        const oWeaponC1 = cm.getCombat(c1).equipSuitableWeapon()
-        cm.getCombat(c1).equipSuitableWeapon()
-        expect(oWeaponC1.weaponType).toBe('WEAPON_TYPE_LONGSWORD')
+        const sSuitableSlot = cm.getCombat(c1).getMostSuitableOffensiveSlot()
+        expect(sSuitableSlot).toBe('')
         expect(cm.getCombat(c1).targetInRange.selected).toBeFalsy()
     })
     it('c1 should not select anything when not being equipped with weapon', function () {

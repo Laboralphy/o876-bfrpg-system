@@ -151,8 +151,11 @@ class Creature {
     }
 
     /**
-     * Use selected action to attack.
-     * The attack may fail if action range is insufficient to reach target.
+     * Use selected action or weapon to attack.
+     * Does not check rules :
+     * - No range checking
+     * - Unloaded ranged weapon can still be used without ammo, missing ammo do not provide bonus
+     * Will not select the most appropriate weapon or action prior to attack
      * @param oTarget {Creature}
      * @returns {BFAttackOutcome}
      */
@@ -161,19 +164,23 @@ class Creature {
             target: oTarget
         })
         const weapon = this.getters.getSelectedWeapon
+        const action = this.getters.getSelectedAction
         if (weapon) {
+            // We have a weapon
             this._attackUsingWeapon(oAttackOutcome)
-        } else {
-            const action = this.getters.getSelectedAction
+        } else if (action) {
+            // We don't have weapon
             oAttackOutcome.action = action
-            if (action) {
-                this._attackUsingAction(oAttackOutcome)
-            } else {
-                oAttackOutcome.failed = true
-                oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
-            }
+            // ... but we have action
+            this._attackUsingAction(oAttackOutcome)
+        } else {
+            // no weapon, no action
+            oAttackOutcome.failed = true
+            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
         }
-        this.resolveAttackHit(oAttackOutcome)
+        if (!oAttackOutcome.failed) {
+            this.resolveAttackHit(oAttackOutcome)
+        }
         return oAttackOutcome
     }
 }

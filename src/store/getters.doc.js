@@ -2,7 +2,7 @@
  * @typedef BFStoreGetters {object}
  * @property getAbilities {Object<string, number>}
  * @property getAbilityModifiers {Object<string, number>}
- * @property getActions {CombatAction[]}
+ * @property getActions {Object<string, CombatAction>}
  * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number}}
  * @property getAttackBonus {number}
  * @property getAttackRollCriticalValue {number}
@@ -22,6 +22,7 @@
  * @property getRangedActions {string[]}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
+ * @property getSpecie {string}
  * @property getSpeed {number}
  * @property isRangedWeaponLoaded {boolean}
  * @property isSelectedWeaponUsable {boolean}

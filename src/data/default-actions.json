@@ -6,13 +6,6 @@
     "conveys": [],
     "attackType": "ATTACK_TYPE_MELEE"
   },
-  "DEFAULT_ACTION_IMPROVISED": {
-    "name": "DEFAULT_ACTION_IMPROVISED",
-    "count": 1,
-    "amp": "1d4",
-    "conveys": [],
-    "attackType": "ATTACK_TYPE_MELEE"
-  },
   "DEFAULT_ACTION_WEAPON": {
     "name": "DEFAULT_ACTION_WEAPON",
     "count": 1,

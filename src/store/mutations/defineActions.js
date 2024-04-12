@@ -1,9 +1,3 @@
-const aReservedAttackNameSet = new Set([
-    'improvised',
-    'unarmed',
-    'weapon'
-])
-
 /**
  * Add an action to character action list
  *
@@ -21,9 +15,6 @@ module.exports = ({ state }, { actions }) => {
     const mda = state.monsterData.actions
     const aPrevKeys = new Set(Object.keys(mda))
     actions.forEach(a => {
-        if (aReservedAttackNameSet.has(a.name)) {
-            throw new Error('Action name reserved: ' + a.name)
-        }
         mda[a.name] = {
             name: a.name,
             attackType: a.attackType,

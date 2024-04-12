@@ -5,5 +5,12 @@
  * @returns {Object<string, CombatAction>}
  */
 module.exports = (state, getters, externals) => {
-    return state.monsterData.actions
+    const oActions = state.monsterData.actions
+    if (Object.keys(oActions).length > 0) {
+        return oActions
+    } else {
+        return {
+            [externals['default-actions'].DEFAULT_ACTION_UNARMED.name]: externals['default-actions'].DEFAULT_ACTION_UNARMED
+        }
+    }
 }

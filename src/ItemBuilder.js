@@ -1,3 +1,4 @@
+const Builder = require('./Builder')
 const ItemProperties = require("./ItemProperties");
 const CONSTS = require("./consts");
 
@@ -103,25 +104,22 @@ class ItemBuilder {
         return this.mixData(oBlueprint, {}, slots, data)
     }
 
-    createItem (oBlueprint, data) {
-        if (!data) {
-            throw new Error('data is not defined !')
-        }
+    createItem (oBlueprint = null, oData = null) {
         switch (oBlueprint.itemType) {
             case CONSTS.ITEM_TYPE_ARMOR: {
-                return this.createItemArmor(oBlueprint, data)
+                return this.createItemArmor(oBlueprint, oData)
             }
 
             case CONSTS.ITEM_TYPE_WEAPON: {
-                return this.createItemWeapon(oBlueprint, data)
+                return this.createItemWeapon(oBlueprint, oData)
             }
 
             case CONSTS.ITEM_TYPE_SHIELD: {
-                return this.createItemShield(oBlueprint, data)
+                return this.createItemShield(oBlueprint, oData)
             }
 
             case CONSTS.ITEM_TYPE_AMMO: {
-                return this.createItemAmmo(oBlueprint, data)
+                return this.createItemAmmo(oBlueprint, oData)
             }
 
             case CONSTS.ITEM_TYPE_HELM:
@@ -133,7 +131,7 @@ class ItemBuilder {
             case CONSTS.ITEM_TYPE_BELT:
             case CONSTS.ITEM_TYPE_BOOTS:
             case CONSTS.ITEM_TYPE_TORCH: {
-                return this.createItemGear(oBlueprint, data)
+                return this.createItemGear(oBlueprint, oData)
             }
 
             default: {

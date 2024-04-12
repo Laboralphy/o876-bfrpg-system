@@ -318,32 +318,26 @@ describe('selectSuitableAction', function () {
             attackType: 'ATTACK_TYPE_ANY'
         })
     })
-    it('should use improvised weapon when having only ranged weapon and target is close', function () {
+    it('should not be able to select weapon when target is far and having only melee weapon', function () {
         const c = new Combat()
         const f1 = new Creature()
         f1.id = 'f1'
         const f2 = new Creature()
         f2.id = 'f2'
         c.setFighters(f1, f2)
-        const bow = oItemBuilder.createItem(BLUEPRINTS["wpn-shortbow"], DATA)
-        const arrow = oItemBuilder.createItem(BLUEPRINTS["ammo-arrow"], DATA)
-        c.distance = 5
-        f1.mutations.equipItem({ item: bow })
-        f1.mutations.equipItem({ item: arrow })
-        f1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        const sword = oItemBuilder.createItem(BLUEPRINTS["wpn-shortsword"], DATA)
+        c.distance = 30
+        f1.mutations.equipItem({ item: sword })
+        f1.mutations.setOffensiveSlot({ slot: '' })
         expect(c.targetInRange).toEqual({
             melee: false,
             ranged: false,
             selected: false
         })
-        // Should use a ranged weapon
         const a = c.getMostSuitableAction()
-        expect(a).toEqual({
-            name: 'DEFAULT_ACTION_IMPROVISED',
-            count: 1,
-            amp: '1d4',
-            conveys: [],
-            attackType: 'ATTACK_TYPE_MELEE'
-        })
+        expect(a).toBeNull()
+        c.distance = 5
+        const a2 = c.getMostSuitableAction()
+        expect(a2).toEqual({"amp": "", "attackType": "ATTACK_TYPE_ANY", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_WEAPON"})
     })
 })
