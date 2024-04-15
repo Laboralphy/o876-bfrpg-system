@@ -74,6 +74,7 @@ function changeBlueprintConstants (oInput) {
         })
     }
     oInput.actions.forEach(action => {
+        action.attackType = searchConst(action.attackType)
         action.conveys.forEach(convey => {
             changeDataConstants(convey.data)
         })

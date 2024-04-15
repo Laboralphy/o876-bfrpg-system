@@ -36,6 +36,7 @@
  * @property hit {boolean}
  * @property range {number}
  * @property roll {number}
+ * @property attacker {Creature}
  * @property target {Creature}
  * @property weapon {BFItem}
  * @property ammo {BFItem}

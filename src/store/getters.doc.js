@@ -8,7 +8,9 @@
  * @property getAttackRollCriticalValue {number}
  * @property getAttackRollFumbleValue {number}
  * @property getClassTypeData {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
+ * @property getDamageMitigation {Object<string, D20OneDamageMitigation>}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}
+ * @property getEffectSet {Set<string>}
  * @property getEffects {{}[]}
  * @property getEquipment {Object<string, BFItem>}
  * @property getHitPoints {number}

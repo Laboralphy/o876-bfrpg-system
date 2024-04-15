@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "bite",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d12",
       "count": 1,
       "conveys": [
@@ -20,7 +20,7 @@
     },
     {
       "name": "gaze",
-      "attackType": "homing",
+      "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
       "count": 1,
       "conveys": [

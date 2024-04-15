@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "talon",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "count": 2,
       "conveys": [
@@ -16,7 +16,7 @@
     },
     {
       "name": "beak",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
       "count": 1,
       "conveys": [

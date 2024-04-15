@@ -5,6 +5,14 @@ const DATA = require('../data')
 const CombatAction = require("./CombatAction");
 
 const { WEAPON_RANGE_MELEE, WEAPON_RANGE_REACH } = DATA['weapon-ranges']
+const NEED_ATTACK_ROLL  = new Set([
+    CONSTS.ATTACK_TYPE_ANY,
+    CONSTS.ATTACK_TYPE_RANGED,
+    CONSTS.ATTACK_TYPE_MELEE,
+    CONSTS.ATTACK_TYPE_RANGED_TOUCH,
+    CONSTS.ATTACK_TYPE_MELEE_TOUCH,
+    CONSTS.ATTACK_TYPE_MULTI_MELEE
+])
 
 class Combat {
     constructor () {
@@ -37,6 +45,8 @@ class Combat {
         if (nOldDistance !== value) {
             this._distance = Math.max(0, value)
             this._events.emit('combat.distance', {
+                turn: this._turn,
+                tick: this._tick,
                 attacker: this._attacker.creature,
                 target: this._defender,
                 distance: this._distance,
@@ -104,18 +114,30 @@ class Combat {
                 attacker: attacker.creature,
                 target: defender,
                 action: action.name,
-                amp: action.amp,
+                damage: action.damage,
                 count: nAttackCount
             })
+            const bWeaponizedAction = action.name === CONSTS.DEFAULT_ACTION_WEAPON ||
+                action.name === CONSTS.DEFAULT_ACTION_UNARMED
+            const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
+                ? attacker.creature.attack(defender, action)
+                : null
+            if (oAttackOutcome) {
+                this._events.emit('combat.attack', {
+                    action,
+                    attackOutcome: oAttackOutcome
+                })
+            }
             action.conveys.forEach(convey => {
                 this._events.emit('combat.script', {
                     turn: this._turn,
                     tick: this._tick,
+                    attackOutcome: oAttackOutcome,
                     attacker: attacker.creature,
                     target: defender,
                     action: action.name,
                     script: convey.script,
-                    amp: action.amp,
+                    damage: action.damage,
                     data: convey.data
                 })
             })

@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "horn",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
       "count": 1,
       "conveys": [
@@ -16,7 +16,7 @@
     },
     {
       "name": "trample",
-      "attackType": "multi-melee",
+      "attackType": "ATTACK_TYPE_MULTI_MELEE",
       "damage": "2d4",
       "count": 1,
       "conveys": [

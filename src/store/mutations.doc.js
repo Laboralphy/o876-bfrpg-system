@@ -2,6 +2,7 @@
  * @typedef BFStoreMutations {Object}
  * @property addCreatureProperty {function(property: BFItemProperty): BFItemProperty}
  * @property addEffect {function(effect: BFEffect): BFEffect}
+ * @property damage {function(amount: number)}
  * @property defineActions {function(actions: DefineActionDTO[])}
  * @property equipItem {function(item: BFItem, slot: string): BFEffect}
  * @property removeDeadEffects {function()}
@@ -12,7 +13,7 @@
  * @property setEffectDuration {function(effect: BFEffect, duration: number)}
  * @property setHitPoints {function(value: number)}
  * @property setLevel {function(value: number)}
- * @property setMonsterData {function(data: { modifiers: { attack: number, hp: number, saveAs: { classType: string, levelAdjust }}})}
+ * @property setMonsterData {function(data: { saveAs: { classType: string, levelAdjust }})}
  * @property setNaturalArmorClass {function(value: number)}
  * @property setOffensiveSlot {function(slot: string)}
  * @property setProperties {function(properties: {[]})}

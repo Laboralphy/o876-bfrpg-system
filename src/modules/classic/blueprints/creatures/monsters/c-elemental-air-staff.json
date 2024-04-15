@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "whirlwind",
-      "attackType": "homing",
+      "attackType": "ATTACK_TYPE_HOMING",
       "damage": "1d12",
       "count": 1,
       "conveys": [

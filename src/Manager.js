@@ -8,6 +8,7 @@ const CombatManager = require('./combat/CombatManager')
 const EFFECTS = require('./effects')
 const DATA = require('./data')
 const CONSTS = require('./consts')
+const SCRIPTS = require('./scripts')
 
 const { getId } = require('./unique-id')
 
@@ -30,6 +31,7 @@ class Manager {
         ep.events.on('effect-disposed', ev => this._effectDisposed(ev))
         const ib = new ItemBuilder()
         const cb = new CreatureBuilder()
+        const cm = new CombatManager()
 
         this._horde = h
         this._effectProcessor = ep
@@ -41,10 +43,12 @@ class Manager {
         ib.blueprints = this._blueprints
         ib.data = this._data
 
+        cm.events.on('combat.script', ev => this._combatScript(ev))
+
         this._itemBuilder = ib
         this._creatureBuilder = cb
         this._schemaValidator = null
-        this._combatManager = new CombatManager()
+        this._combatManager = cm
     }
 
     /**
@@ -104,6 +108,18 @@ class Manager {
        count
     }) {
         // New combat action
+    }
+
+    _combatScript (ev) {
+        const script = 'atk-' + ev.script
+        if (script in SCRIPTS) {
+            return SCRIPTS[script]({
+                ...ev,
+                manager
+            })
+        } else {
+            throw new Error('script not found : ' + script)
+        }
     }
 
     async init () {

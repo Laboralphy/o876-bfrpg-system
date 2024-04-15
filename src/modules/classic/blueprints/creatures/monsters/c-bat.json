@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "special",
-      "attackType": "homing",
+      "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
       "count": 1,
       "conveys": [

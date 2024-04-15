@@ -74,6 +74,7 @@ class Creature {
             hit: false, // target hit by attack
             range: 0, // weapon range
             roll: 0, // attack roll
+            attacker: null, // attacking creature
             target: null, // target creature
             weapon: null, // weapon involved in attack
             ammo: null, // ammunition involved in attack
@@ -172,20 +173,26 @@ class Creature {
      * - Unloaded ranged weapon can still be used without ammo, missing ammo do not provide bonus
      * Will not select the most appropriate weapon or action prior to attack
      * @param oTarget {Creature}
+     * @param action {CombatAction}
      * @returns {BFAttackOutcome}
      */
-    attack (oTarget) {
+    attack (oTarget, action) {
         const oAttackOutcome = this._createAttackOutcome({
-            target: oTarget
+            attacker: this,
+            target: oTarget,
+            action: action || this.getters.getSelectedAction
         })
-        const weapon = this.getters.getSelectedWeapon
-        const action = this.getters.getSelectedAction
+        if (!oAttackOutcome.action) {
+            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
+            return oAttackOutcome
+        }
+        const weapon = action.name === CONSTS.DEFAULT_ACTION_WEAPON
+            ? this.getters.getSelectedWeapon
+            : null
         if (weapon) {
             // We have a weapon
             this._attackUsingWeapon(oAttackOutcome)
         } else if (action) {
-            // We don't have weapon
-            oAttackOutcome.action = action
             // ... but we have action
             this._attackUsingAction(oAttackOutcome)
         } else {

@@ -80,10 +80,11 @@ class CombatManager {
         const combat = new Combat()
         combat.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
         combat.events.on('combat.action', ev => this._events.emit('combat.action', ev))
+        combat.events.on('combat.script', ev => this._events.emit('combat.script', ev))
         combat.events.on('combat.offensive-slot', ev => this._events.emit('combat.offensive-slot', ev))
         combat.events.on('combat.distance', ev => {
             const { attacker, target, distance } = ev
-            this._events.emit('combat.action', ev)
+            this._events.emit('combat.distance', ev)
             if (this.isCreatureFightingWithTarget(attacker, target)) {
                 // also change target distance with attacker if different
                 const oTargetCombat = this.getCombat(oTarget)

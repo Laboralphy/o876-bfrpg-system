@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "claw",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
       "count": 2,
       "conveys": [
@@ -20,7 +20,7 @@
     },
     {
       "name": "bite",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
       "count": 1,
       "conveys": [

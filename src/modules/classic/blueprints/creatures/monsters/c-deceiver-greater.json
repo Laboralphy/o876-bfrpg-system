@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "bite",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "count": 2,
       "conveys": [
@@ -20,7 +20,7 @@
     },
     {
       "name": "bite",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "2d6",
       "count": 1,
       "conveys": [
@@ -32,7 +32,7 @@
     },
     {
       "name": "special",
-      "attackType": "homing",
+      "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
       "count": 1,
       "conveys": [

@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "giant-weapon",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "6d6",
       "count": 1,
       "conveys": [
@@ -16,7 +16,7 @@
     },
     {
       "name": "throw",
-      "attackType": "ranged",
+      "attackType": "ATTACK_TYPE_RANGED",
       "damage": "3d6",
       "count": 1,
       "conveys": [

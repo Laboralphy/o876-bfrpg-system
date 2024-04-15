@@ -17,7 +17,7 @@ class CombatSim {
     }
 
     displayFighter (f) {
-        console.group(f.name)
+        console.group('fighter status:', f.name)
         const g = f.getters
         console.log(g.getSpecie,
             'level', g.getLevel,
@@ -32,7 +32,11 @@ class CombatSim {
      * @param c {Combat}
      */
     displayCombatStatus (c) {
+        console.group('combat status')
+        console.log(c.attacker.creature.name, 'attacks', c.defender.name, 'distance:', c.distance)
         this.displayFighter(c.attacker.creature)
+        this.displayFighter(c.defender)
+        console.groupEnd()
     }
 
     async init () {
@@ -47,22 +51,28 @@ class CombatSim {
         oMonster2.name = sMonster2
         this.combatManager.events.on('combat.turn', ev => {
             const { attacker, turn } = ev
-            console.log('Turn', turn)
+            console.group('[' + turn.toString() + ':0] new turn')
             this.displayCombatStatus(this.combatManager.getCombat(attacker))
+            console.groupEnd()
         })
         this.combatManager.events.on('combat.action', ev => {
-            const { action, amp, count, tick, target, attacker } = ev
-            console.log(attacker.name, 'do action', action, 'x', count, 'on', target.name, 'amp', amp)
+            const { action, damage, count, turn, tick, target, attacker } = ev
+            console.log('[' + turn.toString() + ':' + tick.toString() + ']', attacker.name, '>', action, '( x', count, ') on', target.name)
+        })
+        this.combatManager.events.on('combat.attack', ev => {
+            const { outcome, action } = ev
+            console.log()
         })
         this.combatManager.events.on('combat.script', ev => {
-            const { action, amp, data, script, tick, target, attacker } = ev
-            console.log('script', script, amp, data)
+            const { turn, action, damage, data, script, tick, target, attacker } = ev
+            console.log('[' + turn.toString() + ':' + tick.toString() + ']', 'script', script, damage, data)
         })
         this.combatManager.events.on('combat.distance', ev => {
-            const { attacker, target, distance, previousDistance } = ev
-            console.log(attacker.name, 'move to', target.name, distance - previousDistance, 'ft :', 'now at', distance, 'ft')
+            const { turn, tick, attacker, target, distance, previousDistance } = ev
+            console.log('[' + turn.toString() + ':' + tick.toString() + ']', attacker.name, 'move to', target.name, distance - previousDistance, 'ft :', 'now at', distance, 'ft')
         })
-        this.combatManager.startCombat(oMonster1, oMonster2)
+        const oCombat = this.combatManager.startCombat(oMonster1, oMonster2)
+        oCombat.distance = 30
     }
 
     advance () {
@@ -75,6 +85,61 @@ async function main (sMonster1, sMonster2) {
     const cs = new CombatSim()
     await cs.init()
     cs.initCombat(sMonster1, sMonster2)
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
+    cs.advance()
     cs.advance()
     cs.advance()
     cs.advance()

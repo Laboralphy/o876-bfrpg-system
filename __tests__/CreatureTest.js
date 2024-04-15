@@ -6,6 +6,22 @@ const ItemProperties = require('../src/ItemProperties')
 const ItemBuilder = require('../src/ItemBuilder')
 
 const DATA = {
+    "default-actions": {
+        "DEFAULT_ACTION_UNARMED": {
+            "name": "DEFAULT_ACTION_UNARMED",
+            "count": 1,
+            "amp": "1d3",
+            "conveys": [],
+            "attackType": "ATTACK_TYPE_MELEE"
+        },
+        "DEFAULT_ACTION_WEAPON": {
+            "name": "DEFAULT_ACTION_WEAPON",
+            "count": 1,
+            "amp": "",
+            "conveys": [],
+            "attackType": "ATTACK_TYPE_ANY"
+        }
+    },
     "weapon-types": {
         "WEAPON_TYPE_LONGSWORD": {
             "size": "WEAPON_SIZE_MEDIUM",
@@ -439,7 +455,7 @@ describe('attack', function () {
         c1.mutations.equipItem({ item: sword })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
-        const oAtkOutcome = c1.attack(c2)
+        const oAtkOutcome = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
         expect(oAtkOutcome.action).toBeNull()
         expect(oAtkOutcome.weapon).toBeDefined()
         expect(oAtkOutcome.weapon).not.toBeNull()
@@ -457,7 +473,7 @@ describe('attack', function () {
         c1.mutations.equipItem({ item: arrows })
         c1.mutations.selectAction({ action: '' })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
-        const oAtkOutcome = c1.attack(c2)
+        const oAtkOutcome = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
         expect(oAtkOutcome.action).toBeNull()
     })
 })

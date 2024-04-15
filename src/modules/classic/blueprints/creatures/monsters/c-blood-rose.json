@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "cane",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "count": 1,
       "conveys": [
@@ -20,7 +20,7 @@
     },
     {
       "name": "cane",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "count": 2,
       "conveys": [
@@ -36,7 +36,7 @@
     },
     {
       "name": "cane",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "count": 3,
       "conveys": [
@@ -52,7 +52,7 @@
     },
     {
       "name": "special",
-      "attackType": "homing",
+      "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
       "count": 1,
       "conveys": [

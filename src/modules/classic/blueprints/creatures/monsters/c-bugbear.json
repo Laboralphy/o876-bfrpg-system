@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "fist",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
       "count": 1,
       "conveys": [

@@ -4,7 +4,7 @@
   "actions": [
     {
       "name": "bite",
-      "attackType": "melee",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "2d4",
       "count": 1,
       "conveys": [

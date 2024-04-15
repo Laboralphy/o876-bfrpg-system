@@ -365,7 +365,7 @@ describe('combat for real', function () {
         })
         const sSlot = combat1.getMostSuitableOffensiveSlot()
         expect(sSlot).toBe('')
-        const ao = c1.attack(c2)
+        const ao = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
         expect(ao.failed).toBeTruthy()
         expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK)
     })

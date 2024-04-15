@@ -2,12 +2,12 @@
  * @class
  */
 class CombatAction {
-    constructor ({ name = '', attackType, count = 1, conveys = [], amp = 0 }) {
+    constructor ({ name = '', attackType, count = 1, conveys = [], damage = 0 }) {
         this._name = name
         this._count = count
         this._attackType = attackType
         this._conveys = conveys
-        this._amp = amp
+        this._damage = damage
     }
 
     get name () {
@@ -26,8 +26,8 @@ class CombatAction {
         return this._conveys
     }
 
-    get amp () {
-        return this._amp
+    get damage () {
+        return this._damage
     }
 }
 
