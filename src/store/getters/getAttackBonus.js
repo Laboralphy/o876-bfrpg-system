@@ -40,12 +40,11 @@ function getSelectedWeaponAttackBonus (state, getters) {
  */
 module.exports = (state, getters) => {
     // Monster attack bonus adjustment as defined in monster data table
-    const nMonsterAttackBonus = state.monsterData.modifiers.attack
     // Attack bonus gained with level
     const nLevelAttackBonus = getters.getClassTypeData.attackBonus
     const weapon = getters.getSelectedWeapon
     if (weapon) {
-        return nLevelAttackBonus + nMonsterAttackBonus + getSelectedWeaponAttackBonus(state, getters)
+        return nLevelAttackBonus + getSelectedWeaponAttackBonus(state, getters)
     }
     const action = getters.getSelectedAction
     if (action) {
@@ -53,21 +52,18 @@ module.exports = (state, getters) => {
             case CONSTS.ATTACK_TYPE_RANGED:
             case CONSTS.ATTACK_TYPE_RANGED_TOUCH: {
                 return nLevelAttackBonus +
-                    nMonsterAttackBonus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] +
                     getRangedAttackModifiers(getters)
             }
 
             default: {
                 return nLevelAttackBonus +
-                    nMonsterAttackBonus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] +
                     getMeleeAttackModifiers(getters)
             }
         }
     } else {
         return nLevelAttackBonus +
-            nMonsterAttackBonus +
             getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] +
             getMeleeAttackModifiers(getters)
     }

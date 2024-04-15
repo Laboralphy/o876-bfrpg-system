@@ -24,5 +24,6 @@
   "specie": "SPECIE_VERMIN",
   "level": 2,
   "speed": 50,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

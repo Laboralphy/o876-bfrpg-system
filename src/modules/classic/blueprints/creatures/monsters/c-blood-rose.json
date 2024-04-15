@@ -76,5 +76,6 @@
   "specie": "SPECIE_PLANT",
   "level": 2,
   "speed": 1,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

@@ -59,5 +59,6 @@
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
   "level": 2,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

@@ -45,7 +45,7 @@
   },
   "properties": [
     {
-      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
       "data": {
         "value": 9
       }
@@ -55,5 +55,6 @@
   "specie": "specie-animal",
   "level": 11,
   "speed": 20,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

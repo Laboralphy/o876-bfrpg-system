@@ -56,5 +56,6 @@
   "specie": "SPECIE_MONSTROSITY",
   "level": 16,
   "speed": 40,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

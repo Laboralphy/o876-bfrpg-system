@@ -21,14 +21,14 @@
   },
   "properties": [
     {
-      "property": "property-threat-immunity",
+      "property": "item-property-threat-immunity",
       "amp": 0,
       "data": {
         "threat": "sneak-attack"
       }
     },
     {
-      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
         "value": 2
       }
@@ -38,5 +38,6 @@
   "specie": "SPECIE_VERMIN",
   "level": 1,
   "speed": 40,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

@@ -79,9 +79,13 @@ function changeBlueprintConstants (oInput) {
         })
     })
     oInput.properties.forEach(ip => {
-        ip.property = searchConst('property-' + ip.property)
+        ip.property = searchConst(ip.property.startsWith('ITEM_PROPERTY_')
+            ? ip.property
+            : 'item-property-' + ip.property
+        )
         changeDataConstants(ip.data)
     })
+    oInput.entityType = CONSTS.ENTITY_TYPE_ACTOR
     return oInput
 }
 

@@ -47,10 +47,6 @@ class CreatureBuilder {
         m.setLevel({ value: blueprint.level })
         m.setMonsterData({
             data: {
-                modifiers: {
-                    attack: blueprint.modifiers.attack,
-                    hp: blueprint.modifiers.hp
-                },
                 saveAs: {
                     classType: blueprint.saveAs.classType,
                     levelAdjust: blueprint.saveAs.levelAdjust

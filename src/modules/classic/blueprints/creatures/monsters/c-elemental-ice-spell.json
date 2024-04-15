@@ -23,7 +23,7 @@
   },
   "properties": [
     {
-      "property": "property-damage-aura",
+      "property": "item-property-damage-aura",
       "amp": "1d6",
       "data": {
         "damageType": "DAMAGE_TYPE_COLD"
@@ -44,7 +44,7 @@
       }
     },
     {
-      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
       "data": {
         "value": 12
       }
@@ -54,5 +54,6 @@
   "specie": "SPECIE_ELEMENTAL",
   "level": 16,
   "speed": 40,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

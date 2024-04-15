@@ -58,10 +58,6 @@ module.exports = () => ({
         actions: {
         },
         selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
-        modifiers: {
-            hp: 0,
-            attack: 0
-        }
     },
     gauges: {
         hitPoints: 1

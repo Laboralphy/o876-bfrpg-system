@@ -25,7 +25,7 @@
   },
   "properties": [
     {
-      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
         "value": 1
       }
@@ -35,5 +35,6 @@
   "specie": "specie-animal",
   "level": 1,
   "speed": 50,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

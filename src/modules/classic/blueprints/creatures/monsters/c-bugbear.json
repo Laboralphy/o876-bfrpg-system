@@ -28,7 +28,7 @@
       }
     },
     {
-      "property": "property-ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
         "value": 1
       }
@@ -41,5 +41,6 @@
   "specie": "SPECIE_HUMANOID",
   "level": 3,
   "speed": 30,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

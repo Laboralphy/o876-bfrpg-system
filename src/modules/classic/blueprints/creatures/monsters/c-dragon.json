@@ -70,14 +70,14 @@
       }
     },
     {
-      "property": "property-spellcasting",
+      "property": "ITEM_PROPERTY_SPELLCASTING",
       "amp": 0,
       "data": {
         "level": 5
       }
     },
     {
-      "property": "property-ITEM_PROPERTY_ATTACK_MODIFIER",
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
       "data": {
         "value": 9
       }
@@ -87,5 +87,6 @@
   "specie": "SPECIE_DRAGON",
   "level": 10,
   "speed": 30,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

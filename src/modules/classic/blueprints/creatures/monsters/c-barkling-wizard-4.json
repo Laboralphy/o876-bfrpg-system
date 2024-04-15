@@ -33,7 +33,7 @@
   },
   "properties": [
     {
-      "property": "property-spellcasting",
+      "property": "ITEM_PROPERTY_SPELLCASTING",
       "amp": 0,
       "data": {
         "level": 4
@@ -46,5 +46,6 @@
   "specie": "SPECIE_HUMANOID",
   "level": 1,
   "speed": 20,
-  "classType": "CLASS_TYPE_MONSTER"
+  "classType": "CLASS_TYPE_MONSTER",
+  "entityType": "ENTITY_TYPE_ACTOR"
 }

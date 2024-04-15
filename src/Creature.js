@@ -9,6 +9,7 @@ require('./types.doc')
  * @class Creature
  */
 class Creature {
+
     constructor () {
         this._id = getId()
         this._name = this._id
@@ -42,6 +43,20 @@ class Creature {
 
     get dice () {
         return this._dice
+    }
+
+    /**
+     * @returns {string}
+     */
+    get name() {
+        return this._name;
+    }
+
+    /**
+     * @param value {string}
+     */
+    set name(value) {
+        this._name = value;
     }
 
     /**
