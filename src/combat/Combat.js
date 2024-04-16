@@ -2,7 +2,6 @@ const Events = require('events')
 const CombatFighterState = require('./CombatFighterState')
 const CONSTS = require('../consts')
 const DATA = require('../data')
-const CombatAction = require("./CombatAction");
 
 const { WEAPON_RANGE_MELEE, WEAPON_RANGE_REACH } = DATA['weapon-ranges']
 
@@ -118,7 +117,8 @@ class Combat {
             if (!this._attacker.nextAction) {
                 const oDecidedAction = this.getMostSuitableAction()
                 if (oDecidedAction) {
-                    this._attacker.nextAction = new CombatAction(oDecidedAction)
+                    console.log('the most suitable action for', this._attacker.creature.name, 'is', oDecidedAction.name)
+                    this._attacker.nextAction = oDecidedAction
                 }
             }
             this._events.emit('combat.turn', {
@@ -261,7 +261,17 @@ class Combat {
 
     approachTarget () {
         const nRunSpeed = this._attacker.creature.getters.getSpeed
-        this.distance = Math.max(DATA['weapon-ranges'].WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
+        const prevDistance = this.distance
+        const newDistance = Math.max(DATA['weapon-ranges'].WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
+        this._events.emit('combat.move', {
+            turn: this._turn,
+            tick: this._tick,
+            mover: this._attacker.creature,
+            target: this._defender,
+            speed: nRunSpeed,
+            distance: newDistance
+        })
+        this.distance = newDistance
     }
 }
 

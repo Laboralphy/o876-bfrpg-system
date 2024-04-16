@@ -4,5 +4,5 @@
  * @param properties {{}[]}
  */
 module.exports = ({ state }, { properties }) => {
-    state.properties = value
+    state.properties = properties
 }

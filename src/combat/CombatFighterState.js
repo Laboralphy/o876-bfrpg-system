@@ -1,5 +1,3 @@
-const CombatAction = require("./CombatAction");
-
 class CombatFighterState {
     constructor () {
         /**
@@ -52,17 +50,17 @@ class CombatFighterState {
         return this._plan[tick % this._plan.length]
     }
 
+    /**
+     *
+     * @param value {BFStoreStateAction}
+     */
     set nextAction (value) {
-        if (value === null || (value instanceof CombatAction)) {
-            this._nextAction = value
-        } else {
-            throw new TypeError('action must be null, or instance of CombatAction')
-        }
+        this._nextAction = value
     }
 
     /**
      *
-     * @returns {null|CombatAction}
+     * @returns {null|BFStoreStateAction}
      */
     get nextAction () {
         if (!this._currentAction) {

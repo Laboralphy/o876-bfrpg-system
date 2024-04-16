@@ -1,5 +1,4 @@
 const Combat = require('../src/combat/Combat')
-const CombatAction = require('../src/combat/CombatAction')
 const Creature = require('../src/Creature')
 const ItemBuilder = require("../src/ItemBuilder");
 const CONSTS = require('../src/consts')
@@ -61,26 +60,28 @@ describe('fullcombat', function () {
         c.setFighters(f1, f2)
         const c2 = new Combat()
         c2.setFighters(f2, f1)
-        c.attacker.nextAction = new CombatAction({
+        c.attacker.nextAction = {
             name: 'claw',
             conveys: [{
                 script: 'damage',
                 data: {}
             }],
-            amp: '1d4',
+            damage: '1d4',
+            damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 2,
             data: {}
-        })
-        c2.attacker.nextAction = new CombatAction({
+        }
+        c2.attacker.nextAction = {
             name: 'bite',
             conveys: [{
                 script: 'damage',
                 data: {}
             }],
-            amp: '1d6',
+            damage: '1d6',
+            damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 1,
             data: {}
-        })
+        }
         const aLogs = []
         c.events.on('combat.action', ev => {
             aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
@@ -141,36 +142,39 @@ describe('fullcombat', function () {
         c.setFighters(f1, f2)
         const c2 = new Combat()
         c2.setFighters(f2, f1)
-        const a1 = new CombatAction({
+        const a1 = {
             name: 'claw',
             conveys: [{
                 script: 'damage',
                 data: {}
             }],
-            amp: '1d4',
+            damage: '1d4',
+            damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 2,
             data: {}
-        })
-        const a2 = new CombatAction({
+        }
+        const a2 = {
             name: 'stomp',
             conveys: [{
                 script: 'damage',
                 data: {}
             }],
-            amp: '1d6',
+            damage: '1d6',
+            damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 1,
             data: {}
-        })
+        }
         c.attacker.nextAction = a1
-        c2.attacker.nextAction = new CombatAction({
+        c2.attacker.nextAction = {
             name: 'bite',
             conveys: [{
                 script: 'damage',
                 data: {}
             }],
-            amp: '1d6',
+            damage: '1d6',
+            damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 1
-        })
+        }
         const aLogs = []
         c.events.on('combat.action', ev => {
             aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
@@ -288,7 +292,7 @@ describe('selectSuitableAction', function () {
         c.setFighters(f1, f2)
         c.distance = 5
         const a = c.getMostSuitableAction()
-        expect(a).toEqual({"damage": "1d3", "attackType": "ATTACK_TYPE_MELEE", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_UNARMED"})
+        expect(a).toEqual({"damage": "1d3", "damageType": "DAMAGE_TYPE_PHYSICAL", "attackType": "ATTACK_TYPE_MELEE", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_UNARMED"})
     })
     it('select ranged weapon when target is far', function () {
         const c = new Combat()
@@ -314,6 +318,7 @@ describe('selectSuitableAction', function () {
             name: 'DEFAULT_ACTION_WEAPON',
             count: 1,
             damage: '',
+            damageType: "DAMAGE_TYPE_PHYSICAL",
             conveys: [],
             attackType: 'ATTACK_TYPE_ANY'
         })
@@ -338,6 +343,6 @@ describe('selectSuitableAction', function () {
         expect(a).toBeNull()
         c.distance = 5
         const a2 = c.getMostSuitableAction()
-        expect(a2).toEqual({"damage": "", "attackType": "ATTACK_TYPE_ANY", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_WEAPON"})
+        expect(a2).toEqual({"damage": "", damageType: "DAMAGE_TYPE_PHYSICAL", "attackType": "ATTACK_TYPE_ANY", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_WEAPON"})
     })
 })

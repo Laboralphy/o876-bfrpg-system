@@ -97,6 +97,7 @@ class CombatManager {
                 }
             }
         })
+        combat.events.on('combat.move', ev => this._events.emit('combat.move', ev))
         combat.setFighters(oCreature, oTarget)
         combat.distance = this._defaultDistance
         return combat

@@ -21,36 +21,27 @@ describe('getMostSuitableAction', function () {
                 "name": "bite",
                 "attackType": "ATTACK_TYPE_MELEE",
                 "damage": "1d2",
+                "damageType": "DAMAGE_TYPE_PHYSICAL",
                 "count": 1,
                 "conveys": [
-                    {
-                        "script": "damage",
-                        "data": {}
-                    }
                 ]
             },
             "bump": {
                 "name": "bump",
                 "attackType": "ATTACK_TYPE_MELEE",
                 "damage": "1d4",
+                "damageType": "DAMAGE_TYPE_PHYSICAL",
                 "count": 1,
                 "conveys": [
-                    {
-                        "script": "damage",
-                        "data": {}
-                    }
                 ]
             },
             "spit": {
                 "name": "spit",
                 "attackType": "ATTACK_TYPE_RANGED_TOUCH",
                 "damage": 0,
+                "damageType": "DAMAGE_TYPE_PHYSICAL",
                 "count": 1,
                 "conveys": [
-                    {
-                        "script": "damage",
-                        "data": {}
-                    },
                     {
                         "script": "daze",
                         "data": {}
@@ -71,12 +62,9 @@ describe('getMostSuitableAction', function () {
             "name": "bump",
             "attackType": "ATTACK_TYPE_MELEE",
             "damage": "1d4",
+            "damageType": "DAMAGE_TYPE_PHYSICAL",
             "count": 1,
             "conveys": [
-                {
-                    "script": "damage",
-                    "data": {}
-                }
             ]
         })
     })

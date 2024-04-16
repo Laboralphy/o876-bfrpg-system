@@ -62,6 +62,7 @@ class CreatureBuilder {
         try {
             m.setProperties({ properties: blueprint.properties.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip.data)) })
         } catch (e) {
+            console.error(e)
             console.warn('INVALID ITEM PROPERTY: ' + e.message)
         }
     }

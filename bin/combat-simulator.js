@@ -1,5 +1,5 @@
 const Manager = require('../src/Manager')
-
+const CONSTS = require('../src/consts')
 
 
 class CombatSim {
@@ -76,7 +76,15 @@ class CombatSim {
         })
         this._manager.events.on('combat.action', ev => {
             const { action, count, turn, tick, target, attacker } = ev
-            console.log(this._tt(turn, tick), attacker.name, '>', action.name, '( x', count, ') on', target.name)
+            if (action.name === CONSTS.DEFAULT_ACTION_WEAPON) {
+                console.log(
+                    this._tt(turn, tick),
+                    attacker.name, '> attacks ', '( x', count, ')', target.name, 'with',
+                    attacker.getters.getSelectedWeapon.ref
+                )
+            } else {
+                console.log(this._tt(turn, tick), attacker.name, '>', action.name, '( x', count, ') on', target.name)
+            }
         })
         this._manager.events.on('combat.attack', ev => {
             const { turn, tick, outcome } = ev
@@ -97,9 +105,9 @@ class CombatSim {
                 console.log(ev.attacker.name, 'left combat with', ev.attacker.getters.getHitPoints, 'hp left')
             }
         })
-        this._manager.events.on('combat.distance', ev => {
-            const { turn, tick, attacker, target, distance, previousDistance } = ev
-            console.log('[' + turn.toString() + ':' + tick.toString() + ']', attacker.name, 'move to', target.name, distance - previousDistance, 'ft :', 'now at', distance, 'ft')
+        this._manager.events.on('combat.move', ev => {
+            const { turn, tick, attacker, target, speed, distance } = ev
+            console.log('[' + turn.toString() + ':' + tick.toString() + ']', attacker.name, 'move to', target.name, 'distance:', distance, 'ft')
         })
         const oCombat = this.combatManager.startCombat(oMonster1, oMonster2)
         oCombat.distance = 30

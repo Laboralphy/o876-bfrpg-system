@@ -298,7 +298,7 @@ class Manager {
         }
         const oItem = ib.createItem(oBlueprint, this._data)
         oItem.id = id || getId()
-        oItem.ref = sTypeOfRef === '' ? ref  : ''
+        oItem.ref = sTypeOfRef === 'string' ? ref  : ''
         return oItem
     }
 

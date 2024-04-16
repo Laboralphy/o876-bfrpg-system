@@ -3,6 +3,7 @@
     "name": "DEFAULT_ACTION_UNARMED",
     "count": 1,
     "damage": "1d3",
+    "damageType": "DAMAGE_TYPE_PHYSICAL",
     "conveys": [],
     "attackType": "ATTACK_TYPE_MELEE"
   },
@@ -10,6 +11,7 @@
     "name": "DEFAULT_ACTION_WEAPON",
     "count": 1,
     "damage": "",
+    "damageType": "DAMAGE_TYPE_PHYSICAL",
     "conveys": [],
     "attackType": "ATTACK_TYPE_ANY"
   }

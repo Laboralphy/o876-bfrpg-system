@@ -5,10 +5,12 @@ const CONSTS = require('../../consts')
  * @property hitPoints {number}
  *
  * @typedef BFStoreStateAction {object}
+ * @property name {string}
  * @property attackType {string}
+ * @property damageType {string}
  * @property count {number}
  * @property conveys {{ script: string data: {} }[]}
- * @property amp {string|number}
+ * @property damage {string|number}
  *
  * @typedef BFStoreStateMonsterData {object}
  * @property actions {object<string, BFStoreStateAction>}
