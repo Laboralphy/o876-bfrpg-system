@@ -10,14 +10,14 @@ const DATA = {
         "DEFAULT_ACTION_UNARMED": {
             "name": "DEFAULT_ACTION_UNARMED",
             "count": 1,
-            "amp": "1d3",
+            "damage": "1d3",
             "conveys": [],
             "attackType": "ATTACK_TYPE_MELEE"
         },
         "DEFAULT_ACTION_WEAPON": {
             "name": "DEFAULT_ACTION_WEAPON",
             "count": 1,
-            "amp": "",
+            "damage": "",
             "conveys": [],
             "attackType": "ATTACK_TYPE_ANY"
         }
@@ -437,14 +437,6 @@ describe('attack', function () {
         const c2 = new Creature()
         expect(() => c1.attack(c2)).not.toThrow()
     })
-    it('attack outcome action is null when fighting fresh new creature', function () {
-        const c1 = new Creature()
-        const c2 = new Creature()
-        const ao = c1.attack(c2)
-        expect(ao.action).toBeNull()
-        expect(ao.failed).toBeTruthy()
-        expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_NO_ACTION)
-    })
 
     it('attack outcome should reference sword when equipping with sword', function () {
         const c1 = new Creature()
@@ -456,7 +448,7 @@ describe('attack', function () {
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         expect(c1.getters.getOffensiveSlot).toBe(CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE)
         const oAtkOutcome = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
-        expect(oAtkOutcome.action).toBeNull()
+        expect(oAtkOutcome.action).toEqual(DATA['default-actions'].DEFAULT_ACTION_WEAPON)
         expect(oAtkOutcome.weapon).toBeDefined()
         expect(oAtkOutcome.weapon).not.toBeNull()
         expect(oAtkOutcome.weapon.weaponType).toBe('WEAPON_TYPE_LONGSWORD')
@@ -474,6 +466,6 @@ describe('attack', function () {
         c1.mutations.selectAction({ action: '' })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
         const oAtkOutcome = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
-        expect(oAtkOutcome.action).toBeNull()
+        expect(oAtkOutcome.action).toEqual(DATA['default-actions'].DEFAULT_ACTION_WEAPON)
     })
 })

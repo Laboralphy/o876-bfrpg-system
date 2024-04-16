@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-15T15:02:54.637Z
+// Date : 2024-04-16T15:15:24.829Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -21,14 +21,17 @@ module.exports = {
   'getMaxHitPoints': require('./getMaxHitPoints.js'),
   'getMeleeActions': require('./getMeleeActions.js'),
   'getMonsterData': require('./getMonsterData.js'),
+  'getOffensiveEquipment': require('./getOffensiveEquipment.js'),
   'getOffensiveEquipmentProperties': require('./getOffensiveEquipmentProperties.js'),
   'getOffensiveSlot': require('./getOffensiveSlot.js'),
   'getProperties': require('./getProperties.js'),
   'getRangedActions': require('./getRangedActions.js'),
+  'getRecentDamages': require('./getRecentDamages.js'),
   'getSelectedAction': require('./getSelectedAction.js'),
   'getSelectedWeapon': require('./getSelectedWeapon.js'),
   'getSpecie': require('./getSpecie.js'),
   'getSpeed': require('./getSpeed.js'),
+  'isDead': require('./isDead.js'),
   'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js'),
   'isSelectedWeaponUsable': require('./isSelectedWeaponUsable.js'),
   'isWieldingTwoHandedWeapon': require('./isWieldingTwoHandedWeapon.js')

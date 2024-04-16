@@ -6,12 +6,9 @@
       "name": "special",
       "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "confusion",
           "data": {}

@@ -334,7 +334,7 @@ describe('combat for real', function () {
         cm.startCombat(c1, c2)
     })
 
-    it('simulation 1 when c1 attack c2 with a sword, and being out of melee range', function () {
+    it('when c1 attack c2 with a sword, and being out of melee range, should return empty most suitable slot', function () {
         const oItemBuilder = new ItemBuilder()
         expect(BLUEPRINTS['wpn-shortsword']).toBeDefined()
 
@@ -365,8 +365,5 @@ describe('combat for real', function () {
         })
         const sSlot = combat1.getMostSuitableOffensiveSlot()
         expect(sSlot).toBe('')
-        const ao = c1.attack(c2, DATA['default-actions'].DEFAULT_ACTION_WEAPON)
-        expect(ao.failed).toBeTruthy()
-        expect(ao.failure).toBe(CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK)
     })
 })

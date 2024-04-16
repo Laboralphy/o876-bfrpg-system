@@ -20,7 +20,8 @@ module.exports = ({ state }, { actions }) => {
             attackType: a.attackType,
             count: a.count,
             conveys: a.conveys.slice(0),
-            damage: a.damage
+            damage: a.damage,
+            damageType: a.damageType
         }
         aPrevKeys.delete(a.name)
     })

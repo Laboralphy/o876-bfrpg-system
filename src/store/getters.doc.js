@@ -18,14 +18,17 @@
  * @property getMaxHitPoints {number}
  * @property getMeleeActions {string[]}
  * @property getMonsterData {{modifiers: { hp: number, attack: number }, saveAs: {levelAdjust: number, classType: string}, actions: {}[]}}
+ * @property getOffensiveEquipment {{weapon: BFItem|null, ammo: BFItem|null}}
  * @property getOffensiveEquipmentProperties {BFItemProperty[]}
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
  * @property getRangedActions {string[]}
+ * @property getRecentDamages {{ amount: number, types: Object<string, { amount: number, resisted: number }> }}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpecie {string}
  * @property getSpeed {number}
+ * @property isDead undefined
  * @property isRangedWeaponLoaded {boolean}
  * @property isSelectedWeaponUsable {boolean}
  * @property isWieldingTwoHandedWeapon {boolean}

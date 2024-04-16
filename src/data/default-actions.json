@@ -2,14 +2,14 @@
   "DEFAULT_ACTION_UNARMED": {
     "name": "DEFAULT_ACTION_UNARMED",
     "count": 1,
-    "amp": "1d3",
+    "damage": "1d3",
     "conveys": [],
     "attackType": "ATTACK_TYPE_MELEE"
   },
   "DEFAULT_ACTION_WEAPON": {
     "name": "DEFAULT_ACTION_WEAPON",
     "count": 1,
-    "amp": "",
+    "damage": "",
     "conveys": [],
     "attackType": "ATTACK_TYPE_ANY"
   }

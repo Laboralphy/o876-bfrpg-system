@@ -6,13 +6,9 @@
       "name": "fist",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     }
   ],
   "saveAs": {
@@ -24,7 +20,7 @@
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
       "amp": 1,
       "data": {
-        "damageType": "DAMAGE_TYPE_WEAPON"
+        "damageType": "DEFAULT_ACTION_WEAPON"
       }
     },
     {

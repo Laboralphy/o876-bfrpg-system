@@ -31,7 +31,7 @@ describe('createItemWeapon', function () {
                 property: "ITEM_PROPERTY_DAMAGE_MODIFIER",
                 amp: 1,
                 data: {
-                    type: "DAMAGE_TYPE_WEAPON"
+                    type: "DAMAGE_TYPE_PHYSICAL"
                 }
             }],
             data: {},

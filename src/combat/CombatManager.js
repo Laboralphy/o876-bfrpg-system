@@ -27,7 +27,11 @@ class CombatManager {
     processCombats () {
         this.combats
             .forEach(combat => {
-                combat.advance()
+                if (combat.attacker.creature.getters.isDead || combat.defender.isDead) {
+                    this.endCombat(combat.attacker.creature, true)
+                } else {
+                    combat.advance()
+                }
             })
     }
 

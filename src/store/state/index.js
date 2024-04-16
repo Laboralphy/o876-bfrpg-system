@@ -29,6 +29,7 @@ const CONSTS = require('../../consts')
  * @property properties {BFItemProperty[]}
  * @property offensiveSlot {string}
  * @property equipment {{}}
+ * @property recentDamages {{ type:string, amount:number, resisted:number, source:string }[]}
  */
 
 /**
@@ -79,5 +80,6 @@ module.exports = () => ({
         [CONSTS.EQUIPMENT_SLOT_AMMO]: null,
         [CONSTS.EQUIPMENT_SLOT_WAIST]: null,
         [CONSTS.EQUIPMENT_SLOT_FEET]: null
-    }
+    },
+    recentDamages: []
 })

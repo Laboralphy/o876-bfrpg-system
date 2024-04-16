@@ -71,7 +71,7 @@ describe('createItem', function () {
                 {
                     "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
                     "amp": 3,
-                    "type": "DAMAGE_TYPE_WEAPON"
+                    "type": "DAMAGE_TYPE_PHYSICAL"
                 }
             ]
         }
@@ -86,7 +86,7 @@ describe('createItem', function () {
                     "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
                     "amp": 3,
                     "data": {
-                        "type": "DAMAGE_TYPE_WEAPON"
+                        "type": "DAMAGE_TYPE_PHYSICAL"
                     }
                 }
             ],

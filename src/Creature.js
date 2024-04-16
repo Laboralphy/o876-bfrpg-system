@@ -1,5 +1,6 @@
 const { getId } = require('./unique-id')
 const { buildStore } = require('./store')
+const { aggregateModifiers } = require('./aggregator')
 const Dice = require('./libs/dice')
 const CONSTS = require('./consts')
 
@@ -80,13 +81,12 @@ class Creature {
             ammo: null, // ammunition involved in attack
             action: null, // action involved in attack
             kill: false, // the attack killed the target
-            failed: true, // could not attack
-            failure: CONSTS.ATTACK_FAILURE_DID_NOT_ATTACK, // reason why attack failed (out of range, condition, etc...)
+            failed: false, // could not attack
+            failure: '', // reason why attack failed (out of range, condition, etc...)
             sneakable: false, // This attack is made from behind, a rogue may have damage bonus
             damages: {
                 amount: 0, // amount of damage if attack hit
-                resisted: {}, // amount of resisted damage, by damage type
-                types: {} // amount of damage by type
+                types: {} // amount of damage taken and resisted by type
             },
             ...oDefault
         }
@@ -126,7 +126,7 @@ class Creature {
      * @param oAttackOutcome {BFAttackOutcome}
      */
     _attackUsingAction (oAttackOutcome) {
-        const { amp, conveys, attackType } = oAttackOutcome.action
+        const { damage, conveys, attackType } = oAttackOutcome.action
         const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
         oAttackOutcome.bonus = this.getters.getAttackBonus
@@ -162,7 +162,7 @@ class Creature {
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
         oAttackOutcome.critical = nRoll >= this.getters.getAttackRollCriticalValue
-        oAttackOutcome.hit = (nRoll <= this.getters.getAttackRollFumbleValue) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        oAttackOutcome.hit = (nRoll > this.getters.getAttackRollFumbleValue) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
         return oAttackOutcome
     }
 
@@ -199,11 +199,69 @@ class Creature {
             // no weapon, no action
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
+            return oAttackOutcome
         }
         if (!oAttackOutcome.failed) {
             this.resolveAttackHit(oAttackOutcome)
         }
         return oAttackOutcome
+    }
+
+    /**
+     * @param oAttackOutcome {BFAttackOutcome}
+     * @returns {{types: {[p: string]: number}, material: string}}
+     */
+    rollDamage (oAttackOutcome) {
+        const action = oAttackOutcome.action
+        let damage, material, damageType
+        if (action.name === CONSTS.DEFAULT_ACTION_WEAPON) {
+            const { weapon, ammo } = this.getters.getOffensiveEquipment
+            damage = this.dice.evaluate(weapon.damage)
+            damageType = CONSTS.DAMAGE_TYPE_PHYSICAL
+            material = ammo ? ammo.material : weapon.material
+        } else {
+            damage = this.dice.evaluate(action.damage)
+            damageType = action.damageType
+            material = CONSTS.MATERIAL_UNKNOWN
+        }
+        const ampMapper = amp => this.dice.evaluate(amp)
+        const sorterFunc = x => x.data.type
+        const oDamageBonusRegistry = aggregateModifiers([
+            CONSTS.ITEM_PROPERTY_DAMAGE_MODIFIER,
+            CONSTS.EFFECT_DAMAGE_MODIFIER
+        ], this.getters, {
+            effectAmpMapper: ampMapper,
+            propAmpMapper: ampMapper,
+            effectSorter: sorterFunc,
+            propSorter: sorterFunc
+        })
+        const oDamageTypes = {
+            [damageType]: damage
+        }
+        Object.entries(oDamageBonusRegistry.sorter).forEach(([sType, { sum }]) => {
+            if (!(sType in oDamageTypes)) {
+                oDamageTypes[sType] = sum
+            } else {
+                oDamageTypes[sType] += sum
+            }
+        })
+        return {
+            material,
+            types: oDamageTypes
+        }
+    }
+
+    /**
+     * Compile a report of recently taken damage
+     * @param bFlush {boolean} empties the recent damage list in the state
+     * @return {{ amount: number, types: Object<string, { amount: number, resisted: number } >}}
+     */
+    getDamageReport (bFlush = false) {
+        const d = this.getters.getRecentDamages
+        if (bFlush) {
+            this.mutations.flushRecentDamages()
+        }
+        return d
     }
 }
 

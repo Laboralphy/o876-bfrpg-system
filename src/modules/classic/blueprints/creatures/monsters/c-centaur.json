@@ -6,13 +6,9 @@
       "name": "hoove",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 2,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     }
   ],
   "saveAs": {

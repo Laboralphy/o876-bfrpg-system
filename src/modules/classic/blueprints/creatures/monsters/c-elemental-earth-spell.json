@@ -6,12 +6,9 @@
       "name": "fist",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "3d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "tremor-punch",
           "data": {

@@ -5,13 +5,13 @@ const CONSTS = require('../consts')
  * @param oEffect {BFEffect}
  * @param value {number}
  * @param sDamageType {string} DAMAGE_TYPE_
- * @param material {string} MATERIAL_
+ * @param material {string|string[]} MATERIAL_
  * @param critical {boolean}
  */
 function init (oEffect, { type: sDamageType, material = CONSTS.MATERIAL_UNKNOWN, critical = false }) {
     Object.assign(oEffect.data, {
         type: sDamageType,
-        material,
+        material: Array.isArray(material) ? material : [material],
         originalAmount: 0,
         appliedAmount: 0,
         resistedAmount: 0,
@@ -34,19 +34,29 @@ function mutate ({ effect, target, source }) {
     if (aMaterials) {
         bMaterialVulnerable = aMaterials.some(m => oMitigation[m] && oMitigation[m].vulnerability)
     }
-    let amp = effect.amp
+    let amp = typeof effect.amp === 'number'
+        ? effect.amp
+        : target.dice.evaluate(effect.amp)
+    effect.data.originalAmount = amp
     if (sType in oMitigation) {
         const { resistance, vulnerability, factor, reduction, immunity } = oMitigation[sType]
-        const nFinalFactor = bMaterialVulnerable ? Math.min(1, 2 * factor) : factor
+        const nFinalFactor = bMaterialVulnerable ? Math.max(1, 2 * factor) : factor
         const appliedAmount = Math.ceil(Math.max(0, (amp - reduction)) * nFinalFactor)
         effect.data.resistedAmount += amp - appliedAmount
         effect.amp = amp - effect.data.resistedAmount
         effect.data.appliedAmount = appliedAmount
+        effect.data.resistedAmount = Math.max(0, effect.data.resistedAmount)
     } else {
         // no resistance no absorb no immunity
         effect.data.appliedAmount = amp
     }
-    target.mutations.damage({ amount: effect.amp })
+    target.mutations.registerRecentDamage({
+        type: sType,
+        source,
+        amount: effect.data.appliedAmount,
+        resisted: effect.data.resistedAmount
+    })
+    target.mutations.damage({ amount: effect.data.appliedAmount })
 }
 
 module.exports = {

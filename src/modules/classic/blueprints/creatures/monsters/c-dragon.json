@@ -6,53 +6,36 @@
       "name": "claw",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 2,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "bite",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "4d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "tail",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "breath",
       "attackType": "ATTACK_TYPE_HOMING",
       "damage": "4d8",
+      "damageType": "DAMAGE_TYPE_FIRE",
       "count": 1,
       "conveys": [
         {
-          "script": "damage",
-          "data": {}
-        },
-        {
           "script": "dragon-breath",
-          "data": {
-            "damageType": "DAMAGE_TYPE_FIRE"
-          }
+          "data": {}
         }
       ]
     }

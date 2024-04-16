@@ -83,13 +83,13 @@ describe('fullcombat', function () {
         })
         const aLogs = []
         c.events.on('combat.action', ev => {
-            aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+            aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
         })
         c.events.on('combat.turn', ev => {
             aLogs.push({ event: 'combat.turn-1', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
         })
         c2.events.on('combat.action', ev => {
-            aLogs.push({ event: 'combat.action-2', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+            aLogs.push({ event: 'combat.action-2', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
         })
         c2.events.on('combat.turn', ev => {
             aLogs.push({ event: 'combat.turn-2', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
@@ -173,13 +173,13 @@ describe('fullcombat', function () {
         })
         const aLogs = []
         c.events.on('combat.action', ev => {
-            aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+            aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
         })
         c.events.on('combat.turn', ev => {
             aLogs.push({ event: 'combat.turn-1', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
         })
         c2.events.on('combat.action', ev => {
-            aLogs.push({ event: 'combat.action-2', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action })
+            aLogs.push({ event: 'combat.action-2', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
         })
         c2.events.on('combat.turn', ev => {
             aLogs.push({ event: 'combat.turn-2', attacker: ev.attacker.id, target: ev.target.id, turn: ev.turn })
@@ -288,7 +288,7 @@ describe('selectSuitableAction', function () {
         c.setFighters(f1, f2)
         c.distance = 5
         const a = c.getMostSuitableAction()
-        expect(a).toEqual({"amp": "1d3", "attackType": "ATTACK_TYPE_MELEE", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_UNARMED"})
+        expect(a).toEqual({"damage": "1d3", "attackType": "ATTACK_TYPE_MELEE", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_UNARMED"})
     })
     it('select ranged weapon when target is far', function () {
         const c = new Combat()
@@ -313,7 +313,7 @@ describe('selectSuitableAction', function () {
         expect(a).toEqual({
             name: 'DEFAULT_ACTION_WEAPON',
             count: 1,
-            amp: '',
+            damage: '',
             conveys: [],
             attackType: 'ATTACK_TYPE_ANY'
         })
@@ -338,6 +338,6 @@ describe('selectSuitableAction', function () {
         expect(a).toBeNull()
         c.distance = 5
         const a2 = c.getMostSuitableAction()
-        expect(a2).toEqual({"amp": "", "attackType": "ATTACK_TYPE_ANY", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_WEAPON"})
+        expect(a2).toEqual({"damage": "", "attackType": "ATTACK_TYPE_ANY", "conveys": [], "count": 1, "name": "DEFAULT_ACTION_WEAPON"})
     })
 })

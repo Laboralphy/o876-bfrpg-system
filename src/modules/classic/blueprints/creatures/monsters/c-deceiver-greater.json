@@ -6,12 +6,9 @@
       "name": "bite",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_POISON",
       "count": 2,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "poison",
           "data": {}
@@ -22,24 +19,17 @@
       "name": "bite",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "2d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "special",
       "attackType": "ATTACK_TYPE_HOMING",
       "damage": "",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "decoy",
           "data": {}

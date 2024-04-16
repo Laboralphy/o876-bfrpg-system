@@ -1,0 +1,37 @@
+{
+  "MATERIAL_UNKNOWN": {
+    "parent": ""
+  },
+  "MATERIAL_WOOD": {
+    "description": "Standard non magical wood",
+    "parent": ""
+  },
+  "MATERIAL_METAL": {
+    "description": "Standard non magical metallic material (iron, steel)",
+    "parent": ""
+  },
+  "MATERIAL_FABRIC": {
+    "description": "Standard non magical fabric",
+    "parent": ""
+  },
+  "MATERIAL_LEATHER": {
+    "description": "Material made out of processed animal skin",
+    "parent": ""
+  },
+  "MATERIAL_SILVER": {
+    "description": "Silver makes weapon effective against super natural creatures that are immune to mundane weapon",
+    "parent": "MATERIAL_METAL"
+  },
+  "MATERIAL_IRON": {
+    "description": "Pure non alloyed metal",
+    "parent": "MATERIAL_METAL"
+  },
+  "MATERIAL_STEEL": {
+    "description": "Higher quality non magical material. Need high level of smithing",
+    "parent": "MATERIAL_METAL"
+  },
+  "MATERIAL_POLYMER": {
+    "description": "this material can be either naturally or artificially produced (keratin and chitin are polymers). When artificially created, it is a non-conductive material made out of oil or resin, requires modern and heavy industry, resistant to fire, cold, acid, electricity",
+    "parent": ""
+  }
+}

@@ -6,12 +6,9 @@
       "name": "touch",
       "attackType": "ATTACK_TYPE_MELEE_TOUCH",
       "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "damage-ability",
           "data": {

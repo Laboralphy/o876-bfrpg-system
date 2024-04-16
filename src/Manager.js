@@ -1,23 +1,33 @@
+const EventEmitter = require('node:events')
+const { getId } = require('./unique-id')
 const Horde = require("./Horde");
 const Creature = require("./Creature");
 const EffectProcessor = require("./EffectProcessor");
 const ItemBuilder = require("./ItemBuilder");
 const SchemaValidator = require('./SchemaValidator')
 const CombatManager = require('./combat/CombatManager')
+const CreatureBuilder = require("./CreatureBuilder");
 
 const EFFECTS = require('./effects')
 const DATA = require('./data')
 const CONSTS = require('./consts')
 const SCRIPTS = require('./scripts')
 
-const { getId } = require('./unique-id')
+
 
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
-const CreatureBuilder = require("./CreatureBuilder");
-const ItemProperties = require("./ItemProperties");
 
+
+const NEED_ATTACK_ROLL  = new Set([
+    CONSTS.ATTACK_TYPE_ANY,
+    CONSTS.ATTACK_TYPE_RANGED,
+    CONSTS.ATTACK_TYPE_MELEE,
+    CONSTS.ATTACK_TYPE_RANGED_TOUCH,
+    CONSTS.ATTACK_TYPE_MELEE_TOUCH,
+    CONSTS.ATTACK_TYPE_MULTI_MELEE
+])
 
 /**
  * @class
@@ -39,16 +49,23 @@ class Manager {
         this._data = Object.assign({}, DATA)
         this._blueprints = {}
         this._validBlueprints = {}
+        this._events = new EventEmitter()
 
         ib.blueprints = this._blueprints
         ib.data = this._data
 
-        cm.events.on('combat.script', ev => this._combatScript(ev))
+        cm.events.on('combat.action', ev => this._combatAction(ev))
+        cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
+        cm.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
 
         this._itemBuilder = ib
         this._creatureBuilder = cb
         this._schemaValidator = null
         this._combatManager = cm
+    }
+
+    get events () {
+        return this._events
     }
 
     /**
@@ -90,35 +107,77 @@ class Manager {
      * @param tick {number}
      * @param attacker {Creature}
      * @param target {Creature}
-     * @param action {string}
+     * @param action {CombatAction}
      * @param script {string}
-     * @param amp {string|number}
-     * @param data {object}
      * @param count {number}
      * @private
      */
-    _combatAction ({   turn,
+    _combatAction ({
+       turn,
        tick,
        attacker,
        target,
        action,
-       script,
-       amp,
-       data,
        count
     }) {
         // New combat action
-    }
-
-    _combatScript (ev) {
-        const script = 'atk-' + ev.script
-        if (script in SCRIPTS) {
-            return SCRIPTS[script]({
-                ...ev,
-                manager
+        this._events.emit('combat.action', {
+            turn,
+            tick,
+            attacker,
+            target,
+            action,
+            count
+        })
+        // weaponized action is an action that uses standard attack system (roll + bonus vs. ac)
+        const bWeaponizedAction = action.name === CONSTS.DEFAULT_ACTION_WEAPON ||
+            action.name === CONSTS.DEFAULT_ACTION_UNARMED
+        for (let iAtk = 0; iAtk < count; ++iAtk) {
+            // creates a new attack outcome if weaponized action
+            const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
+                ? attacker.attack(target, action)
+                : null
+            if (oAttackOutcome) {
+                if (oAttackOutcome.hit) {
+                    // the attack has landed : rolling damages
+                    const { material: sWeaponMaterial, types: oWeaponDamages} = attacker
+                        .rollDamage(oAttackOutcome)
+                    const aEffects = Object
+                        .entries(oWeaponDamages)
+                        .filter(([, nAmount]) => nAmount > 0)
+                        .map(([sDamageType, nAmount]) => this
+                            .effectProcessor
+                            .createEffect(CONSTS.EFFECT_DAMAGE, nAmount, {
+                                material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
+                                    ? sWeaponMaterial
+                                    : CONSTS.MATERIAL_UNKNOWN,
+                                type: sDamageType
+                            })
+                        )
+                    aEffects.forEach(effect => this.effectProcessor.applyEffect(effect, target, 0, attacker))
+                    oAttackOutcome.damages = target.getDamageReport(true)
+                }
+                this._events.emit('combat.attack', {
+                    turn, tick,
+                    outcome: oAttackOutcome
+                })
+            }
+            action.conveys.forEach(({ script, data }) => {
+                const sScriptRef = 'atk-' + script
+                if (sScriptRef in SCRIPTS) {
+                    SCRIPTS[sScriptRef]({
+                        turn,
+                        tick,
+                        data,
+                        attacker,
+                        target,
+                        attackOutcome: oAttackOutcome,
+                        manager: this
+                    })
+                } else {
+                    throw new Error('script not found : ' + sScriptRef)
+                }
             })
-        } else {
-            throw new Error('script not found : ' + script)
         }
     }
 
@@ -150,7 +209,7 @@ class Manager {
     }
 
     /**
-     * Load a module of additionnal assets (blueprints and data)
+     * Load a module of additional assets (blueprints and data)
      * @param module {string} name of module (classic, modern, future)
      */
     loadModule (module) {

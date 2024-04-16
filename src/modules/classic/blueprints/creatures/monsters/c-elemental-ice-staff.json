@@ -6,15 +6,9 @@
       "name": "fist",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d12",
+      "damageType": "DAMAGE_TYPE_COLD",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {
-            "damageType": "DAMAGE_TYPE_COLD"
-          }
-        }
-      ]
+      "conveys": []
     }
   ],
   "saveAs": {

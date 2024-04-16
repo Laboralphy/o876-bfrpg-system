@@ -6,37 +6,25 @@
       "name": "bite",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "tail",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "2d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     },
     {
       "name": "trample",
       "attackType": "ATTACK_TYPE_MULTI_MELEE",
       "damage": "2d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     }
   ],
   "saveAs": {

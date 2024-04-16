@@ -6,13 +6,9 @@
       "name": "whirlwind",
       "attackType": "ATTACK_TYPE_HOMING",
       "damage": "3d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        }
-      ]
+      "conveys": []
     }
   ],
   "saveAs": {

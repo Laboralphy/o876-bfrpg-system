@@ -6,12 +6,9 @@
       "name": "sting",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "conveys": [
-        {
-          "script": "damage",
-          "data": {}
-        },
         {
           "script": "poison",
           "data": {}
