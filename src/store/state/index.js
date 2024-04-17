@@ -56,7 +56,7 @@ module.exports = () => ({
     monsterData: {
         saveAs: {
             classType: 'CLASS_TYPE_FIGHTER',
-            levelAdjust: 0
+            level: 0
         },
         actions: {
         },

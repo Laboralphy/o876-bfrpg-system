@@ -2,7 +2,7 @@
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
  * @param externals {{}}
- * @returns {Object<string, CombatAction>}
+ * @returns {Object<string, BFStoreStateAction>}
  */
 module.exports = (state, getters, externals) => {
     const oActions = state.monsterData.actions

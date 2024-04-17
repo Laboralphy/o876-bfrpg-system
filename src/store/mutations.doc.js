@@ -15,7 +15,7 @@
  * @property setEffectDuration {function(effect: BFEffect, duration: number)}
  * @property setHitPoints {function(value: number)}
  * @property setLevel {function(value: number)}
- * @property setMonsterData {function(data: { saveAs: { classType: string, levelAdjust }})}
+ * @property setMonsterData {function(data: { saveAs: { classType: string, level }})}
  * @property setNaturalArmorClass {function(value: number)}
  * @property setOffensiveSlot {function(slot: string)}
  * @property setProperties {function(properties: {[]})}

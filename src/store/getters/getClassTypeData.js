@@ -1,7 +1,12 @@
 const CONSTS = require('../../consts')
 
 function getArrayValue (arr, index) {
-    return arr[Math.min(arr.length, Math.max(1, index)) - 1]
+    const value = arr[Math.min(arr.length, Math.max(1, index)) - 1]
+    if (value === undefined) {
+        console.error(arr, index)
+        throw new Error('extracted value is undefined')
+    }
+    return value
 }
 
 function extractRegistryLevel (reg, nLevel) {
@@ -23,10 +28,10 @@ module.exports = (state, getters, externals) => {
     const nUndrainedLevel = Math.max(1, state.level)
     const bIsMonster = state.classType === CONSTS.CLASS_TYPE_MONSTER
     const oSavingThrows = bIsMonster
-        ? externals['class-types'][state.monsterData.saveAs.classType]
+        ? externals['class-types'][state.monsterData.saveAs.classType].savingThrows
         : data.savingThrows
     const nSavingThrowLevel = bIsMonster
-        ? state.monsterData.saveAs.levelAdjust
+        ? state.monsterData.saveAs.level
         : nEffectiveLevel
     return {
         classType: state.classType,

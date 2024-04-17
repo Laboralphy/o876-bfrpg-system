@@ -1,6 +1,7 @@
 const { getId } = require('./unique-id')
 const { buildStore } = require('./store')
 const { aggregateModifiers } = require('./aggregator')
+const EventEmitter = require('node:events')
 const Dice = require('./libs/dice')
 const CONSTS = require('./consts')
 
@@ -16,6 +17,11 @@ class Creature {
         this._name = this._id
         this._dice = new Dice()
         this._store = buildStore()
+        this._events = new EventEmitter()
+    }
+
+    get events () {
+        return this._events
     }
 
     /**
@@ -173,7 +179,7 @@ class Creature {
      * - Unloaded ranged weapon can still be used without ammo, missing ammo do not provide bonus
      * Will not select the most appropriate weapon or action prior to attack
      * @param oTarget {Creature}
-     * @param action {CombatAction}
+     * @param action {BFStoreStateAction}
      * @returns {BFAttackOutcome}
      */
     attack (oTarget, action) {
@@ -182,6 +188,11 @@ class Creature {
             target: oTarget,
             action: action || this.getters.getSelectedAction
         })
+        if (!this.getters.canFight) {
+            oAttackOutcome.failed = true
+            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_CONDITION
+            return oAttackOutcome
+        }
         if (!oAttackOutcome.action) {
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
             return oAttackOutcome
@@ -262,6 +273,41 @@ class Creature {
             this.mutations.flushRecentDamages()
         }
         return d
+    }
+
+    /**
+     * Rolls a saving throw
+     * @param sSavingThrow {string} SAVING_THROW_*
+     * @param nAdjustment {number}
+     */
+    rollSavingThrow (sSavingThrow, nAdjustment = 0) {
+        const st = this.getters.getClassTypeData.savingThrows
+        if (sSavingThrow in st) {
+            const dc = st[sSavingThrow] + nAdjustment
+            const nRoll = this.dice.roll(20)
+            const nBonus = aggregateModifiers([
+                CONSTS.EFFECT_SAVING_THROW_MODIFIER,
+                CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER
+            ], this.getters, {
+                effectFilter: effect => effect.data.threat === sSavingThrow,
+                propFilter: prop => prop.data.threat === sSavingThrow
+            }).sum
+            const success =
+                nRoll >= this.getters.getSavingThrowSucessValue ||
+                (nRoll > this.getters.getSavingThrowFailureValue && nRoll + nBonus >= dc)
+            const outcome = {
+                success,
+                threat: sSavingThrow,
+                dc,
+                roll: nRoll,
+                bonus: nBonus,
+                adjustment: nAdjustment
+            }
+            this._events.emit('saving-throw', outcome)
+            return outcome
+        } else {
+            throw new Error('this threat cannot be saved : ' + sSavingThrow)
+        }
     }
 }
 

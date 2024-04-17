@@ -40,7 +40,7 @@
  * @property target {Creature}
  * @property weapon {BFItem}
  * @property ammo {BFItem}
- * @property action {CombatAction}
+ * @property action {BFStoreStateAction}
  * @property kill {boolean}
  * @property failed {boolean}
  * @property failure {string}

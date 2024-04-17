@@ -30,8 +30,8 @@
       }
     },
     "savingThrows": {
-      "SAVING_THROW_DEATH_RAY": 4,
-      "SAVING_THROW_POISON": 4,
+      "SAVING_THROW_DEATH_RAY_POISON": 4,
+      "SAVING_THROW_DEATH_RAY_POISON": 4,
       "SAVING_THROW_PARALYSIS_PETRIFY": 4,
       "SAVING_THROW_MAGIC_WAND": 4,
       "SAVING_THROW_SPELL": 4,
@@ -50,8 +50,8 @@
     },
     "maxHitDice": 6,
     "savingThrows": {
-      "SAVING_THROW_DEATH_RAY": 4,
-      "SAVING_THROW_POISON": 4,
+      "SAVING_THROW_DEATH_RAY_POISON": 4,
+      "SAVING_THROW_DEATH_RAY_POISON": 4,
       "SAVING_THROW_PARALYSIS_PETRIFY": 4,
       "SAVING_THROW_MAGIC_WAND": 4,
       "SAVING_THROW_SPELL": 4,

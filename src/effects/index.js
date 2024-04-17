@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-16T15:15:24.931Z
+// Date : 2024-04-17T15:18:14.326Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -14,5 +14,7 @@ module.exports = {
   'EFFECT_DAMAGE': require('./damage.js'),
   'EFFECT_HEAL': require('./heal.js'),
   'EFFECT_MATERIAL_VULNERABILITY': require('./material-vulnerability.js'),
-  'EFFECT_SPEED_MODIFIER': require('./speed-modifier.js')
+  'EFFECT_SAVING_THROW_MODIFIER': require('./saving-throw-modifier.js'),
+  'EFFECT_SPEED_MODIFIER': require('./speed-modifier.js'),
+  'EFFECT_STUN': require('./stun.js')
 }

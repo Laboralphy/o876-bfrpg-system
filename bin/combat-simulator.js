@@ -6,6 +6,7 @@ class CombatSim {
     constructor () {
         this._manager = new Manager()
         this._timer = 0
+        this._tick = 0
     }
 
     /**
@@ -73,6 +74,8 @@ class CombatSim {
         oMonster1.name = sMonster1
         oMonster2.name = sMonster2
         this._manager.events.on('combat.turn', ev => {
+            const { turn, tick, attacker, target, distance } = ev
+            console.log(this._tt(turn, tick), attacker.name, 'is at', distance, 'ft. from', target.name)
         })
         this._manager.events.on('combat.action', ev => {
             const { action, count, turn, tick, target, attacker } = ev
@@ -105,16 +108,37 @@ class CombatSim {
                 console.log(ev.attacker.name, 'left combat with', ev.attacker.getters.getHitPoints, 'hp left')
             }
         })
-        this._manager.events.on('combat.move', ev => {
-            const { turn, tick, attacker, target, speed, distance } = ev
-            console.log('[' + turn.toString() + ':' + tick.toString() + ']', attacker.name, 'move to', target.name, 'distance:', distance, 'ft')
+        this._manager.combatManager.events.on('combat.move', ev => {
+            const { turn, tick, attacker, target, speed, factor, distance } = ev
+            const p100 = factor < 1
+                ? ' (' + Math.round(factor * 100).toString() + '%)'
+                : ''
+            const sSpeed = speed.toString() + 'ft./turn' + p100
+            console.log(this._tt(turn, tick), attacker.name, 'moves toward', target.name + "'s direction - speed:", sSpeed,  "- distance:", distance, 'ft')
         })
-        const oCombat = this.combatManager.startCombat(oMonster1, oMonster2)
-        oCombat.distance = 30
+        this._manager.combatManager.events.on('combat.offensive-slot', ev => {
+            const { turn, tick, attacker, target, weapon, slot } = ev
+            console.log(this._tt(turn, tick), attacker.name, 'will now use :', weapon.ref)
+        })
+        this._manager.events.on('creature.saving-throw', ev => {
+            const { creature, success, roll, bonus, dc, threat } = ev
+            console.log(creature.name, 'saving throw against', threat.substring(13).toLowerCase(), ':', roll, '+', bonus, 'vs.', dc, ':', success ? 'SUCCESS' : 'FAILURE')
+        })
+        this._manager.events.on('creature.damage', ev => {
+            const { creature, amount, type: sDamageType, source, subtype } = ev
+            if (subtype !== CONSTS.EFFECT_SUBTYPE_WEAPON) {
+                console.log(creature.name, 'receive damage', amount, '(' + sDamageType.substring(12).toLowerCase() + ')', 'from', source.name)
+            }
+        })
+        this.combatManager.startCombat(oMonster1, oMonster2)
     }
 
     advance () {
+        if (this._tick % this.combatManager.defaultTickCount === 0) {
+            this._manager.processEffects()
+        }
         this.combatManager.processCombats()
+        ++this._tick
     }
 }
 
@@ -131,4 +155,4 @@ async function main (sMonster1, sMonster2) {
     }
 }
 
-main('c-centaur', 'c-elemental-fire-staff').then(() => console.log('done.'))
+main('c-centaur', 'c-centipede').then(() => console.log('done.'))

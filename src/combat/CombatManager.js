@@ -6,6 +6,7 @@ class CombatManager {
         this._fighters = {}
         this._events = new Events()
         this._defaultDistance = 0
+        this._defaultTickCount = 6
     }
 
     get events () {
@@ -22,6 +23,14 @@ class CombatManager {
 
     get defaultDistance () {
         return this._defaultDistance
+    }
+
+    set defaultTickCount (value) {
+        this._defaultTickCount = value
+    }
+
+    get defaultTickCount () {
+        return this._defaultTickCount
     }
 
     processCombats () {
@@ -82,6 +91,7 @@ class CombatManager {
      */
     _createCombat (oCreature, oTarget) {
         const combat = new Combat()
+        combat.tickCount = this._defaultTickCount
         combat.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
         combat.events.on('combat.action', ev => this._events.emit('combat.action', ev))
         combat.events.on('combat.script', ev => this._events.emit('combat.script', ev))

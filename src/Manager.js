@@ -54,6 +54,7 @@ class Manager {
         ib.blueprints = this._blueprints
         ib.data = this._data
 
+        cm.defaultDistance = 50
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
         cm.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
@@ -107,7 +108,7 @@ class Manager {
      * @param tick {number}
      * @param attacker {Creature}
      * @param target {Creature}
-     * @param action {CombatAction}
+     * @param action {BFStoreStateAction}
      * @param script {string}
      * @param count {number}
      * @private
@@ -145,15 +146,18 @@ class Manager {
                     const aEffects = Object
                         .entries(oWeaponDamages)
                         .filter(([, nAmount]) => nAmount > 0)
-                        .map(([sDamageType, nAmount]) => this
-                            .effectProcessor
-                            .createEffect(CONSTS.EFFECT_DAMAGE, nAmount, {
-                                material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
-                                    ? sWeaponMaterial
-                                    : CONSTS.MATERIAL_UNKNOWN,
-                                type: sDamageType
-                            })
-                        )
+                        .map(([sDamageType, nAmount]) => {
+                            const effect = this
+                                .effectProcessor
+                                .createEffect(CONSTS.EFFECT_DAMAGE, nAmount, {
+                                    material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
+                                        ? sWeaponMaterial
+                                        : CONSTS.MATERIAL_UNKNOWN,
+                                    type: sDamageType
+                                })
+                            effect.subtype = CONSTS.EFFECT_SUBTYPE_WEAPON
+                            return effect
+                        })
                     aEffects.forEach(effect => this.effectProcessor.applyEffect(effect, target, 0, attacker))
                     oAttackOutcome.damages = target.getDamageReport(true)
                 }
@@ -161,6 +165,13 @@ class Manager {
                     turn, tick,
                     outcome: oAttackOutcome
                 })
+                if (oAttackOutcome.hit) {
+                    // the target will have penalty of speed
+                    const oTargetCombat = this.combatManager.getCombat(target)
+                    if (oTargetCombat) {
+                        ++oTargetCombat.attacker.speedPenalty
+                    }
+                }
             }
             action.conveys.forEach(({ script, data }) => {
                 const sScriptRef = 'atk-' + script
@@ -282,6 +293,16 @@ class Manager {
         oCreature.id = id
         oCreature.mutations.setHitPoints({ value: oCreature.getters.getMaxHitPoints })
         this._horde.linkCreature(oCreature)
+        oCreature.events.on('saving-throw', ev => this._events.emit('creature.saving-throw', {
+            ...ev,
+            creature: oCreature,
+            manager: this
+        }))
+        oCreature.events.on('damage', ev => this._events.emit('creature.damage', {
+            ...ev,
+            creature: oCreature,
+            manager: this
+        }))
         return oCreature
     }
 

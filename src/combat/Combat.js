@@ -16,6 +16,14 @@ class Combat {
         this._distance = 0
     }
 
+    get tickCount () {
+        return this._tickCount
+    }
+
+    set tickCount (value) {
+        this._tickCount = Math.max(1, value)
+    }
+
     /**
      * @returns {Events}
      */
@@ -88,6 +96,9 @@ class Combat {
         const action = who.nextAction
         const nAttackCount = action ? action.count : 0
         who.plan = Combat.computePlanning(nAttackCount, this._tickCount, true)
+        if (nAttackCount === 0) {
+            this.approachTarget()
+        }
     }
 
     /**
@@ -99,39 +110,34 @@ class Combat {
         const nAttackCount = attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
             const action = attacker.nextAction
-            this._events.emit('combat.action', {
-                turn: this._turn,
-                tick: this._tick,
-                attacker: attacker.creature,
-                target: defender,
-                action: action,
-                count: nAttackCount
-            })
+            if (action) {
+                this._events.emit('combat.action', {
+                    turn: this._turn,
+                    tick: this._tick,
+                    attacker: attacker.creature,
+                    target: defender,
+                    action: action,
+                    count: nAttackCount
+                })
+            }
         }
     }
 
     advance () {
+        this.selectMostSuitableAction()
         if (this._tick === 0) {
             // Start of turn
             // attack-types planning
-            if (!this._attacker.nextAction) {
-                const oDecidedAction = this.getMostSuitableAction()
-                if (oDecidedAction) {
-                    console.log('the most suitable action for', this._attacker.creature.name, 'is', oDecidedAction.name)
-                    this._attacker.nextAction = oDecidedAction
-                }
-            }
             this._events.emit('combat.turn', {
                 turn: this._turn,
+                tick: this._tick,
                 attacker: this._attacker.creature,
                 action: oAction => {
                     this._attacker.nextAction = oAction
                 },
-                target: this._defender
+                target: this._defender,
+                distance: this._distance
             })
-            if (!this._attacker.nextAction) {
-                this.approachTarget()
-            }
             this.prepareTurn(this._attacker)
         }
         this.playFighterAction(this._attacker, this._defender)
@@ -183,6 +189,8 @@ class Combat {
             // new offensive slot is different from previous offensive slot : fire an event
             atkr.mutations.setOffensiveSlot({ slot })
             this._events.emit('combat.offensive-slot', {
+                turn: this._turn,
+                tick: this._tick,
                 slot,
                 previousSlot: sOldSlot,
                 attacker: atkr,
@@ -216,17 +224,19 @@ class Combat {
 
     /**
      *
-     * @returns {CombatAction}
+     * @returns {BFStoreStateAction}
      */
     getMostSuitableAction () {
         const atkr = this._attacker.creature
         // are there any usable weapons ?
-        const msw = this.getMostSuitableOffensiveSlot()
-        if (msw) {
-            // One of out offensive slot is suitable for attacking target
-            atkr.mutations.setOffensiveSlot({ slot: msw })
+        const sBestWeaponSlot = this.getMostSuitableOffensiveSlot()
+        if (sBestWeaponSlot) {
+            // We should use our weapon
+            // One of our offensive slots is suitable for attacking target
+            this._switchOffensiveSlot(sBestWeaponSlot)
             return DATA['default-actions'].DEFAULT_ACTION_WEAPON
         }
+        // We don't have suitable weapon at this point
         // target cannot be attacked by one of our equipped weapons
         // are there any natural attacks ?
         const bTargetIsFar = this.distance > WEAPON_RANGE_MELEE
@@ -234,18 +244,30 @@ class Combat {
             ? atkr.getters.getRangedActions
             : atkr.getters.getMeleeActions
         if (aActions.length > 0) {
+            // We have suitable action(s)
             const iAction = atkr.dice.roll(aActions.length) - 1
             return atkr.getters.getActions[aActions[iAction]]
         }
+        // At this point we have no weapon, and we have no action that can reach target.
         // Fallback actions
-        // target must be close
         if (bTargetIsFar) {
             // target is too far
             // There is no way to attack
             // must go closer
             return null
         }
+        // Target is at melee range, we must use our unarmed attack
         return DATA['default-actions'].DEFAULT_ACTION_UNARMED
+    }
+
+    /**
+     * Will use the most suitable action
+     */
+    selectMostSuitableAction () {
+        const oDecidedAction = this.getMostSuitableAction()
+        if (oDecidedAction) {
+            this._attacker.nextAction = oDecidedAction
+        }
     }
 
     /**
@@ -260,18 +282,21 @@ class Combat {
     }
 
     approachTarget () {
-        const nRunSpeed = this._attacker.creature.getters.getSpeed
-        const prevDistance = this.distance
+        const nRunSpeed = this._attacker.speed
+        const previousDistance = this.distance
         const newDistance = Math.max(DATA['weapon-ranges'].WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
             turn: this._turn,
             tick: this._tick,
-            mover: this._attacker.creature,
+            attacker: this._attacker.creature,
             target: this._defender,
             speed: nRunSpeed,
+            factor: this._attacker.speedFactor,
+            previousDistance,
             distance: newDistance
         })
         this.distance = newDistance
+        this._attacker.healSpeedPenalty()
     }
 }
 

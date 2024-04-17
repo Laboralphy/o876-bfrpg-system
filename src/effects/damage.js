@@ -50,13 +50,16 @@ function mutate ({ effect, target, source }) {
         // no resistance no absorb no immunity
         effect.data.appliedAmount = amp
     }
-    target.mutations.registerRecentDamage({
+    const oRecentDamage = {
         type: sType,
         source,
         amount: effect.data.appliedAmount,
-        resisted: effect.data.resistedAmount
-    })
-    target.mutations.damage({ amount: effect.data.appliedAmount })
+        resisted: effect.data.resistedAmount,
+        subtype: effect.subtype
+    }
+    target.mutations.registerRecentDamage(oRecentDamage)
+    target.mutations.damage({ amount: oRecentDamage.amount })
+    target.events.emit('damage', oRecentDamage)
 }
 
 module.exports = {

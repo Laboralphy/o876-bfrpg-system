@@ -49,7 +49,7 @@ class CreatureBuilder {
             data: {
                 saveAs: {
                     classType: blueprint.saveAs.classType,
-                    levelAdjust: blueprint.saveAs.levelAdjust
+                    level: blueprint.saveAs.level
                 }
             }
         })
