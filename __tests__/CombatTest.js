@@ -164,8 +164,9 @@ describe('fullcombat', function () {
             count: 1,
             data: {}
         }
+        f1.mutations.defineActions({ actions: [a1, a2]})
         c.attacker.nextAction = a1
-        c2.attacker.nextAction = {
+        f2.mutations.defineActions({ actions: [{
             name: 'bite',
             conveys: [{
                 script: 'damage',
@@ -174,7 +175,7 @@ describe('fullcombat', function () {
             damage: '1d6',
             damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 1
-        }
+        }] })
         const aLogs = []
         c.events.on('combat.action', ev => {
             aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
