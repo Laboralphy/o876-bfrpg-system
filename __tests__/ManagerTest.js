@@ -47,7 +47,7 @@ describe('createItem', function () {
         const oDagger = m.createItem({ id: 'dag1', ref: 'wpn-dagger' })
         expect(oDagger.id).toBe('dag1')
         expect(oDagger).toEqual({
-            ref: '',
+            ref: 'wpn-dagger',
             data: {},
             properties: [],
             size: 'WEAPON_SIZE_SMALL',

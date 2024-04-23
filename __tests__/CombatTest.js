@@ -60,8 +60,9 @@ describe('fullcombat', function () {
         c.setFighters(f1, f2)
         const c2 = new Combat()
         c2.setFighters(f2, f1)
-        c.attacker.nextAction = {
+        c.attacker.creature.mutations.defineActions({ actions: [{
             name: 'claw',
+            attackType: CONSTS.ATTACK_TYPE_MELEE,
             conveys: [{
                 script: 'damage',
                 data: {}
@@ -70,9 +71,10 @@ describe('fullcombat', function () {
             damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 2,
             data: {}
-        }
-        c2.attacker.nextAction = {
+        }] })
+        c2.attacker.creature.mutations.defineActions({ actions: [{
             name: 'bite',
+            attackType: CONSTS.ATTACK_TYPE_MELEE,
             conveys: [{
                 script: 'damage',
                 data: {}
@@ -81,7 +83,7 @@ describe('fullcombat', function () {
             damageType: CONSTS.DAMAGE_TYPE_PHYSICAL,
             count: 1,
             data: {}
-        }
+        }] })
         const aLogs = []
         c.events.on('combat.action', ev => {
             aLogs.push({ event: 'combat.action-1', attacker: ev.attacker.id, target: ev.target.id, tick: ev.tick, action: ev.action.name })
@@ -136,14 +138,17 @@ describe('fullcombat', function () {
     it('should switch to action a2 during turn 2 when defining a1 then a2', function () {
         const c = new Combat()
         const f1 = new Creature()
+        f1.dice.cheat(0.15)
         f1.id = 'f1'
         const f2 = new Creature()
         f2.id = 'f2'
+        f2.dice.cheat(0.15)
         c.setFighters(f1, f2)
         const c2 = new Combat()
         c2.setFighters(f2, f1)
         const a1 = {
             name: 'claw',
+            attackType: CONSTS.ATTACK_TYPE_MELEE,
             conveys: [{
                 script: 'damage',
                 data: {}
@@ -155,6 +160,7 @@ describe('fullcombat', function () {
         }
         const a2 = {
             name: 'stomp',
+            attackType: CONSTS.ATTACK_TYPE_MELEE,
             conveys: [{
                 script: 'damage',
                 data: {}
@@ -168,6 +174,7 @@ describe('fullcombat', function () {
         c.attacker.nextAction = a1
         f2.mutations.defineActions({ actions: [{
             name: 'bite',
+            attackType: CONSTS.ATTACK_TYPE_MELEE,
             conveys: [{
                 script: 'damage',
                 data: {}
@@ -257,8 +264,15 @@ describe('fullcombat', function () {
                 event: 'combat.action-1',
                 attacker: 'f1',
                 target: 'f2',
+                tick: 2,
+                action: 'claw'
+            },
+            {
+                event: 'combat.action-1',
+                attacker: 'f1',
+                target: 'f2',
                 tick: 5,
-                action: 'stomp'
+                action: 'claw'
             },
             {
                 event: 'combat.action-2',

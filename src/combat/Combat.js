@@ -256,6 +256,7 @@ class Combat {
             // must go closer
             return null
         }
+        console.debug('target is close')
         // Target is at melee range, we must use our unarmed attack
         return DATA['default-actions'].DEFAULT_ACTION_UNARMED
     }

@@ -1,3 +1,5 @@
+const { checkCombatActionSchema } = require('../../libs/check-combat-action-schema')
+
 /**
  * Add an action to character action list
  *
@@ -15,10 +17,11 @@ module.exports = ({ state }, { actions }) => {
     const mda = state.monsterData.actions
     const aPrevKeys = new Set(Object.keys(mda))
     actions.forEach(a => {
+        checkCombatActionSchema(a)
         mda[a.name] = {
             name: a.name,
             attackType: a.attackType,
-            count: a.count,
+            count: a.count || 1,
             conveys: a.conveys.slice(0),
             damage: a.damage,
             damageType: a.damageType

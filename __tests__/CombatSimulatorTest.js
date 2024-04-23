@@ -59,12 +59,16 @@ describe('getMostSuitableAction', function () {
         ])
         oLocust.dice.cheat(0.5)
         expect(oCombatLocust.getMostSuitableAction()).toEqual({
-            "name": "bump",
-            "attackType": "ATTACK_TYPE_MELEE",
-            "damage": "1d4",
+            "name": "spit",
+            "attackType": "ATTACK_TYPE_RANGED_TOUCH",
+            "damage": 0,
             "damageType": "DAMAGE_TYPE_PHYSICAL",
             "count": 1,
             "conveys": [
+                {
+                    data: {},
+                    script: "daze"
+                }
             ]
         })
     })

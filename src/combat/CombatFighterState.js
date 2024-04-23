@@ -1,3 +1,5 @@
+const { checkCombatActionSchema } = require('../libs/check-combat-action-schema')
+
 class CombatFighterState {
     constructor () {
         /**
@@ -77,6 +79,7 @@ class CombatFighterState {
      * @param value {BFStoreStateAction}
      */
     set nextAction (value) {
+        checkCombatActionSchema(value)
         this._nextAction = value
     }
 
