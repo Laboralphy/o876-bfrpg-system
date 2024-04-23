@@ -1,6 +1,5 @@
 /**
  * @typedef BFStoreGetters {object}
- * @property canFight {boolean}
  * @property getAbilities {Object<string, number>}
  * @property getAbilityModifiers {Object<string, number>}
  * @property getActions {Object<string, BFStoreStateAction>}
@@ -8,6 +7,7 @@
  * @property getAttackBonus {number}
  * @property getAttackRollCriticalValue {number}
  * @property getAttackRollFumbleValue {number}
+ * @property getCapabilities {{attack: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
  * @property getClassTypeData {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  * @property getConditionSet {Set<string>}
  * @property getDamageMitigation {Object<string, D20OneDamageMitigation>}}

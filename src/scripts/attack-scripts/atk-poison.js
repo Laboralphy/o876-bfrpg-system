@@ -14,21 +14,21 @@ const CONSTS = require('../../consts')
  * @param manager {{}}
  */
 function main ({
-                   turn,
-                   tick,
-                   attackOutcome,
-                   attacker,
-                   target,
-                   action,
-                   script,
-                   damage,
-                   data: {
-                       power = 0
-                   },
-                   manager
-               }) {
+   turn,
+   tick,
+   attackOutcome,
+   attacker,
+   target,
+   action,
+   script,
+   damage,
+   data: {
+       power = 0
+   },
+   manager
+}) {
     // if saving throw against poison fail then apply poison
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, power).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: power, threat: CONSTS.THREAT_POISON }).success) {
         const ePoison = manager.effectProcessor.createEffect(CONSTS.EFFECT_DAMAGE, '1d3', {
             type: CONSTS.DAMAGE_TYPE_POISON
         })

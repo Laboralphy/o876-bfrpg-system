@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-17T15:18:14.257Z
+// Date : 2024-04-23T15:01:19.281Z
 // List of files in ./src/store/mutations
 
 module.exports = {
@@ -11,6 +11,7 @@ module.exports = {
   'flushRecentDamages': require('./flushRecentDamages.js'),
   'registerRecentDamage': require('./registerRecentDamage.js'),
   'removeDeadEffects': require('./removeDeadEffects.js'),
+  'removeEffect': require('./removeEffect.js'),
   'removeItem': require('./removeItem.js'),
   'selectAction': require('./selectAction.js'),
   'setAbilityValue': require('./setAbilityValue.js'),

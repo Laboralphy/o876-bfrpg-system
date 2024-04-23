@@ -1,9 +1,8 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-17T15:18:14.224Z
+// Date : 2024-04-23T15:01:19.248Z
 // List of files in ./src/store/getters
 
 module.exports = {
-  'canFight': require('./canFight.js'),
   'getAbilities': require('./getAbilities.js'),
   'getAbilityModifiers': require('./getAbilityModifiers.js'),
   'getActions': require('./getActions.js'),
@@ -11,6 +10,7 @@ module.exports = {
   'getAttackBonus': require('./getAttackBonus.js'),
   'getAttackRollCriticalValue': require('./getAttackRollCriticalValue.js'),
   'getAttackRollFumbleValue': require('./getAttackRollFumbleValue.js'),
+  'getCapabilities': require('./getCapabilities.js'),
   'getClassTypeData': require('./getClassTypeData.js'),
   'getConditionSet': require('./getConditionSet.js'),
   'getDamageMitigation': require('./getDamageMitigation.js'),

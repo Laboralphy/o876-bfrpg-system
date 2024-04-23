@@ -188,7 +188,7 @@ class Creature {
             target: oTarget,
             action: action || this.getters.getSelectedAction
         })
-        if (!this.getters.canFight) {
+        if (!this.getters.getCapabilities.attack) {
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_CONDITION
             return oAttackOutcome
@@ -278,14 +278,35 @@ class Creature {
     /**
      * Rolls a saving throw
      * @param sSavingThrow {string} SAVING_THROW_*
-     * @param nAdjustment {number}
+     * @param adjustment {number}
+     * @param threat {string} THREAT_*
      */
-    rollSavingThrow (sSavingThrow, nAdjustment = 0) {
+    rollSavingThrow (sSavingThrow, { adjustment = 0, threat = '' } = {}) {
         const st = this.getters.getClassTypeData.savingThrows
         if (sSavingThrow in st) {
-            const dc = st[sSavingThrow] + nAdjustment
+            let sAbility = ''
+            switch (threat) {
+                case CONSTS.THREAT_POISON: {
+                    sAbility = CONSTS.ABILITY_CONSTITUTION
+                    break
+                }
+
+                case CONSTS.THREAT_ILLUSION: {
+                    sAbility = CONSTS.ABILITY_INTELLIGENCE
+                    break
+                }
+
+                case CONSTS.THREAT_MIND_SPELL: {
+                    sAbility = CONSTS.ABILITY_WISDOM
+                    break
+                }
+            }
+            const nAbilityBonus = sAbility
+                ? this.getters.getAbilityModifiers[sAbility]
+                : 0
+            const dc = st[sSavingThrow] + adjustment
             const nRoll = this.dice.roll(20)
-            const nBonus = aggregateModifiers([
+            const nBonus = nAbilityBonus + aggregateModifiers([
                 CONSTS.EFFECT_SAVING_THROW_MODIFIER,
                 CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER
             ], this.getters, {
@@ -301,7 +322,7 @@ class Creature {
                 dc,
                 roll: nRoll,
                 bonus: nBonus,
-                adjustment: nAdjustment
+                adjustment: adjustment
             }
             this._events.emit('saving-throw', outcome)
             return outcome

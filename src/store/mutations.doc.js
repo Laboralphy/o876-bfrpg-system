@@ -8,6 +8,7 @@
  * @property flushRecentDamages {function()}
  * @property registerRecentDamage {function(sDamageType: string DAMAGE_TYPE_*, source: Creature, amount: number, resisted: number)}
  * @property removeDeadEffects {function()}
+ * @property removeEffect {function(effect: BFEffect)}
  * @property removeItem {function(slot: string): BFEffect}
  * @property selectAction {function(action: string)}
  * @property setAbilityValue {function(ability: string, value: number)}

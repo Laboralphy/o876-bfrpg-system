@@ -18,7 +18,17 @@ module.exports = (state, getters) => {
             }
 
             case CONSTS.EFFECT_STUN: {
-                aConditionSet.add(CONSTS.CONDITION_STUNNED)
+                aConditionSet.add(CONSTS.CONDITION_DAZED)
+                break
+            }
+
+            case CONSTS.EFFECT_PARALYSIS: {
+                aConditionSet.add(CONSTS.CONDITION_PARALYZED)
+                break
+            }
+
+            case CONSTS.EFFECT_PETRIFICATION: {
+                aConditionSet.add(CONSTS.CONDITION_PETRIFIED)
                 break
             }
         }
