@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack dazes target for a given duration
+ * This attack paralyzes target for a given duration
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -27,13 +27,10 @@ function main ({
     },
     manager
 }) {
-    if (!duration) {
-        throw new Error('attack script daze : missing parameter : duration')
-    }
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
-        const eDaze = manager.effectProcessor.createEffect(CONSTS.EFFECT_STUN)
-        eDaze.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.effectProcessor.applyEffect(eDaze, target, duration, attacker)
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
+        const eParalysis = manager.effectProcessor.createEffect(CONSTS.EFFECT_PARALYSIS)
+        eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        manager.effectProcessor.applyEffect(eParalysis, target, duration, attacker)
     }
 }
 

@@ -79,7 +79,8 @@ class EffectProcessor {
                 amp,
                 duration: 0,
                 source: null,
-                data: {}
+                data: {},
+                stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK
             }
             if ('init' in ept) {
                 ept.init(oEffect, oParams)
@@ -97,7 +98,38 @@ class EffectProcessor {
         oEffect.duration = duration
         oEffect.source = source.id
         if (oEffect.duration > 0) {
-            oEffect = target.mutations.addEffect({ effect: oEffect })
+            switch (oEffect.stackingRule) {
+                case CONSTS.EFFECT_STACKING_RULE_NO_STACK: {
+                    // Will not replace same effect
+                    if (!target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)) {
+                        oEffect = target.mutations.addEffect({ effect: oEffect })
+                    }
+                    break
+                }
+
+                case CONSTS.EFFECT_STACKING_RULE_REPLACE: {
+                    const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
+                    if (oOldEffect) {
+                        this.killEffect(oOldEffect)
+                        oEffect = target.mutations.addEffect({ effect: oEffect })
+                    }
+                    break
+                }
+
+                case CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION: {
+                    const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
+                    if (oOldEffect) {
+                        oOldEffect.duration = Math.max(oEffect.duration, oOldEffect.duration)
+                        oEffect = oOldEffect
+                    }
+                    break
+                }
+
+                default: {
+                    oEffect = target.mutations.addEffect({ effect: oEffect })
+                    break
+                }
+            }
         } else {
             this.invokeEffectMethod(oEffect, 'mutate', target, source)
         }

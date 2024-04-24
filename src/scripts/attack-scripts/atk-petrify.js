@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * Attack script
+ * This attack petrifies target
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -10,8 +10,8 @@ const CONSTS = require('../../consts')
  * @param action {BFStoreStateAction}
  * @param script {string}
  * @param damage {string|number}
- * @param manager {{}}
  * @param data {{}}
+ * @param manager {{}}
  */
 function main ({
     turn,
@@ -22,10 +22,14 @@ function main ({
     action,
     script,
     damage,
-    manager,
-    data
+    data,
+    manager
 }) {
-
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
+        const ePetrify = manager.effectProcessor.createEffect(CONSTS.EFFECT_PETRIFICATION)
+        ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        manager.effectProcessor.applyEffect(ePetrify, target, Infinity, attacker)
+    }
 }
 
 module.exports = main

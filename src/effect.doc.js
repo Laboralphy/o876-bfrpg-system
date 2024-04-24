@@ -7,4 +7,5 @@
  * @property duration {number} duration of effect, decrease each turn, when reach 0 the effect is deleted
  * @property source {string} identifier of the creatures which cast the effect
  * @property data {{}} custom data for the effect
+ * @property stackingRule {string} EFFECT_STACKING_RULE_*
  */

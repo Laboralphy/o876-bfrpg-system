@@ -6,7 +6,7 @@
       "name": "touch",
       "attackType": "ATTACK_TYPE_MELEE_TOUCH",
       "damage": "1d8",
-      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "damageType": "DAMAGE_TYPE_NECROTIC",
       "count": 1,
       "conveys": [
         {

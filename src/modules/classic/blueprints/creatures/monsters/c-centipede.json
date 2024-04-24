@@ -6,7 +6,7 @@
       "name": "bite",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": 0,
-      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "damageType": "DAMAGE_TYPE_POISON",
       "count": 1,
       "conveys": [
         {
