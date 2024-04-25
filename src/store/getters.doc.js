@@ -12,6 +12,7 @@
  * @property getConditionSet {Set<string>}
  * @property getDamageMitigation {Object<string, D20OneDamageMitigation>}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}
+ * @property getEffectRegistry {Object<string, BFEffect>}
  * @property getEffectSet {Set<string>}
  * @property getEffects {{}[]}
  * @property getEquipment {Object<string, BFItem>}

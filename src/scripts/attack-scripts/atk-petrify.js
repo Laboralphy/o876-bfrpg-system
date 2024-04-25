@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack petrifies target
+ * This attack petrifies target, if target fails at saving against petrification
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -26,9 +26,9 @@ function main ({
     manager
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
-        const ePetrify = manager.effectProcessor.createEffect(CONSTS.EFFECT_PETRIFICATION)
+        const ePetrify = manager.createEffect(CONSTS.EFFECT_PETRIFICATION)
         ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.effectProcessor.applyEffect(ePetrify, target, Infinity, attacker)
+        manager.applyEffect(ePetrify, target, Infinity, attacker)
     }
 }
 

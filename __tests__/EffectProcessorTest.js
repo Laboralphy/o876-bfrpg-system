@@ -25,7 +25,7 @@ describe('processEffect', function () {
     it('should call effect mutate function when processing effect', function () {
         const c1 = new Creature()
         const ep = new EffectProcessor()
-        ep.effectPrograms = EFFECTS
+        ep.effectPrograms = { ...EFFECTS }
         const aLog = []
         ep.effectPrograms.EFFECT_TESTING = {
             init: function (oEffect) {
@@ -71,5 +71,38 @@ describe('processEffect', function () {
             'mutate effect testing',
             'dispose effect testing'
         ])
+    })
+})
+
+describe('effect groups', function () {
+    it('eff1 and eff2 should have same sibling array when eff1 and eff2 are in effect group', function () {
+        const c1 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eff1 = ep.createEffect(CONSTS.EFFECT_ATTACK_MODIFIER, -2)
+        const eff2 = ep.createEffect(CONSTS.EFFECT_SAVING_THROW_MODIFIER, -2)
+        ep.applyEffectGroup([eff1, eff2], ['TAG_TEST_1'], c1, 10)
+        const aExpectedSibs = [eff1.id, eff2.id]
+        expect(eff1.group.siblings).toEqual(aExpectedSibs)
+        expect(eff2.group.siblings).toEqual(aExpectedSibs)
+        expect(eff1.group.tags).toEqual(['TAG_TEST_1'])
+        expect(eff2.group.tags).toEqual(['TAG_TEST_1'])
+    })
+    it('should remove eff2 effect when removing eff1 and, [eff1, eff2] are in same group', function () {
+        const c1 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eff1 = ep.createEffect(CONSTS.EFFECT_ATTACK_MODIFIER, -2)
+        const eff2 = ep.createEffect(CONSTS.EFFECT_SAVING_THROW_MODIFIER, -2)
+        expect(c1.getters.getAttackBonus).toBe(0)
+        ep.applyEffectGroup([eff1, eff2], ['TAG_TEST_1'], c1, 10)
+        expect(c1.getters.getEffects.length).toBe(2)
+        expect(c1.getters.getEffectRegistry[eff1.id]).toEqual(eff1)
+        expect(c1.getters.getEffectRegistry[eff2.id]).toEqual(eff2)
+        expect(eff1.data.type).toBe(CONSTS.ATTACK_TYPE_ANY)
+        expect(c1.getters.getAttackBonus).toBe(-2)
+        ep.killEffect(eff2, c1, c1)
+        expect(c1.getters.getAttackBonus).toBe(0)
+        expect(c1.getters.getEffects.length).toBe(0)
     })
 })

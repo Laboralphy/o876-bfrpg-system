@@ -50,7 +50,20 @@ class EffectProcessor {
     }
 
     killEffect (oEffect, target, source) {
-        this.setEffectDuration(oEffect, 0, target, source)
+        const oEffectRegistry = target.getters.getEffectRegistry
+        const aEffects = oEffect.group.siblings.length > 0
+            ? oEffect
+                .group
+                .siblings
+                .map(effId => effId in oEffectRegistry
+                    ? oEffectRegistry[effId]
+                    : null
+                )
+                .filter(eff => eff !== null)
+            : [oEffect]
+        aEffects.forEach(effect => {
+            this.setEffectDuration(effect, 0, target, source)
+        })
     }
 
     processEffect (oEffect, target, source) {
@@ -69,7 +82,7 @@ class EffectProcessor {
      * @param oParams
      * @returns {BFEffect}
      */
-    createEffect (sType, amp = 0, oParams = null) {
+    createEffect (sType, amp = 0, oParams = {}) {
         const ept = this._effectPrograms[sType]
         if (ept) {
             const oEffect = {
@@ -80,7 +93,11 @@ class EffectProcessor {
                 duration: 0,
                 source: null,
                 data: {},
-                stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK
+                stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK,
+                group: {
+                    siblings: [],
+                    tags: []
+                }
             }
             if ('init' in ept) {
                 ept.init(oEffect, oParams)
@@ -89,6 +106,21 @@ class EffectProcessor {
         } else {
             throw new Error('Unknown effect type : ' + sType + ' - maybe effectPrograms not initialized')
         }
+    }
+
+    _groupEffects (aEffects, tags = []) {
+        const aSiblings = aEffects.map(({ id }) => id)
+        aEffects.forEach(effect => {
+            effect.group.siblings = aSiblings
+            effect.group.tags = tags
+        })
+    }
+
+    applyEffectGroup (aEffects, tags, target, duration = 0, source = null) {
+        this._groupEffects(aEffects, tags)
+        aEffects.forEach(effect => {
+            this.applyEffect(effect, target, duration, source)
+        })
     }
 
     applyEffect(oEffect, target, duration = 0, source = null) {

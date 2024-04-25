@@ -310,8 +310,8 @@ class Creature {
                 CONSTS.EFFECT_SAVING_THROW_MODIFIER,
                 CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER
             ], this.getters, {
-                effectFilter: effect => effect.data.threat === sSavingThrow,
-                propFilter: prop => prop.data.threat === sSavingThrow
+                effectFilter: effect => effect.data.threat === sSavingThrow || effect.data.threat === CONSTS.SAVING_THROW_ANY,
+                propFilter: prop => prop.data.threat === sSavingThrow || prop.data.threat === CONSTS.SAVING_THROW_ANY
             }).sum
             const success =
                 nRoll >= this.getters.getSavingThrowSucessValue ||

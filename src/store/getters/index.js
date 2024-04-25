@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-24T11:42:16.719Z
+// Date : 2024-04-25T08:38:09.509Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -15,6 +15,7 @@ module.exports = {
   'getConditionSet': require('./getConditionSet.js'),
   'getDamageMitigation': require('./getDamageMitigation.js'),
   'getDefensiveEquipmentProperties': require('./getDefensiveEquipmentProperties.js'),
+  'getEffectRegistry': require('./getEffectRegistry.js'),
   'getEffectSet': require('./getEffectSet.js'),
   'getEffects': require('./getEffects.js'),
   'getEquipment': require('./getEquipment.js'),

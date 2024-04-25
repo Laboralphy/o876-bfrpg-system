@@ -1,7 +1,7 @@
 /**
  * @typedef BFStoreMutations {Object}
  * @property addCreatureProperty {function(property: BFItemProperty): BFItemProperty}
- * @property addEffect {function(effect: BFEffect): BFEffect}
+ * @property addEffect {function(): BFEffect}
  * @property damage {function(amount: number)}
  * @property defineActions {function(actions: DefineActionDTO[])}
  * @property equipItem {function(item: BFItem, slot: string): BFEffect}

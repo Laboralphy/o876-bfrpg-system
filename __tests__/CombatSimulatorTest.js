@@ -44,7 +44,9 @@ describe('getMostSuitableAction', function () {
                 "conveys": [
                     {
                         "script": "daze",
-                        "data": {}
+                        "data": {
+                            "duration": 10
+                        }
                     }
                 ]
             }
@@ -66,7 +68,9 @@ describe('getMostSuitableAction', function () {
             "count": 1,
             "conveys": [
                 {
-                    data: {},
+                    data: {
+                        duration: 10
+                    },
                     script: "daze"
                 }
             ]

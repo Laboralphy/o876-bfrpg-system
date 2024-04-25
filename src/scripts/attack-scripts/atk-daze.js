@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack dazes target for a given duration
+ * This attack dazes target for a given duration, if target failed at saving against death ray
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -23,17 +23,14 @@ function main ({
     script,
     damage,
     data: {
-        duration
+        duration = 10
     },
     manager
 }) {
-    if (!duration) {
-        throw new Error('attack script daze : missing parameter : duration')
-    }
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
-        const eDaze = manager.effectProcessor.createEffect(CONSTS.EFFECT_STUN)
+        const eDaze = manager.createEffect(CONSTS.EFFECT_STUN)
         eDaze.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.effectProcessor.applyEffect(eDaze, target, duration, attacker)
+        manager.applyEffect(eDaze, target, duration, attacker)
     }
 }
 

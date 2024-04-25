@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack paralyzes target for a given duration
+ * This attack paralyzes target for a given duration, if target fails at saving against paralysis
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -23,14 +23,14 @@ function main ({
     script,
     damage,
     data: {
-        duration
+        duration = 10
     },
     manager
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
-        const eParalysis = manager.effectProcessor.createEffect(CONSTS.EFFECT_PARALYSIS)
+        const eParalysis = manager.createEffect(CONSTS.EFFECT_PARALYSIS)
         eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.effectProcessor.applyEffect(eParalysis, target, duration, attacker)
+        manager.applyEffect(eParalysis, target, duration, attacker)
     }
 }
 

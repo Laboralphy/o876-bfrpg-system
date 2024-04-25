@@ -5,7 +5,7 @@ const CONSTS = require("../../consts");
 function getRangedAttackModifiers (getters) {
     const { sum: nAttackModifierRanged } = aggregateModifiers([
         CONSTS.ITEM_PROPERTY_ATTACK_MODIFIER,
-        CONSTS.EFFECT_ARMOR_CLASS_MODIFIER
+        CONSTS.EFFECT_ATTACK_MODIFIER
     ], getters, {
         effectFilter: effect => effect.data.type === CONSTS.ATTACK_TYPE_RANGED || effect.data.type === CONSTS.ATTACK_TYPE_ANY,
         propFilter: prop => prop.data.type === CONSTS.ATTACK_TYPE_RANGED || prop.data.type === CONSTS.ATTACK_TYPE_ANY
@@ -16,7 +16,7 @@ function getRangedAttackModifiers (getters) {
 function getMeleeAttackModifiers (getters) {
     const { sum: nAttackModifierMelee } = aggregateModifiers([
         CONSTS.ITEM_PROPERTY_ATTACK_MODIFIER,
-        CONSTS.EFFECT_ARMOR_CLASS_MODIFIER
+        CONSTS.EFFECT_ATTACK_MODIFIER
     ], getters, {
         effectFilter: effect => effect.data.type === CONSTS.ATTACK_TYPE_MELEE || effect.data.type === CONSTS.ATTACK_TYPE_ANY,
         propFilter: prop => prop.data.type === CONSTS.ATTACK_TYPE_MELEE || prop.data.type === CONSTS.ATTACK_TYPE_ANY

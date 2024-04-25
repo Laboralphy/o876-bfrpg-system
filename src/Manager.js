@@ -352,6 +352,26 @@ class Manager {
             this._effectProcessor.processEffect(effect, target, source)
         })
     }
+
+    createEffect (sType, amp = 0, oParams = {}) {
+        return this._effectProcessor.createEffect(sType, amp, oParams)
+    }
+
+    applyEffect (effect, target, duration = 0, source = null) {
+        return this._effectProcessor.applyEffect(effect, target, duration, source)
+    }
+
+    applyEffectGroup (aEffects, tags, target, duration = 0, source = null) {
+        return this._effectProcessor.applyEffectGroup(aEffects, tags, target, duration, source)
+    }
+
+    removeEffect (effect) {
+        const target = this._horde.creatures(effect.target)
+        const source = this._horde.creatures(effect.source)
+        return this._effectProcessor.killEffect(effect, target, source)
+    }
+
+
 }
 
 module.exports = Manager

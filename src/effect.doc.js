@@ -1,4 +1,8 @@
 /**
+ * @typedef BFEffectGroup {object}
+ * @property siblings {string[]}
+ * @property tag {string}
+ *
  * @typedef BFEffect {Object}
  * @property id {string}
  * @property type {string} type of effect
@@ -8,4 +12,5 @@
  * @property source {string} identifier of the creatures which cast the effect
  * @property data {{}} custom data for the effect
  * @property stackingRule {string} EFFECT_STACKING_RULE_*
+ * @property group {BFEffectGroup}
  */

@@ -1,6 +1,6 @@
 const CONSTS = require('../consts')
 
-function init (oEffect, { type: sAttackType = CONSTS.ATTACK_TYPE_ANY }) {
+function init (oEffect, { type: sAttackType = CONSTS.ATTACK_TYPE_ANY } = {}) {
     oEffect.data.type = sAttackType
 }
 
