@@ -14,5 +14,5 @@ module.exports = (state, getters, externals) => {
             CONSTS.ITEM_PROPERTY_SPEED_MODIFIER
         ], getters
     ).sum
-    return state.speed + nModifier
+    return Math.max(0, state.speed + nModifier)
 }

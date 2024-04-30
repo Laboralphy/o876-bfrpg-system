@@ -31,6 +31,12 @@ module.exports = (state, getters) => {
                 aConditionSet.add(CONSTS.CONDITION_PETRIFIED)
                 break
             }
+
+            case CONSTS.EFFECT_SPEED_MODIFIER: {
+                if (getters.getSpeed === 0) {
+                    aConditionSet.add(CONSTS.CONDITION_RESTRAINED)
+                }
+            }
         }
     })
     return aConditionSet

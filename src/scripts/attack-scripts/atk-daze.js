@@ -1,7 +1,10 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack dazes target for a given duration, if target failed at saving against death ray
+ * Effect : apply EFFECT_STUN on target
+ * Avoided if saving throw against Death ray
+ * Duration : specified in data
+ *
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
