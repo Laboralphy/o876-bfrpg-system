@@ -1,11 +1,13 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-25T08:38:09.614Z
+// Date : 2024-05-03T14:01:56.819Z
 // List of files in ./src/effects
 
 module.exports = {
   'EFFECT_ABILITY_MODIFIER': require('./ability-modifier.js'),
   'EFFECT_ARMOR_CLASS_MODIFIER': require('./armor-class-modifier.js'),
   'EFFECT_ATTACK_MODIFIER': require('./attack-modifier.js'),
+  'EFFECT_BLINDNESS': require('./blindness.js'),
+  'EFFECT_CHARM': require('./charm.js'),
   'EFFECT_DAMAGE_IMMUNITY': require('./damage-immunity.js'),
   'EFFECT_DAMAGE_MODIFIER': require('./damage-modifier.js'),
   'EFFECT_DAMAGE_REDUCTION': require('./damage-reduction.js'),

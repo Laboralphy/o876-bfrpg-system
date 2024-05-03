@@ -137,7 +137,7 @@ class Manager {
             // creates a new attack outcome if weaponized action
             const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
                 ? attacker.attack(target, action)
-                : null
+                : attacker.getNoAttackOutcome()
             if (oAttackOutcome) {
                 if (oAttackOutcome.hit) {
                     // the attack has landed : rolling damages
@@ -161,10 +161,12 @@ class Manager {
                     aEffects.forEach(effect => this.effectProcessor.applyEffect(effect, target, 0, attacker))
                     oAttackOutcome.damages = target.getDamageReport(true)
                 }
-                this._events.emit('combat.attack', {
-                    turn, tick,
-                    outcome: oAttackOutcome
-                })
+                if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
+                    this._events.emit('combat.attack', {
+                        turn, tick,
+                        outcome: oAttackOutcome
+                    })
+                }
                 if (oAttackOutcome.hit) {
                     // the target will have penalty of speed
                     const oTargetCombat = this.combatManager.getCombat(target)
@@ -371,7 +373,10 @@ class Manager {
         return this._effectProcessor.killEffect(effect, target, source)
     }
 
-
+    getAllAttackers (oCreature) {
+        const cm = this.combatManager
+        cm.get
+    }
 }
 
 module.exports = Manager

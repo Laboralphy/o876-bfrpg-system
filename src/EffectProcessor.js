@@ -116,8 +116,12 @@ class EffectProcessor {
         })
     }
 
+    _forceArray (x) {
+        return Array.isArray(x) ? x : [x]
+    }
+
     applyEffectGroup (aEffects, tags, target, duration = 0, source = null) {
-        this._groupEffects(aEffects, tags)
+        this._groupEffects(aEffects, this._forceArray(tags))
         aEffects.forEach(effect => {
             this.applyEffect(effect, target, duration, source)
         })

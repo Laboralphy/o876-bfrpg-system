@@ -98,6 +98,12 @@ class Creature {
         }
     }
 
+    getNoAttackOutcome () {
+        return this._createAttackOutcome({
+            failure: CONSTS.ATTACK_FAILURE_NO_NEED
+        })
+    }
+
     /**
      * Attack the target using the specified combatAction
      * @param oAttackOutcome {BFAttackOutcome}
@@ -276,29 +282,46 @@ class Creature {
     }
 
     /**
+     * @typedef SavingThrowOutcome {object}
+     * @property success {boolean} if true then saving throw is success, threat is avoided or diminished
+     * @property ability {string} ability involved in saving throw adjustment
+     * @property threat {string} threat involved in saving throw adjustement
+     * @property dc {number} difficulty class
+     * @property roll {number} roll
+     * @property bonus {number} bonus
+     * @property adjustment {number} manual adjustment
+     *
      * Rolls a saving throw
      * @param sSavingThrow {string} SAVING_THROW_*
      * @param adjustment {number}
+     * @param ability {string} ABILITY_*
      * @param threat {string} THREAT_*
+     *
      */
-    rollSavingThrow (sSavingThrow, { adjustment = 0, threat = '' } = {}) {
+    rollSavingThrow (sSavingThrow, { ability = '', adjustment = 0, threat = '' } = {}) {
         const st = this.getters.getClassTypeData.savingThrows
         if (sSavingThrow in st) {
-            let sAbility = ''
-            switch (threat) {
-                case CONSTS.THREAT_POISON: {
-                    sAbility = CONSTS.ABILITY_CONSTITUTION
-                    break
-                }
+            let sAbility = ability
+            if (ability === '') {
+                switch (threat) {
+                    case CONSTS.THREAT_POISON: {
+                        sAbility = CONSTS.ABILITY_CONSTITUTION
+                        break
+                    }
 
-                case CONSTS.THREAT_ILLUSION: {
-                    sAbility = CONSTS.ABILITY_INTELLIGENCE
-                    break
-                }
+                    case CONSTS.THREAT_ILLUSION: {
+                        sAbility = CONSTS.ABILITY_INTELLIGENCE
+                        break
+                    }
 
-                case CONSTS.THREAT_MIND_SPELL: {
-                    sAbility = CONSTS.ABILITY_WISDOM
-                    break
+                    case CONSTS.THREAT_MIND_SPELL: {
+                        sAbility = CONSTS.ABILITY_WISDOM
+                        break
+                    }
+
+                    default: {
+                        throw new Error('Unsupported threat : ' + threat)
+                    }
                 }
             }
             const nAbilityBonus = sAbility
@@ -318,6 +341,7 @@ class Creature {
                 (nRoll > this.getters.getSavingThrowFailureValue && nRoll + nBonus >= dc)
             const outcome = {
                 success,
+                ability: sAbility,
                 threat: sSavingThrow,
                 dc,
                 roll: nRoll,

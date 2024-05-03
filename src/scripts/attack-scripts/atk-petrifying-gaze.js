@@ -1,9 +1,9 @@
 const CONSTS = require('../../consts')
 
 /**
- * Effect : apply EFFECT_STUN on target
- * Avoided if saving throw against Death ray
- * Duration : specified in data
+ * This attack petrifies target, if target fails at saving against petrification.
+ * No attack roll needed.
+ * The duration is always Infinite
  *
  * @param turn {number}
  * @param tick {number}
@@ -13,7 +13,7 @@ const CONSTS = require('../../consts')
  * @param action {BFStoreStateAction}
  * @param script {string}
  * @param damage {string|number}
- * @param duration {number}
+ * @param data {{}}
  * @param manager {{}}
  */
 function main ({
@@ -25,15 +25,13 @@ function main ({
     action,
     script,
     damage,
-    data: {
-        duration = 10
-    },
+    data,
     manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
-        const eDaze = manager.createEffect(CONSTS.EFFECT_STUN)
-        eDaze.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(eDaze, target, duration, attacker)
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
+        const ePetrify = manager.createEffect(CONSTS.EFFECT_PETRIFICATION)
+        ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        manager.applyEffect(ePetrify, target, CONSTS.DURATION_PERMANENT, attacker)
     }
 }
 

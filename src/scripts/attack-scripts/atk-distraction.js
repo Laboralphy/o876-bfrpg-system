@@ -1,7 +1,8 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack confuses target for a given duration
+ * This attack confuses target for a given duration (specified in data).
+ *
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}

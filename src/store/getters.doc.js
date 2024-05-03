@@ -31,7 +31,7 @@
  * @property getSavingThrowSucessValue {number}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
- * @property getSpecie {string}
+ * @property getSpecie {{ ref: string, living: boolean, mind: boolean }}
  * @property getSpeed {number}
  * @property isDead {boolean}
  * @property isRangedWeaponLoaded {boolean}

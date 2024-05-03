@@ -70,15 +70,26 @@ class CombatManager {
     }
 
     /**
+     * Returns all creature attacking specified creature
+     * @param oCreature
+     * @return {Creature[]}
+     */
+    getOffenders (oCreature) {
+        this.combats
+            .filter(combat => combat.defender === oCreature)
+            .map(combat => combat.attacker.creature)
+    }
+
+    /**
      * This creature is being removed from the game
      * All combats involved are to be ended
      * @param oCreature {Creature}
      */
     removeFighter (oCreature) {
-        this.combats
-            .filter(combat => combat.defender === oCreature)
-            .forEach(combat => {
-                this.endCombat(combat.attacker.creature, true)
+        this
+            .getOffenders(oCreature)
+            .forEach(creature => {
+                this.endCombat(creature, true)
             })
     }
 

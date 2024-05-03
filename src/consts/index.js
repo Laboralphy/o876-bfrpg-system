@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-04-25T08:38:09.476Z
+// Date : 2024-05-03T14:01:56.670Z
 // List of files in ./src/consts
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
   ...require('./conditions.json'),
   ...require('./damage-types.json'),
   ...require('./default-actions.json'),
+  ...require('./durations.js'),
   ...require('./effect-stacking-rules.json'),
   ...require('./effect-subtypes.json'),
   ...require('./effects.js'),

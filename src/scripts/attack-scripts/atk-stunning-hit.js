@@ -1,7 +1,10 @@
 const CONSTS = require('../../consts')
 
 /**
- * This attack paralyzes target for a given duration, if target fails at saving against paralysis
+ * Effect : apply EFFECT_STUN on target
+ * Avoided if saving throw against Death ray
+ * Duration : specified in data
+ *
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -27,10 +30,10 @@ function main ({
     },
     manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
-        const eParalysis = manager.createEffect(CONSTS.EFFECT_PARALYSIS)
-        eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(eParalysis, target, duration, attacker)
+    if (attackOutcome.hit && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
+        const eDaze = manager.createEffect(CONSTS.EFFECT_STUN)
+        eDaze.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        manager.applyEffect(eDaze, target, duration, attacker)
     }
 }
 
