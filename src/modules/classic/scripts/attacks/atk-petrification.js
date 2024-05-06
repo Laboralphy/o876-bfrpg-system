@@ -1,8 +1,17 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack petrifies target, if attack hits and if target fails at saving against petrification.
- * The duration is always Infinite.
+ * Effect:
+ * This attack petrifies target
+ *
+ * Saving throw:
+ * target must roll against petrification with no ability adjustment
+ *
+ * Data:
+ * None
+ *
+ * Note:
+ * The duration is always Infinite
  *
  * @param turn {number}
  * @param tick {number}
@@ -27,7 +36,7 @@ function main ({
     data,
     manager
 }) {
-    if (attackOutcome.hit && !target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
         const ePetrify = manager.createEffect(CONSTS.EFFECT_PETRIFICATION)
         ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(ePetrify, target, CONSTS.DURATION_PERMANENT, attacker)

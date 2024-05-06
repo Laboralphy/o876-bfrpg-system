@@ -1,9 +1,21 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack damages an ability, attack must hit, and a saving throw against death ray is allowed.
- * Works on living creature only.
- * The amount of points and duration is specified in data.
+ * Effect:
+ * This attack damages an ability.
+ *
+ * Saving throw:
+ * A saving throw against death ray is allowed.
+ * No ability bonus.
+ *
+ * Data:
+ * - ability : (required) the ability that will be damaged
+ * - amount : The amount of points of damage. (default 1)
+ * - duration : The curse duration (default permanent)
+ *
+ * Notes:
+ * - Works on living creature only.
+ * - The effect is supernatural : cannot be dispelled or removed by resting.
  *
  * @param turn {number}
  * @param tick {number}
@@ -34,7 +46,7 @@ function main ({
        duration = CONSTS.DURATION_PERMANENT
     }
 }) {
-    if (target.getters.getSpecie.living && attackOutcome.hit && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
+    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
         const eCurse = manager.createEffect(CONSTS.EFFECT_ABILITY_MODIFIER, amount, { ability })
         eCurse.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
         manager.applyEffect(eCurse, target, duration, attacker)

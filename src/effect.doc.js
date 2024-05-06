@@ -13,4 +13,5 @@
  * @property data {{}} custom data for the effect
  * @property stackingRule {string} EFFECT_STACKING_RULE_*
  * @property group {BFEffectGroup}
+ * @property tags {string[]} effect tags
  */

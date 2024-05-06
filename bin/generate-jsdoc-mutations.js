@@ -2,9 +2,6 @@ const path = require('node:path')
 const fs = require('node:fs')
 const TreeSync = require('../src/libs/o876-xtree/sync')
 
-const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-const ARGUMENT_NAMES = /([^\s,]+)/g;
-
 function getAllParams (sFile) {
     const aParams = fs
         .readFileSync(sFile, {encoding: 'utf-8'})
@@ -31,7 +28,7 @@ function getAllParams (sFile) {
     return ' {function(' + p + ')' + sReturnType + '}'
 }
 
-function generateGetterReturnType (aPaths) {
+function generateMutationReturnType (aPaths) {
     const p = aPaths.map(sPath => {
         return TreeSync.ls(sPath)
             .filter(f => f.name !== 'index.js')
@@ -50,4 +47,4 @@ function generateGetterReturnType (aPaths) {
     return x.join('\n')
 }
 
-console.log(generateGetterReturnType(process.argv.slice(2)))
+console.log(generateMutationReturnType(process.argv.slice(2)))

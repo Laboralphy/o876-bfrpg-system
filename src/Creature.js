@@ -67,6 +67,16 @@ class Creature {
     }
 
     /**
+     * Proxy to aggregateModifiers
+     * @param aEffectsAndProps
+     * @param oFunctions
+     * @returns {{sorter: Object<String, {sum: number, max: number, count: number}>, max: number, min: number, sum: number, count: number, effects: number, ip: number}}
+     */
+    aggregateModifiers (aEffectsAndProps, oFunctions) {
+        return aggregateModifiers(aEffectsAndProps, this.getters, oFunctions)
+    }
+
+    /**
      * @param oDefault
      * @returns {BFAttackOutcome}
      * @private
@@ -243,10 +253,10 @@ class Creature {
         }
         const ampMapper = amp => this.dice.evaluate(amp)
         const sorterFunc = x => x.data.type
-        const oDamageBonusRegistry = aggregateModifiers([
+        const oDamageBonusRegistry = this.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_DAMAGE_MODIFIER,
             CONSTS.EFFECT_DAMAGE_MODIFIER
-        ], this.getters, {
+        ], {
             effectAmpMapper: ampMapper,
             propAmpMapper: ampMapper,
             effectSorter: sorterFunc,
@@ -329,10 +339,10 @@ class Creature {
                 : 0
             const dc = st[sSavingThrow] + adjustment
             const nRoll = this.dice.roll(20)
-            const nBonus = nAbilityBonus + aggregateModifiers([
+            const nBonus = nAbilityBonus + this.aggregateModifiers([
                 CONSTS.EFFECT_SAVING_THROW_MODIFIER,
                 CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER
-            ], this.getters, {
+            ],  {
                 effectFilter: effect => effect.data.threat === sSavingThrow || effect.data.threat === CONSTS.SAVING_THROW_ANY,
                 propFilter: prop => prop.data.threat === sSavingThrow || prop.data.threat === CONSTS.SAVING_THROW_ANY
             }).sum

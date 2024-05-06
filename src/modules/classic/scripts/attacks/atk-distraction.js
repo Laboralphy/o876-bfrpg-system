@@ -1,7 +1,17 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack confuses target for a given duration (specified in data).
+ * Effect:
+ * This attack lowers attack bonus by 2.
+ *
+ * Saving throw:
+ * None
+ *
+ * Data:
+ * - duration: duration of the affliction.
+ *
+ * Notes:
+ * - cannot be stacked : several sources of distraction will not stack
  *
  * @param turn {number}
  * @param tick {number}
@@ -24,7 +34,7 @@ function main ({
                    script,
                    damage,
                    data: {
-                       duration = 10
+                       duration = CONSTS.DURATION_DEFAULT
                    },
                    manager
                }) {

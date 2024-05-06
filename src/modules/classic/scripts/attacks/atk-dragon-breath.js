@@ -1,8 +1,17 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack don't need hit.
+ * Effect:
+ * Damage on all offending creatures : All creature attacking the attacker will take damage.
+ *
+ * Saving throw:
  * A saving throw against dragon breath is allowed for half damage
+ *
+ * Data:
+ * None
+ *
+ * Note:
+ * The damage amount and type is fixed by the attack parameters.
  *
  * @param turn {number}
  * @param tick {number}
@@ -28,9 +37,6 @@ function main ({
                    data
                }) {
     const sDamageType = attackOutcome.action.damageType
-    if (!sDamageType) {
-        throw new Error('dragon breath requires damage type in action definition')
-    }
     manager
         .getOffenders(attacker)
         .forEach(oCreature => {

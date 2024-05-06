@@ -1,8 +1,17 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack paralyzes target for a given duration, if attack hits and if target fails at saving against paralysis
- * the duration is specified in data (default 10 turns)
+ * This attack paralyzes target for a given duration,
+ *
+ * Saving throw:
+ * A saving throw against paralysis is allowed
+ * with STRENGTH adjustment
+ *
+ * Data:
+ * - duration : duration of the effect (default 10)
+ *
+ * Note:
+ * This attack is used by ghouls.
  *
  * @param turn {number}
  * @param tick {number}
@@ -25,13 +34,11 @@ function main ({
     script,
     damage,
     data: {
-        duration = 10
+        duration = CONSTS.DURATION_DEFAULT
     },
     manager
 }) {
-    if (attackOutcome.hit &&
-        !target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, { ability: CONSTS.ABILITY_STRENGTH }).success
-    ) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, { ability: CONSTS.ABILITY_STRENGTH }).success) {
         const eParalysis = manager.createEffect(CONSTS.EFFECT_PARALYSIS)
         eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(eParalysis, target, duration, attacker)

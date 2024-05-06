@@ -1,9 +1,17 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * This attack poisons target for an unlimited duration, if target fails at saving against poison.
- * The potency is specified in data (default 0)
- * The amount of damage is specified in data (default 1)
+ * This attack poisons target for an unlimited duration, dealing a small amount of damage each turn.
+ *
+ * Saving throw
+ * saving against poison is allowed for avoidance.
+ *
+ * Data:
+ * - potency : The potency is specified in data (default 0)
+ * - amount : The amount of damage is specified in data (default 1)
+ *
+ * Notes:
+ * None
  *
  * @param turn {number}
  * @param tick {number}
@@ -33,7 +41,7 @@ function main ({
    manager
 }) {
     // if saving throw against poison fail then apply poison
-    if (attackOutcome.hit && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency, threat: CONSTS.THREAT_POISON }).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency, threat: CONSTS.THREAT_POISON }).success) {
         const ePoison = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, {
             type: CONSTS.DAMAGE_TYPE_POISON
         })

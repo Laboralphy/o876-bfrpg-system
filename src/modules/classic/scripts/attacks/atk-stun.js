@@ -1,9 +1,14 @@
-const CONSTS = require('../../consts')
+const CONSTS = require('../../../../consts')
 
 /**
- * Effect : apply EFFECT_STUN on target
+ * Effect:
+ * apply EFFECT_STUN on target
+ *
+ * Saving throw:
  * Avoided if saving throw against Death ray
- * Duration : specified in data
+ *
+ * Data:
+ * - duration : specified in data
  *
  * @param turn {number}
  * @param tick {number}
@@ -26,11 +31,11 @@ function main ({
     script,
     damage,
     data: {
-        duration = 10
+        duration = CONSTS.DURATION_DEFAULT
     },
     manager
 }) {
-    if (attackOutcome.hit && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
         const eDaze = manager.createEffect(CONSTS.EFFECT_STUN)
         eDaze.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(eDaze, target, duration, attacker)

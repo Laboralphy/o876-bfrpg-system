@@ -1,28 +1,38 @@
 #!/bin/bash
 
+buildModuleThings () {
+  local sPath="$1"
+  echo module "$sPath"
+  echo - blueprints
+  node ./bin/generate-indexes.js "./src/modules/$sPath/blueprints" REQUIRE > "./src/modules/$sPath/blueprints/index.js"
+
+  echo - data
+  node ./bin/generate-indexes.js "./src/modules/$sPath/data" REQUIRE > "./src/modules/$sPath/data/index.js"
+
+  echo - scripts
+  node ./bin/generate-indexes.js "./src/modules/$sPath/scripts" REQUIRE > "./src/modules/$sPath/scripts/index.js"
+}
+
 echo const-effects
-node ./bin/generate-indexes.js ./src/effects TYPE_GENERATE_CONSTS_PREFIXED EFFECT > ./src/consts/effects.js
+node ./bin/generate-indexes.js ./src/effects CONST_FILENAME EFFECT > ./src/consts/effects.js
 
 echo const-item-properties
-node ./bin/generate-indexes.js ./src/item-properties TYPE_GENERATE_CONSTS_PREFIXED ITEM_PROPERTY > ./src/consts/item-properties.js
+node ./bin/generate-indexes.js ./src/item-properties CONST_FILENAME ITEM_PROPERTY > ./src/consts/item-properties.js
 
 echo constants
-node ./bin/generate-indexes.js ./src/consts TYPE_SPREAD > ./src/consts/index.js
+node ./bin/generate-indexes.js ./src/consts SPREAD > ./src/consts/index.js
 
 echo getters
-node ./bin/generate-indexes.js ./src/store/getters TYPE_KEY_BASED > ./src/store/getters/index.js
+node ./bin/generate-indexes.js ./src/store/getters REQUIRE > ./src/store/getters/index.js
 
 echo mutations
-node ./bin/generate-indexes.js ./src/store/mutations TYPE_KEY_BASED > ./src/store/mutations/index.js
-
-echo data
-node ./bin/generate-indexes.js ./src/data TYPE_KEY_BASED > ./src/data/index.js
+node ./bin/generate-indexes.js ./src/store/mutations REQUIRE > ./src/store/mutations/index.js
 
 echo effects
-node ./bin/generate-indexes.js ./src/effects TYPE_UPPER_KEY_PREFIXED EFFECT > ./src/effects/index.js
+node ./bin/generate-indexes.js ./src/effects CONST_REQUIRE EFFECT > ./src/effects/index.js
 
 echo item properties
-node ./bin/generate-indexes.js ./src/item-properties TYPE_UPPER_KEY_PREFIXED ITEM_PROPERTY > ./src/item-properties/index.js
+node ./bin/generate-indexes.js ./src/item-properties CONST_REQUIRE ITEM_PROPERTY > ./src/item-properties/index.js
 
 echo getters
 node ./bin/generate-jsdoc-getters.js ./src/store/getters > ./src/store/getters.doc.js
@@ -30,11 +40,11 @@ node ./bin/generate-jsdoc-getters.js ./src/store/getters > ./src/store/getters.d
 echo mutations
 node ./bin/generate-jsdoc-mutations.js ./src/store/mutations > ./src/store/mutations.doc.js
 
-echo module classic - blueprints
-node ./bin/generate-indexes.js ./src/modules/classic/blueprints TYPE_KEY_BASED > ./src/modules/classic/blueprints/index.js
-
-echo module classic - data
-node ./bin/generate-indexes.js ./src/modules/classic/data TYPE_KEY_BASED > ./src/modules/classic/data/index.js
+echo data
+node ./bin/generate-indexes.js ./src/data REQUIRE > ./src/data/index.js
 
 echo scripts
-node ./bin/generate-indexes.js ./src/scripts TYPE_KEY_BASED > ./src/scripts/index.js
+node ./bin/generate-indexes.js ./src/scripts REQUIRE > ./src/scripts/index.js
+
+buildModuleThings classic
+

@@ -97,7 +97,8 @@ class EffectProcessor {
                 group: {
                     siblings: [],
                     tags: []
-                }
+                },
+                tags: []
             }
             if ('init' in ept) {
                 ept.init(oEffect, oParams)

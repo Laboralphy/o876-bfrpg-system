@@ -4,29 +4,32 @@ const TreeSync = require('../src/libs/o876-xtree/sync')
 
 const TYPES = {
     RAW: 'RAW',
-    TYPE_KEY_BASED: 'TYPE_KEY_BASED',
-    TYPE_SPREAD: 'TYPE_SPREAD',
-    TYPE_UPPER_KEY_PREFIXED: 'TYPE_UPPER_KEY_PREFIXED',
-    TYPE_GENERATE_CONSTS_PREFIXED: 'TYPE_GENERATE_CONSTS_PREFIXED'
+    REQUIRE: 'REQUIRE',
+    SPREAD: 'SPREAD',
+    CONST_REQUIRE: 'CONST_REQUIRE',
+    CONST_FILENAME: 'CONST_FILENAME'
 }
 
+function filenameToPrefixedConst (sFile, sPrefix) {
+    return sPrefix.toUpperCase() + '_' + path.basename(sFile, path.extname(sFile)).toUpperCase().replace(/-/g, '_')
+}
 
 function buildLine (sFile, sType) {
     switch (sType) {
-        case TYPES.TYPE_KEY_BASED: {
+        case TYPES.REQUIRE: { // REQUIRE
             return '\'' + path.basename(sFile, path.extname(sFile)) + '\': require(\'./' + sFile + '\')'
         }
 
-        case TYPES.TYPE_UPPER_KEY_PREFIXED: {
-            return '\'' + process.argv[4] + '_' + path.basename(sFile, path.extname(sFile)).toUpperCase().replace(/-/g, '_') + '\': require(\'./' + sFile + '\')'
+        case TYPES.CONST_REQUIRE: { // CONST_REQUIRE
+            return '\'' + filenameToPrefixedConst(sFile, process.argv[4]) + '\': require(\'./' + sFile + '\')'
         }
 
-        case TYPES.TYPE_GENERATE_CONSTS_PREFIXED: {
-            const s = '"' + process.argv[4] + '_' + path.basename(sFile, path.extname(sFile)).toUpperCase().replace(/-/g, '_') + '"'
+        case TYPES.CONST_FILENAME: { // CONST_FILENAME
+            const s = '"' + filenameToPrefixedConst(sFile, process.argv[4]) + '"'
             return s + ': ' + s
         }
 
-        case TYPES.TYPE_SPREAD: {
+        case TYPES.SPREAD: { // SPREAD
             return '...require(\'./' + sFile + '\')'
         }
 

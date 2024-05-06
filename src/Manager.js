@@ -63,6 +63,10 @@ class Manager {
         this._creatureBuilder = cb
         this._schemaValidator = null
         this._combatManager = cm
+
+        this._scripts = {
+            ...SCRIPTS
+        }
     }
 
     get events () {
@@ -175,22 +179,31 @@ class Manager {
                     }
                 }
             }
-            action.conveys.forEach(({ script, data }) => {
-                const sScriptRef = 'atk-' + script
-                if (sScriptRef in SCRIPTS) {
-                    SCRIPTS[sScriptRef]({
-                        turn,
-                        tick,
-                        data,
-                        attacker,
-                        target,
-                        attackOutcome: oAttackOutcome,
-                        manager: this
-                    })
-                } else {
-                    throw new Error('script not found : ' + sScriptRef)
-                }
-            })
+            if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
+                action.conveys.forEach(({ script: sScriptRef, data }) => {
+                    if (sScriptRef in this._scripts) {
+                        this.runScript(sScriptRef, {
+                            turn,
+                            tick,
+                            data,
+                            attacker,
+                            target,
+                            attackOutcome: oAttackOutcome,
+                            manager: this
+                        })
+                    } else {
+                        throw new Error('script not found : ' + sScriptRef)
+                    }
+                })
+            }
+        }
+    }
+
+    runScript (sScriptRef, ...aParams) {
+        if (sScriptRef in this._scripts) {
+            return this._scripts[sScriptRef](...aParams)
+        } else {
+            throw new Error('script not found : ' + sScriptRef)
         }
     }
 
@@ -226,9 +239,10 @@ class Manager {
      * @param module {string} name of module (classic, modern, future)
      */
     loadModule (module) {
-        const { DATA, BLUEPRINTS } = require('./modules/' + module)
+        const { DATA, BLUEPRINTS, SCRIPTS } = require('./modules/' + module)
         Object.assign(this._data, DATA)
         Object.assign(this._blueprints, BLUEPRINTS)
+        Object.assign(this._scripts, SCRIPTS)
     }
 
     /**
@@ -371,11 +385,6 @@ class Manager {
         const target = this._horde.creatures(effect.target)
         const source = this._horde.creatures(effect.source)
         return this._effectProcessor.killEffect(effect, target, source)
-    }
-
-    getAllAttackers (oCreature) {
-        const cm = this.combatManager
-        cm.get
     }
 }
 

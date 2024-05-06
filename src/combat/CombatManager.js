@@ -71,12 +71,13 @@ class CombatManager {
 
     /**
      * Returns all creature attacking specified creature
-     * @param oCreature
+     * @param oCreature {Creature}
+     * @param nRange {number} maximum range
      * @return {Creature[]}
      */
-    getOffenders (oCreature) {
+    getOffenders (oCreature, nRange = Infinity) {
         this.combats
-            .filter(combat => combat.defender === oCreature)
+            .filter(combat => combat.defender === oCreature && combat.attacker.distance <= nRange)
             .map(combat => combat.attacker.creature)
     }
 
