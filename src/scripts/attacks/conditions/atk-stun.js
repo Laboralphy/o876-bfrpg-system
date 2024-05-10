@@ -1,4 +1,5 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
+const { durations: DURATIONS } = require('../../../data')
 
 /**
  * Effect:
@@ -29,9 +30,8 @@ function main ({
     target,
     action,
     script,
-    damage,
     data: {
-        duration = CONSTS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT
     },
     manager
 }) {

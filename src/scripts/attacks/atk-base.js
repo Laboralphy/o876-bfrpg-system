@@ -16,16 +16,15 @@ const CONSTS = require('../../consts')
 function main ({
     turn,
     tick,
-    attackOutcome,
     attacker,
     target,
-    action,
+    attackOutcome,
     script,
-    damage,
+    action,
     manager,
-    data
+    data,
 }) {
-
+    //
 }
 
 module.exports = main

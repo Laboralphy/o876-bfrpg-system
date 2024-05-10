@@ -1,6 +1,8 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
+const { durations: DURATIONS } = require('../../../data')
 
 /**
+ * Effect:
  * This attack paralyzes target for a given duration,
  *
  * Saving throw:
@@ -32,9 +34,8 @@ function main ({
     target,
     action,
     script,
-    damage,
     data: {
-        duration = CONSTS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT
     },
     manager
 }) {

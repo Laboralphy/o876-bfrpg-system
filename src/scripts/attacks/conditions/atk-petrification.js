@@ -1,4 +1,5 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
+const { durations: DURATIONS } = require('../../../data')
 
 /**
  * Effect:
@@ -32,14 +33,13 @@ function main ({
     target,
     action,
     script,
-    damage,
     data,
     manager
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
         const ePetrify = manager.createEffect(CONSTS.EFFECT_PETRIFICATION)
         ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(ePetrify, target, CONSTS.DURATION_PERMANENT, attacker)
+        manager.applyEffect(ePetrify, target, DURATIONS.DURATION_PERMANENT, attacker)
     }
 }
 

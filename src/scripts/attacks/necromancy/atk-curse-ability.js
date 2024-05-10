@@ -1,4 +1,5 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
+const { durations: DURATIONS } = require('../../../data')
 
 /**
  * Effect:
@@ -38,12 +39,11 @@ function main ({
     target,
     action,
     script,
-    damage,
     manager,
     data: {
        ability,
        amount = 1,
-       duration = CONSTS.DURATION_PERMANENT
+       duration = DURATIONS.DURATION_PERMANENT
     }
 }) {
     if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {

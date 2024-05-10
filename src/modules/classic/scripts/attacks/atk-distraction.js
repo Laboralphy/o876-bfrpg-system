@@ -1,8 +1,9 @@
 const CONSTS = require('../../../../consts')
+const { durations: DURATIONS } = require('../../../../data')
 
 /**
  * Effect:
- * This attack lowers attack bonus by 2.
+ * This attack lowers attack bonus, and saving throw bonus by 2.
  *
  * Saving throw:
  * None
@@ -20,24 +21,22 @@ const CONSTS = require('../../../../consts')
  * @param target {Creature}
  * @param action {BFStoreStateAction}
  * @param script {string}
- * @param damage {string|number}
  * @param duration {number}
  * @param manager {{}}
  */
 function main ({
-                   turn,
-                   tick,
-                   attackOutcome,
-                   attacker,
-                   target,
-                   action,
-                   script,
-                   damage,
-                   data: {
-                       duration = CONSTS.DURATION_DEFAULT
-                   },
-                   manager
-               }) {
+    turn,
+    tick,
+    attackOutcome,
+    attacker,
+    target,
+    action,
+    script,
+    data: {
+        duration = DURATIONS.DURATION_DEFAULT
+    },
+    manager
+}) {
     const eAtkMalus = manager.createEffect(CONSTS.EFFECT_ATTACK_MODIFIER, -2)
     const eSTMalus = manager.createEffect(CONSTS.EFFECT_SAVING_THROW_MODIFIER, -2)
     eAtkMalus.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION

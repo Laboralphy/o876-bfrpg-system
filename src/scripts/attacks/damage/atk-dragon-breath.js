@@ -1,4 +1,4 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
 
 /**
  * Effect:
@@ -25,17 +25,17 @@ const CONSTS = require('../../../../consts')
  * @param data {{}}
  */
 function main ({
-                   turn,
-                   tick,
-                   attackOutcome,
-                   attacker,
-                   target,
-                   action,
-                   script,
-                   damage,
-                   manager,
-                   data
-               }) {
+    turn,
+    tick,
+    attackOutcome,
+    attacker,
+    target,
+    action,
+    script,
+    damage,
+    manager,
+    data
+}) {
     const sDamageType = attackOutcome.action.damageType
     manager
         .getOffenders(attacker)
@@ -46,7 +46,7 @@ function main ({
                 nDamage = nDamage >> 1
             }
             const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: sDamageType })
-            manager.applyEffect(eDamage, oCreature, CONSTS.DURATION_INSTANT, attacker)
+            manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_INSTANT, attacker)
         })
 }
 

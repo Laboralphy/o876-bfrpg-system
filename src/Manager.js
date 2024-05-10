@@ -186,9 +186,11 @@ class Manager {
                             turn,
                             tick,
                             data,
+                            script: sScriptRef,
                             attacker,
                             target,
                             attackOutcome: oAttackOutcome,
+                            action,
                             manager: this
                         })
                     } else {

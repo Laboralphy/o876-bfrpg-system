@@ -1,4 +1,5 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
+const { durations: DURATIONS } = require('../../../data')
 
 /**
  * This attack poisons target for an unlimited duration, dealing a small amount of damage each turn.
@@ -33,7 +34,6 @@ function main ({
    target,
    action,
    script,
-   damage,
    data: {
        potency = 0,
        amount = 1
@@ -46,7 +46,7 @@ function main ({
             type: CONSTS.DAMAGE_TYPE_POISON
         })
         ePoison.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(ePoison, target, CONSTS.DURATION_PERMANENT, attacker)
+        manager.applyEffect(ePoison, target, DURATIONS.DURATION_PERMANENT, attacker)
     }
 }
 

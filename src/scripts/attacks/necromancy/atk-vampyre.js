@@ -1,7 +1,19 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../consts')
 
 /**
- * Attack script
+ * Effect:
+ * This attack heals attacker, with an amount of hp equal to damage dealt by attack
+ *
+ * Saving throw:
+ * None
+ *
+ * Data:
+ * None
+ *
+ * Notes:
+ * Often used on hit attack
+ * Only living creature are affected
+ *
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -23,13 +35,11 @@ function main ({
     script,
     damage,
     manager,
-    data: {
-        duration = CONSTS.DURATION_DEFAULT
-    }
+    data
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, { threat: CONSTS.THREAT_MIND_SPELL }).success) {
-        const eCalm = manager.createEffect(CONSTS.EFFECT_CALM)
-        manager.applyEffect(eCalm, target, duration, attacker)
+    if (target.getters.getSpecie.living) {
+        const eHeal = manager.createEffect(CONSTS.EFFECT_HEAL, attackOutcome.damages.amount)
+        manager.applyEffect(eHeal, attacker)
     }
 }
 

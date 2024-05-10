@@ -1,4 +1,5 @@
-const CONSTS = require('../../../../consts')
+const CONSTS = require('../../../../../consts')
+const DATA = require('../../../../../data')
 
 /**
  * Effect:
@@ -20,7 +21,7 @@ const CONSTS = require('../../../../consts')
  * @param script {string}
  * @param damage {string|number}
  * @param manager {{}}
- * @param amount {number}
+ * @param data {object}
  */
 function main ({
     turn,
@@ -30,15 +31,15 @@ function main ({
     target,
     action,
     script,
-    damage,
     manager,
     data
 }) {
+    const sDamageType = attackOutcome.action.damageType
     manager
-        .getOffenders(attacker)
+        .getOffenders(attacker, DATA["weapon-ranges"].WEAPON_RANGE_MELEE)
         .forEach(oCreature => {
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { type: CONSTS.DAMAGE_TYPE_FORCE })
-            manager.applyEffect(eDamage, oCreature, CONSTS.DURATION_INSTANT, attacker)
+            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, action.damage, { type: sDamageType })
+            manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_INSTANT, attacker)
         })
 }
 
