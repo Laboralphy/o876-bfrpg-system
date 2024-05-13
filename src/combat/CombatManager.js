@@ -1,5 +1,6 @@
 const Combat = require('./Combat')
 const Events = require('events')
+const CONSTS = require('../consts')
 
 class CombatManager {
     constructor () {
@@ -36,11 +37,13 @@ class CombatManager {
     processCombats () {
         this.combats
             .forEach(combat => {
-                if (combat.attacker.creature.getters.isDead || combat.defender.isDead) {
-                    this.endCombat(combat.attacker.creature, true)
+                const oAttacker = combat.attacker.creature
+                if (oAttacker.getters.isDead || combat.defender.isDead) {
+                    this.endCombat(oAttacker, true)
                 } else {
                     combat.advance()
                 }
+                this.processPassiveProperties(oAttacker)
             })
     }
 

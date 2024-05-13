@@ -25,8 +25,7 @@ const NEED_ATTACK_ROLL  = new Set([
     CONSTS.ATTACK_TYPE_RANGED,
     CONSTS.ATTACK_TYPE_MELEE,
     CONSTS.ATTACK_TYPE_RANGED_TOUCH,
-    CONSTS.ATTACK_TYPE_MELEE_TOUCH,
-    CONSTS.ATTACK_TYPE_MULTI_MELEE
+    CONSTS.ATTACK_TYPE_MELEE_TOUCH
 ])
 
 /**
@@ -369,6 +368,21 @@ class Manager {
         Object.values(this._effectOptimRegistry).forEach(({ effect, target, source }) => {
             this._effectProcessor.processEffect(effect, target, source)
         })
+    }
+
+    /**
+     * TODO not sure of i keep this method, i don't know when to call it
+     * TODO need a better system to deal with periodic item properties
+     * @param oCreature
+     */
+    processCreaturePassiveProperties (oCreature) {
+        // regeneration
+        const nRegen = oCreature.aggregateModifiers([
+            CONSTS.ITEM_PROPERTY_REGENERATION
+        ]).sum
+        if (nRegen > 0 && oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
+            oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
+        }
     }
 
     createEffect (sType, amp = 0, oParams = {}) {

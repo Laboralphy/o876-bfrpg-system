@@ -1,4 +1,5 @@
 const CONSTS = require('../../../../consts')
+const { durations: DURATIONS } = require('../../../../data')
 
 /**
  * Effect:
@@ -42,7 +43,7 @@ function main ({
                 nDamage = nDamage >> 1
             }
             const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: CONSTS.DAMAGE_TYPE_POISON })
-            manager.applyEffect(eDamage, oCreature, CONSTS.DURATION_INSTANT, attacker)
+            manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
         })
 }
 

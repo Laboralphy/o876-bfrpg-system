@@ -1,4 +1,5 @@
 const CONSTS = require('../../../../consts')
+const { durations: DURATIONS } = require('../../../../data')
 
 /**
  * Effect:
@@ -41,7 +42,7 @@ function main ({
         .filter(oCreature => target !== oCreature)
         .forEach(oCreature => {
             const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, { type: CONSTS.DAMAGE_TYPE_FORCE })
-            manager.applyEffect(eDamage, oCreature, CONSTS.DURATION_INSTANT, attacker)
+            manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
         })
 }
 

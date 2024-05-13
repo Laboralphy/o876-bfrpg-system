@@ -2,13 +2,14 @@ const CONSTS = require('../../../consts')
 const { durations: DURATIONS } = require('../../../data')
 
 /**
- * This attack will apply CALM effect on target if saving throw against spell (mind spells) fails
+ * Effect:
+ * apply EFFECT_BLINDNESS on target
  *
  * Saving throw:
- * Spells / mind spells
+ * Avoided if saving throw against Death ray
  *
  * Data:
- * - duration
+ * - duration : specified in data
  *
  * @param turn {number}
  * @param tick {number}
@@ -17,8 +18,8 @@ const { durations: DURATIONS } = require('../../../data')
  * @param target {Creature}
  * @param action {BFStoreStateAction}
  * @param script {string}
+ * @param duration {number}
  * @param manager {{}}
- * @param duration {{}}
  */
 function main ({
     turn,
@@ -27,14 +28,15 @@ function main ({
     attacker,
     target,
     action,
-    manager,
     data: {
         duration = DURATIONS.DURATION_DEFAULT
-    }
+    },
+    manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, { threat: CONSTS.THREAT_MIND_SPELL }).success) {
-        const eDaze = manager.createEffect(CONSTS.EFFECT_DAZE)
-        manager.applyEffect(eDaze, target, attacker.dice.evaluate(duration), attacker)
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
+        const eBlindness = manager.createEffect(CONSTS.EFFECT_BLINDNESS)
+        eBlindness.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        manager.applyEffect(eBlindness, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

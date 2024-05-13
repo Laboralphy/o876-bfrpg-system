@@ -48,6 +48,9 @@ class Creature {
         this._id = value
     }
 
+    /**
+     * @returns {Dice}
+     */
     get dice () {
         return this._dice
     }

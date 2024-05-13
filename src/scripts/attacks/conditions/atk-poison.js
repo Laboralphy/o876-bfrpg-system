@@ -22,7 +22,6 @@ const { durations: DURATIONS } = require('../../../data')
  * @param action {BFStoreStateAction}
  * @param script {string}
  * @param manager {{}}
- * @param damage {string|number}
  * @param potency {number} saving throw adjustement
  * @param amount {string|number}
  */

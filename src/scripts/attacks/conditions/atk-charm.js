@@ -12,7 +12,8 @@ const { duration: DURATIONS } = require('../../../data')
  * @param script {string}
  * @param damage {string|number}
  * @param manager {{}}
- * @param duration {{}}
+ * @param duration {number}
+ * @param potency {number}
  */
 function main ({
     turn,
@@ -25,12 +26,16 @@ function main ({
     damage,
     manager,
     data: {
-        duration = DURATIONS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT,
+        potency = 0
     }
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, { threat: CONSTS.THREAT_MIND_SPELL }).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, {
+        adjustment: potency,
+        threat: CONSTS.THREAT_MIND_SPELL
+    }).success) {
         const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)
-        manager.applyEffect(eCharm, target, duration, attacker)
+        manager.applyEffect(eCharm, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

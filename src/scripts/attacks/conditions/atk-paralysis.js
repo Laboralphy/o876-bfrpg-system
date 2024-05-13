@@ -42,7 +42,7 @@ function main ({
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, { ability: CONSTS.ABILITY_STRENGTH }).success) {
         const eParalysis = manager.createEffect(CONSTS.EFFECT_PARALYSIS)
         eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(eParalysis, target, duration, attacker)
+        manager.applyEffect(eParalysis, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

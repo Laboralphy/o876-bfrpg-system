@@ -18,7 +18,6 @@ const { durations: DURATIONS } = require('../../../data')
  * @param target {Creature}
  * @param action {BFStoreStateAction}
  * @param script {string}
- * @param damage {string|number}
  * @param duration {number}
  * @param manager {{}}
  */
@@ -37,7 +36,7 @@ function main ({
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
         const eStun = manager.createEffect(CONSTS.EFFECT_STUN)
         eStun.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(eStun, target, duration, attacker)
+        manager.applyEffect(eStun, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

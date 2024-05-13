@@ -1,4 +1,5 @@
 const CONSTS = require('../../../../consts')
+const { durations: DURATIONS } = require('../../../../data')
 
 /**
  * Effect:
@@ -42,7 +43,7 @@ function main ({
     const eAtkMalus = manager.createEffect(CONSTS.EFFECT_ATTACK_MODIFIER, -2)
     eAtkMalus.stackingRule = CONSTS.EFFECT_STACKING_RULE_NO_STACK
     eAtkMalus.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-    manager.applyEffectGroup([eAtkMalus], [CONSTS.EFFECT_TAG_DISEASE, 'SLA_IRRITATING_OIL'], target, CONSTS.DURATION_DAY, attacker)
+    manager.applyEffectGroup([eAtkMalus], [CONSTS.EFFECT_TAG_DISEASE, 'SLA_IRRITATING_OIL'], target, DURATIONS.DURATION_DAY, attacker)
 }
 
 module.exports = main
