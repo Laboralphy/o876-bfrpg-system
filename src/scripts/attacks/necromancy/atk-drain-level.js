@@ -3,7 +3,7 @@ const { durations: DURATIONS } = require('../../../data')
 
 /**
  * Effect:
- * This attack damages an ability.
+ * This attack adds negative level.
  *
  * Saving throw:
  * A saving throw against death ray is allowed.
@@ -41,16 +41,15 @@ function main ({
     script,
     manager,
     data: {
-       ability,
-       amount = 1,
-       duration = DURATIONS.DURATION_PERMANENT,
-       potency = 0
+        amount = 1,
+        duration = DURATIONS.DURATION_PERMANENT,
+        potency = 0
     }
 }) {
     if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency }).success) {
-        const eCurse = manager.createEffect(CONSTS.EFFECT_ABILITY_MODIFIER, amount, { ability })
-        eCurse.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
-        manager.applyEffect(eCurse, target, attacker.dice.evaluate(duration), attacker)
+        const eDrain = manager.createEffect(CONSTS.EFFECT_NEGATIVE_LEVEL, attacker.dice.evaluate(amount))
+        eDrain.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
+        manager.applyEffect(eDrain, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

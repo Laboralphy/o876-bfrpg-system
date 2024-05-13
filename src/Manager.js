@@ -56,7 +56,10 @@ class Manager {
         cm.defaultDistance = 50
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
-        cm.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
+        cm.events.on('combat.turn', ev => {
+            this.processCreaturePassiveProperties(ev.attacker)
+            this._events.emit('combat.turn', ev)
+        })
 
         this._itemBuilder = ib
         this._creatureBuilder = cb
@@ -373,16 +376,20 @@ class Manager {
     /**
      * TODO not sure of i keep this method, i don't know when to call it
      * TODO need a better system to deal with periodic item properties
-     * @param oCreature
+     * @param oCreature {Creature}
      */
     processCreaturePassiveProperties (oCreature) {
         // regeneration
         const nRegen = oCreature.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_REGENERATION
-        ]).sum
-        if (nRegen > 0 && oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
-            oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
-        }
+        ], {
+            propFilter: prop => prop.amp > 0,
+            propForEach: prop => {
+                if (oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
+                    oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
+                }
+            }
+        })
     }
 
     createEffect (sType, amp = 0, oParams = {}) {

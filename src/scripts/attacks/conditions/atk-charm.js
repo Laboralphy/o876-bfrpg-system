@@ -26,12 +26,10 @@ function main ({
     damage,
     manager,
     data: {
-        duration = DURATIONS.DURATION_DEFAULT,
-        potency = 0
+        duration = DURATIONS.DURATION_DEFAULT
     }
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, {
-        adjustment: potency,
         threat: CONSTS.THREAT_MIND_SPELL
     }).success) {
         const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)
