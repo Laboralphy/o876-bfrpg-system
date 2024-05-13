@@ -11,24 +11,18 @@ const CONSTS = require('../../../consts')
  * Data:
  * - amount : damage dealt by this attack
  *
- * @param turn {number}
- * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
  * @param attacker {Creature}
  * @param target {Creature}
  * @param action {BFStoreStateAction}
- * @param script {string}
  * @param manager {{}}
  * @param data {object}
  */
 function main ({
-    turn,
-    tick,
     attackOutcome,
     attacker,
     target,
     action,
-    script,
     manager,
     data
 }) {

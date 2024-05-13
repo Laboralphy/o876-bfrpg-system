@@ -1,15 +1,8 @@
 const CONSTS = require('../../../consts')
-const { durations: DURATIONS } = require('../../../data')
+const { duration: DURATIONS } = require('../../../data')
 
 /**
- * This attack will apply CALM effect on target if saving throw against spell (mind spells) fails
- *
- * Saving throw:
- * Spells / mind spells
- *
- * Data:
- * - duration
- *
+ * Attack script
  * @param turn {number}
  * @param tick {number}
  * @param attackOutcome {BFAttackOutcome}
@@ -29,14 +22,15 @@ function main ({
     target,
     action,
     script,
+    damage,
     manager,
     data: {
         duration = DURATIONS.DURATION_DEFAULT
     }
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, { threat: CONSTS.THREAT_MIND_SPELL }).success) {
-        const eCalm = manager.createEffect(CONSTS.EFFECT_CALM)
-        manager.applyEffect(eCalm, target, duration, attacker)
+        const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)
+        manager.applyEffect(eCharm, target, duration, attacker)
     }
 }
 

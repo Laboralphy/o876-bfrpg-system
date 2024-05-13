@@ -12,7 +12,7 @@ module.exports = (state, getters) => {
         aConditionSet.has(CONSTS.CONDITION_PARALYZED) ||
         aConditionSet.has(CONSTS.CONDITION_PETRIFIED) ||
         aConditionSet.has(CONSTS.CONDITION_INCAPACITATED) ||
-        aConditionSet.has(CONSTS.CONDITION_DAZED)
+        aConditionSet.has(CONSTS.CONDITION_STUNNED)
     )
     const move = !(
         aConditionSet.has(CONSTS.CONDITION_PARALYZED) ||
@@ -27,7 +27,7 @@ module.exports = (state, getters) => {
         aConditionSet.has(CONSTS.CONDITION_PARALYZED) ||
         aConditionSet.has(CONSTS.CONDITION_PETRIFIED) ||
         aConditionSet.has(CONSTS.CONDITION_INCAPACITATED) ||
-        aConditionSet.has(CONSTS.CONDITION_DAZED)
+        aConditionSet.has(CONSTS.CONDITION_STUNNED)
     )
     const castTarget = castSelf && see
     const cast = {

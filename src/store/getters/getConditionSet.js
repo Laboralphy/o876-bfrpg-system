@@ -18,7 +18,17 @@ module.exports = (state, getters) => {
             }
 
             case CONSTS.EFFECT_STUN: {
+                aConditionSet.add(CONSTS.CONDITION_STUNNED)
+                break
+            }
+
+            case CONSTS.EFFECT_DAZE: {
                 aConditionSet.add(CONSTS.CONDITION_DAZED)
+                break
+            }
+
+            case CONSTS.EFFECT_CHARM: {
+                aConditionSet.add(CONSTS.CONDITION_CHARMED)
                 break
             }
 
@@ -37,7 +47,12 @@ module.exports = (state, getters) => {
                     aConditionSet.add(CONSTS.CONDITION_RESTRAINED)
                 }
             }
+
+            // CONDITION_BLINDED
         }
     })
+    if (getters.getHitPoints <= 0) {
+        aConditionSet.add(CONSTS.CONDITION_INCAPACITATED)
+    }
     return aConditionSet
 }

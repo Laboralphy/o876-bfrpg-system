@@ -4,7 +4,7 @@
 
 module.exports = {
   'atk-base': require('./attacks/atk-base.js'),
-  'atk-calm': require('./attacks/conditions/atk-calm.js'),
+  'atk-calm': require('./attacks/conditions/atk-daze.js'),
   'atk-paralysis': require('./attacks/conditions/atk-paralysis.js'),
   'atk-petrification': require('./attacks/conditions/atk-petrification.js'),
   'atk-poison': require('./attacks/conditions/atk-poison.js'),

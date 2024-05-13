@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-10T14:45:27.331Z
+// Date : 2024-05-07T19:45:09.876Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -7,7 +7,6 @@ module.exports = {
   'EFFECT_ARMOR_CLASS_MODIFIER': require('./armor-class-modifier.js'),
   'EFFECT_ATTACK_MODIFIER': require('./attack-modifier.js'),
   'EFFECT_BLINDNESS': require('./blindness.js'),
-  'EFFECT_CALM': require('./calm.js'),
   'EFFECT_CHARM': require('./charm.js'),
   'EFFECT_DAMAGE_IMMUNITY': require('./damage-immunity.js'),
   'EFFECT_DAMAGE_MODIFIER': require('./damage-modifier.js'),
@@ -15,6 +14,7 @@ module.exports = {
   'EFFECT_DAMAGE_RESISTANCE': require('./damage-resistance.js'),
   'EFFECT_DAMAGE_VULNERABILITY': require('./damage-vulnerability.js'),
   'EFFECT_DAMAGE': require('./damage.js'),
+  'EFFECT_DAZE': require('./daze.js'),
   'EFFECT_FLAG': require('./flag.js'),
   'EFFECT_HEAL': require('./heal.js'),
   'EFFECT_MATERIAL_VULNERABILITY': require('./material-vulnerability.js'),

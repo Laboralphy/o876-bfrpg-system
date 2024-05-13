@@ -2,14 +2,13 @@ const CONSTS = require('../../../consts')
 const { durations: DURATIONS } = require('../../../data')
 
 /**
- * Effect:
- * apply EFFECT_STUN on target
+ * This attack will apply CALM effect on target if saving throw against spell (mind spells) fails
  *
  * Saving throw:
- * Avoided if saving throw against Death ray
+ * Spells / mind spells
  *
  * Data:
- * - duration : specified in data
+ * - duration
  *
  * @param turn {number}
  * @param tick {number}
@@ -19,8 +18,8 @@ const { durations: DURATIONS } = require('../../../data')
  * @param action {BFStoreStateAction}
  * @param script {string}
  * @param damage {string|number}
- * @param duration {number}
  * @param manager {{}}
+ * @param duration {{}}
  */
 function main ({
     turn,
@@ -29,15 +28,14 @@ function main ({
     attacker,
     target,
     action,
+    manager,
     data: {
         duration = DURATIONS.DURATION_DEFAULT
-    },
-    manager
+    }
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
-        const eStun = manager.createEffect(CONSTS.EFFECT_STUN)
-        eStun.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(eStun, target, duration, attacker)
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, { threat: CONSTS.THREAT_MIND_SPELL }).success) {
+        const eDaze = manager.createEffect(CONSTS.EFFECT_DAZE)
+        manager.applyEffect(eDaze, target, duration, attacker)
     }
 }
 
