@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-13T15:37:46.083Z
+// Date : 2024-05-14T15:04:50.165Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
   'getEffects': require('./getEffects.js'),
   'getEquipment': require('./getEquipment.js'),
   'getHitPoints': require('./getHitPoints.js'),
+  'getImmunitySet': require('./getImmunitySet.js'),
   'getLevel': require('./getLevel.js'),
   'getMaxHitPoints': require('./getMaxHitPoints.js'),
   'getMeleeActions': require('./getMeleeActions.js'),

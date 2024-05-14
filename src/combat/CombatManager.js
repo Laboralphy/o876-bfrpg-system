@@ -79,7 +79,7 @@ class CombatManager {
      * @return {Creature[]}
      */
     getOffenders (oCreature, nRange = Infinity) {
-        this.combats
+        return this.combats
             .filter(combat => combat.defender === oCreature && combat.attacker.distance <= nRange)
             .map(combat => combat.attacker.creature)
     }

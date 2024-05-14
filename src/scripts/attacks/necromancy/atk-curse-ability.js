@@ -47,7 +47,9 @@ function main ({
        potency = 0
     }
 }) {
-    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency }).success) {
+    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
+        adjustment: potency
+    }).success) {
         const eCurse = manager.createEffect(CONSTS.EFFECT_ABILITY_MODIFIER, amount, { ability })
         eCurse.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
         manager.applyEffect(eCurse, target, attacker.dice.evaluate(duration), attacker)

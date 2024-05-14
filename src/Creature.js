@@ -20,6 +20,10 @@ class Creature {
         this._events = new EventEmitter()
     }
 
+    /**
+     *
+     * @returns {EventEmitter}
+     */
     get events () {
         return this._events
     }

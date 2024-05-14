@@ -27,7 +27,6 @@ const { durations: DURATIONS } = require('../../../data')
  * @param script {string}
  * @param damage {string|number}
  * @param manager {{}}
- * @param ability {string} ability to be damaged
  * @param amount {number} amount of ability points
  * @param duration {number} if no duration then : infinity
  */
@@ -46,7 +45,9 @@ function main ({
         potency = 0
     }
 }) {
-    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency }).success) {
+    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
+        adjustment: potency
+    }).success) {
         const eDrain = manager.createEffect(CONSTS.EFFECT_NEGATIVE_LEVEL, attacker.dice.evaluate(amount))
         eDrain.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
         manager.applyEffect(eDrain, target, attacker.dice.evaluate(duration), attacker)

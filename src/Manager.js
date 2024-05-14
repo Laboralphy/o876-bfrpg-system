@@ -323,6 +323,12 @@ class Manager {
             creature: oCreature,
             manager: this
         }))
+        oCreature.events.on('disease-stage', ({ disease, effect, amp, duration, data }) => {
+            const oEffect = this.createEffect(effect, amp, data)
+            oEffect.tags.push(CONSTS.EFFECT_TAG_DISEASE, disease)
+            oEffect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+            this.applyEffect(oEffect, oCreature, duration)
+        })
         return oCreature
     }
 

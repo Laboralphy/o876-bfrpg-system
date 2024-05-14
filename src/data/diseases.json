@@ -1,0 +1,23 @@
+{
+  "DISEASE_GHOUL_FEVER": {
+    "description": "After 24h the target dies",
+    "duration": 14400,
+    "stages": [
+      {
+        "time": 14400,
+        "effect": "EFFECT_DEATH"
+      }
+    ]
+  },
+  "DISEASE_MUMMY_ROT": {
+    "description": "The target cannot heal",
+    "duration": 14400,
+    "stages": [
+      {
+        "time": 0,
+        "effect": "EFFECT_MITIGATE_HEALING",
+        "amp": 100
+      }
+    ]
+  }
+}

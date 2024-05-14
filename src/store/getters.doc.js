@@ -17,6 +17,7 @@
  * @property getEffects {{}[]}
  * @property getEquipment {Object<string, BFItem>}
  * @property getHitPoints {number}
+ * @property getImmunitySet {Set<string>}
  * @property getLevel {number}
  * @property getMaxHitPoints {number}
  * @property getMeleeActions {string[]}

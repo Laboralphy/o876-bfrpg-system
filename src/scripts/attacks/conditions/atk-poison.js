@@ -22,6 +22,7 @@ const { durations: DURATIONS } = require('../../../data')
  * @param action {BFStoreStateAction}
  * @param script {string}
  * @param manager {{}}
+ * @param duration {number}
  * @param potency {number} saving throw adjustement
  * @param amount {string|number}
  */
@@ -34,18 +35,22 @@ function main ({
    action,
    script,
    data: {
+       duration = DURATIONS.DURATION_PERMANENT,
        potency = 0,
        amount = 1
    },
    manager
 }) {
     // if saving throw against poison fail then apply poison
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency, threat: CONSTS.THREAT_POISON }).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
+        adjustment: potency,
+        threat: CONSTS.THREAT_POISON
+    }).success) {
         const ePoison = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, {
             type: CONSTS.DAMAGE_TYPE_POISON
         })
         ePoison.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(ePoison, target, DURATIONS.DURATION_PERMANENT, attacker)
+        manager.applyEffect(ePoison, target, attacker.dice.evaluate(duration), attacker)
     }
 }
 

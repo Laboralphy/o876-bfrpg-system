@@ -83,10 +83,10 @@ describe('effect groups', function () {
         const eff2 = ep.createEffect(CONSTS.EFFECT_SAVING_THROW_MODIFIER, -2)
         ep.applyEffectGroup([eff1, eff2], ['TAG_TEST_1'], c1, 10)
         const aExpectedSibs = [eff1.id, eff2.id]
-        expect(eff1.group.siblings).toEqual(aExpectedSibs)
-        expect(eff2.group.siblings).toEqual(aExpectedSibs)
-        expect(eff1.group.tags).toEqual(['TAG_TEST_1'])
-        expect(eff2.group.tags).toEqual(['TAG_TEST_1'])
+        expect(eff1.siblings).toEqual(aExpectedSibs)
+        expect(eff2.siblings).toEqual(aExpectedSibs)
+        expect(eff1.tags).toEqual(['TAG_TEST_1'])
+        expect(eff2.tags).toEqual(['TAG_TEST_1'])
     })
     it('should remove eff2 effect when removing eff1 and, [eff1, eff2] are in same group', function () {
         const c1 = new Creature()

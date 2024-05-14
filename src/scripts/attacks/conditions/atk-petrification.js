@@ -33,10 +33,14 @@ function main ({
     target,
     action,
     script,
-    data,
+    data: {
+        potency = 0
+    },
     manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, {
+        adjustment: potency
+    }).success) {
         const ePetrify = manager.createEffect(CONSTS.EFFECT_PETRIFICATION)
         ePetrify.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(ePetrify, target, DURATIONS.DURATION_PERMANENT, attacker)

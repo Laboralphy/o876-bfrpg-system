@@ -29,11 +29,12 @@ function main ({
     target,
     action,
     data: {
-        duration = DURATIONS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT,
+        potency = 0
     },
     manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency }).success) {
         const eBlindness = manager.createEffect(CONSTS.EFFECT_BLINDNESS)
         eBlindness.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(eBlindness, target, attacker.dice.evaluate(duration), attacker)

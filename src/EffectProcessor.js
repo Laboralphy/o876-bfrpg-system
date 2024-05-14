@@ -51,9 +51,8 @@ class EffectProcessor {
 
     killEffect (oEffect, target, source) {
         const oEffectRegistry = target.getters.getEffectRegistry
-        const aEffects = oEffect.group.siblings.length > 0
+        const aEffects = oEffect.siblings.length > 0
             ? oEffect
-                .group
                 .siblings
                 .map(effId => effId in oEffectRegistry
                     ? oEffectRegistry[effId]
@@ -94,10 +93,7 @@ class EffectProcessor {
                 source: null,
                 data: {},
                 stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK,
-                group: {
-                    siblings: [],
-                    tags: []
-                },
+                siblings: [],
                 tags: []
             }
             if ('init' in ept) {
@@ -112,8 +108,8 @@ class EffectProcessor {
     _groupEffects (aEffects, tags = []) {
         const aSiblings = aEffects.map(({ id }) => id)
         aEffects.forEach(effect => {
-            effect.group.siblings = aSiblings
-            effect.group.tags = tags
+            effect.siblings = aSiblings
+            effect.tags.push(...tags)
         })
     }
 
@@ -128,12 +124,90 @@ class EffectProcessor {
         })
     }
 
+    /**
+     * Return true if effect is rejected by immunity
+     * @param oEffect {BFEffect}
+     * @param target {Creature}
+     */
+    isImmuneToEffect (oEffect, target) {
+        const aImmunitySet = target.getters.getImmunitySet
+        switch (oEffect.type) {
+            case CONSTS.EFFECT_STUN: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_STUN)
+            }
+
+            case CONSTS.EFFECT_PARALYSIS: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_PARALYSIS)
+            }
+
+            case CONSTS.EFFECT_DAZE: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_DAZED)
+            }
+
+            case CONSTS.EFFECT_BLINDNESS: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_BLINDNESS)
+            }
+
+            case CONSTS.EFFECT_CHARM: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_CHARM)
+            }
+
+            case CONSTS.EFFECT_NEGATIVE_LEVEL: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_NEGATIVE_LEVEL)
+            }
+
+            case CONSTS.EFFECT_DISEASE: {
+                return aImmunitySet.has(CONSTS.IMMUNITY_TYPE_DISEASE)
+            }
+
+            case CONSTS.EFFECT_ABILITY_MODIFIER: {
+                return oEffect.amp < 0 && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_ABILITY_DECREASE)
+            }
+
+            case CONSTS.EFFECT_ARMOR_CLASS_MODIFIER: {
+                return oEffect.amp < 0 && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_AC_DECREASE)
+            }
+
+            case CONSTS.EFFECT_ATTACK_MODIFIER: {
+                return oEffect.amp < 0 && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_ATTACK_DECREASE)
+            }
+
+            case CONSTS.EFFECT_DAMAGE_MODIFIER: {
+                return oEffect.amp < 0 && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_DAMAGE_DECREASE)
+            }
+
+            case CONSTS.EFFECT_DEATH: {
+                return oEffect.subtype === CONSTS.EFFECT_SUBTYPE_MAGICAL && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_DEATH)
+            }
+
+            case CONSTS.EFFECT_DAMAGE: {
+                return oEffect.data.damageType === CONSTS.DAMAGE_TYPE_POISON && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_POISON)
+            }
+
+            case CONSTS.EFFECT_SPEED_MODIFIER: {
+                return (oEffect.amp === -Infinity && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_ENTANGLE)) ||
+                    (oEffect.amp < 0 && oEffect.amp > -Infinity && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_SLOW))
+            }
+
+            case CONSTS.EFFECT_SAVING_THROW_MODIFIER: {
+                return oEffect.amp < 0 && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_SAVING_THROW_DECREASE)
+            }
+
+            default: {
+                return false
+            }
+        }
+    }
+
     applyEffect(oEffect, target, duration = 0, source = null) {
         if (!source) {
             source = target
         }
         oEffect.duration = duration
         oEffect.source = source.id
+        if (this.isImmuneToEffect(oEffect, target)) {
+            return
+        }
         if (oEffect.duration > 0) {
             switch (oEffect.stackingRule) {
                 case CONSTS.EFFECT_STACKING_RULE_NO_STACK: {

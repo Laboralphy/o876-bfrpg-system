@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-13T15:37:46.332Z
+// Date : 2024-05-14T15:04:50.411Z
 // List of files in ./src/scripts
 
 module.exports = {
@@ -12,7 +12,9 @@ module.exports = {
   'atk-poison': require('./attacks/conditions/atk-poison.js'),
   'atk-stun': require('./attacks/conditions/atk-stun.js'),
   'atk-dragon-breath': require('./attacks/damage/atk-dragon-breath.js'),
+  'atk-disease': require('./attacks/diseases/atk-disease.js'),
+  'atk-toxic-stench': require('./attacks/diseases/atk-toxic-stench.js'),
   'atk-curse-ability': require('./attacks/necromancy/atk-curse-ability.js'),
-  'atk-toxic-stench': require('./attacks/necromancy/atk-toxic-stench.js'),
+  'atk-drain-level': require('./attacks/necromancy/atk-drain-level.js'),
   'atk-vampyre': require('./attacks/necromancy/atk-vampyre.js')
 }

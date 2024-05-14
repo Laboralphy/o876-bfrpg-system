@@ -1,5 +1,5 @@
-const CONSTS = require('../../../../consts')
-const { durations: DURATIONS } = require('../../../../data')
+const CONSTS = require('../../../../../consts')
+const { durations: DURATIONS } = require('../../../../../data')
 
 /**
  * Effect:

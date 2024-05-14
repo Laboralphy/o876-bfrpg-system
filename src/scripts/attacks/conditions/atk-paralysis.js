@@ -35,11 +35,15 @@ function main ({
     action,
     script,
     data: {
-        duration = DURATIONS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT,
+        potency = 0
     },
     manager
 }) {
-    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, { ability: CONSTS.ABILITY_STRENGTH }).success) {
+    if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, {
+        ability: CONSTS.ABILITY_STRENGTH,
+        adjustment: potency
+    }).success) {
         const eParalysis = manager.createEffect(CONSTS.EFFECT_PARALYSIS)
         eParalysis.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(eParalysis, target, attacker.dice.evaluate(duration), attacker)

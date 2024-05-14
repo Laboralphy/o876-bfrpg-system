@@ -43,12 +43,18 @@ module.exports = (state, getters) => {
             }
 
             case CONSTS.EFFECT_SPEED_MODIFIER: {
-                if (getters.getSpeed === 0) {
-                    aConditionSet.add(CONSTS.CONDITION_RESTRAINED)
+                if (effect.amp < 0) {
+                    if (getters.getSpeed <= 0) {
+                        aConditionSet.add(CONSTS.CONDITION_RESTRAINED)
+                    }
                 }
+                break
             }
 
-            // CONDITION_BLINDED
+            case CONSTS.EFFECT_BLINDNESS: {
+                aConditionSet.add(CONSTS.CONDITION_BLINDED)
+                break
+            }
         }
     })
     if (getters.getHitPoints <= 0) {

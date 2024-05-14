@@ -1,15 +1,16 @@
-const CONSTS = require('../../../../consts')
-const { durations: DURATIONS } = require('../../../../data')
+const CONSTS = require('../../../../../consts')
+const { durations: DURATIONS } = require('../../../../../data')
 
 /**
  * Effect:
- * Deal damage on all offenders
+ * This attack deals damage to all non-flying creatures
  *
  * Saving throw:
- * Save against POISON for half damage
+ * None
  *
  * Data:
- * None
+ * - amount : damage dealt by this attack, this damage is lower than main damage dealt to target.
+ *
  *
  * @param turn {number}
  * @param tick {number}
@@ -20,7 +21,7 @@ const { durations: DURATIONS } = require('../../../../data')
  * @param script {string}
  * @param damage {string|number}
  * @param manager {{}}
- * @param data {{}}
+ * @param amount {number}
  */
 function main ({
     turn,
@@ -32,17 +33,15 @@ function main ({
     script,
     damage,
     manager,
-    data
+    data: {
+        amount
+    }
 }) {
     manager
         .getOffenders(attacker)
+        .filter(oCreature => target !== oCreature)
         .forEach(oCreature => {
-            let nDamage = oCreature.dice.evaluate(damage)
-            const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success
-            if (bSuccess) {
-                nDamage = nDamage >> 1
-            }
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: CONSTS.DAMAGE_TYPE_POISON })
+            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, { type: CONSTS.DAMAGE_TYPE_FORCE })
             manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
         })
 }

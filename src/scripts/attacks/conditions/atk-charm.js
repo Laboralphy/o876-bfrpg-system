@@ -26,11 +26,13 @@ function main ({
     damage,
     manager,
     data: {
-        duration = DURATIONS.DURATION_DEFAULT
+        duration = DURATIONS.DURATION_DEFAULT,
+        potency = 0
     }
 }) {
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, {
-        threat: CONSTS.THREAT_MIND_SPELL
+        threat: CONSTS.THREAT_MIND_SPELL,
+        adjustment: potency
     }).success) {
         const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)
         manager.applyEffect(eCharm, target, attacker.dice.evaluate(duration), attacker)

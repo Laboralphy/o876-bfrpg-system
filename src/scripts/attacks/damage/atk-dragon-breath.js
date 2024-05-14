@@ -34,14 +34,18 @@ function main ({
     script,
     damage,
     manager,
-    data
+    data: {
+        potency = 0
+    }
 }) {
     const sDamageType = attackOutcome.action.damageType
     manager
         .getOffenders(attacker)
         .forEach(oCreature => {
             let nDamage = oCreature.dice.evaluate(damage)
-            const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DRAGON_BREATH).success
+            const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DRAGON_BREATH, {
+                adjustment: potency
+            }).success
             if (bSuccess) {
                 nDamage = nDamage >> 1
             }
