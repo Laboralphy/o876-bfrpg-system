@@ -323,12 +323,6 @@ class Manager {
             creature: oCreature,
             manager: this
         }))
-        oCreature.events.on('disease-stage', ({ disease, effect, amp, duration, data }) => {
-            const oEffect = this.createEffect(effect, amp, data)
-            oEffect.tags.push(CONSTS.EFFECT_TAG_DISEASE, disease)
-            oEffect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-            this.applyEffect(oEffect, oCreature, duration)
-        })
         return oCreature
     }
 
@@ -413,7 +407,7 @@ class Manager {
     removeEffect (effect) {
         const target = this._horde.creatures(effect.target)
         const source = this._horde.creatures(effect.source)
-        return this._effectProcessor.killEffect(effect, target, source)
+        return this._effectProcessor.removeEffect(effect, target, source)
     }
 }
 

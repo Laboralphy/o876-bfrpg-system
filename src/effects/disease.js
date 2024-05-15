@@ -1,8 +1,14 @@
-const { DURATION_INSTANT} = require("../data/durations");
+const CONSTS = require('../consts')
+const { DURATION_INSTANT} = require('../data/durations')
 
 /**
+ * @typedef BFEffectDiseaseStageEffectDef {object}
+ * @property type {string}
+ * @property amp {number}
+ * @property data {object}
+ *
  * @typedef BFEffectDiseaseStage {object}
- * @property effect {*}
+ * @property effect {BFEffectDiseaseStageEffectDef}
  * @property time {number}
  *
  * @param oEffect
@@ -15,21 +21,18 @@ function init (oEffect, { disease, stages }) {
     oEffect.data.index = 0
 }
 
-function mutate ({ effect, target }) {
-    const aStages = effect.data.stages
+function mutate ({ effectProcessor, effect: eDisease, target }) {
+    const aStages = eDisease.data.stages
     aStages.forEach(s => {
         --s.time
     })
     const aReadyStages = aStages.filter(s => s.time <= 0)
-    effect.data.stages = aStages.filter(s => s.time > 0)
-    aReadyStages.forEach(({ effect, amp = 0, duration = DURATION_INSTANT, data = {} }) => {
-        target.events.emit('disease-stage', {
-            disease: effect.data.disease,
-            effect,
-            amp,
-            duration,
-            data
-        })
+    aStages.data.stages = aStages.filter(s => s.time > 0)
+    aReadyStages.forEach(({ type: sEffectType, amp = 0, duration = DURATION_INSTANT, data = {} }) => {
+        const effect = effectProcessor.createEffect(sEffectType, amp, data)
+        effect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+        effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, eDisease.data.disease)
+        this.applyEffect(effect, target, duration)
     })
 }
 

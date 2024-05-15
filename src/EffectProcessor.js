@@ -32,7 +32,12 @@ class EffectProcessor {
     invokeEffectMethod (oEffect, sMethod, target, source) {
         const ee = this.getEffectEngine(oEffect.type)
         if (sMethod in ee) {
-            return ee[sMethod]({ effect: oEffect, target, source })
+            return ee[sMethod]({
+                effect: oEffect,
+                effectProcessor: this,
+                target,
+                source
+            })
         }
         return undefined
     }
@@ -49,7 +54,7 @@ class EffectProcessor {
         }
     }
 
-    killEffect (oEffect, target, source) {
+    removeEffect (oEffect, target, source) {
         const oEffectRegistry = target.getters.getEffectRegistry
         const aEffects = oEffect.siblings.length > 0
             ? oEffect
@@ -70,7 +75,7 @@ class EffectProcessor {
             this.invokeEffectMethod(oEffect, 'mutate', target, source)
             this.setEffectDuration(oEffect, oEffect.duration - 1, target, source)
         } else {
-            this.killEffect(oEffect, target, source)
+            this.removeEffect(oEffect, target, source)
         }
     }
 
@@ -221,7 +226,7 @@ class EffectProcessor {
                 case CONSTS.EFFECT_STACKING_RULE_REPLACE: {
                     const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
                     if (oOldEffect) {
-                        this.killEffect(oOldEffect)
+                        this.removeEffect(oOldEffect)
                         oEffect = target.mutations.addEffect({ effect: oEffect })
                     }
                     break
