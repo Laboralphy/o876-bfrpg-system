@@ -5,12 +5,11 @@
  * @returns {BFStoreStateAction}
  */
 module.exports = (state, getters) => {
-    const md = state.monsterData
-    const mdsa = md.selectedAction
-    if (!mdsa) {
+    const sa = state.selectedAction
+    if (!sa) {
         return null
     }
-    const action = getters.getActions[mdsa]
+    const action = getters.getActions[sa]
     if (!action) {
         return null
     }

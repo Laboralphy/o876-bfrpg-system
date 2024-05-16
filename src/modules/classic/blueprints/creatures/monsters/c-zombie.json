@@ -1,42 +1,16 @@
 {
-  "name": "c-ghoul",
-  "ac": 14,
+  "name": "c-zombie",
+  "ac": 12,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "claw",
+      "name": "fist",
       "attackType": "ATTACK_TYPE_MELEE",
-      "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_PHYSICAL",
-      "count": 2,
-      "cooldown": 0,
-      "conveys": [
-        {
-          "script": "atk-paralysis",
-          "data": {}
-        }
-      ]
-    },
-    {
-      "name": "bite",
-      "attackType": "ATTACK_TYPE_MELEE",
-      "damage": "1d4",
+      "damage": "1d8",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
-      "conveys": [
-        {
-          "script": "atk-paralysis",
-          "data": {}
-        },
-        {
-          "script": "atk-disease",
-          "data": {
-            "disease": "ghoul-fever",
-            "chance": 5
-          }
-        }
-      ]
+      "conveys": []
     }
   ],
   "properties": [
@@ -81,11 +55,25 @@
       "data": {
         "damageType": "DAMAGE_TYPE_NECROTIC"
       }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_FIRE"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
     }
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
   "level": 2,
-  "speed": 30,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

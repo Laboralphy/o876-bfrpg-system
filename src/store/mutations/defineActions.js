@@ -1,10 +1,12 @@
 const { checkCombatActionSchema } = require('../../libs/check-combat-action-schema')
+const CONSTS = require('../../consts')
 
 /**
  * Add an action to character action list
  *
  * @typedef DefineActionDTO {object}
  * @property count {number}
+ * @property cooldown {number}
  * @property attackType {string}
  * @property name {string}
  * @property conveys {{script: string, data: {}}[]}
@@ -14,7 +16,7 @@ const { checkCombatActionSchema } = require('../../libs/check-combat-action-sche
  * @param actions {DefineActionDTO[]}
  */
 module.exports = ({ state }, { actions }) => {
-    const mda = state.monsterData.actions
+    const mda = state.actions
     const aPrevKeys = new Set(Object.keys(mda))
     actions.forEach(a => {
         checkCombatActionSchema(a)
@@ -22,6 +24,7 @@ module.exports = ({ state }, { actions }) => {
             name: a.name,
             attackType: a.attackType,
             count: a.count || 1,
+            cooldown: a.cooldown || 0,
             conveys: a.conveys.slice(0),
             damage: a.damage,
             damageType: a.damageType

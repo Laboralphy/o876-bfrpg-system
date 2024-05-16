@@ -1,6 +1,7 @@
 {
   "name": "c-centaur",
   "ac": 13,
+  "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
       "name": "hoove",
@@ -8,13 +9,10 @@
       "damage": "1d6",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 2,
+      "cooldown": 0,
       "conveys": []
     }
   ],
-  "saveAs": {
-    "level": 4,
-    "classType": "CLASS_TYPE_FIGHTER"
-  },
   "properties": [],
   "equipment": [
     "arm-leather",
@@ -25,6 +23,5 @@
   "specie": "SPECIE_MAGICAL_BEAST",
   "level": 4,
   "speed": 50,
-  "classType": "CLASS_TYPE_MONSTER",
   "entityType": "ENTITY_TYPE_ACTOR"
 }

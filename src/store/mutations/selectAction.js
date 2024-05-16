@@ -6,7 +6,7 @@
  */
 module.exports = ({ state, getters }, { action }) => {
     if (action === '' || (action in getters.getActions)) {
-        state.monsterData.selectedAction = action
+        state.selectedAction = action
     } else {
         throw new Error('action "' + action +'" undefined - actions available: [' + Object.keys(getters.getActions).join(', ') + ']')
     }

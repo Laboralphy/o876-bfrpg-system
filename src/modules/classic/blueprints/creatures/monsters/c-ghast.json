@@ -1,6 +1,7 @@
 {
   "name": "c-ghast",
   "ac": 15,
+  "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
       "name": "claw",
@@ -8,9 +9,10 @@
       "damage": "1d4",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 2,
+      "cooldown": 0,
       "conveys": [
         {
-          "script": "paralysis",
+          "script": "atk-paralysis",
           "data": {}
         }
       ]
@@ -21,35 +23,83 @@
       "damage": "1d4",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
+      "cooldown": 0,
       "conveys": [
         {
-          "script": "paralysis",
+          "script": "atk-paralysis",
           "data": {}
+        },
+        {
+          "script": "atk-disease",
+          "data": {
+            "disease": "ghoul-fever",
+            "chance": 10
+          }
         }
       ]
     },
     {
       "name": "stench",
       "attackType": "ATTACK_TYPE_HOMING",
-      "damage": "",
+      "damage": 0,
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
+      "cooldown": 0,
       "conveys": [
         {
-          "script": "ghast-stench",
+          "script": "atk-toxic-stench",
           "data": {}
         }
       ]
     }
   ],
-  "saveAs": {
-    "level": 2,
-    "classType": "CLASS_TYPE_FIGHTER"
-  },
-  "properties": [],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_CHARM"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_STUN"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_DAZED"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_POISON"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_NECROTIC"
+      }
+    }
+  ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
   "level": 2,
-  "classType": "CLASS_TYPE_MONSTER",
+  "speed": 30,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

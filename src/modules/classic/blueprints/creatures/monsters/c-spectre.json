@@ -1,39 +1,20 @@
 {
-  "name": "c-ghoul",
-  "ac": 14,
+  "name": "c-spectre",
+  "ac": 17,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "claw",
-      "attackType": "ATTACK_TYPE_MELEE",
+      "name": "touch",
+      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
       "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_PHYSICAL",
-      "count": 2,
-      "cooldown": 0,
-      "conveys": [
-        {
-          "script": "atk-paralysis",
-          "data": {}
-        }
-      ]
-    },
-    {
-      "name": "bite",
-      "attackType": "ATTACK_TYPE_MELEE",
-      "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "damageType": "DAMAGE_TYPE_NECROTIC",
       "count": 1,
       "cooldown": 0,
       "conveys": [
         {
-          "script": "atk-paralysis",
-          "data": {}
-        },
-        {
-          "script": "atk-disease",
+          "script": "atk-drain-level",
           "data": {
-            "disease": "ghoul-fever",
-            "chance": 5
+            "amount": 1
           }
         }
       ]
@@ -81,11 +62,31 @@
       "data": {
         "damageType": "DAMAGE_TYPE_NECROTIC"
       }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_RADIANT"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
+      "amp": 0,
+      "data": {
+        "material": "MATERIAL_SILVER"
+      }
     }
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
-  "level": 2,
-  "speed": 30,
+  "level": 6,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

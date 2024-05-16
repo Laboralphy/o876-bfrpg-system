@@ -16,6 +16,22 @@ class Combat {
         this._distance = 0
     }
 
+    get turn () {
+        return this._turn
+    }
+
+    set turn (value) {
+        this._turn = value
+    }
+
+    get tick () {
+        return this._tick
+    }
+
+    set tick (value) {
+        this._tick = value
+    }
+
     get tickCount () {
         return this._tickCount
     }
@@ -111,6 +127,7 @@ class Combat {
         if (nAttackCount > 0) {
             const action = attacker.nextAction
             if (action) {
+                attacker.setActionCooldown(action, this._turn)
                 this._events.emit('combat.action', {
                     turn: this._turn,
                     tick: this._tick,
@@ -222,6 +239,7 @@ class Combat {
         return ''
     }
 
+
     /**
      *
      * @returns {BFStoreStateAction}
@@ -240,13 +258,26 @@ class Combat {
         // target cannot be attacked by one of our equipped weapons
         // are there any natural attacks ?
         const bTargetIsFar = this.distance > WEAPON_RANGE_MELEE
-        const aActions = bTargetIsFar
+        const oCreatureActionRegistry = atkr.getters.getActions
+        const turn = this._turn
+        const aActions = (bTargetIsFar
             ? atkr.getters.getRangedActions
-            : atkr.getters.getMeleeActions
+            : atkr.getters.getMeleeActions)
+            .filter(actid => {
+                /**
+                 * @type BFStoreStateAction
+                 */
+                const act = oCreatureActionRegistry[actid]
+                return !this._attacker.isActionCoolingDown(act, turn)
+            })
         if (aActions.length > 0) {
             // We have suitable action(s)
             const iAction = atkr.dice.roll(aActions.length) - 1
-            return atkr.getters.getActions[aActions[iAction]]
+            const oSelectedAction = oCreatureActionRegistry[aActions[iAction]]
+            if (this._attacker.isActionCoolingDown(oSelectedAction, turn)) {
+                throw new Error('Should not be able to choose a cooling down action : ' + oSelectedAction.name)
+            }
+            return oSelectedAction
         }
         // At this point we have no weapon, and we have no action that can reach target.
         // Fallback actions
@@ -256,7 +287,6 @@ class Combat {
             // must go closer
             return null
         }
-        console.debug('target is close')
         // Target is at melee range, we must use our unarmed attack
         return DATA['default-actions'].DEFAULT_ACTION_UNARMED
     }
@@ -268,6 +298,8 @@ class Combat {
         const oDecidedAction = this.getMostSuitableAction()
         if (oDecidedAction) {
             this._attacker.nextAction = oDecidedAction
+        } else if (this.attacker.isActionCoolingDown(this.attacker.nextAction)) {
+            this._attacker.flushCurrentAction()
         }
     }
 

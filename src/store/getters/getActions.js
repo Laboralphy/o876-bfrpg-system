@@ -5,7 +5,7 @@
  * @returns {Object<string, BFStoreStateAction>}
  */
 module.exports = (state, getters, externals) => {
-    const oActions = state.monsterData.actions
+    const oActions = state.actions
     if (Object.keys(oActions).length > 0) {
         return oActions
     } else {

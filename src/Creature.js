@@ -321,6 +321,10 @@ class Creature {
             let sAbility = ability
             if (ability === '') {
                 switch (threat) {
+                    case '': {
+                        break
+                    }
+
                     case CONSTS.THREAT_POISON: {
                         sAbility = CONSTS.ABILITY_CONSTITUTION
                         break

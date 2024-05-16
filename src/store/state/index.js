@@ -9,13 +9,9 @@ const CONSTS = require('../../consts')
  * @property attackType {string}
  * @property damageType {string}
  * @property count {number}
+ * @property cooldown {number}
  * @property conveys {{ script: string data: {} }[]}
  * @property damage {string|number}
- *
- * @typedef BFStoreStateMonsterData {object}
- * @property actions {object<string, BFStoreStateAction>}
- * @property saveAs {{ classType: string, level: number }}
- *
  *
  * @typedef BFStoreState {object}
  * @property abilities {Object<string, number>}
@@ -25,7 +21,8 @@ const CONSTS = require('../../consts')
  * @property race {string}
  * @property naturalArmorClass {number}
  * @property level {number}
- * @property monsterData {BFStoreStateMonsterData}
+ * @property actions {object<string, BFStoreStateAction>}
+ * @property selectedAction {string}
  * @property gauges {BFStoreStateGauges}
  * @property effect {BFEffect[]}
  * @property properties {BFItemProperty[]}
@@ -53,15 +50,9 @@ module.exports = () => ({
     race: 'RACE_HUMAN',
     naturalArmorClass: 11,
     level: 1,
-    monsterData: {
-        saveAs: {
-            classType: 'CLASS_TYPE_FIGHTER',
-            level: 0
-        },
-        actions: {
-        },
-        selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
+    actions: {
     },
+    selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
     gauges: {
         hitPoints: 1
     },

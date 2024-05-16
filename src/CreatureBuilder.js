@@ -45,14 +45,6 @@ class CreatureBuilder {
         const m = oCreature.mutations
         m.setClassType({ value: CONSTS.CLASS_TYPE_MONSTER })
         m.setLevel({ value: blueprint.level })
-        m.setMonsterData({
-            data: {
-                saveAs: {
-                    classType: blueprint.saveAs.classType,
-                    level: blueprint.saveAs.level
-                }
-            }
-        })
         m.defineActions({
             actions: blueprint.actions
         })

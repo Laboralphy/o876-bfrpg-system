@@ -1,26 +1,58 @@
 {
-  "name": "c-ghost",
-  "ac": 20,
+  "name": "c-vampire",
+  "ac": 18,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
+      "name": "fist",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
-      "damageType": "DAMAGE_TYPE_NECROTIC",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "gaze",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": 0,
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
       "conveys": [
         {
-          "script": "atk-curse-ability",
+          "script": "atk-charm",
           "data": {
-            "ability": "ABILITY_CONSTITUTION",
+            "duration": 2,
+            "potency": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d3",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 3,
+      "conveys": [
+        {
+          "script": "atk-vampyre",
+          "data": {}
+        },
+        {
+          "script": "atk-drain-level",
+          "data": {
             "amount": 1
           }
         },
         {
-          "script": "atk-vampyre",
-          "data": {}
+          "script": "atk-lower-self-ac",
+          "data": {
+            "amount": 5,
+            "duration": 2
+          }
         }
       ]
     }
@@ -69,6 +101,13 @@
       }
     },
     {
+      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+      "amp": 3,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
+    },
+    {
       "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
       "amp": 0,
       "data": {
@@ -90,15 +129,20 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+      "property": "ITEM_PROPERTY_REGENERATION",
+      "amp": 1,
+      "data": {}
+    },
+    {
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
-        "value": 9
+        "value": 8
       }
     }
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
-  "level": 10,
-  "speed": 30,
+  "level": 7,
+  "speed": 40,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

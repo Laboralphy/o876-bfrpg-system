@@ -21,7 +21,6 @@
  * @property getLevel {number}
  * @property getMaxHitPoints {number}
  * @property getMeleeActions {string[]}
- * @property getMonsterData {{modifiers: { hp: number, attack: number }, saveAs: {level: number, classType: string}, actions: {}[]}}
  * @property getOffensiveEquipment {{weapon: BFItem|null, ammo: BFItem|null}}
  * @property getOffensiveEquipmentProperties {BFItemProperty[]}
  * @property getOffensiveSlot {string}

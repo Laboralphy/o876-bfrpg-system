@@ -126,37 +126,6 @@
           }
         }
       }
-    },
-    "saveAs": {
-      "type": "object",
-      "description": "specifies which class and level used for resolving saving throws",
-      "required": [
-        "classType"
-      ],
-      "allowAdditionalProperties": false,
-      "properties": {
-        "level": {
-          "type": "number"
-        },
-        "classType": {
-          "type": "string"
-        }
-      }
-    },
-    "modifiers": {
-      "type": "object",
-      "description": "Adjustments made specific to monster blueprints, when abilities are not specified",
-      "allowAdditionalProperties": false,
-      "properties": {
-        "hp": {
-          "type": "number",
-          "description": "hit points modifier"
-        },
-        "attack": {
-          "type": "number",
-          "description": "attack modifier"
-        }
-      }
     }
   }
 }

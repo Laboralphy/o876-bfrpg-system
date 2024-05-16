@@ -28,11 +28,9 @@ module.exports = (state, getters, externals) => {
     const nUndrainedLevel = Math.max(1, state.level)
     const bIsMonster = state.classType === CONSTS.CLASS_TYPE_MONSTER
     const oSavingThrows = bIsMonster
-        ? externals['class-types'][state.monsterData.saveAs.classType].savingThrows
+        ? externals['class-types'][state.classType].savingThrows
         : data.savingThrows
-    const nSavingThrowLevel = bIsMonster
-        ? state.monsterData.saveAs.level
-        : nEffectiveLevel
+    const nSavingThrowLevel = nEffectiveLevel
     return {
         classType: state.classType,
         level: nEffectiveLevel,

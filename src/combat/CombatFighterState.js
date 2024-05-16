@@ -15,6 +15,7 @@ class CombatFighterState {
         this._nextAction = null
         this._currentAction = null
         this._speedPenalty = 0
+        this._actionCooldown = {}
     }
 
     /**
@@ -96,6 +97,25 @@ class CombatFighterState {
 
     flushCurrentAction () {
         this._currentAction = null
+    }
+
+    setActionCooldown (oAction, nTurn) {
+        const { name: sAction } = oAction
+        if (this.isActionCoolingDown(oAction, nTurn)) {
+            throw new Error('Action unavailable : cooling down : ' + sAction + ' turn ' + nTurn)
+        }
+        const acd = this._actionCooldown
+        acd[sAction] = nTurn
+    }
+
+    isActionCoolingDown (oAction, nTurn) {
+        const { name: sAction, cooldown: nCooldown } = oAction
+        const acd = this._actionCooldown
+        if (!(sAction in acd)) {
+            return false
+        } else {
+            return acd[sAction] !== nTurn && (acd[sAction] + nCooldown) > nTurn
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-14T15:04:50.165Z
+// Date : 2024-05-16T12:35:12.438Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -24,7 +24,6 @@ module.exports = {
   'getLevel': require('./getLevel.js'),
   'getMaxHitPoints': require('./getMaxHitPoints.js'),
   'getMeleeActions': require('./getMeleeActions.js'),
-  'getMonsterData': require('./getMonsterData.js'),
   'getOffensiveEquipment': require('./getOffensiveEquipment.js'),
   'getOffensiveEquipmentProperties': require('./getOffensiveEquipmentProperties.js'),
   'getOffensiveSlot': require('./getOffensiveSlot.js'),
