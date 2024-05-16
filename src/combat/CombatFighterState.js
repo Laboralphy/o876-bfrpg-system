@@ -80,8 +80,10 @@ class CombatFighterState {
      * @param value {BFStoreStateAction}
      */
     set nextAction (value) {
-        checkCombatActionSchema(value)
-        this._nextAction = value
+        if (value) {
+            checkCombatActionSchema(value)
+        }
+        this._currentAction = value
     }
 
     /**
@@ -89,14 +91,10 @@ class CombatFighterState {
      * @returns {null|BFStoreStateAction}
      */
     get nextAction () {
-        if (!this._currentAction) {
-            this._currentAction = this._nextAction
-        }
         return this._currentAction
     }
 
     flushCurrentAction () {
-        this._currentAction = null
     }
 
     setActionCooldown (oAction, nTurn) {

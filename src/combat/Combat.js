@@ -140,8 +140,15 @@ class Combat {
         }
     }
 
+    checkCurrentActionCooldown () {
+        if (this._attacker.nextAction && this._attacker.isActionCoolingDown(this._attacker.nextAction, this._turn)) {
+            throw new Error('check action error : cooling down')
+        }
+    }
+
     advance () {
         this.selectMostSuitableAction()
+        this.checkCurrentActionCooldown()
         if (this._tick === 0) {
             // Start of turn
             // attack-types planning
@@ -297,9 +304,12 @@ class Combat {
     selectMostSuitableAction () {
         const oDecidedAction = this.getMostSuitableAction()
         if (oDecidedAction) {
+            if (this.attacker.isActionCoolingDown(oDecidedAction)) {
+                throw new Error('selectMostSuitableAction : selected cooling down action ' + oDecidedAction.name)
+            }
             this._attacker.nextAction = oDecidedAction
-        } else if (this.attacker.isActionCoolingDown(this.attacker.nextAction)) {
-            this._attacker.flushCurrentAction()
+        } else {
+            this._attacker.nextAction = null
         }
     }
 

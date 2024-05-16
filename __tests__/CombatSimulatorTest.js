@@ -145,18 +145,18 @@ describe('getMostSuitableAction', function () {
         }
 
         emptyLog()
-        oCombatLocust.advance()
         expect(oCombatLocust.distance).toBe(30)
+        oCombatLocust.advance() // 0
+        // Spit en cooldown, et pas d'autre compétence à distance : on avance
+        expect(oCombatLocust.distance).toBe(10)
         expect(oCombatLocust.turn).toBe(1)
-        oCombatLocust.advance()
-        oCombatLocust.advance()
-        oCombatLocust.advance()
-        oCombatLocust.advance()
-        expect(oCombatLocust.tick).toBe(5)
-        oCombatLocust.advance()
-        expect(aLog.length).toBe(1)
-        expect(aLog[0].action.name).toBe('spit')
-        expect(oCombatLocust.attacker._actionCooldown).toEqual({ spit: 1 })
+        oCombatLocust.advance() // 1
+        oCombatLocust.advance() // 2
+        oCombatLocust.advance() // 3
+        oCombatLocust.advance() // 4
+        oCombatLocust.advance() // 5
+        expect(aLog.length).toBe(0)
+        expect(oCombatLocust.attacker._actionCooldown).toEqual({ spit: 0 })
 
         oCombatLocust.turn = 19
         oCombatLocust.tick = 0
@@ -173,23 +173,14 @@ describe('getMostSuitableAction', function () {
         expect(oCombatLocust.turn).toBe(20)
         expect(oCombatLocust.tick).toBe(0)
         expect(oCombatLocust.distance).toBe(5)
-
-
-
-        // expect(aLog.length).toBe(0)
-        // expect(oCombatLocust.attacker.isActionCoolingDown('spit', 20, oCombatLocust.turn)).toBeFalsy()
-        // expect(oCombatLocust.attacker._nextAction.name).toBe('spit')
-        // oCombatLocust.advance() // 0 -> 1
-        // oCombatLocust.advance() // 1 -> 2
-        // oCombatLocust.advance() // 2 -> 3
-        // oCombatLocust.advance() // 3 -> 4
-        // oCombatLocust.advance() // 4 -> 5
-        // expect(aLog.length).toBe(0)
-        //
-        // oCombatLocust.distance = 30
-        //
-        // oCombatLocust.advance() // 5 -> 0 *** action
-        // expect(oCombatLocust.getMostSuitableAction().name).toBe('spit')
+        oCombatLocust.advance() // 0 -> 1
+        oCombatLocust.advance() // 1 -> 2
+        oCombatLocust.advance() // 2 -> 3
+        oCombatLocust.advance() // 3 -> 4
+        oCombatLocust.advance() // 4 -> 5
+        oCombatLocust.advance() // 5 -> 0
+        expect(aLog.length).toBe(1)
+        expect(aLog[0].action.name).toBe('bump')
     })
 })
 
