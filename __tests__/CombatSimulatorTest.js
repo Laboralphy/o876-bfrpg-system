@@ -27,7 +27,7 @@ describe('cooldown', function () {
     })
 })
 
-describe('getMostSuitableAction', function () {
+describe('cooldown', function () {
     it('should select spit action', async function() {
         const manager = new Manager()
         await manager.init()
@@ -181,6 +181,23 @@ describe('getMostSuitableAction', function () {
         oCombatLocust.advance() // 5 -> 0
         expect(aLog.length).toBe(1)
         expect(aLog[0].action.name).toBe('bump')
+    })
+
+    it('should attack with attack 1 each 3 turns', function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const sMonster1 = 'c-cave-locust'
+        const sMonster2 = 'c-centaur'
+        const oLocust = manager.createCreature({ id: 'm1', ref: sMonster1 })
+        const oCentaur = manager.createCreature({ id: 'm2', ref: sMonster2 })
+        oLocust.name = sMonster1
+        oCentaur.name = sMonster2
+        const combatManager = manager.combatManager
+        combatManager.startCombat(oLocust, oCentaur)
+        const oCombatLocust = combatManager.getCombat(oLocust)
+        oCombatLocust.distance = 30
+
     })
 })
 
