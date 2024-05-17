@@ -280,11 +280,7 @@ class Combat {
         if (aActions.length > 0) {
             // We have suitable action(s)
             const iAction = atkr.dice.roll(aActions.length) - 1
-            const oSelectedAction = oCreatureActionRegistry[aActions[iAction]]
-            if (this._attacker.isActionCoolingDown(oSelectedAction, turn)) {
-                throw new Error('Should not be able to choose a cooling down action : ' + oSelectedAction.name)
-            }
-            return oSelectedAction
+            return oCreatureActionRegistry[aActions[iAction]]
         }
         // At this point we have no weapon, and we have no action that can reach target.
         // Fallback actions
@@ -304,10 +300,8 @@ class Combat {
     selectMostSuitableAction () {
         const oDecidedAction = this.getMostSuitableAction()
         if (oDecidedAction) {
-            if (this.attacker.isActionCoolingDown(oDecidedAction)) {
-                throw new Error('selectMostSuitableAction : selected cooling down action ' + oDecidedAction.name)
-            }
             this._attacker.nextAction = oDecidedAction
+            this.checkCurrentActionCooldown()
         } else {
             this._attacker.nextAction = null
         }
@@ -340,6 +334,10 @@ class Combat {
         })
         this.distance = newDistance
         this._attacker.healSpeedPenalty()
+    }
+
+    getActionCooldownRegistry () {
+        return this._attacker.getActionCooldownRegistry(this._turn)
     }
 }
 

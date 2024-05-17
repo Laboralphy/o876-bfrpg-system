@@ -115,6 +115,23 @@ class CombatFighterState {
             return acd[sAction] !== nTurn && (acd[sAction] + nCooldown) > nTurn
         }
     }
+
+    getActionCooldown (oAction, nTurn) {
+        const { name: sAction, cooldown: nCooldown } = oAction
+        const acd = this._actionCooldown
+        if (sAction in acd) {
+            return Math.max(0, nCooldown - nTurn + acd[sAction])
+        } else {
+            return 0
+        }
+    }
+
+    getActionCooldownRegistry (nTurn) {
+        const oActions = this._creature.getters.getActions
+        return Object.fromEntries(Object.entries(oActions).map(([sKey, oAction]) => {
+            return [sKey, this.getActionCooldown(oAction, nTurn)]
+        }))
+    }
 }
 
 module.exports = CombatFighterState

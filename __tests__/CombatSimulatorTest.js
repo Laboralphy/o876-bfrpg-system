@@ -183,7 +183,7 @@ describe('cooldown', function () {
         expect(aLog[0].action.name).toBe('bump')
     })
 
-    it('should attack with attack 1 each 3 turns', function () {
+    it('should attack with attack 1 each 3 turns', async function () {
         const manager = new Manager()
         await manager.init()
         manager.loadModule('classic')
@@ -193,11 +193,88 @@ describe('cooldown', function () {
         const oCentaur = manager.createCreature({ id: 'm2', ref: sMonster2 })
         oLocust.name = sMonster1
         oCentaur.name = sMonster2
+        oLocust.mutations.defineActions({ "actions": [
+                {
+                    "name": "bite-cd",
+                    "attackType": "ATTACK_TYPE_MELEE",
+                    "damage": "1d2",
+                    "damageType": "DAMAGE_TYPE_PHYSICAL",
+                    "count": 1,
+                    "cooldown": 3,
+                    "conveys": []
+                },
+                {
+                    "name": "bump",
+                    "attackType": "ATTACK_TYPE_MELEE",
+                    "damage": "1d4",
+                    "damageType": "DAMAGE_TYPE_PHYSICAL",
+                    "count": 1,
+                    "cooldown": 0,
+                    "conveys": []
+                },
+                {
+                    "name": "spit",
+                    "attackType": "ATTACK_TYPE_RANGED_TOUCH",
+                    "damage": 0,
+                    "damageType": "DAMAGE_TYPE_PHYSICAL",
+                    "count": 1,
+                    "cooldown": 20,
+                    "conveys": [
+                        {
+                            "script": "atk-stun",
+                            "data": {
+                                "duration": "3d6"
+                            }
+                        }
+                    ]
+                }
+            ]})
+        oLocust.dice.cheat(0.9)
         const combatManager = manager.combatManager
         combatManager.startCombat(oLocust, oCentaur)
         const oCombatLocust = combatManager.getCombat(oLocust)
-        oCombatLocust.distance = 30
+        oCombatLocust.distance = 5
+        let oLastLog = null
+        oCombatLocust.events.on('combat.action', ev => {
+            oLastLog = ev
+        })
+        oCombatLocust.advance() // turn 0 tick 0
+        oCombatLocust.advance() // turn 0 tick 1
+        oCombatLocust.advance() // turn 0 tick 2
+        oCombatLocust.advance() // turn 0 tick 3
+        oCombatLocust.advance() // turn 0 tick 4
+        oCombatLocust.advance() // turn 0 tick 5
+        expect(oLastLog).toBeDefined()
+        expect(oLastLog.action.name).toBe('bite-cd')
+        expect(oLastLog.turn).toBe(0)
 
+        oCombatLocust.advance() // turn 1 tick 0
+        oCombatLocust.advance() // turn 1 tick 1
+        oCombatLocust.advance() // turn 1 tick 2
+        oCombatLocust.advance() // turn 1 tick 3
+        oCombatLocust.advance() // turn 1 tick 4
+        oCombatLocust.advance() // turn 1 tick 5
+        expect(oLastLog.action.name).toBe('bump')
+        expect(oLastLog.turn).toBe(1)
+
+        oCombatLocust.advance() // turn 2 tick 0
+        oCombatLocust.advance() // turn 2 tick 1
+        oCombatLocust.advance() // turn 2 tick 2
+        oCombatLocust.advance() // turn 2 tick 3
+        oCombatLocust.advance() // turn 2 tick 4
+        oCombatLocust.advance() // turn 2 tick 5
+        expect(oLastLog.action.name).toBe('bump')
+        expect(oLastLog.turn).toBe(2)
+
+
+        oCombatLocust.advance() // turn 3 tick 0
+        oCombatLocust.advance() // turn 3 tick 1
+        oCombatLocust.advance() // turn 3 tick 2
+        oCombatLocust.advance() // turn 3 tick 3
+        oCombatLocust.advance() // turn 3 tick 4
+        oCombatLocust.advance() // turn 3 tick 5
+        expect(oLastLog.action.name).toBe('bite-cd')
+        expect(oLastLog.turn).toBe(3)
     })
 })
 
