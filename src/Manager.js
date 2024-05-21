@@ -300,7 +300,7 @@ class Manager {
      * @param ref {string}
      * @returns {Creature}
      */
-    createCreature ({ id, ref = '' }) {
+    createCreature ({ id = '', ref = '' } = {}) {
         const oCreature = new Creature()
         if (ref) {
             const oBlueprint = this.getBlueprint(ref)
@@ -310,7 +310,9 @@ class Manager {
                 oCreature.mutations.equipItem({ item: oItem })
             })
         }
-        oCreature.id = id
+        if (id !== '') {
+            oCreature.id = id
+        }
         oCreature.mutations.setHitPoints({ value: oCreature.getters.getMaxHitPoints })
         this._horde.linkCreature(oCreature)
         oCreature.events.on('saving-throw', ev => this._events.emit('creature.saving-throw', {

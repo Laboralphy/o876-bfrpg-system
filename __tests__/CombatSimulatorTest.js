@@ -247,6 +247,11 @@ describe('cooldown', function () {
         expect(oLastLog).toBeDefined()
         expect(oLastLog.action.name).toBe('bite-cd')
         expect(oLastLog.turn).toBe(0)
+        expect(oCombatLocust.getActionCooldownRegistry()).toEqual({
+            "bite-cd": 2,
+            "bump": 0,
+            "spit": 0
+        })
 
         oCombatLocust.advance() // turn 1 tick 0
         oCombatLocust.advance() // turn 1 tick 1
@@ -277,4 +282,3 @@ describe('cooldown', function () {
         expect(oLastLog.turn).toBe(3)
     })
 })
-

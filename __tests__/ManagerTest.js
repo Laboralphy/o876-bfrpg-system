@@ -104,3 +104,32 @@ describe('createItem', function () {
         })
     })
 })
+
+describe('disease', function () {
+    it('should apply initial effect of disease', function () {
+        const m = new Manager()
+        m.loadModule('classic')
+        const c = m.createCreature()
+        const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis II',
+            stages: [
+                {
+                    time: 0,
+                    type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                    amp: -2,
+                    duration: 10,
+                    data: {
+                        ability: CONSTS.ABILITY_CHARISMA
+                    }
+                }
+            ]
+        })
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.applyEffect(eDisease, c, 10)
+        expect(m._effectOptimRegistry[eDisease.id]).toBeDefined()
+        expect(c.getters.getConditionSet.has(CONSTS.CONDITION_DISEASE)).toBeTruthy()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+    })
+})

@@ -336,6 +336,10 @@ class Combat {
         this._attacker.healSpeedPenalty()
     }
 
+    /**
+     * Returns an object associating actions with cooldown turn
+     * @returns {*}
+     */
     getActionCooldownRegistry () {
         return this._attacker.getActionCooldownRegistry(this._turn)
     }

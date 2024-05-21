@@ -26,16 +26,20 @@ function mutate ({ effectProcessor, effect: eDisease, target }) {
     aStages.forEach(s => {
         --s.time
     })
-    const aReadyStages = aStages.filter(s => s.time <= 0)
-    aStages.data.stages = aStages.filter(s => s.time > 0)
-    aReadyStages.forEach(({ type: sEffectType, amp = 0, duration = DURATION_INSTANT, data = {} }) => {
-        const effect = effectProcessor.createEffect(sEffectType, amp, data)
-        effect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, eDisease.data.disease)
-        this.applyEffect(effect, target, duration)
-    })
+    for (let iStage = aStages.length - 1; iStage >= 0; --iStage) {
+        const oReadyStage = aStages[iStage]
+        if (aStages[iStage].time <= 0) {
+            const { type: sEffectType, amp = 0, duration = DURATION_INSTANT, data = {} } = oReadyStage
+            aStages.splice(iStage, 1)
+            const effect = effectProcessor.createEffect(sEffectType, amp, data)
+            effect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
+            effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, eDisease.data.disease)
+            effectProcessor.applyEffect(effect, target, duration)
+        }
+    }
 }
 
 module.exports = {
-    init
+    init,
+    mutate
 }

@@ -55,6 +55,11 @@ module.exports = (state, getters) => {
                 aConditionSet.add(CONSTS.CONDITION_BLINDED)
                 break
             }
+
+            case CONSTS.EFFECT_DISEASE: {
+                aConditionSet.add(CONSTS.CONDITION_DISEASE)
+                break
+            }
         }
     })
     if (getters.getHitPoints <= 0) {
