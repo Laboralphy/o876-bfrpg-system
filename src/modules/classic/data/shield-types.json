@@ -3,5 +3,15 @@
     "weight": 5,
     "ac": 1,
     "material": "MATERIAL_WOOD"
+  },
+  "SHIELD_TYPE_MEDIUM": {
+    "weight": 10,
+    "ac": 2,
+    "material": "MATERIAL_WOOD"
+  },
+  "SHIELD_TYPE_LARGE": {
+    "weight": 15,
+    "ac": 3,
+    "material": "MATERIAL_WOOD"
   }
 }

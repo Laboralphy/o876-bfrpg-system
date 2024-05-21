@@ -13,12 +13,9 @@ const DATA = require('./data')
 const CONSTS = require('./consts')
 const SCRIPTS = require('./scripts')
 
-
-
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
-
 
 const NEED_ATTACK_ROLL  = new Set([
     CONSTS.ATTACK_TYPE_ANY,
@@ -57,7 +54,7 @@ class Manager {
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
         cm.events.on('combat.turn', ev => {
-            this.processCreaturePassiveProperties(ev.attacker)
+            this._processCreaturePassiveProperties(ev.attacker)
             this._events.emit('combat.turn', ev)
         })
 
@@ -380,7 +377,7 @@ class Manager {
      * TODO need a better system to deal with periodic item properties
      * @param oCreature {Creature}
      */
-    processCreaturePassiveProperties (oCreature) {
+    _processCreaturePassiveProperties (oCreature) {
         // regeneration
         const nRegen = oCreature.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_REGENERATION

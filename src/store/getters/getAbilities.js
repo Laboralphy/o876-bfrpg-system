@@ -22,7 +22,7 @@ module.exports = (state, getters) => {
         .entries(state.abilities)
         .map(([sAbility, nValue]) => {
             const nModifier = (sAbility in sorter) ? sorter[sAbility].sum : 0
-            return [sAbility, nValue + nModifier]
+            return [sAbility, Math.max(1, nValue + nModifier)]
         })
     )
 }

@@ -1,5 +1,6 @@
 const Manager = require('../src/Manager')
 const CONSTS = require('../src/consts')
+const { DURATION_PERMANENT} = require("../src/data/durations");
 
 describe('createCreature', function () {
     it('should create a creatures when calling the function', function () {
@@ -115,21 +116,246 @@ describe('disease', function () {
             stages: [
                 {
                     time: 0,
-                    type: CONSTS.EFFECT_ABILITY_MODIFIER,
-                    amp: -2,
-                    duration: 10,
-                    data: {
-                        ability: CONSTS.ABILITY_CHARISMA
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -2,
+                        duration: 10,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
                     }
                 }
             ]
         })
         expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
         m.applyEffect(eDisease, c, 10)
+        expect(eDisease.duration).toBe(10)
         expect(m._effectOptimRegistry[eDisease.id]).toBeDefined()
         expect(c.getters.getConditionSet.has(CONSTS.CONDITION_DISEASE)).toBeTruthy()
         expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
         m.processEffects()
         expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+    })
+    it('should apply final effect of disease when stage time is lower or equal than disease duration', function () {
+        const m = new Manager()
+        m.loadModule('classic')
+        const c = m.createCreature()
+        const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis II',
+            stages: [
+                {
+                    time: 9,
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -2,
+                        duration: 10,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
+                    }
+                }
+            ]
+        })
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        const e2 = m.applyEffect(eDisease, c, 10)
+        expect(e2.duration).toBe(10)
+        expect(m._effectOptimRegistry[e2.id]).toBeDefined()
+        expect(c.getters.getConditionSet.has(CONSTS.CONDITION_DISEASE)).toBeTruthy()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(9)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(8)
+        m.processEffects()
+        expect(e2.duration).toBe(7)
+        m.processEffects()
+        expect(e2.duration).toBe(6)
+        m.processEffects()
+        expect(e2.duration).toBe(5)
+        m.processEffects()
+        expect(e2.duration).toBe(4)
+        m.processEffects()
+        expect(e2.duration).toBe(3)
+        m.processEffects()
+        expect(e2.duration).toBe(2)
+        m.processEffects()
+        expect(e2.duration).toBe(1)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(0)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+    })
+    it('should not apply final effect of disease when stage time is greater than disease duration', function () {
+        const m = new Manager()
+        m.loadModule('classic')
+        const c = m.createCreature()
+        const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis II',
+            stages: [
+                {
+                    time: 11,
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -2,
+                        duration: 10,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
+                    }
+                }
+            ]
+        })
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        const e2 = m.applyEffect(eDisease, c, 10)
+        expect(e2.duration).toBe(10)
+        expect(m._effectOptimRegistry[e2.id]).toBeDefined()
+        expect(c.getters.getConditionSet.has(CONSTS.CONDITION_DISEASE)).toBeTruthy()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(9)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(8)
+        m.processEffects()
+        expect(e2.duration).toBe(7)
+        m.processEffects()
+        expect(e2.duration).toBe(6)
+        m.processEffects()
+        expect(e2.duration).toBe(5)
+        m.processEffects()
+        expect(e2.duration).toBe(4)
+        m.processEffects()
+        expect(e2.duration).toBe(3)
+        m.processEffects()
+        expect(e2.duration).toBe(2)
+        m.processEffects()
+        expect(e2.duration).toBe(1)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        m.processEffects()
+        expect(e2.duration).toBe(0)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+    })
+    it('should not be able to stack two same diseases', function () {
+        const m = new Manager()
+        m.loadModule('classic')
+        const c = m.createCreature()
+        const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis II',
+            stages: [
+                {
+                    time: 0,
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -2,
+                        duration: 10,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
+                    }
+                }
+            ]
+        })
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        const e1 = m.applyEffect(eDisease, c, 10)
+        m.processEffects()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        const eDisease2 = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis II',
+            stages: [
+                {
+                    time: 0,
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -2,
+                        duration: 10,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
+                    }
+                }
+            ]
+        })
+        const e2 = m.applyEffect(eDisease2, c, 10)
+        m.processEffects()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        m.processEffects()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+    })
+    it('should periodically apply malus when defining multiple times', function () {
+        const m = new Manager()
+        m.loadModule('classic')
+        const c = m.createCreature()
+        const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
+            disease: 'leprosis III',
+            stages: [
+                {
+                    time: [0, 2, 4, 6, 8],
+                    description: '-1 charisma each 2 turns',
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -1,
+                        duration: DURATION_PERMANENT,
+                        data: {
+                            ability: CONSTS.ABILITY_CHARISMA
+                        }
+                    }
+                },
+                {
+                    time: [3, 7],
+                    description: '-1 strength each 3 or 4 turns',
+                    effect: {
+                        type: CONSTS.EFFECT_ABILITY_MODIFIER,
+                        amp: -1,
+                        duration: DURATION_PERMANENT,
+                        data: {
+                            ability: CONSTS.ABILITY_STRENGTH
+                        }
+                    }
+                }
+            ]
+        })
+        m.applyEffect(eDisease, c, 10)
+        m.processEffects() // 0
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(9)
+        m.processEffects() // 1
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(9)
+        m.processEffects() // 2
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+        m.processEffects() // 3
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(8)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(9)
+        m.processEffects() // 4
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(7)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(9)
+        m.processEffects() // 5
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(7)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(9)
+        m.processEffects() // 6
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(6)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(9)
+        m.processEffects() // 7
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(6)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(8)
+        m.processEffects() // 8
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(5)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(8)
+        m.processEffects() // 9
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(5)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(8)
+        m.processEffects() // 10
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(5)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(8)
     })
 })

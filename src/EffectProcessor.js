@@ -29,14 +29,15 @@ class EffectProcessor {
         return ee
     }
 
-    invokeEffectMethod (oEffect, sMethod, target, source) {
+    invokeEffectMethod (oEffect, sMethod, target, source, oParams = {}) {
         const ee = this.getEffectEngine(oEffect.type)
         if (sMethod in ee) {
             return ee[sMethod]({
                 effect: oEffect,
                 effectProcessor: this,
                 target,
-                source
+                source,
+                ...oParams
             })
         }
         return undefined
@@ -204,6 +205,15 @@ class EffectProcessor {
         }
     }
 
+    /**
+     * This method apllies effect on target, and return the true applied effect
+     * If the effect is rejected (immunity, stacking rules), the method returns null
+     * @param oEffect
+     * @param target
+     * @param duration
+     * @param source
+     * @returns {*|null}
+     */
     applyEffect(oEffect, target, duration = 0, source = null) {
         if (!source) {
             source = target
@@ -211,7 +221,7 @@ class EffectProcessor {
         oEffect.duration = duration
         oEffect.source = source.id
         if (this.isImmuneToEffect(oEffect, target)) {
-            return
+            return null
         }
         if (oEffect.duration > 0) {
             switch (oEffect.stackingRule) {
@@ -219,6 +229,8 @@ class EffectProcessor {
                     // Will not replace same effect
                     if (!target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)) {
                         oEffect = target.mutations.addEffect({ effect: oEffect })
+                    } else {
+                        oEffect = null
                     }
                     break
                 }
@@ -227,7 +239,8 @@ class EffectProcessor {
                     const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
                     if (oOldEffect) {
                         this.removeEffect(oOldEffect)
-                        oEffect = target.mutations.addEffect({ effect: oEffect })
+                        target.mutations.addEffect({ effect: oEffect })
+                        oEffect = null
                     }
                     break
                 }
@@ -236,7 +249,25 @@ class EffectProcessor {
                     const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
                     if (oOldEffect) {
                         oOldEffect.duration = Math.max(oEffect.duration, oOldEffect.duration)
-                        oEffect = oOldEffect
+                        oEffect = null
+                    }
+                    break
+                }
+
+                case CONSTS.EFFECT_STACKING_RULE_SPECIAL: {
+                    // Will not replace same effect
+                    const bFoundRejectingEffect = target
+                        .getters
+                        .getEffects
+                        .find(eff =>
+                            eff.stackingRule === oEffect.stackingRule &&
+                            eff.type === oEffect.type &&
+                            this.invokeEffectMethod(eff,'reject', target, source, { newEffect: oEffect })
+                        )
+                    if (!bFoundRejectingEffect) {
+                        oEffect = target.mutations.addEffect({ effect: oEffect })
+                    } else {
+                        oEffect = null
                     }
                     break
                 }
@@ -249,11 +280,13 @@ class EffectProcessor {
         } else {
             this.invokeEffectMethod(oEffect, 'mutate', target, source)
         }
-        this._events.emit('effect-applied', {
-            effect: oEffect,
-            target,
-            source
-        })
+        if (oEffect) {
+            this._events.emit('effect-applied', {
+                effect: oEffect,
+                target,
+                source
+            })
+        }
         return oEffect
     }
 }
