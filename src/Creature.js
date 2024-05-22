@@ -160,6 +160,7 @@ class Creature {
         const oArmorClass = oTarget.getters.getArmorClass
         oAttackOutcome.bonus = this.getters.getAttackBonus
         switch (attackType) {
+            case CONSTS.ATTACK_TYPE_MULTI_MELEE:
             case CONSTS.ATTACK_TYPE_MELEE: {
                 oAttackOutcome.ac = oArmorClass.melee
                 break

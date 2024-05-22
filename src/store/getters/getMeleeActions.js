@@ -12,7 +12,8 @@ module.exports = (state, getters) => {
         .filter(([sKey, action]) => {
             const at = action.attackType
             return at === CONSTS.ATTACK_TYPE_MELEE_TOUCH ||
-                at === CONSTS.ATTACK_TYPE_MELEE
+                at === CONSTS.ATTACK_TYPE_MELEE ||
+                at === CONSTS.ATTACK_TYPE_MULTI_MELEE
         })
         .map(([key]) => key)
 }

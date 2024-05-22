@@ -1,5 +1,9 @@
 const CONSTS = require('../../consts')
-const { aggregateModifiers } = require("../../aggregator");
+const { aggregateModifiers } = require('../../aggregator')
+const {
+    filterMeleeAttackTypes,
+    filterRangedAttackTypes
+} = require('../../libs/effect-prop-need-roll')
 
 /**
  * @param state {BFStoreState}
@@ -16,15 +20,15 @@ module.exports = (state, getters) => {
         CONSTS.ITEM_PROPERTY_ARMOR_CLASS_MODIFIER,
         CONSTS.EFFECT_ARMOR_CLASS_MODIFIER
     ], getters, {
-        effectFilter: effect => effect.data.type === CONSTS.ATTACK_TYPE_MELEE || effect.data.type === CONSTS.ATTACK_TYPE_ANY,
-        propFilter: prop => prop.data.type === CONSTS.ATTACK_TYPE_MELEE || prop.data.type === CONSTS.ATTACK_TYPE_ANY
+        effectFilter: filterMeleeAttackTypes,
+        propFilter: filterMeleeAttackTypes
     })
     const { sum: nACBonusRanged } = aggregateModifiers([
         CONSTS.ITEM_PROPERTY_ARMOR_CLASS_MODIFIER,
         CONSTS.EFFECT_ARMOR_CLASS_MODIFIER
     ], getters, {
-        effectFilter: effect => effect.data.type === CONSTS.ATTACK_TYPE_RANGED || effect.data.type === CONSTS.ATTACK_TYPE_ANY,
-        propFilter: prop => prop.data.type === CONSTS.ATTACK_TYPE_RANGED || prop.data.type === CONSTS.ATTACK_TYPE_ANY
+        effectFilter: filterRangedAttackTypes,
+        propFilter: filterRangedAttackTypes
     })
     const nEquipmentAC = naturalArmorClass + (oArmor?.ac || 0) + (oShield?.ac || 0)
     return {
