@@ -149,6 +149,7 @@ class Combat {
     advance () {
         this.selectMostSuitableAction()
         this.checkCurrentActionCooldown()
+
         if (this._tick === 0) {
             // Start of turn
             // attack-types planning

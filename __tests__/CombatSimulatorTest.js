@@ -282,3 +282,123 @@ describe('cooldown', function () {
         expect(oLastLog.turn).toBe(3)
     })
 })
+
+describe('multi melee attacks', function () {
+    it('should attack several enemy', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const sMonster1 = 'c-monster-1'
+        const sMonster2 = 'c-monster-2'
+        const m1 = manager.createCreature({ id: 'm1' })
+        m1.mutations.setLevel({ value: 10 })
+        m1.mutations.defineActions({ "actions": [
+                {
+                    "name": "bite-mm",
+                    "attackType": "ATTACK_TYPE_MULTI_MELEE",
+                    "damage": "1d2",
+                    "damageType": "DAMAGE_TYPE_PHYSICAL",
+                    "count": 2,
+                    "cooldown": 0,
+                    "conveys": []
+                }
+            ]})
+        const m2 = manager.createCreature({ id: 'm2' })
+        m2.mutations.setLevel({ value: 10 })
+        const m3 = manager.createCreature({ id: 'm3' })
+        m3.mutations.setLevel({ value: 10 })
+        const m4 = manager.createCreature({ id: 'm4' })
+        m4.mutations.setLevel({ value: 10 })
+
+        const combatManager = manager.combatManager
+        combatManager.startCombat(m1, m2).distance = 5
+        combatManager.startCombat(m2, m1).distance = 5
+        combatManager.startCombat(m3, m1).distance = 5
+        combatManager.startCombat(m4, m1).distance = 5
+        const oCombatLocust = combatManager.getCombat(m1)
+        expect(combatManager.getOffenders(m1, Infinity).length).toBe(3)
+        expect(combatManager.combats.length).toBe(4)
+
+        const aLog = []
+        combatManager.events.on('combat.action', ev => {
+            aLog.push({
+                atk: ev.attacker.id,
+                def: ev.target.id,
+                turn: ev.turn,
+                tick: ev.tick,
+                action: ev.action.name
+            })
+        })
+        oCombatLocust.advance() // turn 0 tick 0
+        oCombatLocust.advance() // turn 0 tick 1
+        m1.dice.cheat(0)
+        oCombatLocust.advance() // turn 0 tick 2
+        oCombatLocust.advance() // turn 0 tick 3
+        oCombatLocust.advance() // turn 0 tick 4
+        m1.dice.cheat(0.6)
+        oCombatLocust.advance() // turn 0 tick 5
+        expect(aLog).toEqual([
+            { atk: 'm1', def: 'm2', turn: 0, tick: 2, action: 'bite-mm' },
+            { atk: 'm1', def: 'm3', turn: 0, tick: 5, action: 'bite-mm' }
+        ])
+    })
+    it('should not attack several enemy when target die before strike', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const sMonster1 = 'c-monster-1'
+        const sMonster2 = 'c-monster-2'
+        const m1 = manager.createCreature({ id: 'm1' })
+        m1.mutations.setLevel({ value: 10 })
+        m1.mutations.defineActions({ "actions": [
+                {
+                    "name": "bite-mm",
+                    "attackType": "ATTACK_TYPE_MULTI_MELEE",
+                    "damage": "1d2",
+                    "damageType": "DAMAGE_TYPE_PHYSICAL",
+                    "count": 2,
+                    "cooldown": 0,
+                    "conveys": []
+                }
+            ]})
+        const m2 = manager.createCreature({ id: 'm2' })
+        m2.mutations.setLevel({ value: 10 })
+        const m3 = manager.createCreature({ id: 'm3' })
+        m3.mutations.setLevel({ value: 10 })
+        const m4 = manager.createCreature({ id: 'm4' })
+        m4.mutations.setLevel({ value: 10 })
+
+        const combatManager = manager.combatManager
+        combatManager.startCombat(m1, m2).distance = 5
+        combatManager.startCombat(m2, m1).distance = 5
+        combatManager.startCombat(m3, m1).distance = 5
+        combatManager.startCombat(m4, m1).distance = 5
+        const oCombatLocust = combatManager.getCombat(m1)
+        expect(combatManager.getOffenders(m1, Infinity).length).toBe(3)
+        expect(combatManager.combats.length).toBe(4)
+
+        const aLog = []
+        combatManager.events.on('combat.action', ev => {
+            aLog.push({
+                atk: ev.attacker.id,
+                def: ev.target.id,
+                turn: ev.turn,
+                tick: ev.tick,
+                action: ev.action.name
+            })
+        })
+        oCombatLocust.advance() // turn 0 tick 0
+        oCombatLocust.advance() // turn 0 tick 1
+        m1.dice.cheat(0)
+        oCombatLocust.advance() // turn 0 tick 2
+        oCombatLocust.advance() // turn 0 tick 3
+        m1.dice.cheat(0.6)
+        combatManager.removeFighter(m3)
+        oCombatLocust.advance() // turn 0 tick 4
+        oCombatLocust.advance() // turn 0 tick 5
+        expect(aLog).toEqual([
+            { atk: 'm1', def: 'm2', turn: 0, tick: 2, action: 'bite-mm' },
+            { atk: 'm1', def: 'm4', turn: 0, tick: 5, action: 'bite-mm' }
+        ])
+    })
+})

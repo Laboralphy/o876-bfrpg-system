@@ -207,6 +207,9 @@ class Creature {
      * @returns {BFAttackOutcome}
      */
     attack (oTarget, action) {
+        if (!oTarget) {
+            throw new Error('Creature.attack target must be defined')
+        }
         const oAttackOutcome = this._createAttackOutcome({
             attacker: this,
             target: oTarget,

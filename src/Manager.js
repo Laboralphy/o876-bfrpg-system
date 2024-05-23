@@ -232,6 +232,9 @@ class Manager {
         return this._effectProcessor
     }
 
+    /**
+     * @returns {CombatManager}
+     */
     get combatManager () {
         return this._combatManager
     }

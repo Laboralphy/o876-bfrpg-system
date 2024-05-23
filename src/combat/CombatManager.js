@@ -80,7 +80,7 @@ class CombatManager {
      */
     getOffenders (oCreature, nRange = Infinity) {
         return this.combats
-            .filter(combat => combat.defender === oCreature && combat.attacker.distance <= nRange)
+            .filter(combat => combat.defender === oCreature && combat.distance <= nRange)
             .map(combat => combat.attacker.creature)
     }
 
@@ -95,6 +95,7 @@ class CombatManager {
             .forEach(creature => {
                 this.endCombat(creature, true)
             })
+        this.endCombat(oCreature)
     }
 
     /**
@@ -133,8 +134,11 @@ class CombatManager {
         // Instead of striking target we strike a random offending target
         if (ev.action.attackType === CONSTS.ATTACK_TYPE_MULTI_MELEE) {
             const aOffenders = this.getOffenders(ev.attacker, DATA['weapon-ranges'].WEAPON_RANGE_MELEE)
-            const nChoice = Math.floor(ev.attacker.dice.random() * aOffenders.length)
-            ev.target = aOffenders[nChoice]
+            if (aOffenders.length > 0) {
+                const nChoice = Math.floor(ev.attacker.dice.random() * aOffenders.length)
+                ev.target = aOffenders[nChoice]
+            }
+            // If attacker is not attacked back, there is no offender
         }
         this._events.emit('combat.action', ev)
     }
