@@ -1,20 +1,20 @@
 {
-  "name": "c-spectre",
+  "name": "c-mummy",
   "ac": 17,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
-      "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_NECROTIC",
+      "name": "strike",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d12",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
       "conveys": [
         {
-          "script": "atk-drain-level",
+          "script": "atk-disease",
           "data": {
-            "amount": 1
+            "disease": "mummy-rot"
           }
         }
       ]
@@ -64,13 +64,6 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
-      "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_RADIANT"
-      }
-    },
-    {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
       "data": {
@@ -87,7 +80,7 @@
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
-  "level": 6,
-  "speed": 40,
+  "level": 5,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

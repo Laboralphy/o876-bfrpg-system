@@ -1,23 +1,16 @@
 {
-  "name": "c-spectre",
-  "ac": 17,
+  "name": "c-skeleton-chieftain",
+  "ac": 13,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
-      "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_NECROTIC",
+      "name": "fist",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
-      "conveys": [
-        {
-          "script": "atk-drain-level",
-          "data": {
-            "amount": 1
-          }
-        }
-      ]
+      "conveys": []
     }
   ],
   "properties": [
@@ -62,32 +55,17 @@
       "data": {
         "damageType": "DAMAGE_TYPE_NECROTIC"
       }
-    },
-    {
-      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
-      "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_RADIANT"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
-      "amp": 0,
-      "data": {
-        "material": "MATERIAL_SILVER"
-      }
     }
   ],
-  "equipment": [],
+  "equipment": [
+    "wpn-longsword",
+    "arm-chain-mail",
+    "shd-medium",
+    "wpn-shortbow",
+    "ammo-arrow"
+  ],
   "specie": "SPECIE_UNDEAD",
-  "level": 6,
-  "speed": 40,
+  "level": 2,
+  "speed": 30,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

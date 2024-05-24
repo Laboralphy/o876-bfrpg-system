@@ -1,0 +1,55 @@
+{
+  "name": "c-gargoyle",
+  "ac": 15,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "claw",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 2,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "horn",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
+      "amp": 0,
+      "data": {
+        "material": "MATERIAL_SILVER"
+      }
+    }
+  ],
+  "equipment": [],
+  "specie": "SPECIE_MAGICAL_BEAST",
+  "level": 4,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

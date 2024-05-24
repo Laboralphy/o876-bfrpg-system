@@ -1,0 +1,42 @@
+{
+  "name": "c-minotaur",
+  "ac": 12,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "gore",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
+      "amp": 2,
+      "data": {
+        "damageType": "DAMAGE_TYPE_ANY"
+      }
+    }
+  ],
+  "equipment": [
+    "arm-leather",
+    "wpn-greataxe"
+  ],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 6,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

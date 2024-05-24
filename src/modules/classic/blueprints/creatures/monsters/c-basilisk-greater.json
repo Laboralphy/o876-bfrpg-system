@@ -1,0 +1,41 @@
+{
+  "name": "c-basilisk-greater",
+  "ac": 17,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d12",
+      "damageType": "DAMAGE_TYPE_POISON",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-poison",
+          "data": {}
+        }
+      ]
+    },
+    {
+      "name": "gaze",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": 0,
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-petrification",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 8,
+  "speed": 20,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

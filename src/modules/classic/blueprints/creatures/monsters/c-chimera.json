@@ -1,0 +1,61 @@
+{
+  "name": "c-chimera",
+  "ac": 16,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "claw",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 2,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "2d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "horn",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "breath",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": "3d6",
+      "damageType": "DAMAGE_TYPE_FIRE",
+      "count": 1,
+      "cooldown": 2,
+      "conveys": [
+        {
+          "script": "atk-dragon-breath",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+      "data": {
+        "value": 8
+      }
+    }
+  ],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 9,
+  "speed": 40,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

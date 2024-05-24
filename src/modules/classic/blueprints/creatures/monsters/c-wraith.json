@@ -1,12 +1,12 @@
 {
-  "name": "c-spectre",
-  "ac": 17,
+  "name": "c-wraith",
+  "ac": 15,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
       "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
-      "damage": "1d4",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
       "damageType": "DAMAGE_TYPE_NECROTIC",
       "count": 1,
       "cooldown": 0,
@@ -87,7 +87,7 @@
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
-  "level": 6,
-  "speed": 40,
+  "level": 4,
+  "speed": 80,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

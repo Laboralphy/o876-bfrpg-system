@@ -1,0 +1,41 @@
+{
+  "name": "c-medusa",
+  "ac": 12,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "snakebite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_POISON",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-poison",
+          "data": {}
+        }
+      ]
+    },
+    {
+      "name": "gaze",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": 0,
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-petrification",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 4,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

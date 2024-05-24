@@ -1,0 +1,28 @@
+{
+  "name": "c-hydra-6",
+  "ac": 17,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MULTI_MELEE",
+      "damage": "1d10",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 6,
+      "cooldown": 0,
+      "conveys": []
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 10
+      }
+    }
+  ],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 6,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

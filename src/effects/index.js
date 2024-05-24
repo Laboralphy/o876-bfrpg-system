@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-21T14:24:49.583Z
+// Date : 2024-05-24T15:35:35.819Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -27,5 +27,6 @@ module.exports = {
   'EFFECT_PETRIFICATION': require('./petrification.js'),
   'EFFECT_SAVING_THROW_MODIFIER': require('./saving-throw-modifier.js'),
   'EFFECT_SPEED_MODIFIER': require('./speed-modifier.js'),
+  'EFFECT_SPIKE_DAMAGE': require('./spike-damage.js'),
   'EFFECT_STUN': require('./stun.js')
 }

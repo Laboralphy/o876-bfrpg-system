@@ -1,0 +1,65 @@
+{
+  "name": "c-manticore",
+  "ac": 18,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "claws",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 2,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "2d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "spike",
+      "attackType": "ATTACK_TYPE_RANGED",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 20,
+      "conveys": []
+    },
+    {
+      "name": "spike-3",
+      "attackType": "ATTACK_TYPE_RANGED",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 3,
+      "cooldown": 20,
+      "conveys": []
+    },
+    {
+      "name": "spike-4",
+      "attackType": "ATTACK_TYPE_RANGED",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 4,
+      "cooldown": 20,
+      "conveys": []
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
+      }
+    }
+  ],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 6,
+  "speed": 60,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

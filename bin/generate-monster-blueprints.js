@@ -19,6 +19,12 @@ function toSNAKECASE (s) {
  * @returns {*|string|string|number}
  */
 function searchConst (sSearch) {
+    if (sSearch === 'TRUE') {
+        return true
+    }
+    if (sSearch === 'FALSE') {
+        return false
+    }
     if (Array.isArray(sSearch)) {
         return sSearch.map(s => searchConst(s))
     }

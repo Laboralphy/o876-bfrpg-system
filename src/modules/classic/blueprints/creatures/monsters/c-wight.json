@@ -1,12 +1,12 @@
 {
-  "name": "c-spectre",
-  "ac": 17,
+  "name": "c-wight",
+  "ac": 15,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
       "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
-      "damage": "1d4",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d3",
       "damageType": "DAMAGE_TYPE_NECROTIC",
       "count": 1,
       "cooldown": 0,
@@ -83,11 +83,18 @@
       "data": {
         "material": "MATERIAL_SILVER"
       }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_FIRE"
+      }
     }
   ],
   "equipment": [],
   "specie": "SPECIE_UNDEAD",
-  "level": 6,
-  "speed": 40,
+  "level": 3,
+  "speed": 30,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

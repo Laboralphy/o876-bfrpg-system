@@ -1,0 +1,36 @@
+{
+  "name": "c-gorgon",
+  "ac": 19,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "gore",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "2d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "breath",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": 0,
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 2,
+      "conveys": [
+        {
+          "script": "atk-petrification",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [],
+  "equipment": [],
+  "specie": "SPECIE_MAGICAL_BEAST",
+  "level": 8,
+  "speed": 40,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

@@ -25,6 +25,7 @@
  * @property getOffensiveEquipmentProperties {BFItemProperty[]}
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
+ * @property getPropertySet {Set<string>}
  * @property getRangedActions {string[]}
  * @property getRecentDamages {{ amount: number, types: Object<string, { amount: number, resisted: number }> }}
  * @property getSavingThrowFailureValue {number}

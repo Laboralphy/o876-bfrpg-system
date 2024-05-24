@@ -1,0 +1,30 @@
+{
+  "name": "c-rat-giant",
+  "ac": 13,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d4",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-disease",
+          "data": {
+            "disease": "rat-plague",
+            "chance": 5
+          }
+        }
+      ]
+    }
+  ],
+  "properties": [],
+  "equipment": [],
+  "specie": "SPECIE_VERMIN",
+  "level": 1,
+  "speed": 40,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

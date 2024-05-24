@@ -1,0 +1,68 @@
+{
+  "name": "c-dragon",
+  "ac": 21,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "claw",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 2,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "bite",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "4d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "tail",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    },
+    {
+      "name": "breath",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": "4d8",
+      "damageType": "DAMAGE_TYPE_FIRE",
+      "count": 1,
+      "cooldown": 2,
+      "conveys": [
+        {
+          "script": "atk-dragon-breath",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_FIRE"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+      "data": {
+        "value": 9
+      }
+    }
+  ],
+  "equipment": [],
+  "specie": "SPECIE_DRAGON",
+  "level": 10,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

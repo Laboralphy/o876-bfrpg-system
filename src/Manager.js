@@ -123,7 +123,8 @@ class Manager {
        attacker,
        target,
        action,
-       count
+       count,
+       combatManager
     }) {
         // New combat action
         this._events.emit('combat.action', {
@@ -132,7 +133,8 @@ class Manager {
             attacker,
             target,
             action,
-            count
+            count,
+            combatManager
         })
         // weaponized action is an action that uses standard attack system (roll + bonus vs. ac)
         const bWeaponizedAction = action.name === CONSTS.DEFAULT_ACTION_WEAPON ||
@@ -197,6 +199,38 @@ class Manager {
                         throw new Error('script not found : ' + sScriptRef)
                     }
                 })
+            }
+            if (oAttackOutcome.hit &&
+                (
+                    target.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_SPIKE_DAMAGE) ||
+                    target.getters.getEffectSet.has(CONSTS.EFFECT_SPIKE_DAMAGE)
+                )
+            ) {
+                const ampMapper = ({ amp }) => target.dice.evaluate(amp)
+                const stFilter = effProp => {
+                    if (effProp.data.savingThrow) {
+                        return !attacker
+                            .rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { ability: CONSTS.ABILITY_DEXTERITY })
+                            .success
+                    } else {
+                        return true
+                    }
+                }
+                const { sorter: oDamageRegistry } = target.aggregateModifiers([
+                    CONSTS.ITEM_PROPERTY_SPIKE_DAMAGE,
+                    CONSTS.EFFECT_SPIKE_DAMAGE
+                ], {
+                    effectFilter: stFilter,
+                    propFilter: stFilter,
+                    effectSorter: eff => eff.data.damageType,
+                    propSorter: prop => prop.data.damageType,
+                    effectAmpMapper: ampMapper,
+                    propAmpMapper: ampMapper
+                })
+                for (const [damageType, { sum }] of Object.entries(oDamageRegistry)) {
+                    const eDamage = this.createEffect(CONSTS.EFFECT_DAMAGE, sum, { damageType })
+                    this.applyEffect(eDamage, attacker, 0, target)
+                }
             }
         }
     }
@@ -321,11 +355,23 @@ class Manager {
             creature: oCreature,
             manager: this
         }))
-        oCreature.events.on('damage', ev => this._events.emit('creature.damage', {
-            ...ev,
-            creature: oCreature,
-            manager: this
-        }))
+        oCreature.events.on('damage', ev => {
+            const oPayload = {
+                ...ev,
+                creature: oCreature,
+                manager: this
+            }
+            this._events.emit('creature.damage', oPayload)
+            if (oCreature.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_ON_DAMAGE)) {
+                oCreature.aggregateModifiers([
+                    CONSTS.ITEM_PROPERTY_ON_DAMAGE
+                ], {
+                    propForEach: prop => {
+                        this.runScript(prop.data.script, oPayload)
+                    }
+                })
+            }
+        })
         return oCreature
     }
 

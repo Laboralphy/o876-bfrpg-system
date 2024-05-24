@@ -63,7 +63,8 @@ class CombatManager {
             oCombat.events.removeAllListeners()
             this._events.emit('combat.end', {
                 attacker: oCombat.attacker.creature,
-                target: oCombat.defender
+                target: oCombat.defender,
+                combatManager: this
             })
             delete this._fighters[oCreature.id]
             if (bBothSides && this.isCreatureFightingWithTarget(oDefender, oCreature)) {
@@ -98,6 +99,13 @@ class CombatManager {
         this.endCombat(oCreature)
     }
 
+    _addManagerToObject (oObject) {
+        return {
+            ...oObject,
+            combatManager: this
+        }
+    }
+
     /**
      * Creates a new combat and plugs events
      * @param oCreature {Creature}
@@ -108,13 +116,13 @@ class CombatManager {
     _createCombat (oCreature, oTarget) {
         const combat = new Combat()
         combat.tickCount = this._defaultTickCount
-        combat.events.on('combat.turn', ev => this._events.emit('combat.turn', ev))
+        combat.events.on('combat.turn', ev => this._events.emit('combat.turn', this._addManagerToObject(ev)))
         combat.events.on('combat.action', ev => this._sendCombatActionEvent(ev))
-        combat.events.on('combat.script', ev => this._events.emit('combat.script', ev))
-        combat.events.on('combat.offensive-slot', ev => this._events.emit('combat.offensive-slot', ev))
+        combat.events.on('combat.script', ev => this._events.emit('combat.script', this._addManagerToObject(ev)))
+        combat.events.on('combat.offensive-slot', ev => this._events.emit('combat.offensive-slot', this._addManagerToObject(ev)))
         combat.events.on('combat.distance', ev => {
             const { attacker, target, distance } = ev
-            this._events.emit('combat.distance', ev)
+            this._events.emit('combat.distance', this._addManagerToObject(ev))
             if (this.isCreatureFightingWithTarget(attacker, target)) {
                 // also change target distance with attacker if different
                 const oTargetCombat = this.getCombat(oTarget)
@@ -123,7 +131,7 @@ class CombatManager {
                 }
             }
         })
-        combat.events.on('combat.move', ev => this._events.emit('combat.move', ev))
+        combat.events.on('combat.move', ev => this._events.emit('combat.move', this._addManagerToObject(ev)))
         combat.setFighters(oCreature, oTarget)
         combat.distance = this._defaultDistance
         return combat
@@ -140,7 +148,7 @@ class CombatManager {
             }
             // If attacker is not attacked back, there is no offender
         }
-        this._events.emit('combat.action', ev)
+        this._events.emit('combat.action', this._addManagerToObject(ev))
     }
 
     isCreatureFightingWithTarget (oCreature, oTarget) {

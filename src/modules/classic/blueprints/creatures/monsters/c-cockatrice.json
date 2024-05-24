@@ -1,0 +1,27 @@
+{
+  "name": "c-cockatrice",
+  "ac": 14,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "beak",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": [
+        {
+          "script": "atk-petrification",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [],
+  "equipment": [],
+  "specie": "SPECIE_MONSTROSITY",
+  "level": 5,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

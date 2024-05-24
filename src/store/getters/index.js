@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-21T14:24:49.490Z
+// Date : 2024-05-24T15:35:35.750Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -28,6 +28,7 @@ module.exports = {
   'getOffensiveEquipmentProperties': require('./getOffensiveEquipmentProperties.js'),
   'getOffensiveSlot': require('./getOffensiveSlot.js'),
   'getProperties': require('./getProperties.js'),
+  'getPropertySet': require('./getPropertySet.js'),
   'getRangedActions': require('./getRangedActions.js'),
   'getRecentDamages': require('./getRecentDamages.js'),
   'getSavingThrowFailureValue': require('./getSavingThrowFailureValue.js'),
