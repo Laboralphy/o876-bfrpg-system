@@ -4,6 +4,7 @@ const Horde = require("./Horde");
 const Creature = require("./Creature");
 const EffectProcessor = require("./EffectProcessor");
 const ItemBuilder = require("./ItemBuilder");
+const ItemProperties = require('./ItemProperties')
 const SchemaValidator = require('./SchemaValidator')
 const CombatManager = require('./combat/CombatManager')
 const CreatureBuilder = require("./CreatureBuilder");
@@ -206,6 +207,7 @@ class Manager {
                     target.getters.getEffectSet.has(CONSTS.EFFECT_SPIKE_DAMAGE)
                 )
             ) {
+
                 const ampMapper = ({ amp }) => target.dice.evaluate(amp)
                 const stFilter = effProp => {
                     if (effProp.data.savingThrow) {
@@ -329,6 +331,16 @@ class Manager {
         }
     }
 
+    runPropEffectScript (oCreature, sScript, oParams) {
+        for (const effect of oCreature.getters.getEffects) {
+            const source = this._horde.creatures[effect.source]
+            this.effectProcessor.invokeEffectMethod(effect, sScript, oCreature, source, oParams)
+        }
+        for (const prop of oCreature.getters.getProperties) {
+            ItemProperties.runScript(prop, sScript, oParams)
+        }
+    }
+
     /**
      * Create a new creature
      * @param id {string}
@@ -362,15 +374,7 @@ class Manager {
                 manager: this
             }
             this._events.emit('creature.damage', oPayload)
-            if (oCreature.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_ON_DAMAGE)) {
-                oCreature.aggregateModifiers([
-                    CONSTS.ITEM_PROPERTY_ON_DAMAGE
-                ], {
-                    propForEach: prop => {
-                        this.runScript(prop.data.script, oPayload)
-                    }
-                })
-            }
+            this.runPropEffectScript(oCreature, 'damage', oPayload)
         })
         return oCreature
     }
@@ -453,7 +457,7 @@ class Manager {
         return this._effectProcessor.applyEffectGroup(aEffects, tags, target, duration, source)
     }
 
-    removeEffect (effect) {
+    dispelEffect (effect) {
         const target = this._horde.creatures(effect.target)
         const source = this._horde.creatures(effect.source)
         return this._effectProcessor.removeEffect(effect, target, source)

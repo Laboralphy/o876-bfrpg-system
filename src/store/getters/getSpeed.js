@@ -9,10 +9,17 @@ const { aggregateModifiers } = require('../../aggregator')
  * @returns {number}
  */
 module.exports = (state, getters, externals) => {
-    const nModifier = aggregateModifiers([
+    let nModifier = 1
+    const f = ({ amp }) => {
+        nModifier *= amp
+    }
+    aggregateModifiers([
             CONSTS.EFFECT_SPEED_MODIFIER,
             CONSTS.ITEM_PROPERTY_SPEED_MODIFIER
-        ], getters
-    ).sum
-    return Math.max(0, state.speed + nModifier)
+        ], getters, {
+            propForEach: f,
+            effectForEach: f
+        }
+    )
+    return Math.max(0, state.speed * nModifier)
 }
