@@ -42,15 +42,20 @@ function main ({
     manager
         .getOffenders(attacker)
         .forEach(oCreature => {
-            let nDamage = oCreature.dice.evaluate(damage)
             const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DRAGON_BREATH, {
                 adjustment: potency
             }).success
-            if (bSuccess) {
-                nDamage = nDamage >> 1
+            if (sDamageType === CONSTS.DAMAGE_TYPE_POISON) {
+                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { type: sDamageType })
+                manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_PERMANENT, attacker)
+            } else {
+                let nDamage = oCreature.dice.evaluate(damage)
+                if (bSuccess) {
+                    nDamage = nDamage >> 1
+                }
+                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: sDamageType })
+                manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_INSTANT, attacker)
             }
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: sDamageType })
-            manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_INSTANT, attacker)
         })
 }
 

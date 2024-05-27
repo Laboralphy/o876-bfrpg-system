@@ -146,6 +146,7 @@ class Manager {
                 ? attacker.attack(target, action)
                 : attacker.getNoAttackOutcome()
             if (oAttackOutcome) {
+                oAttackOutcome.distance = combatManager.getCombat(attacker).distance
                 if (oAttackOutcome.hit) {
                     // the attack has landed : rolling damages
                     const { material: sWeaponMaterial, types: oWeaponDamages} = attacker
@@ -180,6 +181,11 @@ class Manager {
                     if (oTargetCombat) {
                         ++oTargetCombat.attacker.speedPenalty
                     }
+                    this.runPropEffectScript(target, 'attacked', {
+                        attacker,
+                        creature: target,
+                        attackOutcome: oAttackOutcome
+                    })
                 }
             }
             if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
@@ -200,39 +206,6 @@ class Manager {
                         throw new Error('script not found : ' + sScriptRef)
                     }
                 })
-            }
-            if (oAttackOutcome.hit &&
-                (
-                    target.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_SPIKE_DAMAGE) ||
-                    target.getters.getEffectSet.has(CONSTS.EFFECT_SPIKE_DAMAGE)
-                )
-            ) {
-
-                const ampMapper = ({ amp }) => target.dice.evaluate(amp)
-                const stFilter = effProp => {
-                    if (effProp.data.savingThrow) {
-                        return !attacker
-                            .rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { ability: CONSTS.ABILITY_DEXTERITY })
-                            .success
-                    } else {
-                        return true
-                    }
-                }
-                const { sorter: oDamageRegistry } = target.aggregateModifiers([
-                    CONSTS.ITEM_PROPERTY_SPIKE_DAMAGE,
-                    CONSTS.EFFECT_SPIKE_DAMAGE
-                ], {
-                    effectFilter: stFilter,
-                    propFilter: stFilter,
-                    effectSorter: eff => eff.data.damageType,
-                    propSorter: prop => prop.data.damageType,
-                    effectAmpMapper: ampMapper,
-                    propAmpMapper: ampMapper
-                })
-                for (const [damageType, { sum }] of Object.entries(oDamageRegistry)) {
-                    const eDamage = this.createEffect(CONSTS.EFFECT_DAMAGE, sum, { damageType })
-                    this.applyEffect(eDamage, attacker, 0, target)
-                }
             }
         }
     }
@@ -337,7 +310,11 @@ class Manager {
             this.effectProcessor.invokeEffectMethod(effect, sScript, oCreature, source, oParams)
         }
         for (const prop of oCreature.getters.getProperties) {
-            ItemProperties.runScript(prop, sScript, oParams)
+            ItemProperties.runScript(prop, sScript, {
+                ...oParams,
+                manager: this,
+                target: oCreature
+            })
         }
     }
 
