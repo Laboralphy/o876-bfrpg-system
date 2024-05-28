@@ -19,5 +19,6 @@
   },
   "specie": "SPECIE_HUMANOID",
   "level": 2,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

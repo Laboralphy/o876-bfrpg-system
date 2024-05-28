@@ -263,7 +263,7 @@ class Creature {
             material = CONSTS.MATERIAL_UNKNOWN
         }
         const ampMapper = amp => this.dice.evaluate(amp)
-        const sorterFunc = x => x.data.type
+        const sorterFunc = x => x.data.damageType
         const oDamageBonusRegistry = this.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_DAMAGE_MODIFIER,
             CONSTS.EFFECT_DAMAGE_MODIFIER

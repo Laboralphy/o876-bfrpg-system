@@ -11,7 +11,7 @@ module.exports = (state, getters) => {
     getters.getEffects.forEach(effect => {
         switch (effect.type) {
             case CONSTS.EFFECT_DAMAGE: {
-                if (effect.data.type === CONSTS.DAMAGE_TYPE_POISON) {
+                if (effect.data.damageType === CONSTS.DAMAGE_TYPE_POISON) {
                     aConditionSet.add(CONSTS.CONDITION_POISONED)
                 }
                 break

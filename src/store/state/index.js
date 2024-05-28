@@ -7,7 +7,7 @@ const CONSTS = require('../../consts')
  * @typedef BFStoreStateAction {object}
  * @property name {string}
  * @property attackType {string}
- * @property damageType {string}
+ * @property damageType: {string}
  * @property count {number}
  * @property cooldown {number}
  * @property conveys {{ script: string data: {} }[]}
@@ -28,7 +28,7 @@ const CONSTS = require('../../consts')
  * @property properties {BFItemProperty[]}
  * @property offensiveSlot {string}
  * @property equipment {{}}
- * @property recentDamages {{ type:string, amount:number, resisted:number, source:string }[]}
+ * @property recentDamages {{ damageTypestring, amount:number, resisted:number, source:string }[]}
  */
 
 /**

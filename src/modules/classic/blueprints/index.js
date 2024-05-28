@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-24T15:35:36.025Z
+// Date : 2024-05-28T06:54:44.261Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
@@ -14,8 +14,15 @@ module.exports = {
   'c-ghast': require('./creatures/monsters/c-ghast.json'),
   'c-ghost': require('./creatures/monsters/c-ghost.json'),
   'c-ghoul': require('./creatures/monsters/c-ghoul.json'),
+  'c-goblin-chieftain': require('./creatures/monsters/c-goblin-chieftain.json'),
+  'c-goblin-shaman': require('./creatures/monsters/c-goblin-shaman.json'),
+  'c-goblin-warrior': require('./creatures/monsters/c-goblin-warrior.json'),
+  'c-goblin': require('./creatures/monsters/c-goblin.json'),
   'c-golem-bone': require('./creatures/monsters/c-golem-bone.json'),
   'c-golem-bronze': require('./creatures/monsters/c-golem-bronze.json'),
+  'c-golem-clay': require('./creatures/monsters/c-golem-clay.json'),
+  'c-golem-flesh': require('./creatures/monsters/c-golem-flesh.json'),
+  'c-golem-iron': require('./creatures/monsters/c-golem-iron.json'),
   'c-gorgon': require('./creatures/monsters/c-gorgon.json'),
   'c-griffon': require('./creatures/monsters/c-griffon.json'),
   'c-harpy': require('./creatures/monsters/c-harpy.json'),
@@ -38,6 +45,7 @@ module.exports = {
   'c-wraith': require('./creatures/monsters/c-wraith.json'),
   'c-zombie-warrior': require('./creatures/monsters/c-zombie-warrior.json'),
   'c-zombie': require('./creatures/monsters/c-zombie.json'),
+  'c-zombraire': require('./creatures/monsters/c-zombraire.json'),
   'ammo-arrow': require('./items/ammunitions/ammo-arrow.json'),
   'ammo-quarrel': require('./items/ammunitions/ammo-quarrel.json'),
   'arm-chain-mail': require('./items/armors/arm-chain-mail.json'),

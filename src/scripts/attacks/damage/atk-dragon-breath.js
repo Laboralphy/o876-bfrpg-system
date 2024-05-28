@@ -46,14 +46,14 @@ function main ({
                 adjustment: potency
             }).success
             if (sDamageType === CONSTS.DAMAGE_TYPE_POISON) {
-                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { type: sDamageType })
+                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { damageType: sDamageType })
                 manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_PERMANENT, attacker)
             } else {
                 let nDamage = oCreature.dice.evaluate(damage)
                 if (bSuccess) {
                     nDamage = nDamage >> 1
                 }
-                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: sDamageType })
+                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { damageType: sDamageType })
                 manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_INSTANT, attacker)
             }
         })

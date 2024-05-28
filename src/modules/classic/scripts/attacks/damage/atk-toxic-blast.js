@@ -42,7 +42,7 @@ function main ({
             if (bSuccess) {
                 nDamage = nDamage >> 1
             }
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { type: CONSTS.DAMAGE_TYPE_POISON })
+            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, nDamage, { damageType: CONSTS.DAMAGE_TYPE_POISON })
             manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
         })
 }

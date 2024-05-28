@@ -82,11 +82,11 @@ class CombatSim {
             if (action.name === CONSTS.DEFAULT_ACTION_WEAPON) {
                 console.log(
                     this._tt(turn, tick),
-                    attacker.name, '> attacks ', '( x', count, ')', target.name, 'with',
+                    attacker.name, '> attacks ', target.name, 'with',
                     attacker.getters.getSelectedWeapon.ref
                 )
             } else {
-                console.log(this._tt(turn, tick), attacker.name, '>', action.name, '( x', count, ') on', target.name)
+                console.log(this._tt(turn, tick), attacker.name, '>', action.name, 'on', target.name)
             }
         })
         this._manager.events.on('combat.attack', ev => {
@@ -125,7 +125,7 @@ class CombatSim {
             console.log(creature.name, 'saving throw against', threat.substring(13).toLowerCase(), ':', roll, '+', bonus, 'vs.', dc, ':', success ? 'SUCCESS' : 'FAILURE')
         })
         this._manager.events.on('creature.damage', ev => {
-            const { creature, amount, type: sDamageType, source, subtype } = ev
+            const { creature, amount, damageType: sDamageType, source, subtype } = ev
             if (subtype !== CONSTS.EFFECT_SUBTYPE_WEAPON) {
                 console.log(creature.name, 'receive damage', amount, '(' + sDamageType.substring(12).toLowerCase() + ')', 'from', source.name)
             }
@@ -155,4 +155,4 @@ async function main (sMonster1, sMonster2) {
     }
 }
 
-main('c-centaur', 'c-centipede').then(() => console.log('done.'))
+main('c-golem-bronze', 'c-hydra-5').then(() => console.log('done.'))

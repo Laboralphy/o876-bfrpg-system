@@ -10,7 +10,7 @@ const TAG_GOLEM_IRON_ELEC_SLOW = 'TAG_GOLEM_IRON_ELEC_SLOW'
  * @param amount {number}
  * @param resisted {number}
  */
-function main ({ manager, creature, type: sDamageType, amount, resisted }) {
+function main ({ manager, creature, damageType: sDamageType, amount, resisted }) {
     switch (sDamageType) {
         case CONSTS.DAMAGE_TYPE_ELECTRICITY: {
             // Applique un effet de ralenti pendant 2d6 tours

@@ -6,9 +6,9 @@
  * @param amount {number}
  * @param resisted {number}
  */
-module.exports = ({ state }, { type: sDamageType, source, amount, resisted }) => {
+module.exports = ({ state }, { damageType: sDamageType, source, amount, resisted }) => {
     state.recentDamages.push({
-        type: sDamageType,
+        damageType: sDamageType,
         source: source.id,
         amount,
         resisted

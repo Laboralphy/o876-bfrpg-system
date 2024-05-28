@@ -8,9 +8,9 @@ const CONSTS = require('../consts')
  * @param material {string|string[]} MATERIAL_
  * @param critical {boolean}
  */
-function init (oEffect, { type: sDamageType, material = CONSTS.MATERIAL_UNKNOWN, critical = false }) {
+function init (oEffect, { damageType: sDamageType, material = CONSTS.MATERIAL_UNKNOWN, critical = false }) {
     Object.assign(oEffect.data, {
-        type: sDamageType,
+        damageType: sDamageType,
         material: Array.isArray(material) ? material : [material],
         originalAmount: 0,
         appliedAmount: 0,
@@ -28,7 +28,10 @@ function init (oEffect, { type: sDamageType, material = CONSTS.MATERIAL_UNKNOWN,
 function mutate ({ effect, target, source }) {
     // What is the damage resistance, vulnerability, reduction ?
     const oMitigation = target.getters.getDamageMitigation
-    const sType = effect.data.type
+    const sType = effect.data.damageType
+    if (!sType) {
+        console.log(effect.data)
+    }
     const aMaterials = effect.data.material
     let bMaterialVulnerable = false
     if (aMaterials) {
@@ -51,7 +54,7 @@ function mutate ({ effect, target, source }) {
         effect.data.appliedAmount = amp
     }
     const oRecentDamage = {
-        type: sType,
+        damageType: sType,
         source,
         amount: effect.data.appliedAmount,
         resisted: effect.data.resistedAmount,

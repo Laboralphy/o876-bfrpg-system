@@ -21,9 +21,9 @@ describe('test1', function () {
             ['name', 'actions', 'param', 'value'],
             ['c={ actions: [], name: value }', 'c.actions.push({ opcode: value, data: {} })', '', 'kv(last(c.actions).data)'],
             ['', '', '', ''],
-            ['atk', 'damage',   'type', 'fire'],
+            ['atk', 'damage',   'damageType', 'fire'],
             [   '',       '', 'amount', '3d6']
         ])
-        expect(o).toEqual([{ name: 'atk', actions:[{ opcode: 'damage', data: { type: 'fire', amount: '3d6' } }] }])
+        expect(o).toEqual([{ name: 'atk', actions:[{ opcode: 'damage', data: { damageType: 'fire', amount: '3d6' } }] }])
     })
 })

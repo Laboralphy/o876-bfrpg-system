@@ -1,7 +1,7 @@
 const CONSTS = require("../consts");
 
-function init (oEffect, { type: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, maxDistance = Infinity, savingThrow = false }) {
-    oEffect.data.type = sDamageType
+function init (oEffect, { damageType: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, maxDistance = Infinity, savingThrow = false }) {
+    oEffect.data.damageType = sDamageType
     oEffect.data.savingThrow = savingThrow
     oEffect.data.maxDistance = maxDistance
 }
@@ -20,7 +20,7 @@ function attacked ({ effectProcessor, effect: { amp, data }, attackOutcome }) {
     }
     // The attacker will take damage
     const eDamage = effectProcessor.createEffect(CONSTS.EFFECT_DAMAGE, amp, {
-        type: data.damageType
+        damageType: data.damageType
     })
     effectProcessor.applyEffect(eDamage, attacker, 0, target)
 }

@@ -99,7 +99,7 @@ describe('effect groups', function () {
         expect(c1.getters.getEffects.length).toBe(2)
         expect(c1.getters.getEffectRegistry[eff1.id]).toEqual(eff1)
         expect(c1.getters.getEffectRegistry[eff2.id]).toEqual(eff2)
-        expect(eff1.data.type).toBe(CONSTS.ATTACK_TYPE_ANY)
+        expect(eff1.data.attackType).toBe(CONSTS.ATTACK_TYPE_ANY)
         expect(c1.getters.getAttackBonus).toBe(-2)
         ep.removeEffect(eff2, c1, c1)
         expect(c1.getters.getAttackBonus).toBe(0)

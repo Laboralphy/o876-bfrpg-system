@@ -161,7 +161,7 @@ class Manager {
                                     material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
                                         ? sWeaponMaterial
                                         : CONSTS.MATERIAL_UNKNOWN,
-                                    type: sDamageType
+                                    damageType: sDamageType
                                 })
                             effect.subtype = CONSTS.EFFECT_SUBTYPE_WEAPON
                             return effect
@@ -284,12 +284,24 @@ class Manager {
             }
             switch (bp.entityType) {
                 case CONSTS.ENTITY_TYPE_ITEM: {
-                    this._schemaValidator.validate(bp, 'blueprint-item')
+                    try {
+                        this._schemaValidator.validate(bp, 'blueprint-item')
+                    } catch (e) {
+                        throw new Error('Error while getting blueprint ref : ' + sRef, {
+                            cause: e
+                        })
+                    }
                     break
                 }
 
                 case CONSTS.ENTITY_TYPE_ACTOR: {
-                    this._schemaValidator.validate(bp, 'blueprint-actor')
+                    try {
+                        this._schemaValidator.validate(bp, 'blueprint-actor')
+                    } catch (e) {
+                        throw new Error('Error while getting blueprint ref : ' + sRef, {
+                            cause: e
+                        })
+                    }
                     break
                 }
 

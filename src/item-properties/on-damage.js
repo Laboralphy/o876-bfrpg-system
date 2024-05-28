@@ -4,11 +4,11 @@ function init (oItemProperty, { script }) {
     oItemProperty.data.script = script
 }
 
-function damage (oItemProperty, { manager, creature, type: sDamageType, amount, resisted }) {
+function damage (oItemProperty, { manager, creature, damageType: sDamageType, amount, resisted }) {
     manager.runScript(oItemProperty.data.script, {
         manager,
         creature,
-        type: sDamageType,
+        damageType: sDamageType,
         amount,
         resisted
     })

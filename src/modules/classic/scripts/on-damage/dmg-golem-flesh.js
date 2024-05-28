@@ -10,7 +10,7 @@ const TAG_GOLEM_FLESH_FIRE_COLD_SLOW = 'TAG_GOLEM_FLESH_FIRE_COLD_SLOW'
  * @param amount {number}
  * @param resisted {number}
  */
-function main ({ manager, creature, type: sDamageType, amount, resisted }) {
+function main ({ manager, creature, damageType: sDamageType, amount, resisted }) {
     switch (sDamageType) {
         case CONSTS.DAMAGE_TYPE_COLD:
         case CONSTS.DAMAGE_TYPE_FIRE: {

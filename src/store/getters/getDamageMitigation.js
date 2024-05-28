@@ -40,42 +40,49 @@ module.exports = (state, getters, externals) => {
         DAMAGE_FACTOR_RESISTANCE,
         DAMAGE_FACTOR_VULNERABILITY
     } = externals['damage-factors']
-    const fEffectSorter = eff => eff.data.type
-    const fPropSorter = prop => prop.data.type
+    const fDamageEffectSorter = eff => {
+        if (!eff.data.damageType) {
+            console.log(eff)
+        }
+        return eff.data.damageType
+    }
+    const fDamagePropSorter = prop => prop.data.damageType
+    const fMaterialEffectSorter = eff => eff.data.materialType
+    const fMaterialPropSorter = prop => prop.data.materialType
     const oReduction = aggregateModifiers([
         CONSTS.EFFECT_DAMAGE_REDUCTION,
         CONSTS.ITEM_PROPERTY_DAMAGE_REDUCTION
     ], getters, {
-        effectSorter: fEffectSorter,
-        propSorter: fPropSorter
+        effectSorter: fDamageEffectSorter,
+        propSorter: fDamagePropSorter
     })
     const oResistance = aggregateModifiers([
         CONSTS.EFFECT_DAMAGE_RESISTANCE,
         CONSTS.ITEM_PROPERTY_DAMAGE_RESISTANCE
     ], getters, {
-        effectSorter: fEffectSorter,
-        propSorter: fPropSorter
+        effectSorter: fDamageEffectSorter,
+        propSorter: fDamagePropSorter
     })
     const oVulnerability = aggregateModifiers([
         CONSTS.EFFECT_DAMAGE_VULNERABILITY,
         CONSTS.ITEM_PROPERTY_DAMAGE_VULNERABILITY
     ], getters, {
-        effectSorter: fEffectSorter,
-        propSorter: fPropSorter
+        effectSorter: fDamageEffectSorter,
+        propSorter: fDamagePropSorter
     })
     const oImmunity = aggregateModifiers([
         CONSTS.EFFECT_DAMAGE_IMMUNITY,
         CONSTS.ITEM_PROPERTY_DAMAGE_IMMUNITY
     ], getters, {
-        effectSorter: fEffectSorter,
-        propSorter: fPropSorter
+        effectSorter: fDamageEffectSorter,
+        propSorter: fDamagePropSorter
     })
     const oMatVulnerability = aggregateModifiers([
         CONSTS.EFFECT_MATERIAL_VULNERABILITY,
         CONSTS.ITEM_PROPERTY_MATERIAL_VULNERABILITY
     ], getters, {
-        effectSorter: fEffectSorter,
-        propSorter: fPropSorter
+        effectSorter: fMaterialEffectSorter,
+        propSorter: fMaterialPropSorter
     })
     const oMitigation = {}
     addMitigation(oMitigation, oReduction)

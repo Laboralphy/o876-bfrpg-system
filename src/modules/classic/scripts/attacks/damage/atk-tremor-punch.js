@@ -41,7 +41,7 @@ function main ({
         .getOffenders(attacker)
         .filter(oCreature => target !== oCreature)
         .forEach(oCreature => {
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, { type: CONSTS.DAMAGE_TYPE_FORCE })
+            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, { damageType: CONSTS.DAMAGE_TYPE_FORCE })
             manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
         })
 }

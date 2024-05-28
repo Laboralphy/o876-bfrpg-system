@@ -1,12 +1,12 @@
 const CONSTS = require('../consts')
 
 function init (oItemProperty, { damageType: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, savingThrow = false }) {
-    oItemProperty.data.type = sDamageType
+    oItemProperty.data.damageType = sDamageType
     oItemProperty.data.savingThrow = savingThrow
 }
 
 function attacked ({ amp, data }, { manager, attackOutcome }) {
-    if (attackOutcome.distance > data.maxDistance) {
+    if (!attackOutcome.hit || attackOutcome.damages.amount <= 0 || attackOutcome.distance > data.maxDistance) {
         return
     }
     const {
@@ -19,11 +19,12 @@ function attacked ({ amp, data }, { manager, attackOutcome }) {
     }
     // The attacker will take damage
     const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amp, {
-        type: data.damageType
+        damageType: data.damageType
     })
     manager.applyEffect(eDamage, attacker, 0, target)
 }
 
 module.exports = {
-    init
+    init,
+    attacked
 }

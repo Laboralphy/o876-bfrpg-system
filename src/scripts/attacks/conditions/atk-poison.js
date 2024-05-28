@@ -47,7 +47,7 @@ function main ({
         threat: CONSTS.THREAT_POISON
     }).success) {
         const ePoison = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, {
-            type: CONSTS.DAMAGE_TYPE_POISON
+            damageType: CONSTS.DAMAGE_TYPE_POISON
         })
         ePoison.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(ePoison, target, attacker.dice.evaluate(duration), attacker)
