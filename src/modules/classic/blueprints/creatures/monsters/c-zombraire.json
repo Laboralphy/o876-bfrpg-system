@@ -1,23 +1,16 @@
 {
-  "name": "c-spectre",
-  "ac": 17,
-  "classType": "CLASS_TYPE_MONSTER",
+  "name": "c-zombraire",
+  "ac": 12,
+  "classType": "CLASS_TYPE_MAGIC_USER",
   "actions": [
     {
-      "name": "touch",
-      "attackType": "ATTACK_TYPE_MELEE_TOUCH",
-      "damage": "1d4",
-      "damageType": "DAMAGE_TYPE_NECROTIC",
+      "name": "fist",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "1d8",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
-      "conveys": [
-        {
-          "script": "atk-drain-level",
-          "data": {
-            "amount": 1
-          }
-        }
-      ]
+      "conveys": []
     }
   ],
   "properties": [
@@ -67,35 +60,31 @@
       "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
       "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_RADIANT"
+        "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_PHYSICAL"
       }
-    },
-    {
-      "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
-      "amp": 0,
-      "data": {
-        "material": "MATERIAL_SILVER"
-      }
     }
   ],
-  "equipment": [],
+  "equipment": [
+    "wpn-club",
+    "arm-leather"
+  ],
   "abilities": {
     "strength": 10,
     "dexterity": 10,
     "constitution": 10,
-    "intelligence": 10,
+    "intelligence": 16,
     "wisdom": 10,
     "charisma": 10
   },
   "specie": "SPECIE_UNDEAD",
-  "level": 6,
-  "speed": 40,
+  "level": 2,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

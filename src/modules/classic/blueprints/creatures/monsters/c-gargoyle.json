@@ -48,6 +48,14 @@
     }
   ],
   "equipment": [],
+  "abilities": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
   "specie": "SPECIE_MAGICAL_BEAST",
   "level": 4,
   "speed": 30,

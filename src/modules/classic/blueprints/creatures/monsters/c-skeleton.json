@@ -1,7 +1,7 @@
 {
   "name": "c-skeleton",
   "ac": 13,
-  "classType": "CLASS_TYPE_MONSTER",
+  "classType": "CLASS_TYPE_MAGIC_USER",
   "actions": [
     {
       "name": "fist",
@@ -58,6 +58,14 @@
     }
   ],
   "equipment": [],
+  "abilities": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 17,
+    "wisdom": 10,
+    "charisma": 10
+  },
   "specie": "SPECIE_UNDEAD",
   "level": 1,
   "speed": 30,

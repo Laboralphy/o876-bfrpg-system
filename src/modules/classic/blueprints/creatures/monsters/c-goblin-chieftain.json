@@ -1,0 +1,23 @@
+{
+  "name": "c-goblin-chieftain",
+  "ac": 11,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [],
+  "properties": [],
+  "equipment": [
+    "wpn-handaxe",
+    "arm-chain-mail",
+    "shd-small"
+  ],
+  "abilities": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 15,
+    "charisma": 10
+  },
+  "specie": "SPECIE_HUMANOID",
+  "level": 2,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

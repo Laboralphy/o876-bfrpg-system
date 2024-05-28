@@ -1,23 +1,30 @@
 {
-  "name": "c-hydra-9",
-  "ac": 20,
+  "name": "c-golem-clay",
+  "ac": 22,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "bite",
-      "attackType": "ATTACK_TYPE_MULTI_MELEE",
-      "damage": "1d10",
+      "name": "fist",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "3d10",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
-      "count": 9,
+      "count": 1,
       "cooldown": 0,
       "conveys": []
     }
   ],
   "properties": [
     {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
+    },
+    {
       "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
-        "value": 10
+        "value": 9
       }
     }
   ],
@@ -30,7 +37,8 @@
     "wisdom": 10,
     "charisma": 10
   },
-  "specie": "SPECIE_MONSTROSITY",
-  "level": 9,
+  "specie": "SPECIE_CONSTRUCT",
+  "level": 11,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

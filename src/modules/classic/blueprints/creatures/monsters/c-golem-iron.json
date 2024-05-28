@@ -1,38 +1,51 @@
 {
-  "name": "c-golem-bronze",
-  "ac": 20,
+  "name": "c-golem-iron",
+  "ac": 25,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "fist",
+      "name": "strike",
       "attackType": "ATTACK_TYPE_MELEE",
-      "damage": "3d10",
+      "damage": "4d10",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
       "cooldown": 0,
       "conveys": []
+    },
+    {
+      "name": "gas",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": "1d3",
+      "damageType": "DAMAGE_TYPE_POISON",
+      "count": 1,
+      "cooldown": 6,
+      "conveys": [
+        {
+          "script": "atk-dragon-breath",
+          "data": {}
+        }
+      ]
     }
   ],
   "properties": [
     {
-      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
-      "amp": "1d10",
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
       "data": {
         "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
-      "property": "ITEM_PROPERTY_SPIKE_DAMAGE",
-      "amp": "2d6",
+      "property": "ITEM_PROPERTY_ON_DAMAGE",
+      "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_FIRE",
-        "savingThrow": true
+        "script": "dmg-golem-iron"
       }
     },
     {
       "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
-        "value": 13
+        "value": 12
       }
     }
   ],
@@ -46,7 +59,7 @@
     "charisma": 10
   },
   "specie": "SPECIE_CONSTRUCT",
-  "level": 20,
-  "speed": 10,
+  "level": 17,
+  "speed": 20,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

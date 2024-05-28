@@ -1,6 +1,6 @@
 {
   "name": "c-vampire",
-  "ac": 18,
+  "ac": 16,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
@@ -101,13 +101,6 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
-      "amp": 3,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
-    },
-    {
       "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
       "amp": 0,
       "data": {
@@ -132,15 +125,17 @@
       "property": "ITEM_PROPERTY_REGENERATION",
       "amp": 1,
       "data": {}
-    },
-    {
-      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
-      "data": {
-        "value": 8
-      }
     }
   ],
   "equipment": [],
+  "abilities": {
+    "strength": 18,
+    "dexterity": 16,
+    "constitution": 15,
+    "intelligence": 14,
+    "wisdom": 14,
+    "charisma": 16
+  },
   "specie": "SPECIE_UNDEAD",
   "level": 7,
   "speed": 40,

@@ -1,0 +1,23 @@
+{
+  "name": "c-goblin",
+  "ac": 11,
+  "classType": "CLASS_TYPE_ROGUE",
+  "actions": [],
+  "properties": [],
+  "equipment": [
+    "wpn-dagger",
+    "arm-leather"
+  ],
+  "abilities": {
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
+  "specie": "SPECIE_HUMANOID",
+  "level": 1,
+  "speed": 20,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}
