@@ -1,7 +1,7 @@
 const CONSTS = require('../consts')
 
-function init (oItemProperty, { threat = CONSTS.SAVING_THROW_ANY }) {
-    oItemProperty.data.threat = threat
+function init ({ itemProperty, threat = CONSTS.SAVING_THROW_ANY }) {
+    itemProperty.data.threat = threat
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const CONSTS = require('../consts')
 
-function init (oItemProperty, { attackType = CONSTS.ATTACK_TYPE_ANY }) {
-    oItemProperty.data.attackType = attackType
+function init ({ itemProperty, attackType = CONSTS.ATTACK_TYPE_ANY }) {
+    itemProperty.data.attackType = attackType
 }
 
 module.exports = {

@@ -2,14 +2,17 @@ const CONSTS = require('../consts')
 
 /**
  * Inflict damage
- * @param oEffect {BFEffect}
+ * @param effect {BFEffect}
  * @param value {number}
  * @param sDamageType {string} DAMAGE_TYPE_
  * @param material {string|string[]} MATERIAL_
  * @param critical {boolean}
  */
-function init (oEffect, { damageType: sDamageType, material = CONSTS.MATERIAL_UNKNOWN, critical = false }) {
-    Object.assign(oEffect.data, {
+function init ({ effect, damageType: sDamageType, material = CONSTS.MATERIAL_UNKNOWN, critical = false }) {
+    if (effect.amp === 0 && sDamageType === CONSTS.DAMAGE_TYPE_POISON) {
+        throw new Error('WTF!!! POISON 0 amp')
+    }
+    Object.assign(effect.data, {
         damageType: sDamageType,
         material: Array.isArray(material) ? material : [material],
         originalAmount: 0,
@@ -29,9 +32,6 @@ function mutate ({ effect, target, source }) {
     // What is the damage resistance, vulnerability, reduction ?
     const oMitigation = target.getters.getDamageMitigation
     const sType = effect.data.damageType
-    if (!sType) {
-        console.log(effect.data)
-    }
     const aMaterials = effect.data.material
     let bMaterialVulnerable = false
     if (aMaterials) {
@@ -60,7 +60,6 @@ function mutate ({ effect, target, source }) {
         resisted: effect.data.resistedAmount,
         subtype: effect.subtype
     }
-    target.mutations.registerRecentDamage(oRecentDamage)
     target.mutations.damage({ amount: oRecentDamage.amount })
     target.events.emit('damage', oRecentDamage)
 }

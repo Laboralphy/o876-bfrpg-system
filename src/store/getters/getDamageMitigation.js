@@ -41,9 +41,6 @@ module.exports = (state, getters, externals) => {
         DAMAGE_FACTOR_VULNERABILITY
     } = externals['damage-factors']
     const fDamageEffectSorter = eff => {
-        if (!eff.data.damageType) {
-            console.log(eff)
-        }
         return eff.data.damageType
     }
     const fDamagePropSorter = prop => prop.data.damageType

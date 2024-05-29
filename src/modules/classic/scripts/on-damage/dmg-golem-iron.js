@@ -23,7 +23,7 @@ function main ({ manager, creature, damageType: sDamageType, amount, resisted })
         case CONSTS.DAMAGE_TYPE_FIRE: {
             // Fire will get rid of slow effect, and will heal golem
             const nDamage = amount + resisted
-            const nHealing = Math.floor(nDamage / 3)
+            const nHealing = Math.max(1, Math.floor(nDamage / 3))
             const eHeal = manager.createEffect(CONSTS.EFFECT_HEAL, nHealing)
             manager.applyEffect(eHeal, creature)
             creature.getters.getEffects.forEach(effect => {

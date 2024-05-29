@@ -1,5 +1,5 @@
-function init (oEffect, { damageType: sDamageType }) {
-    oEffect.data.damageType = sDamageType
+function init ({ effect,  damageType: sDamageType }) {
+    effect.data.damageType = sDamageType
 }
 
 module.exports = {

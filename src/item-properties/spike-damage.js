@@ -1,27 +1,13 @@
 const CONSTS = require('../consts')
+const { onAttacked } = require('../libs/spike-damage-logic')
 
-function init (oItemProperty, { damageType: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, savingThrow = false }) {
-    oItemProperty.data.damageType = sDamageType
-    oItemProperty.data.savingThrow = savingThrow
+function init ({ itemProperty, damageType: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, savingThrow = false }) {
+    itemProperty.data.damageType = sDamageType
+    itemProperty.data.savingThrow = savingThrow
 }
 
-function attacked ({ amp, data }, { manager, attackOutcome }) {
-    if (!attackOutcome.hit || attackOutcome.damages.amount <= 0 || attackOutcome.distance > data.maxDistance) {
-        return
-    }
-    const {
-        attacker,
-        target
-    } = attackOutcome
-    // check saving throw
-    if (data.savingThrow && attacker.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON).success) {
-        return
-    }
-    // The attacker will take damage
-    const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amp, {
-        damageType: data.damageType
-    })
-    manager.applyEffect(eDamage, attacker, 0, target)
+function attacked ({ itemProperty: { amp, data }, manager, attackOutcome }) {
+    onAttacked(manager.effectProcessor, attackOutcome, amp, data)
 }
 
 module.exports = {

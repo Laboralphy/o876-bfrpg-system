@@ -20,9 +20,8 @@ const CONSTS = require('../../../consts')
  * @param target {Creature}
  * @param action {BFStoreStateAction}
  * @param script {string}
- * @param damage {string|number}
  * @param manager {{}}
- * @param data {{}}
+ * @param potency {number}
  */
 function main ({
     turn,
@@ -32,7 +31,6 @@ function main ({
     target,
     action,
     script,
-    damage,
     manager,
     data: {
         potency = 0
@@ -40,14 +38,21 @@ function main ({
 }) {
     const sDamageType = attackOutcome.action.damageType
     manager
+        .combatManager
         .getOffenders(attacker)
         .forEach(oCreature => {
             const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DRAGON_BREATH, {
                 adjustment: potency
             }).success
+            const damage = action.damage
+            if (!damage) {
+                throw new Error('creature ' + attacker.name + ' - action ' + action.name + ' must specify damage value')
+            }
             if (sDamageType === CONSTS.DAMAGE_TYPE_POISON) {
-                const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { damageType: sDamageType })
-                manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_PERMANENT, attacker)
+                if (!bSuccess) {
+                    const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, { damageType: sDamageType })
+                    manager.applyEffect(eDamage, oCreature, manager.data.durations.DURATION_PERMANENT, attacker)
+                }
             } else {
                 let nDamage = oCreature.dice.evaluate(damage)
                 if (bSuccess) {

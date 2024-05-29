@@ -4,7 +4,7 @@
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "strike",
+      "name": "strikex",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "4d10",
       "damageType": "DAMAGE_TYPE_PHYSICAL",

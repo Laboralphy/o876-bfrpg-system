@@ -23,3 +23,14 @@ Called when a creature is damaged.
 | resisted     | number         | Amount of damage resisted                        |
 | subtype      | string         | Effect subtype                                   |
 
+### attacked
+
+Called when a creature is attacked.
+
+#### Additional parameters
+
+| parameter     | type            | description               |
+|---------------|-----------------|---------------------------|
+| itemProperty  | BFItemProperty  |                           | 
+| manager       | Manager         | Instance of manager       |
+| attackOutcome | BFAttackOutcome | Attack outcome            |

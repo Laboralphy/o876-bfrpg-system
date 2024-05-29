@@ -17,7 +17,7 @@
         "time": 0,
         "effect": {
           "type": "EFFECT_AMPLIFY_HEALING",
-          "amp": -100,
+          "amp": 0,
           "duration": 14400
         }
       }

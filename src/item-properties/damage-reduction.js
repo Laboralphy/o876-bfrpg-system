@@ -1,10 +1,10 @@
 const CONSTS = require('../consts')
 
-function init (oItemProperty, { damageType: sDamageType }) {
+function init ({ itemProperty, damageType: sDamageType }) {
     if (!CONSTS[sDamageType]) {
         throw new Error('unknown damage type ' + sDamageType)
     }
-    oItemProperty.data.damageType = sDamageType
+    itemProperty.data.damageType = sDamageType
 }
 
 module.exports = {

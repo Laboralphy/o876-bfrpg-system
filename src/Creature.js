@@ -115,8 +115,9 @@ class Creature {
         }
     }
 
-    getNoAttackOutcome () {
+    getNoAttackOutcome (action) {
         return this._createAttackOutcome({
+            action,
             failure: CONSTS.ATTACK_FAILURE_NO_NEED
         })
     }
@@ -262,7 +263,7 @@ class Creature {
             damageType = action.damageType
             material = CONSTS.MATERIAL_UNKNOWN
         }
-        const ampMapper = amp => this.dice.evaluate(amp)
+        const ampMapper = ({ amp }) => this.dice.evaluate(amp)
         const sorterFunc = x => x.data.damageType
         const oDamageBonusRegistry = this.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_DAMAGE_MODIFIER,
@@ -289,18 +290,6 @@ class Creature {
         }
     }
 
-    /**
-     * Compile a report of recently taken damage
-     * @param bFlush {boolean} empties the recent damage list in the state
-     * @return {{ amount: number, types: Object<string, { amount: number, resisted: number } >}}
-     */
-    getDamageReport (bFlush = false) {
-        const d = this.getters.getRecentDamages
-        if (bFlush) {
-            this.mutations.flushRecentDamages()
-        }
-        return d
-    }
 
     /**
      * @typedef SavingThrowOutcome {object}

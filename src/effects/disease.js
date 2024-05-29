@@ -14,15 +14,15 @@ const CONSTS = require('../consts')
  * @property endDisease {boolean} if true the disease ends when savingThrow is success
  * @property time {number}
  *
- * @param oEffect
+ * @param effect
  * @param disease {string}
  * @param stages {BFEffectDiseaseStage[]}
  */
-function init (oEffect, { disease, stages }) {
-    oEffect.data.disease = disease
-    oEffect.data.stages = stages
-    oEffect.stackingRule = CONSTS.EFFECT_STACKING_RULE_SPECIAL
-    oEffect.tags.push(CONSTS.EFFECT_TAG_DISEASE, disease)
+function init ({ effect, disease, stages }) {
+    effect.data.disease = disease
+    effect.data.stages = stages
+    effect.stackingRule = CONSTS.EFFECT_STACKING_RULE_SPECIAL
+    effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, disease)
 }
 
 function reject ({ effect: eDisease, newEffect: eNewDisease }) {

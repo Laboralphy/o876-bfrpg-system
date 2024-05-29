@@ -102,9 +102,10 @@ class EffectProcessor {
                 siblings: [],
                 tags: []
             }
-            if ('init' in ept) {
-                ept.init(oEffect, oParams)
-            }
+            this.invokeEffectMethod(oEffect, 'init', null, null, oParams)
+            // if ('init' in ept) {
+            //     ept.init(oEffect, oParams)
+            // }
             return oEffect
         } else {
             throw new Error('Unknown effect type : ' + sType + ' - maybe effectPrograms not initialized')

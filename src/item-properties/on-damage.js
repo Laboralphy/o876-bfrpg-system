@@ -1,11 +1,11 @@
 const CONSTS = require('../consts')
 
-function init (oItemProperty, { script }) {
-    oItemProperty.data.script = script
+function init ({ itemProperty, script }) {
+    itemProperty.data.script = script
 }
 
-function damage (oItemProperty, { manager, creature, damageType: sDamageType, amount, resisted }) {
-    manager.runScript(oItemProperty.data.script, {
+function damage ({ itemProperty, manager, creature, damageType: sDamageType, amount, resisted }) {
+    manager.runScript(itemProperty.data.script, {
         manager,
         creature,
         damageType: sDamageType,
@@ -15,5 +15,6 @@ function damage (oItemProperty, { manager, creature, damageType: sDamageType, am
 }
 
 module.exports = {
-    init
+    init,
+    damage
 }

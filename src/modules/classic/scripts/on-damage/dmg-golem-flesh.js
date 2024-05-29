@@ -25,7 +25,7 @@ function main ({ manager, creature, damageType: sDamageType, amount, resisted })
             // "Ça fait du bien par où ça passe !"
             // - Franky, dans le Croque Monstre Show
             const nDamage = amount + resisted
-            const nHealing = Math.floor(nDamage / 3)
+            const nHealing = Math.max(1, Math.floor(nDamage / 3))
             const eHeal = manager.createEffect(CONSTS.EFFECT_HEAL, nHealing)
             manager.applyEffect(eHeal, creature)
             creature.getters.getEffects.forEach(effect => {

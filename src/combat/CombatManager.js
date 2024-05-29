@@ -117,6 +117,7 @@ class CombatManager {
         const combat = new Combat()
         combat.tickCount = this._defaultTickCount
         combat.events.on('combat.turn', ev => this._events.emit('combat.turn', this._addManagerToObject(ev)))
+        combat.events.on('combat.tick.end', ev => this._events.emit('combat.tick.end', this._addManagerToObject(ev)))
         combat.events.on('combat.action', ev => this._sendCombatActionEvent(ev))
         combat.events.on('combat.script', ev => this._events.emit('combat.script', this._addManagerToObject(ev)))
         combat.events.on('combat.offensive-slot', ev => this._events.emit('combat.offensive-slot', this._addManagerToObject(ev)))

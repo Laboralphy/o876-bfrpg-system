@@ -57,7 +57,7 @@ class CombatSim {
                 .forEach(([ sType, { amount, resisted }]) => {
                     a.push(amount, sType.substring(12).toLowerCase())
                     if (resisted) {
-                        a.push('; resisted', resisted)
+                        a.push('resisted', resisted)
                     }
                 })
         }
@@ -75,7 +75,11 @@ class CombatSim {
         oMonster2.name = sMonster2
         this._manager.events.on('combat.turn', ev => {
             const { turn, tick, attacker, target, distance } = ev
-            console.log(this._tt(turn, tick), attacker.name, 'is at', distance, 'ft. from', target.name)
+            console.log(this._tt(turn, tick), 'BEGIN TURN', attacker.name, 'is at', distance, 'ft. from', target.name)
+        })
+        this._manager.events.on('combat.tick.end', ev => {
+            const { turn, tick, attacker, target, distance } = ev
+            console.log(this._tt(turn, tick), 'END TICK', attacker.name)
         })
         this._manager.events.on('combat.action', ev => {
             const { action, count, turn, tick, target, attacker } = ev
@@ -130,6 +134,14 @@ class CombatSim {
                 console.log(creature.name, 'receive damage', amount, '(' + sDamageType.substring(12).toLowerCase() + ')', 'from', source.name)
             }
         })
+        this._manager.events.on('creature.heal', ev => {
+            const { creature, amount, factor, source } = ev
+            if (creature === source || !source) {
+                console.log(creature.name, 'heals', amount, 'hp -', creature.getters.getHitPoints, '/', creature.getters.getMaxHitPoints)
+            } else {
+                console.log(creature.name, 'receive healing', amount, 'hp, from', source.name, ' - hp:', creature.getters.getHitPoints, '/', creature.getters.getMaxHitPoints)
+            }
+        })
         this.combatManager.startCombat(oMonster1, oMonster2)
     }
 
@@ -147,12 +159,14 @@ async function main (sMonster1, sMonster2) {
     const cs = new CombatSim()
     await cs.init()
     cs.initCombat(sMonster1, sMonster2)
-    for (let i = 0; i < 1000; ++i) {
+    const LOOPS = 65535
+    for (let i = 0; i <= LOOPS; ++i) {
         cs.advance()
         if (cs.combatManager.combats.length <= 0) {
-            break
+            return 'All combats done after ' + i.toString() + ' loops'
         }
     }
+    return 'Simulation interrupted after ' + LOOPS + 'loops'
 }
 
-main('c-golem-bronze', 'c-hydra-5').then(() => console.log('done.'))
+main('c-golem-bronze', 'c-golem-iron').then(x => console.log(x))

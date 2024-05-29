@@ -153,6 +153,7 @@ class Combat {
         if (this._tick === 0) {
             // Start of turn
             // attack-types planning
+            this.prepareTurn(this._attacker)
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 tick: this._tick,
@@ -163,9 +164,15 @@ class Combat {
                 target: this._defender,
                 distance: this._distance
             })
-            this.prepareTurn(this._attacker)
         }
         this.playFighterAction(this._attacker, this._defender)
+        this._events.emit('combat.tick.end', {
+            turn: this._turn,
+            tick: this._tick,
+            attacker: this._attacker.creature,
+            target: this._defender,
+            distance: this._distance
+        })
         this.nextTick()
     }
 

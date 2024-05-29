@@ -26,7 +26,10 @@ class ItemProperties {
     static runScript (oItemProperty, sScript, oParameters) {
         const sProperty = oItemProperty.property
         if (ITEM_PROPERTIES[sProperty] && ITEM_PROPERTIES[sProperty][sScript]) {
-            ITEM_PROPERTIES[sProperty][sScript](oItemProperty, oParameters)
+            ITEM_PROPERTIES[sProperty][sScript]({
+                itemProperty: oItemProperty,
+                ...oParameters
+            })
         }
     }
 }

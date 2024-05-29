@@ -71,10 +71,10 @@ function aggregateModifiers (aTags, getters, {
         aFilteredEffects.forEach(f => {
             const sDisc = effectSorter(f)
             const sd = rdisc(sDisc)
-            const amp = f.amp
-            if (typeof amp !== 'number') {
+            if (isNaN(f.amp)) {
                 throw TypeError('Effect amp has not been properly evaluated')
             }
+            const amp = f.amp | 0
             sd.max = Math.max(sd.max, amp)
             sd.sum += amp
             ++sd.count
@@ -84,7 +84,10 @@ function aggregateModifiers (aTags, getters, {
         aFilteredItemProperties.forEach(f => {
             const sDisc = propSorter(f)
             const sd = rdisc(sDisc)
-            const amp = f.amp || 0
+            if (isNaN(f.amp)) {
+                throw TypeError('Item property amp has not been properly evaluated')
+            }
+            const amp = f.amp | 0
             sd.max = Math.max(sd.max, amp)
             sd.sum += amp
             ++sd.count

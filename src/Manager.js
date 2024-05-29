@@ -59,6 +59,9 @@ class Manager {
             this._processCreaturePassiveProperties(ev.attacker)
             this._events.emit('combat.turn', ev)
         })
+        cm.events.on('combat.tick.end', ev => {
+            this._events.emit('combat.tick.end', ev)
+        })
 
         this._itemBuilder = ib
         this._creatureBuilder = cb
@@ -144,7 +147,7 @@ class Manager {
             // creates a new attack outcome if weaponized action
             const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
                 ? attacker.attack(target, action)
-                : attacker.getNoAttackOutcome()
+                : attacker.getNoAttackOutcome(action)
             if (oAttackOutcome) {
                 oAttackOutcome.distance = combatManager.getCombat(attacker).distance
                 if (oAttackOutcome.hit) {
@@ -166,16 +169,24 @@ class Manager {
                             effect.subtype = CONSTS.EFFECT_SUBTYPE_WEAPON
                             return effect
                         })
-                    aEffects.forEach(effect => this.effectProcessor.applyEffect(effect, target, 0, attacker))
-                    oAttackOutcome.damages = target.getDamageReport(true)
-                }
-                if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
-                    this._events.emit('combat.attack', {
-                        turn, tick,
-                        outcome: oAttackOutcome
+                    oAttackOutcome.damages = {
+                        amount: 0,
+                        types: {}
+                    }
+                    aEffects.forEach(effect => {
+                        const eAppliedDamage = this.effectProcessor.applyEffect(effect, target, 0, attacker)
+                        const wdrt = oAttackOutcome.damages.types
+                        if (!wdrt[eAppliedDamage.data.damageType]) {
+                            wdrt[eAppliedDamage.data.damageType] = {
+                                amount: 0,
+                                resisted: 0
+                            }
+                        }
+                        const wdrtar = wdrt[eAppliedDamage.data.damageType]
+                        wdrtar.amount += eAppliedDamage.data.appliedAmount
+                        wdrtar.resisted += eAppliedDamage.data.resistedAmount
+                        oAttackOutcome.damages.amount += eAppliedDamage.data.appliedAmount
                     })
-                }
-                if (oAttackOutcome.hit) {
                     // the target will have penalty of speed
                     const oTargetCombat = this.combatManager.getCombat(target)
                     if (oTargetCombat) {
@@ -185,6 +196,12 @@ class Manager {
                         attacker,
                         creature: target,
                         attackOutcome: oAttackOutcome
+                    })
+                }
+                if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
+                    this._events.emit('combat.attack', {
+                        turn, tick, attackIndex: iAtk,
+                        outcome: oAttackOutcome
                     })
                 }
             }
@@ -364,6 +381,14 @@ class Manager {
             }
             this._events.emit('creature.damage', oPayload)
             this.runPropEffectScript(oCreature, 'damage', oPayload)
+        })
+        oCreature.events.on('heal', ev => {
+            const oPayload = {
+                ...ev,
+                creature: oCreature,
+                manager: this
+            }
+            this._events.emit('creature.heal', oPayload)
         })
         return oCreature
     }

@@ -402,3 +402,38 @@ describe('multi melee attacks', function () {
         ])
     })
 })
+
+describe('Iron Golem Combat vs Bronze Golem', function () {
+    it('should not do poison damage when attacking', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const sGolemIron = 'c-golem-iron'
+        const sGolemBronze = 'c-golem-bronze'
+        const giron = manager.createCreature({ id: 'giron', ref: sGolemIron })
+        const gbronze = manager.createCreature({ id: 'gbronze', ref: sGolemBronze })
+
+        const advance = function () {
+            manager.processEffects()
+            manager.combatManager.processCombats()
+        }
+
+        const combatManager = manager.combatManager
+        const cgg = combatManager.startCombat(giron, gbronze)
+        cgg.distance = 5
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+    })
+})
