@@ -169,4 +169,4 @@ async function main (sMonster1, sMonster2) {
     return 'Simulation interrupted after ' + LOOPS + 'loops'
 }
 
-main('c-golem-bronze', 'c-golem-iron').then(x => console.log(x))
+main('c-vampire', 'c-golem-iron').then(x => console.log(x))

@@ -26,5 +26,13 @@
   {
     "values": [18],
     "modifier": 3
+  },
+  {
+    "values": [19],
+    "modifier": 4
+  },
+  {
+    "values": [20],
+    "modifier": 5
   }
 ]

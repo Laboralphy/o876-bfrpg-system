@@ -207,21 +207,17 @@ class Manager {
             }
             if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
                 action.conveys.forEach(({ script: sScriptRef, data }) => {
-                    if (sScriptRef in this._scripts) {
-                        this.runScript(sScriptRef, {
-                            turn,
-                            tick,
-                            data,
-                            script: sScriptRef,
-                            attacker,
-                            target,
-                            attackOutcome: oAttackOutcome,
-                            action,
-                            manager: this
-                        })
-                    } else {
-                        throw new Error('script not found : ' + sScriptRef)
-                    }
+                    this.runScript(sScriptRef, {
+                        turn,
+                        tick,
+                        data,
+                        script: sScriptRef,
+                        attacker,
+                        target,
+                        attackOutcome: oAttackOutcome,
+                        action,
+                        manager: this
+                    })
                 })
             }
         }
