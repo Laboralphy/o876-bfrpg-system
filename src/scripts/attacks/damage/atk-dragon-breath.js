@@ -40,6 +40,7 @@ function main ({
     manager
         .combatManager
         .getOffenders(attacker)
+        .slice(0, 3)
         .forEach(oCreature => {
             const bSuccess = oCreature.rollSavingThrow(CONSTS.SAVING_THROW_DRAGON_BREATH, {
                 adjustment: potency

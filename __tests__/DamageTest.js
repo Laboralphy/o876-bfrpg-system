@@ -110,4 +110,37 @@ describe('damage', function () {
         oManager.effectProcessor.applyEffect(eSilverDamage, c, 0)
         expect(c.getters.getHitPoints).toBe(22)
     })
+    it('should be resistant to weapon damage but non-resistant to silver weapons', function () {
+        const c = oManager.createCreature({ id: 'm1', ref: 'c-centaur' })
+        expect(c.getters.getHitPoints).toBe(32)
+        const eVulSilv = oManager.effectProcessor.createEffect(CONSTS.EFFECT_MATERIAL_VULNERABILITY, 0, { materialType: CONSTS.MATERIAL_SILVER })
+        const eResWeapon = oManager.effectProcessor.createEffect(CONSTS.EFFECT_DAMAGE_RESISTANCE, 0, { damageType: CONSTS.DAMAGE_TYPE_PHYSICAL })
+        const eSteelDamage = oManager.effectProcessor.createEffect(CONSTS.EFFECT_DAMAGE, 10, { damageType: CONSTS.DAMAGE_TYPE_PHYSICAL, material: CONSTS.MATERIAL_STEEL })
+        const eSilverDamage = oManager.effectProcessor.createEffect(CONSTS.EFFECT_DAMAGE, 10, { damageType: CONSTS.DAMAGE_TYPE_PHYSICAL, material: CONSTS.MATERIAL_SILVER })
+        oManager.effectProcessor.applyEffect(eVulSilv, c, 10)
+        oManager.effectProcessor.applyEffect(eResWeapon, c, 10)
+
+        expect(c.getters.getDamageMitigation).toEqual({
+                DAMAGE_TYPE_PHYSICAL: {
+                    reduction: 0,
+                    resistance: true,
+                    vulnerability: false,
+                    immunity: false,
+                    factor: 0.5
+                },
+                MATERIAL_SILVER: {
+                    reduction: 0,
+                    resistance: false,
+                    vulnerability: true,
+                    immunity: false,
+                    factor: 2
+                }
+            }
+        )
+
+        oManager.effectProcessor.applyEffect(eSteelDamage, c, 0)
+        expect(c.getters.getHitPoints).toBe(27)
+        oManager.effectProcessor.applyEffect(eSilverDamage, c, 0)
+        expect(c.getters.getHitPoints).toBe(17)
+    })
 })

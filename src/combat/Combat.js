@@ -159,7 +159,16 @@ class Combat {
                 tick: this._tick,
                 attacker: this._attacker.creature,
                 action: oAction => {
-                    this._attacker.nextAction = oAction
+                    if (typeof oAction === 'string') {
+                        const oCreatureActions = this._attacker.creature.getters.getActions
+                        if (oAction in oCreatureActions) {
+                            this._attacker.nextAction = oCreatureActions[oAction]
+                        } else {
+                            throw new Error('unknown action : ' + oAction)
+                        }
+                    } else {
+                        this._attacker.nextAction = oAction
+                    }
                 },
                 target: this._defender,
                 distance: this._distance
