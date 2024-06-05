@@ -1,0 +1,81 @@
+{
+  "name": "c-draugr",
+  "ac": 11,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "ice-cone",
+      "attackType": "ATTACK_TYPE_HOMING",
+      "damage": "",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 2,
+      "conveys": [
+        {
+          "script": "spell-cone-cold",
+          "data": {}
+        }
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_CHARM"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_STUN"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_DAZED"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_POISON"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_NECROTIC"
+      }
+    }
+  ],
+  "equipment": [
+    "wpn-greatsword",
+    "arm-plate"
+  ],
+  "abilities": {
+    "strength": 16,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
+  "specie": "SPECIE_UNDEAD",
+  "level": 9,
+  "speed": 20,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

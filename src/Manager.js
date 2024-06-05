@@ -57,6 +57,11 @@ class Manager {
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
         cm.events.on('combat.turn', ev => {
             this._processCreaturePassiveProperties(ev.attacker)
+            this.runPropEffectScript(ev.attacker, 'combatTurn', {
+                action: ev.action,
+                target: ev.target,
+                combat: ev.combat
+            })
             this._events.emit('combat.turn', ev)
         })
         cm.events.on('combat.tick.end', ev => {
@@ -225,7 +230,12 @@ class Manager {
 
     runScript (sScriptRef, ...aParams) {
         if (sScriptRef in this._scripts) {
-            return this._scripts[sScriptRef](...aParams)
+            try {
+                return this._scripts[sScriptRef](...aParams)
+            } catch (e) {
+                console.error(this._scripts)
+                throw e
+            }
         } else {
             throw new Error('script not found : ' + sScriptRef)
         }
@@ -434,6 +444,10 @@ class Manager {
         Object.values(this._effectOptimRegistry).forEach(({ effect, target, source }) => {
             this._effectProcessor.processEffect(effect, target, source)
         })
+    }
+
+    _processAIScript ({ attacker, target, turn, tick, action, distance }) {
+        this.runScript()
     }
 
     /**

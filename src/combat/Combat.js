@@ -14,6 +14,11 @@ class Combat {
         this._tickCount = 6
         this._events = new Events()
         this._distance = 0
+        this._data = {} // custom combat state
+    }
+
+    get data () {
+        return this._data
     }
 
     get turn () {
@@ -158,6 +163,7 @@ class Combat {
                 turn: this._turn,
                 tick: this._tick,
                 attacker: this._attacker.creature,
+                combat: this,
                 action: oAction => {
                     if (typeof oAction === 'string') {
                         const oCreatureActions = this._attacker.creature.getters.getActions
@@ -169,9 +175,9 @@ class Combat {
                     } else {
                         this._attacker.nextAction = oAction
                     }
+                    console.log(this._attacker.creature.id, 'will use action', this.nextActionName || '(no action)')
                 },
-                target: this._defender,
-                distance: this._distance
+                target: this._defender
             })
         }
         this.playFighterAction(this._attacker, this._defender)
@@ -270,13 +276,16 @@ class Combat {
      */
     getMostSuitableAction () {
         const atkr = this._attacker.creature
+        // by default, all creature use their weapon, if they have any
+        // if we want to use special abilities, we must define ai-script
+
         // are there any usable weapons ?
         const sBestWeaponSlot = this.getMostSuitableOffensiveSlot()
         if (sBestWeaponSlot) {
             // We should use our weapon
             // One of our offensive slots is suitable for attacking target
             this._switchOffensiveSlot(sBestWeaponSlot)
-            return DATA['default-actions'].DEFAULT_ACTION_WEAPON
+            return this.defaultActionWeapon
         }
         // We don't have suitable weapon at this point
         // target cannot be attacked by one of our equipped weapons
@@ -308,7 +317,7 @@ class Combat {
             return null
         }
         // Target is at melee range, we must use our unarmed attack
-        return DATA['default-actions'].DEFAULT_ACTION_UNARMED
+        return this.defaultActionUnarmed
     }
 
     /**
@@ -322,6 +331,20 @@ class Combat {
         } else {
             this._attacker.nextAction = null
         }
+    }
+
+    get defaultActionUnarmed () {
+        return DATA['default-actions'].DEFAULT_ACTION_UNARMED
+    }
+
+    get defaultActionWeapon () {
+        return DATA['default-actions'].DEFAULT_ACTION_WEAPON
+    }
+
+    get nextActionName () {
+        return this._attacker.nextAction === null
+            ? ''
+            : this._attacker.nextAction.name
     }
 
     /**

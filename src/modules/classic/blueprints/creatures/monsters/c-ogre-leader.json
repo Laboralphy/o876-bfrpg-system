@@ -1,0 +1,39 @@
+{
+  "name": "c-ogre-leader",
+  "ac": 12,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [
+    {
+      "name": "strike",
+      "attackType": "ATTACK_TYPE_MELEE",
+      "damage": "2d6",
+      "damageType": "DAMAGE_TYPE_PHYSICAL",
+      "count": 1,
+      "cooldown": 0,
+      "conveys": []
+    }
+  ],
+  "properties": [
+    {
+      "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "data": {
+        "value": 1
+      }
+    }
+  ],
+  "equipment": [
+    "arm-leather"
+  ],
+  "abilities": {
+    "strength": 16,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
+  "specie": "SPECIE_GIANT",
+  "level": 6,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

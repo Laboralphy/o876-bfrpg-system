@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-29T13:39:10.550Z
+// Date : 2024-06-05T15:16:28.239Z
 // List of files in ./src/item-properties
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
   'ITEM_PROPERTY_EXTRA_WEIGHT': require('./extra-weight.js'),
   'ITEM_PROPERTY_IMMUNITY': require('./immunity.js'),
   'ITEM_PROPERTY_MATERIAL_VULNERABILITY': require('./material-vulnerability.js'),
+  'ITEM_PROPERTY_ON_COMBAT_TURN': require('./on-combat-turn.js'),
   'ITEM_PROPERTY_ON_DAMAGE': require('./on-damage.js'),
   'ITEM_PROPERTY_REGENERATION': require('./regeneration.js'),
   'ITEM_PROPERTY_SAVING_THROW_MODIFIER': require('./saving-throw-modifier.js'),

@@ -1,14 +1,14 @@
 {
-  "name": "c-vampire",
-  "ac": 16,
+  "name": "c-succubus",
+  "ac": 20,
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "fist",
+      "name": "claws",
       "attackType": "ATTACK_TYPE_MELEE",
-      "damage": "1d8",
+      "damage": "1d4",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
-      "count": 1,
+      "count": 2,
       "cooldown": 0,
       "conveys": []
     },
@@ -23,19 +23,18 @@
         {
           "script": "atk-charm",
           "data": {
-            "duration": 2,
-            "potency": 2
+            "duration": 10
           }
         }
       ]
     },
     {
-      "name": "bite",
+      "name": "kiss",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d3",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
       "count": 1,
-      "cooldown": 3,
+      "cooldown": 0,
       "conveys": [
         {
           "script": "atk-vampyre",
@@ -59,34 +58,6 @@
   ],
   "properties": [
     {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_CHARM"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_STUN"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_DAZED"
-      }
-    },
-    {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
       "data": {
@@ -94,17 +65,31 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_NECROTIC"
+        "damageType": "DAMAGE_TYPE_ELECTRICITY"
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_RADIANT"
+        "damageType": "DAMAGE_TYPE_ACID"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_COLD"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_FIRE"
       }
     },
     {
@@ -122,22 +107,24 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_REGENERATION",
-      "amp": 1,
-      "data": {}
+      "property": "ITEM_PROPERTY_ON_COMBAT_TURN",
+      "amp": 0,
+      "data": {
+        "script": "ai-succubus-level-drain"
+      }
     }
   ],
   "equipment": [],
   "abilities": {
-    "strength": 18,
-    "dexterity": 16,
-    "constitution": 15,
-    "intelligence": 14,
-    "wisdom": 14,
-    "charisma": 16
+    "strength": 10,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 18
   },
-  "specie": "SPECIE_UNDEAD",
+  "specie": "SPECIE_FIEND",
   "level": 7,
-  "speed": 40,
+  "speed": 30,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

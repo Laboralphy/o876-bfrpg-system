@@ -1,8 +1,9 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-29T13:39:10.788Z
+// Date : 2024-06-05T15:16:28.481Z
 // List of files in ./src/modules/classic/scripts
 
 module.exports = {
+  'ai-succubus-level-drain': require('./ai/ai-succubus-level-drain.js'),
   'atk-grab-leg': require('./attacks/atk-grab-leg.js'),
   'atk-toxic-blast': require('./attacks/damage/atk-toxic-blast.js'),
   'atk-tremor-punch': require('./attacks/damage/atk-tremor-punch.js'),

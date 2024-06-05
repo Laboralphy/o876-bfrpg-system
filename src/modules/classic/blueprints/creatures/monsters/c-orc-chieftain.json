@@ -1,0 +1,23 @@
+{
+  "name": "c-orc-chieftain",
+  "ac": 11,
+  "classType": "CLASS_TYPE_MONSTER",
+  "actions": [],
+  "properties": [],
+  "equipment": [
+    "arm-chain-mail",
+    "wpn-greataxe"
+  ],
+  "abilities": {
+    "strength": 16,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 10,
+    "charisma": 10
+  },
+  "specie": "SPECIE_HUMANOID",
+  "level": 4,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

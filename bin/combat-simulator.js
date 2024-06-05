@@ -74,8 +74,8 @@ class CombatSim {
         oMonster1.name = sMonster1
         oMonster2.name = sMonster2
         this._manager.events.on('combat.turn', ev => {
-            const { turn, tick, attacker, target, distance } = ev
-            console.log(this._tt(turn, tick), 'BEGIN TURN', attacker.name, 'is at', distance, 'ft. from', target.name)
+            const { turn, tick, attacker, target, combat } = ev
+            console.log(this._tt(turn, tick), 'BEGIN TURN', attacker.name, 'is at', combat.distance, 'ft. from', target.name)
         })
         this._manager.events.on('combat.tick.end', ev => {
             const { turn, tick, attacker, target, distance } = ev
@@ -169,4 +169,4 @@ async function main (sMonster1, sMonster2) {
     return 'Simulation interrupted after ' + LOOPS + 'loops'
 }
 
-main('c-vampire', 'c-golem-iron').then(x => console.log(x))
+main('c-succubus', 'c-goblin').then(x => console.log(x))

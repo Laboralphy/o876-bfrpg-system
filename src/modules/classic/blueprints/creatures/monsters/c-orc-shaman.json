@@ -1,0 +1,24 @@
+{
+  "name": "c-orc-shaman",
+  "ac": 11,
+  "classType": "CLASS_TYPE_CLERIC",
+  "actions": [],
+  "properties": [],
+  "equipment": [
+    "wpn-mace",
+    "arm-leather",
+    "shd-small"
+  ],
+  "abilities": {
+    "strength": 13,
+    "dexterity": 10,
+    "constitution": 10,
+    "intelligence": 10,
+    "wisdom": 15,
+    "charisma": 10
+  },
+  "specie": "SPECIE_HUMANOID",
+  "level": 2,
+  "speed": 30,
+  "entityType": "ENTITY_TYPE_ACTOR"
+}

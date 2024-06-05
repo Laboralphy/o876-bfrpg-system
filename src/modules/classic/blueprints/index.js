@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-05-29T13:39:10.720Z
+// Date : 2024-06-05T15:16:28.412Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
   'c-chimera': require('./creatures/monsters/c-chimera.json'),
   'c-cockatrice': require('./creatures/monsters/c-cockatrice.json'),
   'c-dragon': require('./creatures/monsters/c-dragon.json'),
+  'c-draugr': require('./creatures/monsters/c-draugr.json'),
   'c-gargoyle': require('./creatures/monsters/c-gargoyle.json'),
   'c-ghast': require('./creatures/monsters/c-ghast.json'),
   'c-ghost': require('./creatures/monsters/c-ghost.json'),
@@ -35,14 +36,25 @@ module.exports = {
   'c-medusa': require('./creatures/monsters/c-medusa.json'),
   'c-minotaur': require('./creatures/monsters/c-minotaur.json'),
   'c-mummy': require('./creatures/monsters/c-mummy.json'),
+  'c-ogre-bully': require('./creatures/monsters/c-ogre-bully.json'),
+  'c-ogre-leader': require('./creatures/monsters/c-ogre-leader.json'),
+  'c-ogre': require('./creatures/monsters/c-ogre.json'),
+  'c-orc-chieftain': require('./creatures/monsters/c-orc-chieftain.json'),
+  'c-orc-king': require('./creatures/monsters/c-orc-king.json'),
+  'c-orc-shaman': require('./creatures/monsters/c-orc-shaman.json'),
+  'c-orc-warrior': require('./creatures/monsters/c-orc-warrior.json'),
+  'c-orc': require('./creatures/monsters/c-orc.json'),
   'c-rat-giant': require('./creatures/monsters/c-rat-giant.json'),
   'c-skeleton-chieftain': require('./creatures/monsters/c-skeleton-chieftain.json'),
   'c-skeleton-warrior': require('./creatures/monsters/c-skeleton-warrior.json'),
   'c-skeleton': require('./creatures/monsters/c-skeleton.json'),
+  'c-solar': require('./creatures/monsters/c-solar.json'),
   'c-spectre': require('./creatures/monsters/c-spectre.json'),
+  'c-succubus': require('./creatures/monsters/c-succubus.json'),
   'c-vampire': require('./creatures/monsters/c-vampire.json'),
   'c-wight': require('./creatures/monsters/c-wight.json'),
   'c-wraith': require('./creatures/monsters/c-wraith.json'),
+  'c-wyvern': require('./creatures/monsters/c-wyvern.json'),
   'c-zombie-warrior': require('./creatures/monsters/c-zombie-warrior.json'),
   'c-zombie': require('./creatures/monsters/c-zombie.json'),
   'c-zombraire': require('./creatures/monsters/c-zombraire.json'),
