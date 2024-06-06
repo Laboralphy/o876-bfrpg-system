@@ -437,3 +437,104 @@ describe('Iron Golem Combat vs Bronze Golem', function () {
         advance()
     })
 })
+
+
+describe('Succubus vs Goblin', function () {
+    it('should try to do ai script', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const suc = manager.createCreature({ id: 'suc', ref: 'c-succubus' })
+        const gob = manager.createCreature({ id: 'gob', ref: 'c-goblin' })
+
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        const combatManager = manager.combatManager
+        const c = combatManager.startCombat(suc, gob)
+        const aLog = []
+
+        const f = ({ turn, tick, attacker }, ...params) => {
+            if (attacker === undefined) {
+                throw new Error('no creature in event')
+            }
+            if (isNaN(turn)) {
+                throw new Error('no turn value in event')
+            }
+            if (isNaN(tick)) {
+                throw new Error('no tick value in event')
+            }
+            aLog.push('[' + turn + ':' + tick + '] ' + attacker.id + ': ' + params.join(' '))
+        }
+
+        manager.events.on('combat.distance', ev => {
+            f(ev, 'new distance', ev.distance)
+        })
+
+        manager.events.on('combat.move', ev => {
+            f(ev, 'moves towards', ev.target.id, 'at speed', ev.speed)
+        })
+
+        manager.events.on('combat.action', ev => {
+            f(ev, 'action', ev.action.name, 'on target', ev.target.id)
+        })
+
+        suc.events.on('info', ({ info }) => {
+            aLog.push('info suc: ' + info)
+        })
+
+        manager.events.on('combat.attack', ev => {
+            const { turn, tick, attackIndex: iAtk, outcome: oAttackOutcome } = ev
+            f({
+                ...ev,
+                attacker: oAttackOutcome.attacker
+            },
+                'attacks', oAttackOutcome.target.id,
+                'roll', oAttackOutcome.roll, '+',
+                'bonus', oAttackOutcome.bonus,
+                '=', oAttackOutcome.roll + oAttackOutcome.bonus,
+                'vs. ac', oAttackOutcome.ac,
+                oAttackOutcome.hit ? 'HIT' : 'MISS')
+        })
+
+        manager.events.on('creature.saving-throw', ev => {
+            aLog.push([ev.creature.id, 'saving throw against', ev.threat, 'roll', ev.total, 'vs.', ev.dc, ev.success ? 'SUCCESS' : 'FAILURE'].join(' '))
+        })
+
+        manager.events.on('creature.effect-applied', ev => {
+            switch (ev.effect.type) {
+                case 'EFFECT_CHARM': {
+                    aLog.push([ev.target.id,'is charmed by', ev.source.id, 'for duration', ev.effect.duration].join(' '))
+                    break
+                }
+
+                case 'EFFECT_NEGATIVE_LEVEL': {
+                    aLog.push([ev.target.id,'loses', ev.effect.amp, 'level(s) for duration', ev.effect.duration].join(' '))
+                    break
+                }
+
+                case 'EFFECT_HEAL': {
+                    aLog.push([ev.target.id, 'gains', ev.effect.amp, 'hp'].join(' '))
+                    break
+                }
+
+                default: {
+                    aLog.push([ev.effect.type, 'applied on', ev.target.id, 'with amp', ev.effect.amp].join(' '))
+                }
+            }
+        })
+
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+        advance()
+
+        console.log(aLog)
+    })
+})

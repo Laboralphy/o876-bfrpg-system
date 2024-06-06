@@ -322,7 +322,7 @@ describe('selectSuitableAction', function () {
         f1.mutations.equipItem({ item: bow })
         f1.mutations.equipItem({ item: arrow })
         f1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
-        expect(c.targetInRange).toEqual({
+        expect(c.targetInWeaponRange).toEqual({
             melee: false,
             ranged: true,
             selected: false
@@ -349,7 +349,7 @@ describe('selectSuitableAction', function () {
         c.distance = 30
         f1.mutations.equipItem({ item: sword })
         f1.mutations.setOffensiveSlot({ slot: '' })
-        expect(c.targetInRange).toEqual({
+        expect(c.targetInWeaponRange).toEqual({
             melee: false,
             ranged: false,
             selected: false

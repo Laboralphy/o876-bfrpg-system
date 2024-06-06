@@ -152,32 +152,37 @@ class Combat {
     }
 
     advance () {
-        this.selectMostSuitableAction()
-        this.checkCurrentActionCooldown()
-
         if (this._tick === 0) {
+            this.selectMostSuitableAction()
+            this.checkCurrentActionCooldown()
             // Start of turn
             // attack-types planning
             this.prepareTurn(this._attacker)
+            if (this._tick !== 0) throw 'WTF'
             this._events.emit('combat.turn', {
                 turn: this._turn,
                 tick: this._tick,
                 attacker: this._attacker.creature,
                 combat: this,
-                action: oAction => {
-                    if (typeof oAction === 'string') {
+                action: action => {
+                    let oDecidedAction = null
+                    if (typeof action === 'string') {
                         const oCreatureActions = this._attacker.creature.getters.getActions
-                        if (oAction in oCreatureActions) {
-                            this._attacker.nextAction = oCreatureActions[oAction]
+                        if (action in oCreatureActions) {
+                            oDecidedAction = oCreatureActions[action]
                         } else {
-                            throw new Error('unknown action : ' + oAction)
+                            throw new Error('unknown action : ' + action)
                         }
                     } else {
-                        this._attacker.nextAction = oAction
+                        oDecidedAction = action
+                        // this._attacker.nextAction = action
                     }
-                    console.log(this._attacker.creature.id, 'will use action', this.nextActionName || '(no action)')
-                },
-                target: this._defender
+                    if (this._attacker.isActionCoolingDown(this._attacker.nextAction, this._turn)) {
+                        // nope : selected action is cooling down
+                        return
+                    }
+                    this._attacker.nextAction = oDecidedAction
+                }
             })
         }
         this.playFighterAction(this._attacker, this._defender)
@@ -205,10 +210,28 @@ class Combat {
         return this._distance <= WEAPON_RANGE_MELEE
     }
 
+    _isTargetInActionRange (action) {
+        if (!action) {
+            return false
+        }
+        let nDistance = this._distance
+        switch (action.attackType) {
+            case CONSTS.ATTACK_TYPE_MELEE_TOUCH:
+            case CONSTS.ATTACK_TYPE_MELEE:
+            case CONSTS.ATTACK_TYPE_MULTI_MELEE: {
+                return nDistance <= WEAPON_RANGE_MELEE
+            }
+
+            default: {
+                return true
+            }
+        }
+    }
+
     /**
      * Returns true if target is in attacker's weapon range
      */
-    get targetInRange () {
+    get targetInWeaponRange () {
         const cg = this._attacker.creature.getters
         const weapon = cg.getSelectedWeapon
         const meleeWeapon = cg.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]
@@ -255,7 +278,7 @@ class Combat {
      * @returns {string}
      */
     getMostSuitableOffensiveSlot () {
-        const oTargetInRange = this.targetInRange
+        const oTargetInRange = this.targetInWeaponRange
         // will try to attack-types with ranged weapon whenever possible
         if (oTargetInRange.ranged) {
             // Ranged weapon is properly loaded, and target is afar : go for ranged
@@ -268,7 +291,6 @@ class Combat {
         // none of our weapon may reach target
         return ''
     }
-
 
     /**
      *
@@ -361,7 +383,7 @@ class Combat {
     approachTarget () {
         const nRunSpeed = this._attacker.speed
         const previousDistance = this.distance
-        const newDistance = Math.max(DATA['weapon-ranges'].WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
+        const newDistance = Math.max(WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
             turn: this._turn,
             tick: this._tick,

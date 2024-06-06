@@ -350,9 +350,10 @@ class Creature {
                 effectFilter: effect => effect.data.threat === sSavingThrow || effect.data.threat === CONSTS.SAVING_THROW_ANY,
                 propFilter: prop => prop.data.threat === sSavingThrow || prop.data.threat === CONSTS.SAVING_THROW_ANY
             }).sum
+            const nRollBonus = nRoll + nBonus
             const success =
                 nRoll >= this.getters.getSavingThrowSucessValue ||
-                (nRoll > this.getters.getSavingThrowFailureValue && nRoll + nBonus >= dc)
+                (nRoll > this.getters.getSavingThrowFailureValue && nRollBonus >= dc)
             const outcome = {
                 success,
                 ability: sAbility,
@@ -360,6 +361,7 @@ class Creature {
                 dc,
                 roll: nRoll,
                 bonus: nBonus,
+                total: nRollBonus,
                 adjustment: adjustment
             }
             this._events.emit('saving-throw', outcome)

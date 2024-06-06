@@ -298,7 +298,7 @@ describe('combat with weapon', function () {
         expect(cm.getCombat(c1).distance).toBe(30)
         const sSuitableSlot = cm.getCombat(c1).getMostSuitableOffensiveSlot()
         expect(sSuitableSlot).toBe('')
-        expect(cm.getCombat(c1).targetInRange.selected).toBeFalsy()
+        expect(cm.getCombat(c1).targetInWeaponRange.selected).toBeFalsy()
     })
     it('c1 should not select anything when not being equipped with weapon', function () {
         const cm = new CombatManager()
@@ -358,7 +358,7 @@ describe('combat for real', function () {
         cm.startCombat(c1, c2)
         const combat1 = cm.getCombat(c1)
 
-        expect(combat1.targetInRange).toEqual({
+        expect(combat1.targetInWeaponRange).toEqual({
             melee: false,
             ranged: false,
             selected: false

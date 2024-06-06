@@ -55,11 +55,11 @@ class Manager {
         cm.defaultDistance = 50
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
+        cm.events.on('combat.move', ev => this._events.emit('combat.move', ev))
         cm.events.on('combat.turn', ev => {
             this._processCreaturePassiveProperties(ev.attacker)
             this.runPropEffectScript(ev.attacker, 'combatTurn', {
                 action: ev.action,
-                target: ev.target,
                 combat: ev.combat
             })
             this._events.emit('combat.turn', ev)
@@ -92,6 +92,7 @@ class Manager {
         if (effect.duration > 0) {
             this._effectOptimRegistry[effect.id] = { effect, target, source }
         }
+        this.events.emit('creature.effect-applied', { manager: this, effect, target, source })
     }
 
     /**
@@ -101,6 +102,7 @@ class Manager {
      * @param source {Creature}
      */
     _effectDisposed ({ effect, target, source }) {
+        this.events.emit('creature.effect-disposed', { manager: this, effect, target, source })
         delete this._effectOptimRegistry[effect.id]
     }
 
@@ -230,12 +232,7 @@ class Manager {
 
     runScript (sScriptRef, ...aParams) {
         if (sScriptRef in this._scripts) {
-            try {
-                return this._scripts[sScriptRef](...aParams)
-            } catch (e) {
-                console.error(this._scripts)
-                throw e
-            }
+            return this._scripts[sScriptRef](...aParams)
         } else {
             throw new Error('script not found : ' + sScriptRef)
         }
@@ -348,7 +345,7 @@ class Manager {
             ItemProperties.runScript(prop, sScript, {
                 ...oParams,
                 manager: this,
-                target: oCreature
+                creature: oCreature
             })
         }
     }

@@ -12,7 +12,6 @@ class CombatFighterState {
          * @private
          */
         this._creature = null
-        this._nextAction = null
         this._currentAction = null
         this._speedPenalty = 0
         this._actionCooldown = {}
