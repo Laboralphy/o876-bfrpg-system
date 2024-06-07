@@ -14,21 +14,10 @@ module.exports = (state, getters) => {
         aConditionSet.has(CONSTS.CONDITION_PETRIFIED) ||
         aConditionSet.has(CONSTS.CONDITION_INCAPACITATED)
     )
-    const attack = !(
-        act ||
-        aConditionSet.has(CONSTS.CONDITION_DAZED)
-    )
-    const move = !(
-        act ||
-        aConditionSet.has(CONSTS.CONDITION_RESTRAINED)
-    )
-    const see = !(
-        aConditionSet.has(CONSTS.CONDITION_BLINDED)
-    )
-    const castSelf = !(
-        act ||
-        aConditionSet.has(CONSTS.CONDITION_DAZED)
-    )
+    const fight = act && !aConditionSet.has(CONSTS.CONDITION_DAZED)
+    const move = act && aConditionSet.has(CONSTS.CONDITION_RESTRAINED)
+    const see = !aConditionSet.has(CONSTS.CONDITION_BLINDED)
+    const castSelf = act && !aConditionSet.has(CONSTS.CONDITION_DAZED)
     const castTarget = castSelf && see
     const cast = {
         self: castSelf,
@@ -39,7 +28,7 @@ module.exports = (state, getters) => {
         act,
         move,
         cast,
-        attack,
+        fight,
         see
     }
 }

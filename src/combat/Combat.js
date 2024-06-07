@@ -21,6 +21,14 @@ class Combat {
         return this._data
     }
 
+    get attackerActions () {
+        return this
+            ._attacker
+            .creature
+            .getters
+            .getActions
+    }
+
     get turn () {
         return this._turn
     }
@@ -133,15 +141,15 @@ class Combat {
             const action = attacker.nextAction
             if (action) {
                 attacker.setActionCooldown(action, this._turn)
-                this._events.emit('combat.action', {
-                    turn: this._turn,
-                    tick: this._tick,
-                    attacker: attacker.creature,
-                    target: defender,
-                    action: action,
-                    count: nAttackCount
-                })
             }
+            this._events.emit('combat.action', {
+                turn: this._turn,
+                tick: this._tick,
+                attacker: attacker.creature,
+                target: defender,
+                action: action,
+                count: nAttackCount
+            })
         }
     }
 
@@ -167,7 +175,7 @@ class Combat {
                 action: action => {
                     let oDecidedAction = null
                     if (typeof action === 'string') {
-                        const oCreatureActions = this._attacker.creature.getters.getActions
+                        const oCreatureActions = this.attackerActions
                         if (action in oCreatureActions) {
                             oDecidedAction = oCreatureActions[action]
                         } else {
@@ -313,7 +321,7 @@ class Combat {
         // target cannot be attacked by one of our equipped weapons
         // are there any natural attacks ?
         const bTargetIsFar = this.distance > WEAPON_RANGE_MELEE
-        const oCreatureActionRegistry = atkr.getters.getActions
+        const oCreatureActionRegistry = this.attackerActions
         const turn = this._turn
         const aActions = (bTargetIsFar
             ? atkr.getters.getRangedActions

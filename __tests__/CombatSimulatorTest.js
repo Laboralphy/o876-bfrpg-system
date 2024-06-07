@@ -440,6 +440,65 @@ describe('Iron Golem Combat vs Bronze Golem', function () {
 
 
 describe('Succubus vs Goblin', function () {
+    it('should be capable of fighting', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const suc = manager.createCreature({ id: 'suc', ref: 'c-succubus' })
+        expect(suc.getters.getCapabilities.fight).toBeTruthy()
+    })
+    it('should emit combat.action with action.name = kiss event when using kiss action', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const suc = manager.createCreature({ id: 'suc', ref: 'c-succubus' })
+        const gob = manager.createCreature({ id: 'gob', ref: 'c-goblin' })
+
+        const combatManager = manager.combatManager
+        const c = combatManager.startCombat(suc, gob)
+        const aLog = []
+        let sLastActionName = ''
+        c.attacker.plan = [1, 1, 1, 1, 1, 1]
+
+        c.events.on('combat.action', ({
+            action
+        }) => {
+            sLastActionName = action.name
+        })
+
+        c.attacker.nextAction = c.attackerActions.kiss
+        c.playFighterAction(c.attacker, c.defender)
+
+        expect(sLastActionName).toBe('kiss')
+    })
+
+    it('action kiss should not hit when distance is 30', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const suc = manager.createCreature({ id: 'suc', ref: 'c-succubus' })
+        const gob = manager.createCreature({ id: 'gob', ref: 'c-goblin' })
+
+        const combatManager = manager.combatManager
+        const c = combatManager.startCombat(suc, gob)
+        c.distance = 30
+        c.attacker.plan = [1, 1, 1, 1, 1, 1]
+        let oLastOutcome = null
+
+        manager.events.on('combat.attack', ({
+            outcome
+        }) => {
+            oLastOutcome = outcome
+        })
+
+        c.attacker.nextAction = c.attackerActions.kiss
+        c.playFighterAction(c.attacker, c.defender)
+
+        expect(oLastOutcome).not.toBeNull()
+        expect(oLastOutcome.failed).toBeTruthy()
+        expect(oLastOutcome.failure).toBe('x')
+    })
+
     it('should try to do ai script', async function () {
         const manager = new Manager()
         await manager.init()

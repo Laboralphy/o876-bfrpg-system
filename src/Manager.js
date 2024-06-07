@@ -137,6 +137,8 @@ class Manager {
        count,
        combatManager
     }) {
+        // action null = target unreachable
+
         // New combat action
         this._events.emit('combat.action', {
             turn,
