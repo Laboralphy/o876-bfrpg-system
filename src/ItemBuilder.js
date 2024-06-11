@@ -1,4 +1,3 @@
-const Builder = require('./Builder')
 const ItemProperties = require("./ItemProperties");
 const CONSTS = require("./consts");
 

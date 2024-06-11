@@ -219,7 +219,6 @@ class Creature {
         if (!this.getters.getCapabilities.fight) {
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_CONDITION
-            console.log(this.getters.getConditionSet)
             return oAttackOutcome
         }
         if (!oAttackOutcome.action) {

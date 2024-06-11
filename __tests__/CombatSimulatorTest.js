@@ -493,7 +493,6 @@ describe('Succubus vs Goblin', function () {
 
         c.attacker.nextAction = c.attackerActions.kiss
         c.playFighterAction(c.attacker, c.defender)
-
         expect(oLastOutcome).not.toBeNull()
         expect(oLastOutcome.failed).toBeTruthy()
         expect(oLastOutcome.failure).toBe('x')

@@ -1,7 +1,6 @@
 const Combat = require('./Combat')
 const Events = require('events')
 const CONSTS = require('../consts')
-const DATA = require('../data')
 
 class CombatManager {
     constructor () {
@@ -9,6 +8,15 @@ class CombatManager {
         this._events = new Events()
         this._defaultDistance = 0
         this._defaultTickCount = 6
+        this._rm = null
+    }
+
+    set resourceManager (value) {
+        this._rm = value
+    }
+
+    get resourceManager () {
+        return this._rm
     }
 
     get events () {
@@ -115,6 +123,7 @@ class CombatManager {
      */
     _createCombat (oCreature, oTarget) {
         const combat = new Combat()
+        combat.resourceManager = this.resourceManager
         combat.tickCount = this._defaultTickCount
         combat.events.on('combat.turn', ev => this._events.emit('combat.turn', this._addManagerToObject(ev)))
         combat.events.on('combat.tick.end', ev => this._events.emit('combat.tick.end', this._addManagerToObject(ev)))
@@ -142,7 +151,7 @@ class CombatManager {
         // Special case concerning multi melee actions :
         // Instead of striking target we strike a random offending target
         if (ev.action.attackType === CONSTS.ATTACK_TYPE_MULTI_MELEE) {
-            const aOffenders = this.getOffenders(ev.attacker, DATA['weapon-ranges'].WEAPON_RANGE_MELEE)
+            const aOffenders = this.getOffenders(ev.attacker, this._rm.data.data['weapon-ranges'].WEAPON_RANGE_MELEE)
             if (aOffenders.length > 0) {
                 const nChoice = Math.floor(ev.attacker.dice.random() * aOffenders.length)
                 ev.target = aOffenders[nChoice]

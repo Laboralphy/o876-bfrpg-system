@@ -14,11 +14,31 @@ class Combat {
         this._tickCount = 6
         this._events = new Events()
         this._distance = 0
-        this._data = {} // custom combat state
+        this._rm = null
     }
 
-    get data () {
-        return this._data
+    get defaultActionUnarmed () {
+        return this._rm.data.data['default-actions'].DEFAULT_ACTION_UNARMED
+    }
+
+    get defaultActionWeapon () {
+        return this._rm.data.data['default-actions'].DEFAULT_ACTION_WEAPON
+    }
+
+    get weaponMeleeRange () {
+        return this._rm.data.data['weapon-ranges'].WEAPON_RANGE_MELEE
+    }
+
+    get weaponReachRange () {
+        return this._rm.data.data['weapon-ranges'].WEAPON_RANGE_REACH
+    }
+
+    set resourceManager (value) {
+        this._rm = value
+    }
+
+    get resourceManager () {
+        return this._rm
     }
 
     get attackerActions () {
@@ -210,12 +230,12 @@ class Combat {
         }
         const aWeaponAttributeSet = new Set(weapon.attributes)
         if (aWeaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)) {
-            return this._distance > WEAPON_RANGE_MELEE
+            return this._distance > this.weaponMeleeRange
         }
         if (aWeaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_REACH)) {
-            return this._distance <= WEAPON_RANGE_REACH
+            return this._distance <= this.weaponReachRange
         }
-        return this._distance <= WEAPON_RANGE_MELEE
+        return this._distance <= this.weaponMeleeRange
     }
 
     _isTargetInActionRange (action) {
@@ -227,7 +247,7 @@ class Combat {
             case CONSTS.ATTACK_TYPE_MELEE_TOUCH:
             case CONSTS.ATTACK_TYPE_MELEE:
             case CONSTS.ATTACK_TYPE_MULTI_MELEE: {
-                return nDistance <= WEAPON_RANGE_MELEE
+                return nDistance <= this.weaponMeleeRange
             }
 
             default: {
@@ -320,7 +340,7 @@ class Combat {
         // We don't have suitable weapon at this point
         // target cannot be attacked by one of our equipped weapons
         // are there any natural attacks ?
-        const bTargetIsFar = this.distance > WEAPON_RANGE_MELEE
+        const bTargetIsFar = this.distance > this.weaponMeleeRange
         const oCreatureActionRegistry = this.attackerActions
         const turn = this._turn
         const aActions = (bTargetIsFar
@@ -363,14 +383,6 @@ class Combat {
         }
     }
 
-    get defaultActionUnarmed () {
-        return DATA['default-actions'].DEFAULT_ACTION_UNARMED
-    }
-
-    get defaultActionWeapon () {
-        return DATA['default-actions'].DEFAULT_ACTION_WEAPON
-    }
-
     get nextActionName () {
         return this._attacker.nextAction === null
             ? ''
@@ -391,7 +403,7 @@ class Combat {
     approachTarget () {
         const nRunSpeed = this._attacker.speed
         const previousDistance = this.distance
-        const newDistance = Math.max(WEAPON_RANGE_MELEE, this.distance - nRunSpeed)
+        const newDistance = Math.max(this.weaponMeleeRange, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
             turn: this._turn,
             tick: this._tick,

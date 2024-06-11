@@ -45,13 +45,6 @@
           "data": {
             "amount": 1
           }
-        },
-        {
-          "script": "atk-lower-self-ac",
-          "data": {
-            "amount": 5,
-            "duration": 1
-          }
         }
       ]
     }

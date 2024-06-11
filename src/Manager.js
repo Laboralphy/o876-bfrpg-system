@@ -8,15 +8,20 @@ const ItemProperties = require('./ItemProperties')
 const SchemaValidator = require('./SchemaValidator')
 const CombatManager = require('./combat/CombatManager')
 const CreatureBuilder = require("./CreatureBuilder");
+const ResourceManager = require('./libs/resource-manager')
 
 const EFFECTS = require('./effects')
 const DATA = require('./data')
 const CONSTS = require('./consts')
 const SCRIPTS = require('./scripts')
 
+const RMK_BLUEPRINTS = 'blueprints'
+const RMK_DATA = 'data'
+
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
+const {BLUEPRINTS} = require("./modules/classic");
 
 const NEED_ATTACK_ROLL  = new Set([
     CONSTS.ATTACK_TYPE_ANY,
@@ -44,13 +49,11 @@ class Manager {
         this._horde = h
         this._effectProcessor = ep
         this._effectOptimRegistry = {}
-        this._data = Object.assign({}, DATA)
-        this._blueprints = {}
+        this._rm = new ResourceManager()
+        this._rm.assign(RMK_BLUEPRINTS, {})
+        this._rm.assign(RMK_DATA, DATA)
         this._validBlueprints = {}
         this._events = new EventEmitter()
-
-        ib.blueprints = this._blueprints
-        ib.data = this._data
 
         cm.defaultDistance = 50
         cm.events.on('combat.action', ev => this._combatAction(ev))
@@ -253,7 +256,11 @@ class Manager {
     }
 
     get data () {
-        return this._data
+        return this._rm.data[RMK_DATA]
+    }
+
+    get blueprints () {
+        return this._rm.data[RMK_BLUEPRINTS]
     }
 
     /**
@@ -276,8 +283,8 @@ class Manager {
      */
     loadModule (module) {
         const { DATA, BLUEPRINTS, SCRIPTS } = require('./modules/' + module)
-        Object.assign(this._data, DATA)
-        Object.assign(this._blueprints, BLUEPRINTS)
+        this._rm.assign('data', DATA)
+        this._rm.assign('blueprints', BLUEPRINTS)
         Object.assign(this._scripts, SCRIPTS)
     }
 
@@ -299,8 +306,8 @@ class Manager {
         if (sRef in this._validBlueprints) {
             return this._validBlueprints[sRef]
         }
-        if (sRef in this._blueprints) {
-            const bp = this._blueprints[sRef]
+        if (sRef in this.blueprints) {
+            const bp = this.blueprints[sRef]
             if (!this._schemaValidator) {
                 throw new Error('schema validator has not been initialized (did you forgot to call Manager.init() ?)')
             }
@@ -409,7 +416,7 @@ class Manager {
         if (!oBlueprint) {
             throw new Error('Could not evaluate blueprint ' + ref)
         }
-        const oItem = ib.createItem(oBlueprint, this._data)
+        const oItem = ib.createItem(oBlueprint, this.data)
         oItem.id = id || getId()
         oItem.ref = sTypeOfRef === 'string' ? ref  : ''
         return oItem
