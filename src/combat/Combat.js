@@ -88,15 +88,22 @@ class Combat {
         return this._defender
     }
 
+    get defaultPayload () {
+        return {
+            combat: this,
+            turn: this._turn,
+            tick: this._tick,
+            attacker: this._attacker.creature,
+            target: this._defender
+        }
+    }
+
     set distance (value) {
         const nOldDistance = this._distance
         if (nOldDistance !== value) {
             this._distance = Math.max(0, value)
             this._events.emit('combat.distance', {
-                turn: this._turn,
-                tick: this._tick,
-                attacker: this._attacker.creature,
-                target: this._defender,
+                ...this.defaultPayload,
                 distance: this._distance,
                 previousDistance: nOldDistance
             })
@@ -163,10 +170,7 @@ class Combat {
                 attacker.setActionCooldown(action, this._turn)
             }
             this._events.emit('combat.action', {
-                turn: this._turn,
-                tick: this._tick,
-                attacker: attacker.creature,
-                target: defender,
+                ...this.defaultPayload,
                 action: action,
                 count: nAttackCount
             })
@@ -188,10 +192,7 @@ class Combat {
             this.prepareTurn(this._attacker)
             if (this._tick !== 0) throw 'WTF'
             this._events.emit('combat.turn', {
-                turn: this._turn,
-                tick: this._tick,
-                attacker: this._attacker.creature,
-                combat: this,
+                ...this.defaultPayload,
                 action: action => {
                     let oDecidedAction = null
                     if (typeof action === 'string') {
@@ -215,10 +216,7 @@ class Combat {
         }
         this.playFighterAction(this._attacker, this._defender)
         this._events.emit('combat.tick.end', {
-            turn: this._turn,
-            tick: this._tick,
-            attacker: this._attacker.creature,
-            target: this._defender,
+            ...this.defaultPayload,
             distance: this._distance
         })
         this.nextTick()
@@ -287,12 +285,9 @@ class Combat {
             // new offensive slot is different from previous offensive slot : fire an event
             atkr.mutations.setOffensiveSlot({ slot })
             this._events.emit('combat.offensive-slot', {
-                turn: this._turn,
-                tick: this._tick,
+                ...this.defaultPayload,
                 slot,
                 previousSlot: sOldSlot,
-                attacker: atkr,
-                target: this._defender,
                 weapon: atkr.getters.getSelectedWeapon
             })
         }
@@ -405,10 +400,7 @@ class Combat {
         const previousDistance = this.distance
         const newDistance = Math.max(this.weaponMeleeRange, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
-            turn: this._turn,
-            tick: this._tick,
-            attacker: this._attacker.creature,
-            target: this._defender,
+            ...this.defaultPayload,
             speed: nRunSpeed,
             factor: this._attacker.speedFactor,
             previousDistance,
