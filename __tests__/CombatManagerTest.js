@@ -1,7 +1,6 @@
 const CombatManager = require('../src/combat/CombatManager')
 const Creature = require('../src/Creature')
 const CONSTS = require('../src/consts')
-const ItemBuilder = require("../src/ItemBuilder");
 const DATA = {
     ...require('../src/data'),
     ...require('../src/modules/classic/data')
@@ -10,9 +9,20 @@ const BLUEPRINTS = {
     ...require('../src/modules/classic/blueprints')
 }
 
+const ResourceManager = require('../src/libs/resource-manager')
+const rm = new ResourceManager()
+rm.assign('data', DATA)
+rm.assign('blueprints', BLUEPRINTS)
+
+function getNewCombatManager () {
+    const cm = new CombatManager()
+    cm.resourceManager = rm
+    return cm
+}
+
 describe('isCreatureFighting', function () {
     it('should return true when adding a creature', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         expect(cm.isCreatureFighting(c1)).toBeFalsy()
@@ -20,7 +30,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c1)).toBeTruthy()
     })
     it('target should be in combat when targeted bu attacker', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         expect(cm.isCreatureFighting(c2)).toBeFalsy()
@@ -28,7 +38,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c2)).toBeTruthy()
     })
     it('both creature should be not-fighting when combat is done', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -39,7 +49,7 @@ describe('isCreatureFighting', function () {
         expect(cm.isCreatureFighting(c2)).toBeFalsy()
     })
     it('c2 combat should not end when ending c1 combat unilaterally', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -53,7 +63,7 @@ describe('isCreatureFighting', function () {
 
 describe('combat.length', function () {
     it('should register 2 combat when adding one fighter and one target', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         expect(cm.combats.length).toBe(0)
         const c1 = new Creature()
         const c2 = new Creature()
@@ -61,7 +71,7 @@ describe('combat.length', function () {
         expect(cm.combats.length).toBe(2)
     })
     it('should remain 1 combat when adding one fighter and one target and ending combat unilaterally', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         expect(cm.combats.length).toBe(0)
         const c1 = new Creature()
         const c2 = new Creature()
@@ -71,7 +81,7 @@ describe('combat.length', function () {
         expect(cm.combats.length).toBe(1)
     })
     it('should have 2 registered combat when cancelling and resuming combat', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         const c1 = new Creature()
         const c2 = new Creature()
         cm.startCombat(c1, c2)
@@ -83,7 +93,7 @@ describe('combat.length', function () {
 
 describe('combat distance', function () {
     it('should set a default distance of 30 when starting combat', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -91,7 +101,7 @@ describe('combat distance', function () {
         expect(cm.getCombat(c1).distance).toBe(30)
     })
     it('should synchronize distance changes when attacker and target fight each other', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -103,7 +113,7 @@ describe('combat distance', function () {
         expect(cm.getCombat(c2).distance).toBe(15)
     })
     it('should not synchronize distance changes when attacker and target don\'t fight each other', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         const c2 = new Creature()
@@ -185,7 +195,7 @@ describe('combat with weapon', function () {
     const oItemBuilder = new ItemBuilder()
 
     it('should select ranged weapon when distance is 30', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -228,7 +238,7 @@ describe('combat with weapon', function () {
         ])
     })
     it('c1 should select ranged, c2 should select melee', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -273,7 +283,7 @@ describe('combat with weapon', function () {
         ])
     })
     it('c1 should use NO weapon when not having proper ammo and target being out of melee ranged', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -301,7 +311,7 @@ describe('combat with weapon', function () {
         expect(cm.getCombat(c1).targetInWeaponRange.selected).toBeFalsy()
     })
     it('c1 should not select anything when not being equipped with weapon', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -318,7 +328,7 @@ describe('combat for real', function () {
     const oItemBuilder = new ItemBuilder()
 
     it('should attack-types target', function () {
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
         const c1 = new Creature()
         c1.id = 'c1'
@@ -338,7 +348,7 @@ describe('combat for real', function () {
         const oItemBuilder = new ItemBuilder()
         expect(BLUEPRINTS['wpn-shortsword']).toBeDefined()
 
-        const cm = new CombatManager()
+        const cm = getNewCombatManager()
         cm.defaultDistance = 30
 
         const c1 = new Creature()

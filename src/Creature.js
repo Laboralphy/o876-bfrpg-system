@@ -20,6 +20,10 @@ class Creature {
         this._events = new EventEmitter()
     }
 
+    get _data () {
+        return this._store.externals.data.data
+    }
+
     /**
      *
      * @returns {EventEmitter}
@@ -205,16 +209,28 @@ class Creature {
      * Will not select the most appropriate weapon or action prior to attack
      * @param oTarget {Creature}
      * @param action {BFStoreStateAction}
+     * @param distance {number} Distance at which attack is done (default 0 means : we don't mind)
      * @returns {BFAttackOutcome}
      */
-    attack (oTarget, action) {
+    attack (oTarget, action, distance = 0) {
         if (!oTarget) {
             throw new Error('Creature.attack target must be defined')
         }
+        const oSelectedAction = action || this.getters.getSelectedAction
+        const oSelectedWeapon = this.getters.getSelectedWeapon
+        const bUseWeapon = (oSelectedAction.name === CONSTS.DEFAULT_ACTION_WEAPON) && !!oSelectedWeapon
+        const weapon = bUseWeapon ? oSelectedWeapon : null
+        const nAttackRange = bUseWeapon
+            ? weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_REACH)
+                ?
+
+
         const oAttackOutcome = this._createAttackOutcome({
             attacker: this,
             target: oTarget,
-            action: action || this.getters.getSelectedAction
+            action: oSelectedAction,
+            distance,
+            range: weapon ? this._store.externals.
         })
         if (!this.getters.getCapabilities.fight) {
             oAttackOutcome.failed = true
@@ -225,9 +241,6 @@ class Creature {
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
             return oAttackOutcome
         }
-        const weapon = action.name === CONSTS.DEFAULT_ACTION_WEAPON
-            ? this.getters.getSelectedWeapon
-            : null
         if (weapon) {
             // We have a weapon
             this._attackUsingWeapon(oAttackOutcome)

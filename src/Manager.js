@@ -56,6 +56,7 @@ class Manager {
         this._events = new EventEmitter()
 
         cm.defaultDistance = 50
+        cm.resourceManager = this._rm
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
         cm.events.on('combat.move', ev => this._events.emit('combat.move', ev))
@@ -136,6 +137,7 @@ class Manager {
        tick,
        attacker,
        target,
+       combat,
        action,
        count,
        combatManager
@@ -148,6 +150,7 @@ class Manager {
             tick,
             attacker,
             target,
+            combat,
             action,
             count,
             combatManager
@@ -158,10 +161,9 @@ class Manager {
         for (let iAtk = 0; iAtk < count; ++iAtk) {
             // creates a new attack outcome if weaponized action
             const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
-                ? attacker.attack(target, action)
+                ? attacker.attack(target, action, combat.distance)
                 : attacker.getNoAttackOutcome(action)
             if (oAttackOutcome) {
-                oAttackOutcome.distance = combatManager.getCombat(attacker).distance
                 if (oAttackOutcome.hit) {
                     // the attack has landed : rolling damages
                     const { material: sWeaponMaterial, types: oWeaponDamages} = attacker

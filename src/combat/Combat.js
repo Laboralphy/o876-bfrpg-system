@@ -171,7 +171,7 @@ class Combat {
             }
             this._events.emit('combat.action', {
                 ...this.defaultPayload,
-                action: action,
+                action,
                 count: nAttackCount
             })
         }
