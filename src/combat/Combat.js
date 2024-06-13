@@ -144,20 +144,6 @@ class Combat {
     }
 
     /**
-     * @param who {CombatFighterState}
-     */
-    prepareTurn (who) {
-        // Plan all attacks this turn
-        who.flushCurrentAction()
-        const action = who.nextAction
-        const nAttackCount = action ? action.count : 0
-        who.plan = Combat.computePlanning(nAttackCount, this._tickCount, true)
-        if (nAttackCount === 0) {
-            this.approachTarget()
-        }
-    }
-
-    /**
      *
      * @param attacker {CombatFighterState}
      * @param defender {Creature}
@@ -168,12 +154,12 @@ class Combat {
             const action = attacker.nextAction
             if (action) {
                 attacker.setActionCooldown(action, this._turn)
+                this._events.emit('combat.action', {
+                    ...this.defaultPayload,
+                    action,
+                    count: nAttackCount
+                })
             }
-            this._events.emit('combat.action', {
-                ...this.defaultPayload,
-                action,
-                count: nAttackCount
-            })
         }
     }
 
@@ -185,12 +171,11 @@ class Combat {
 
     advance () {
         if (this._tick === 0) {
+            const atkr = this._attacker
             this.selectMostSuitableAction()
             this.checkCurrentActionCooldown()
             // Start of turn
             // attack-types planning
-            this.prepareTurn(this._attacker)
-            if (this._tick !== 0) throw 'WTF'
             this._events.emit('combat.turn', {
                 ...this.defaultPayload,
                 action: action => {
@@ -206,13 +191,18 @@ class Combat {
                         oDecidedAction = action
                         // this._attacker.nextAction = action
                     }
-                    if (this._attacker.isActionCoolingDown(this._attacker.nextAction, this._turn)) {
+                    if (atkr.isActionCoolingDown(atkr.nextAction, this._turn)) {
                         // nope : selected action is cooling down
                         return
                     }
-                    this._attacker.nextAction = oDecidedAction
+                    atkr.nextAction = oDecidedAction
                 }
             })
+            if (atkr.nextAction) {
+                atkr.plan = Combat.computePlanning(atkr.nextAction.count, this._tickCount, true)
+            } else {
+                this.approachTarget()
+            }
         }
         this.playFighterAction(this._attacker, this._defender)
         this._events.emit('combat.tick.end', {

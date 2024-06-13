@@ -372,6 +372,7 @@ class Manager {
         if (ref) {
             const oBlueprint = this.getBlueprint(ref)
             this._creatureBuilder.buildMonster(oCreature, oBlueprint)
+            oCreature.ref = ref
             oBlueprint.equipment.forEach(eq => {
                 const oItem = this.createItem({ ref: eq })
                 oCreature.mutations.equipItem({ item: oItem })
@@ -383,6 +384,11 @@ class Manager {
         oCreature.mutations.setHitPoints({ value: oCreature.getters.getMaxHitPoints })
         this._horde.linkCreature(oCreature)
         oCreature.events.on('saving-throw', ev => this._events.emit('creature.saving-throw', {
+            ...ev,
+            creature: oCreature,
+            manager: this
+        }))
+        oCreature.events.on('friend-check', ev => this._events.emit('creature.friend-check', {
             ...ev,
             creature: oCreature,
             manager: this

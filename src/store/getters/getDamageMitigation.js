@@ -44,8 +44,8 @@ module.exports = (state, getters, externals) => {
         return eff.data.damageType
     }
     const fDamagePropSorter = prop => prop.data.damageType
-    const fMaterialEffectSorter = eff => eff.data.materialType
-    const fMaterialPropSorter = prop => prop.data.materialType
+    const fMaterialEffectSorter = eff => eff.data.material
+    const fMaterialPropSorter = prop => prop.data.material
     const oReduction = aggregateModifiers([
         CONSTS.EFFECT_DAMAGE_REDUCTION,
         CONSTS.ITEM_PROPERTY_DAMAGE_REDUCTION

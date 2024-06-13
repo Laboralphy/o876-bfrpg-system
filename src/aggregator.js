@@ -83,6 +83,10 @@ function aggregateModifiers (aTags, getters, {
     if (propSorter) {
         aFilteredItemProperties.forEach(f => {
             const sDisc = propSorter(f)
+            if (sDisc === undefined) {
+                console.error(propSorter.toString())
+                throw new Error('property sorted returned undefined')
+            }
             const sd = rdisc(sDisc)
             if (isNaN(f.amp)) {
                 throw TypeError('Item property amp has not been properly evaluated')

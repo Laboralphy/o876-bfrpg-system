@@ -147,8 +147,8 @@ describe('cooldown', function () {
         emptyLog()
         expect(oCombatLocust.distance).toBe(30)
         oCombatLocust.advance() // 0
-        // Spit en cooldown, et pas d'autre compétence à distance : on avance
-        expect(oCombatLocust.distance).toBe(10)
+        // Spit en cooldown, et pas d'autre compétence à distance : on avance de 20
+        expect(oCombatLocust.distance).toBe(10) // La distance doit etre de 10 maintenant
         expect(oCombatLocust.turn).toBe(1)
         oCombatLocust.advance() // 1
         oCombatLocust.advance() // 2
@@ -495,7 +495,7 @@ describe('Succubus vs Goblin', function () {
         c.playFighterAction(c.attacker, c.defender)
         expect(oLastOutcome).not.toBeNull()
         expect(oLastOutcome.failed).toBeTruthy()
-        expect(oLastOutcome.failure).toBe('x')
+        expect(oLastOutcome.failure).toBe('ATTACK_FAILURE_TARGET_UNREACHABLE')
     })
 
     it('should try to do ai script', async function () {
@@ -504,6 +504,8 @@ describe('Succubus vs Goblin', function () {
         manager.loadModule('classic')
         const suc = manager.createCreature({ id: 'suc', ref: 'c-succubus' })
         const gob = manager.createCreature({ id: 'gob', ref: 'c-goblin' })
+        gob.dice.cheat(0.1)
+        suc.dice.cheat(0.9)
 
         const advance = function () {
             manager.processEffects()
@@ -547,16 +549,33 @@ describe('Succubus vs Goblin', function () {
 
         manager.events.on('combat.attack', ev => {
             const { turn, tick, attackIndex: iAtk, outcome: oAttackOutcome } = ev
-            f({
-                ...ev,
-                attacker: oAttackOutcome.attacker
-            },
-                'attacks', oAttackOutcome.target.id,
-                'roll', oAttackOutcome.roll, '+',
-                'bonus', oAttackOutcome.bonus,
-                '=', oAttackOutcome.roll + oAttackOutcome.bonus,
-                'vs. ac', oAttackOutcome.ac,
-                oAttackOutcome.hit ? 'HIT' : 'MISS')
+            if (oAttackOutcome.failed) {
+                f({
+                        ...ev,
+                        attacker: oAttackOutcome.attacker
+                    },
+                    'failed to attack', oAttackOutcome.target.id,
+                    'beacause', oAttackOutcome.failure,
+                    'action', oAttackOutcome.action?.name || '(none)',
+                    'weapon', oAttackOutcome.weapon?.ref || '(none)',
+                    'distance', oAttackOutcome.distance,
+                    'range', oAttackOutcome.range,
+                )
+            } else {
+                f({
+                        ...ev,
+                        attacker: oAttackOutcome.attacker
+                    },
+                    'attacks', oAttackOutcome.target.id,
+                    oAttackOutcome.weapon ? 'with weapon ' + oAttackOutcome.weapon.ref : '',
+                    'distance', oAttackOutcome.distance,
+                    'range', oAttackOutcome.range,
+                    'roll', oAttackOutcome.roll, '+',
+                    'bonus', oAttackOutcome.bonus,
+                    '=', oAttackOutcome.roll + oAttackOutcome.bonus,
+                    'vs. ac', oAttackOutcome.ac,
+                    oAttackOutcome.hit ? 'HIT' : 'MISS')
+            }
         })
 
         manager.events.on('creature.saving-throw', ev => {
@@ -592,7 +611,6 @@ describe('Succubus vs Goblin', function () {
         advance()
         advance()
         advance()
-
         console.log(aLog)
     })
 })

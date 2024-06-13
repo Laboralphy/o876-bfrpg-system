@@ -1,4 +1,5 @@
 const { checkCombatActionSchema } = require('../libs/check-combat-action-schema')
+const {computePlanning} = require("./compute-planing");
 
 class CombatFighterState {
     constructor () {
@@ -91,9 +92,6 @@ class CombatFighterState {
      */
     get nextAction () {
         return this._currentAction
-    }
-
-    flushCurrentAction () {
     }
 
     setActionCooldown (oAction, nTurn) {

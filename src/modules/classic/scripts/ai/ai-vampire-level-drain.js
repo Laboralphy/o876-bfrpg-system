@@ -17,14 +17,15 @@ function main (ev) {
             creature,
             target,
             charm: 'gaze',
-            drain: 'kiss',
-            attack: 'claws'
+            drain: 'bite',
+            attack: 'fist'
         })
         if (sAction) {
             action(sAction)
         }
     } else {
-        action('claws')
+        action('fist')
     }
 }
+
 module.exports = main

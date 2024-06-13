@@ -18,6 +18,15 @@ class Creature {
         this._dice = new Dice()
         this._store = buildStore()
         this._events = new EventEmitter()
+        this._ref = ''
+    }
+
+    set ref (value) {
+        this._ref = value
+    }
+
+    get ref () {
+        return this._ref
     }
 
     get _data () {
@@ -221,33 +230,49 @@ class Creature {
         // selected weapon if any
         const oSelectedWeapon = this.getters.getSelectedWeapon
         // if bWeapon true then we are using a weapon
-        const bUseWeapon = (oSelectedAction.name === CONSTS.DEFAULT_ACTION_WEAPON) && !!oSelectedWeapon
-        const bUseAction = !!oSelectedAction
+        const bUseWeapon = !!oSelectedWeapon &&
+            (
+                (oSelectedAction.name === CONSTS.DEFAULT_ACTION_WEAPON) ||
+                !oSelectedAction
+            )
+        if (!bUseWeapon && action) {
+            this.mutations.selectAction({ action: action.name })
+        }
         // if bWeapon we fetch the weapon reference, else we use null
         const weapon = bUseWeapon ? oSelectedWeapon : null
-        // Lets get attack range
-        const oWeaponRanges = this._store.externals.data.data['weapon-ranges']
-        const nAttackRange = bUseWeapon
-            ? weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_REACH)
-                ? oWeaponRanges.WEAPON_RANGE_REACH
-                : weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
-                    ? oWeaponRanges.WEAPON_RANGE_ROOM
-                    : oWeaponRanges.WEAPON_RANGE_MELEE
-            : bUseAction
-                ? oSelectedAction.a
-
+        const range = weapon ? this.getters.getAttackRanges.weapon : this.getters.getAttackRanges.action
 
         const oAttackOutcome = this._createAttackOutcome({
             attacker: this,
             target: oTarget,
             action: oSelectedAction,
             distance,
-            range: weapon ? this._store.externals.
+            range
         })
+        if (distance > range) {
+            oAttackOutcome.failed = true
+            oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_TARGET_UNREACHABLE
+            return oAttackOutcome
+        }
         if (!this.getters.getCapabilities.fight) {
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_CONDITION
             return oAttackOutcome
+        } else {
+            // check if can attack THIS target specifically (friend or master)
+            let bPreventAttack = this.getters.getCharmerSet.has(oTarget.id)
+            const oPlayloadFriendCheck = {
+                target: oTarget,
+                preventAttack: () => {
+                    bPreventAttack = true
+                }
+            }
+            this.events.emit('friend-check', oPlayloadFriendCheck)
+            if (bPreventAttack) {
+                oAttackOutcome.failed = true
+                oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_FRIEND
+                return oAttackOutcome
+            }
         }
         if (!oAttackOutcome.action) {
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
