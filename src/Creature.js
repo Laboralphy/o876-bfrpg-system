@@ -216,13 +216,25 @@ class Creature {
         if (!oTarget) {
             throw new Error('Creature.attack target must be defined')
         }
+        // selected action
         const oSelectedAction = action || this.getters.getSelectedAction
+        // selected weapon if any
         const oSelectedWeapon = this.getters.getSelectedWeapon
+        // if bWeapon true then we are using a weapon
         const bUseWeapon = (oSelectedAction.name === CONSTS.DEFAULT_ACTION_WEAPON) && !!oSelectedWeapon
+        const bUseAction = !!oSelectedAction
+        // if bWeapon we fetch the weapon reference, else we use null
         const weapon = bUseWeapon ? oSelectedWeapon : null
+        // Lets get attack range
+        const oWeaponRanges = this._store.externals.data.data['weapon-ranges']
         const nAttackRange = bUseWeapon
             ? weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_REACH)
-                ?
+                ? oWeaponRanges.WEAPON_RANGE_REACH
+                : weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+                    ? oWeaponRanges.WEAPON_RANGE_ROOM
+                    : oWeaponRanges.WEAPON_RANGE_MELEE
+            : bUseAction
+                ? oSelectedAction.a
 
 
         const oAttackOutcome = this._createAttackOutcome({
