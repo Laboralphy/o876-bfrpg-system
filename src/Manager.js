@@ -96,7 +96,7 @@ class Manager {
         if (effect.duration > 0) {
             this._effectOptimRegistry[effect.id] = { effect, target, source }
         }
-        this.events.emit('creature.effect-applied', { manager: this, effect, target, source })
+        this.events.emit('creature.effect.applied', { manager: this, effect, target, source })
     }
 
     /**
@@ -106,7 +106,7 @@ class Manager {
      * @param source {Creature}
      */
     _effectDisposed ({ effect, target, source }) {
-        this.events.emit('creature.effect-disposed', { manager: this, effect, target, source })
+        this.events.emit('creature.effect.disposed', { manager: this, effect, target, source })
         delete this._effectOptimRegistry[effect.id]
     }
 

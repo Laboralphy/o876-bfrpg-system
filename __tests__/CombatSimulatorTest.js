@@ -582,7 +582,7 @@ describe('Succubus vs Goblin', function () {
             aLog.push([ev.creature.id, 'saving throw against', ev.threat, 'roll', ev.total, 'vs.', ev.dc, ev.success ? 'SUCCESS' : 'FAILURE'].join(' '))
         })
 
-        manager.events.on('creature.effect-applied', ev => {
+        manager.events.on('creature.effect.applied', ev => {
             switch (ev.effect.type) {
                 case 'EFFECT_CHARM': {
                     aLog.push([ev.target.id,'is charmed by', ev.source.id, 'for duration', ev.effect.duration].join(' '))
@@ -611,6 +611,6 @@ describe('Succubus vs Goblin', function () {
         advance()
         advance()
         advance()
-        console.log(aLog)
+        // console.log(aLog)
     })
 })

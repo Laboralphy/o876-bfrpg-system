@@ -388,15 +388,17 @@ class Combat {
     approachTarget () {
         const nRunSpeed = this._attacker.speed
         const previousDistance = this.distance
-        const newDistance = Math.max(this.weaponMeleeRange, this.distance - nRunSpeed)
+        let nNewDistance = Math.max(this.weaponMeleeRange, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
             ...this.defaultPayload,
             speed: nRunSpeed,
             factor: this._attacker.speedFactor,
             previousDistance,
-            distance: newDistance
+            distance: d => {
+                nNewDistance = parseFloat(d) || 0
+            }
         })
-        this.distance = newDistance
+        this.distance = nNewDistance
         this._attacker.healSpeedPenalty()
     }
 

@@ -69,11 +69,9 @@ class CombatManager {
             const oCombat = this._fighters[oCreature.id]
             const oDefender = oCombat.defender
             oCombat.events.removeAllListeners()
-            this._events.emit('combat.end', {
-                attacker: oCombat.attacker.creature,
-                target: oCombat.defender,
-                combatManager: this
-            })
+            this._events.emit('combat.end', this._addManagerToObject({
+                ...oCombat.defaultPayload,
+            }))
             delete this._fighters[oCreature.id]
             if (bBothSides && this.isCreatureFightingWithTarget(oDefender, oCreature)) {
                 this.endCombat(oDefender)
