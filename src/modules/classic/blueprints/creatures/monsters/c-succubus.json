@@ -100,10 +100,10 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_ON_COMBAT_TURN",
+      "property": "ITEM_PROPERTY_SPECIAL_BEHAVIOR",
       "amp": 0,
       "data": {
-        "script": "ai-succubus-level-drain"
+        "combat": "ai-succubus-level-drain"
       }
     }
   ],

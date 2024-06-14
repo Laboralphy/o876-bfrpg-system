@@ -30,10 +30,11 @@ module.exports = (state, getters) => {
         effectFilter: filterRangedAttackTypes,
         propFilter: filterRangedAttackTypes
     })
-    const bCanAct = getters.getCapabilities.act
-    const nACDexBonus = bCanAct ? getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] : 0
+    // If cannot act or see : no dexterity bonus and no shield bonus ; equipment armor steel count
+    const bCanActAndSee = getters.getCapabilities.act && getters.getCapabilities.see
+    const nACDexBonus = bCanActAndSee ? getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] : 0
     const nACArmorBonus = oArmor?.ac || 0
-    const nACShieldBonus = bCanAct ? (oShield?.ac || 0) : 0
+    const nACShieldBonus = bCanActAndSee ? (oShield?.ac || 0) : 0
     const nEquipmentAC = naturalArmorClass + nACDexBonus + nACArmorBonus + nACShieldBonus
     return {
         natural: naturalArmorClass,

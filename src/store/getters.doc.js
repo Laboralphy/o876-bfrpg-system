@@ -8,7 +8,7 @@
  * @property getAttackRanges {{weapon: number, action: number}}
  * @property getAttackRollCriticalValue {number}
  * @property getAttackRollFumbleValue {number}
- * @property getCapabilities {{act: boolean, attack: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
+ * @property getCapabilities {{act: boolean, fight: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
  * @property getCharmerSet {Set<string>}
  * @property getClassTypeData {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  * @property getConditionSet {Set<string>}

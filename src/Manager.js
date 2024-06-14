@@ -393,14 +393,14 @@ class Manager {
             creature: oCreature,
             manager: this
         }))
-        oCreature.events.on('damage', ev => {
+        oCreature.events.on('damaged', ev => {
             const oPayload = {
                 ...ev,
                 creature: oCreature,
                 manager: this
             }
             this._events.emit('creature.damage', oPayload)
-            this.runPropEffectScript(oCreature, 'damage', oPayload)
+            this.runPropEffectScript(oCreature, 'damaged', oPayload)
         })
         oCreature.events.on('heal', ev => {
             const oPayload = {
@@ -460,10 +460,6 @@ class Manager {
         })
     }
 
-    _processAIScript ({ attacker, target, turn, tick, action, distance }) {
-        this.runScript()
-    }
-
     /**
      * TODO not sure of i keep this method, i don't know when to call it
      * TODO need a better system to deal with periodic item properties
@@ -471,16 +467,16 @@ class Manager {
      */
     _processCreaturePassiveProperties (oCreature) {
         // regeneration
-        const nRegen = oCreature.aggregateModifiers([
+        const am = oCreature.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_REGENERATION
         ], {
             propFilter: prop => prop.amp > 0,
-            propForEach: prop => {
-                if (oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
-                    oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
-                }
-            }
+            propAmpMapper: prop => typeof prop.amp === 'string' ? oCreature.dice.evaluate(prop.amp) : prop.amp,
         })
+        const nRegen = am.sum
+        if (oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
+            oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
+        }
     }
 
     createEffect (sType, amp = 0, oParams = {}) {

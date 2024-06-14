@@ -61,7 +61,7 @@ function mutate ({ effect, target, source }) {
         subtype: effect.subtype
     }
     target.mutations.damage({ amount: oRecentDamage.amount })
-    target.events.emit('damage', oRecentDamage)
+    target.events.emit('damaged', oRecentDamage)
 }
 
 module.exports = {

@@ -36,10 +36,10 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_ON_DAMAGE",
+      "property": "ITEM_PROPERTY_SPECIAL_BEHAVIOR",
       "amp": 0,
       "data": {
-        "script": "dmg-golem-iron"
+        "damaged": "dmg-golem-iron"
       }
     },
     {

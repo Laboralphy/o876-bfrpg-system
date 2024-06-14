@@ -108,6 +108,26 @@ class Dice {
     }
   }
 
+  _add (result, { sides, count, modifier }) {
+    const sSides = sides.toString()
+    if (sSides in result) {
+      result.sides[sSides] = count
+    } else {
+      result.sides[sSides] += count
+    }
+    result.modifier += modifier
+  }
+
+  add (values) {
+    return values.reduce((prev, curr) => {
+      this._add(prev, this.xdy(curr))
+      return prev
+    }, {
+      sides: {},
+      modifier: 0
+    })
+  }
+
   /**
    * Evaluate an expression of type xDy+z
    * effectively roll the dice
