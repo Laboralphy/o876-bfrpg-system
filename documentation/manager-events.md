@@ -110,12 +110,12 @@ Indicated that a creature used an action.
 
 ### parameters
 
-| Parameter | Type   | Description         |
-|-----------|--------|---------------------|
-| turn          | number        | Elapsed turns since beginning of combat |
-| tick          | number        | Number of ticks since beginning of turn |
-| attackIndex   | number        | If the creature has several attakcs a turn, this is the nth attack |
-| outcome       | BFAttackOutcome | This complex object details all what happenned during this attack |
+| Parameter   | Type            | Description                                                        |
+|-------------|-----------------|--------------------------------------------------------------------|
+| turn        | number          | Elapsed turns since beginning of combat                            |
+| tick        | number          | Number of ticks since beginning of turn                            |
+| attackIndex | number          | If the creature has several attakcs a turn, this is the nth attack |
+| outcome     | BFAttackOutcome | This complex object details all what happenned during this attack  |
 
 ### Types
 
@@ -194,12 +194,12 @@ This event is exploited by client App with a reputation/faction system
 
 ### parameters
 
-| Parameter | Type      | Description                 |
-|-----------|-----------|-----------------------------|
-| manager   | Manager   | Instance of Manager         |
-| creature  | Creature  | Attacking Creature instance |
-| target    | Creature  | Target Creature instance    |
-| preventAttack | function | If called by event handler, the creature attack will be cancelled |
+| Parameter     | Type       | Description                                                       |
+|---------------|------------|-------------------------------------------------------------------|
+| manager       | Manager    | Instance of Manager                                               |
+| creature      | Creature   | Attacking Creature instance                                       |
+| target        | Creature   | Target Creature instance                                          |
+| preventAttack | function   | If called by event handler, the creature attack will be cancelled |
 
 ## creature.damage
 
@@ -207,14 +207,15 @@ This event is fired when a creature is damaged.
 
 ### Parameters
 
-| Parameter | Type      | Description                         |
-|-----------|-----------|-------------------------------------|
-| manager   | Manager   | Instance of Manager                 |
-| creature  | Creature  | Damaged Creature instance           |
-| damageType | string   | Damage Element type (fire, cold...) |
-| source    | Creature  | creature who dealth the damage      |
-| subtype   | string    | effect sub type                     |
-| amount    | number    | 
+| Parameter  | Type       | Description                         |
+|------------|------------|-------------------------------------|
+| manager    | Manager    | Instance of Manager                 |
+| creature   | Creature   | Damaged Creature instance           |
+| damageType | string     | Damage Element type (fire, cold...) |
+| source     | Creature   | creature who dealth the damage      |
+| subtype    | string     | effect sub type                     |
+| amount     | number     | number of damage points dealt       |
+| resisted   | number     | number of damage points resisted    |
 
 
 ## creature.heal 
@@ -251,12 +252,12 @@ Occurs when a effect is applied to a creature.
 
 #### BFEffect
 
-| Property    | Type   | Description                               |
-|-------------|--------|-------------------------------------------|
-| type        | string | Effect type : EFFECT_* constant group     |
+| Property    | Type   | Description                                                                     |
+|-------------|--------|---------------------------------------------------------------------------------|
+| type        | string | Effect type : EFFECT_* constant group                                           |
 | amp         | number | Effect amplitude, usually a number, sometimes a die-expression like 1d4, or 2d6 |
-| subtype     | string | Effect subtype, EFFECT_SUBTYPE_*          |
-| data        | object | Object which content varies greatly according to effect type |
+| subtype     | string | Effect subtype, EFFECT_SUBTYPE_*                                                |
+| data        | object | Object which content varies greatly according to effect type                    |
 
 
 ## creature.effect.disposed
