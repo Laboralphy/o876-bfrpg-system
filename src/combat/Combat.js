@@ -206,8 +206,7 @@ class Combat {
         }
         this.playFighterAction(this._attacker, this._defender)
         this._events.emit('combat.tick.end', {
-            ...this.defaultPayload,
-            distance: this._distance
+            ...this.defaultPayload
         })
         this.nextTick()
     }

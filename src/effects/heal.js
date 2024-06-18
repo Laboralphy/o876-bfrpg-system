@@ -14,7 +14,7 @@ function mutate ({ effect: oEffect, target }) {
     const nFactor = min <= -100 ? 0 : Math.max(0, 1 + sum / 100)
     const nHealAmount = oEffect.amp
     const nHealAmountAmplified = Math.floor(nHealAmount * nFactor)
-    target.mutations.setHitPoints({ value: target.getters.getHitPoints + nHealAmountAmplified })
+    target.setHitPoints(target.getters.getHitPoints + nHealAmountAmplified)
     target.events.emit('heal', {
         amount: nHealAmountAmplified,
         factor: nFactor,

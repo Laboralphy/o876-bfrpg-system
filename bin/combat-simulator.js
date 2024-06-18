@@ -78,7 +78,7 @@ class CombatSim {
             console.log(this._tt(turn, tick), 'BEGIN TURN', attacker.name, 'is at', combat.distance, 'ft. from', target.name)
         })
         this._manager.events.on('combat.tick.end', ev => {
-            const { turn, tick, attacker, target, distance } = ev
+            const { turn, tick, attacker, target } = ev
             console.log(this._tt(turn, tick), 'END TICK', attacker.name)
         })
         this._manager.events.on('combat.action', ev => {

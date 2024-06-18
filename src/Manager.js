@@ -71,6 +71,9 @@ class Manager {
         cm.events.on('combat.tick.end', ev => {
             this._events.emit('combat.tick.end', ev)
         })
+        cm.events.on('combat.offensive-slot', ev => {
+            this._events.emit('combat.offensive-slot', ev)
+        })
 
         this._itemBuilder = ib
         this._creatureBuilder = cb
@@ -381,7 +384,7 @@ class Manager {
         if (id !== '') {
             oCreature.id = id
         }
-        oCreature.mutations.setHitPoints({ value: oCreature.getters.getMaxHitPoints })
+        oCreature.setHitPoints(oCreature.getters.getMaxHitPoints)
         this._horde.linkCreature(oCreature)
         oCreature.events.on('saving-throw', ev => this._events.emit('creature.saving-throw', {
             ...ev,
@@ -409,6 +412,13 @@ class Manager {
                 manager: this
             }
             this._events.emit('creature.heal', oPayload)
+        })
+        oCreature.events.on('death', ev => {
+            const oPayload = {
+                ...ev,
+                manager: this
+            }
+            this._events.emit('creature.death', oPayload)
         })
         return oCreature
     }
@@ -475,7 +485,7 @@ class Manager {
         })
         const nRegen = am.sum
         if (oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
-            oCreature.mutations.setHitPoints({ value: oCreature.getters.getHitPoints + nRegen })
+            oCreature.setHitPoints(oCreature.getters.getHitPoints + nRegen)
         }
     }
 

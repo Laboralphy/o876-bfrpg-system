@@ -197,6 +197,21 @@ class Creature {
         }
     }
 
+    setHitPoints (hp) {
+        const nCurrHP = this.getters.getHitPoints
+        const nMaxHP = this.getters.getMaxHitPoints
+        hp = Math.max(0, Math.min(hp, nMaxHP))
+        if (hp === nCurrHP) {
+            return
+        }
+        this.mutations.setHitPoints({ value: hp })
+        if (hp === 0) {
+            this.events.emit('death', {
+                creature: this
+            })
+        }
+    }
+
     /**
      * Will roll a die and see if attack hits
      * @param oAttackOutcome {BFAttackOutcome}
@@ -407,7 +422,8 @@ class Creature {
             const outcome = {
                 success,
                 ability: sAbility,
-                threat: sSavingThrow,
+                savingThrow: sSavingThrow,
+                threat,
                 dc,
                 roll: nRoll,
                 bonus: nBonus,
