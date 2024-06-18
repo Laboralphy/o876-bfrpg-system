@@ -21,5 +21,6 @@ module.exports = (state, getters, externals) => {
             effectForEach: f
         }
     )
-    return Math.max(0, state.speed * nModifier)
+    const encumbrance = getters.getEncumbrance
+    return Math.max(0, state.speed * nModifier * encumbrance.factor)
 }

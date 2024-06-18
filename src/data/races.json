@@ -17,7 +17,21 @@
       "SAVING_THROW_PARALYSIS_PETRIFY": 1,
       "SAVING_THROW_MAGIC_WAND": 2,
       "SAVING_THROW_SPELL": 2
-    }
+    },
+    "properties": [
+      {
+        "property": "ITEM_PROPERTY_DARKVISION",
+        "amp": 0,
+        "data": {}
+      },
+      {
+        "property": "ITEM_PROPERTY_IMMUNITY",
+        "amp": 0,
+        "data": {
+          "immunityType": "IMMUNITY_TYPE_PARALYSIS"
+        }
+      }
+    ]
   },
   "RACE_DWARF": {
     "specie": "SPECIE_HUMANOID",
@@ -35,7 +49,14 @@
       "SAVING_THROW_MAGIC_WAND": 4,
       "SAVING_THROW_SPELL": 4,
       "SAVING_THROW_DRAGON_BREATH": 3
-    }
+    },
+    "properties": [
+      {
+        "property": "ITEM_PROPERTY_DARKVISION",
+        "amp": 0,
+        "data": {}
+      }
+    ]
   },
   "RACE_HALFLING": {
     "specie": "SPECIE_HUMANOID",
@@ -54,6 +75,20 @@
       "SAVING_THROW_MAGIC_WAND": 4,
       "SAVING_THROW_SPELL": 4,
       "SAVING_THROW_DRAGON_BREATH": 3
-    }
+    },
+    "properties": [
+      {
+        "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+        "amp": 1,
+        "data": {
+          "attackType": "ATTACK_TYPE_RANGED"
+        }
+      },
+      {
+        "property": "ITEM_PROPERTY_ARMOR_CLASS_MODIFIER",
+        "amp": 2,
+        "data": {}
+      }
+    ]
   }
 }

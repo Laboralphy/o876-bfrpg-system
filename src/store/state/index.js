@@ -28,7 +28,7 @@ const CONSTS = require('../../consts')
  * @property properties {BFItemProperty[]}
  * @property offensiveSlot {string}
  * @property equipment {{}}
- * @property recentDamages {{ damageTypestring, amount:number, resisted:number, source:string }[]}
+ * @property encumbrance {number}
  */
 
 /**
@@ -47,7 +47,7 @@ module.exports = () => ({
     classType: 'CLASS_TYPE_TOURIST',
     specie: 'SPECIE_HUMANOID',
     speed: 30,
-    race: 'RACE_HUMAN',
+    race: 'RACE_UNKNOWN',
     naturalArmorClass: 11,
     level: 1,
     actions: {
@@ -74,5 +74,5 @@ module.exports = () => ({
         [CONSTS.EQUIPMENT_SLOT_WAIST]: null,
         [CONSTS.EQUIPMENT_SLOT_FEET]: null
     },
-    recentDamages: []
+    encumbrance: 0
 })

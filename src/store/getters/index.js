@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-06-14T15:00:45.149Z
+// Date : 2024-06-18T16:22:22.615Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
   'getEffectRegistry': require('./getEffectRegistry.js'),
   'getEffectSet': require('./getEffectSet.js'),
   'getEffects': require('./getEffects.js'),
+  'getEncumbrance': require('./getEncumbrance.js'),
   'getEquipment': require('./getEquipment.js'),
   'getHitPoints': require('./getHitPoints.js'),
   'getImmunitySet': require('./getImmunitySet.js'),
@@ -31,10 +32,10 @@ module.exports = {
   'getOffensiveSlot': require('./getOffensiveSlot.js'),
   'getProperties': require('./getProperties.js'),
   'getPropertySet': require('./getPropertySet.js'),
+  'getRace': require('./getRace.js'),
   'getRangedActions': require('./getRangedActions.js'),
-  'getRecentDamages': require('./getRecentDamages.js'),
   'getSavingThrowFailureValue': require('./getSavingThrowFailureValue.js'),
-  'getSavingThrowSucessValue': require('./getSavingThrowSucessValue.js'),
+  'getSavingThrowSuccessValue': require('./getSavingThrowSuccessValue.js'),
   'getSelectedAction': require('./getSelectedAction.js'),
   'getSelectedWeapon': require('./getSelectedWeapon.js'),
   'getSpecie': require('./getSpecie.js'),

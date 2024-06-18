@@ -417,7 +417,7 @@ class Creature {
             }).sum
             const nRollBonus = nRoll + nBonus
             const success =
-                nRoll >= this.getters.getSavingThrowSucessValue ||
+                nRoll >= this.getters.getSavingThrowSuccessValue ||
                 (nRoll > this.getters.getSavingThrowFailureValue && nRollBonus >= dc)
             const outcome = {
                 success,

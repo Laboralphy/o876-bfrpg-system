@@ -30,7 +30,6 @@ module.exports = (state, getters, externals) => {
     const oSavingThrows = bIsMonster
         ? externals['class-types'][state.classType].savingThrows
         : data.savingThrows
-    const nSavingThrowLevel = nEffectiveLevel
     return {
         classType: state.classType,
         level: nEffectiveLevel,
@@ -42,6 +41,6 @@ module.exports = (state, getters, externals) => {
         rogueSkills: data.rogueSkills
             ? extractRegistryLevel(data.rogueSkills, nEffectiveLevel)
             : null,
-        savingThrows: extractRegistryLevel(oSavingThrows, nSavingThrowLevel)
+        savingThrows: extractRegistryLevel(oSavingThrows, nEffectiveLevel)
     }
 }

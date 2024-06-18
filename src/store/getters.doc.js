@@ -17,6 +17,7 @@
  * @property getEffectRegistry {Object<string, BFEffect>}
  * @property getEffectSet {Set<string>}
  * @property getEffects {{}[]}
+ * @property getEncumbrance {{value: number, capacity: number}}
  * @property getEquipment {Object<string, BFItem>}
  * @property getHitPoints {number}
  * @property getImmunitySet {Set<string>}
@@ -28,10 +29,10 @@
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
  * @property getPropertySet {Set<string>}
+ * @property getRace {string|(<T extends any[] | []>(values: T) => Promise<Awaited<T[number]>>)|(<T>(values: Iterable<PromiseLike<T> | T>) => Promise<Awaited<T>>)|*}
  * @property getRangedActions {string[]}
- * @property getRecentDamages {{ amount: number, types: Object<string, { amount: number, resisted: number }> }}
  * @property getSavingThrowFailureValue {number}
- * @property getSavingThrowSucessValue {number}
+ * @property getSavingThrowSuccessValue {number}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpecie {{ ref: string, living: boolean, mind: boolean }}

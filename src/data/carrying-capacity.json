@@ -1,0 +1,82 @@
+[
+  {
+    "strength": [1],
+    "value": 50
+  },
+  {
+    "strength": [2],
+    "value": 60
+  },
+  {
+    "strength": [3],
+    "value": 65
+  },
+  {
+    "strength": [4],
+    "value": 70
+  },
+  {
+    "strength": [5],
+    "value": 75
+  },
+  {
+    "strength": [6],
+    "value": 80
+  },
+  {
+    "strength": [7],
+    "value": 85
+  },
+  {
+    "strength": [8],
+    "value": 90
+  },
+  {
+    "strength": [9],
+    "value": 95
+  },
+  {
+    "strength": [10],
+    "value": 100
+  },
+  {
+    "strength": [11],
+    "value": 110
+  },
+  {
+    "strength": [12],
+    "value": 125
+  },
+  {
+    "strength": [13],
+    "value": 135
+  },
+  {
+    "strength": [14],
+    "value": 150
+  },
+  {
+    "strength": [15],
+    "value": 175
+  },
+  {
+    "strength": [16],
+    "value": 200
+  },
+  {
+    "strength": [17],
+    "value": 250
+  },
+  {
+    "strength": [18],
+    "value": 300
+  },
+  {
+    "strength": [19],
+    "value": 400
+  },
+  {
+    "strength": [20],
+    "value": 500
+  }
+]
