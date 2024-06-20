@@ -20,7 +20,7 @@ function extractRegistryLevel (reg, nLevel) {
  * @param state
  * @param getters
  * @param externals
- * @returns {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
+ * @returns {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  */
 module.exports = (state, getters, externals) => {
     const data = externals['class-types'][state.classType]
@@ -34,9 +34,9 @@ module.exports = (state, getters, externals) => {
         classType: state.classType,
         level: nEffectiveLevel,
         nextLevelExp: data.experienceLevels ? data.experienceLevels[nUndrainedLevel] : 0,
-        hitDieValue: data.hitDieValue,
-        hitPointBonus: data.hitPointBonus,
-        maxHitDice: data.maxHitDice,
+        hdPerLowerLevel: data.hdPerLowerLevel,
+        hdPerHigherLevel: data.hdPerHigherLevel,
+        lowerLevelCount: data.lowerLevelCount,
         attackBonus: getArrayValue(data.attackBonus, nEffectiveLevel),
         rogueSkills: data.rogueSkills
             ? extractRegistryLevel(data.rogueSkills, nEffectiveLevel)

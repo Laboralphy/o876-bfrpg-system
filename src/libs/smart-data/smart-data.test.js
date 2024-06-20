@@ -1,4 +1,4 @@
-const SmartData = require('../src/libs/smart-data')
+const SmartData = require('./index')
 
 describe('test1', function () {
     it('should instanciate without error', function () {

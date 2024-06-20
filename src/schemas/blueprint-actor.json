@@ -72,6 +72,11 @@
       "type": "string",
       "pattern": "^SPECIE_"
     },
+    "race": {
+      "description": "Race of creature (humanoid)",
+      "type": "string",
+      "pattern": "^RACE_"
+    },
     "speed": {
       "description": "Speed of the creature",
       "type": "number"

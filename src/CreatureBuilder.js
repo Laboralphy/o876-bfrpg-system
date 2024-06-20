@@ -51,8 +51,15 @@ class CreatureBuilder {
         m.setNaturalArmorClass({ value: blueprint.ac })
         m.setSpecie({ value: blueprint.specie })
         m.setSpeed({ value: blueprint.speed })
+        const props = []
+        if (blueprint.race) {
+            m.setRace({ value: blueprint.race })
+            const rd = oCreature.getters.getRace
+            props.push(...rd.properties)
+        }
+        props.push(...blueprint.properties)
         try {
-            m.setProperties({ properties: blueprint.properties.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip.data)) })
+            m.setProperties({ properties: props.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip.data)) })
         } catch (e) {
             console.error(e)
             console.warn('INVALID ITEM PROPERTY: ' + e.message)

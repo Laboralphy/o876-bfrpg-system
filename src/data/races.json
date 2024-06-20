@@ -12,7 +12,7 @@
         "max": 17
       }
     },
-    "maxHitDice": 6,
+    "maxHdPerLevel": 6,
     "savingThrows": {
       "SAVING_THROW_PARALYSIS_PETRIFY": 1,
       "SAVING_THROW_MAGIC_WAND": 2,
@@ -68,7 +68,7 @@
         "max": 17
       }
     },
-    "maxHitDice": 6,
+    "maxHdPerLevel": 6,
     "savingThrows": {
       "SAVING_THROW_DEATH_RAY_POISON": 4,
       "SAVING_THROW_PARALYSIS_PETRIFY": 4,

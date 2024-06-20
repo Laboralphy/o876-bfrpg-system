@@ -1,4 +1,4 @@
-const ResourceManager = require('../src/libs/resource-manager')
+const ResourceManager = require('./index')
 
 describe('ResourceManager', function () {
     it('should return { alpha: { x: 1 }} when defining resource type alpha with key x and value 1', function () {

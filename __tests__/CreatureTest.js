@@ -469,3 +469,26 @@ describe('attack', function () {
         expect(oAtkOutcome.action).toEqual(DATA['default-actions'].DEFAULT_ACTION_WEAPON)
     })
 })
+
+describe('race specialities', function () {
+    it('should be able to create a human fighter', function () {
+        const c = new Creature()
+        c.mutations.setLevel({ value: 5 })
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_HUMAN })
+        c.mutations.setAbilityValue({ ability: CONSTS.ABILITY_CONSTITUTION, value: 18 })
+        expect(c.getters.getRace.maxHdPerLevel).toBeUndefined()
+        expect(c.getters.getMaxHitPoints).toBe(5 * (8 + 3))
+    })
+    it('an elf fighter should have hp 45', function () {
+        const c = new Creature()
+        c.mutations.setLevel({ value: 5 })
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_ELF })
+        c.mutations.setAbilityValue({ ability: CONSTS.ABILITY_CONSTITUTION, value: 18 })
+        expect(c.getters.getRace.maxHdPerLevel).toBe(6)
+        expect(c.getters.getMaxHitPoints).toBe(5 * (6 + 3))
+    })
+})

@@ -250,7 +250,7 @@ class Manager {
 
     async init () {
         this._schemaValidator = new SchemaValidator()
-        await this._schemaValidator.init()
+        return this._schemaValidator.init()
     }
 
     /**

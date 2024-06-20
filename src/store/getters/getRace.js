@@ -3,13 +3,17 @@
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
  * @param externals {*}
- * @returns {string|(<T extends any[] | []>(values: T) => Promise<Awaited<T[number]>>)|(<T>(values: Iterable<PromiseLike<T> | T>) => Promise<Awaited<T>>)|*}
+ * @returns {{name:string, specie:string, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
  */
 module.exports = (state, getters, externals) => {
     const sRaceName = state.race
     const oRaceData = sRaceName in externals['races'] ? externals['races'][sRaceName] : { specie: getters.getSpecie }
     return {
-        ...oRaceData,
+        maxHdPerLevel: oRaceData.maxHdPerLevel,
+        specie: oRaceData.specie,
+        abilityRestrictions: oRaceData.abilityRestrictions || {},
+        savingThrows: oRaceData.savingThrows || {},
+        properties: oRaceData.properties || [],
         name: sRaceName
     }
 }

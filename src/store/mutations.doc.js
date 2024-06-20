@@ -17,6 +17,7 @@
  * @property setNaturalArmorClass {function(value: number)}
  * @property setOffensiveSlot {function(slot: string)}
  * @property setProperties {function(properties: {[]})}
+ * @property setRace {function(value: string)}
  * @property setSpecie {function(value: string)}
  * @property setSpeed {function(value: number)}
  */

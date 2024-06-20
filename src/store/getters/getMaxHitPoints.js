@@ -1,4 +1,5 @@
 const CONSTS = require('../../consts')
+const { aggregateModifiers } = require('../../aggregator')
 
 /**
  * returns the amount of maximum hit points a character may have
@@ -8,12 +9,15 @@ const CONSTS = require('../../consts')
  * @returns {number}
  */
 module.exports = (state, getters, externals) => {
+    const nExtraHitPoints = aggregateModifiers([
+        CONSTS.ITEM_PROPERTY_EXTRA_HITPOINTS
+    ], getters).sum
     const raceData = getters.getRace
-    const nRaceMaxHitDice = raceData.maxHitDice || Infinity
-    const { hitDieValue, hitPointBonus, maxHitDice, level } = getters.getClassTypeData
-    const nFinalMaxHitDice = Math.min(nRaceMaxHitDice, maxHitDice)
-    const nLevelBelow9 = Math.min(nFinalMaxHitDice, level)
-    const nLevelOver9 = Math.max(level - nFinalMaxHitDice, 0)
-    const nHPPerLevelBelow9 = Math.max(1, hitDieValue + getters.getAbilityModifiers[CONSTS.ABILITY_CONSTITUTION])
-    return nLevelBelow9 * nHPPerLevelBelow9 + nLevelOver9 * hitPointBonus
+    const nRaceMaxHdPerLevel = raceData.maxHdPerLevel || Infinity
+    const { hdPerLowerLevel, hdPerHigherLevel, lowerLevelCount, level } = getters.getClassTypeData
+    const nLowerLevels = Math.min(lowerLevelCount, level)
+    const nHigherLevels = Math.max(level - lowerLevelCount, 0)
+    const nHdPerLowerLevel = Math.min(hdPerLowerLevel, nRaceMaxHdPerLevel)
+    const nHPPerLowerLevel = Math.max(1, nHdPerLowerLevel + getters.getAbilityModifiers[CONSTS.ABILITY_CONSTITUTION])
+    return nLowerLevels * nHPPerLowerLevel + nHigherLevels * hdPerHigherLevel + nExtraHitPoints
 }

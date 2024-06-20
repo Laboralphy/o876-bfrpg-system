@@ -10,7 +10,7 @@
  * @property getAttackRollFumbleValue {number}
  * @property getCapabilities {{act: boolean, fight: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
  * @property getCharmerSet {Set<string>}
- * @property getClassTypeData {{hitDieValue: number, hitPointBonus: number, maxHitDice: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
+ * @property getClassTypeData {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  * @property getConditionSet {Set<string>}
  * @property getDamageMitigation {Object<string, D20OneDamageMitigation>}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}
@@ -29,7 +29,7 @@
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
  * @property getPropertySet {Set<string>}
- * @property getRace {string|(<T extends any[] | []>(values: T) => Promise<Awaited<T[number]>>)|(<T>(values: Iterable<PromiseLike<T> | T>) => Promise<Awaited<T>>)|*}
+ * @property getRace {{name:string, specie:string, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
  * @property getRangedActions {string[]}
  * @property getSavingThrowFailureValue {number}
  * @property getSavingThrowSuccessValue {number}
