@@ -30,7 +30,7 @@
  * @property getPropertySet {Set<string>}
  * @property getRace {{name:string, specie:{ ref: string, living: boolean, mind: boolean }, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
  * @property getRangedActions {string[]}
- * @property getSavingThrowBonus undefined
+ * @property getSavingThrowBonus {{[p: string]: number}}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpecie {{ ref: string, living: boolean, mind: boolean }}

@@ -1,6 +1,13 @@
 const CONSTS = require('../../consts')
 const { aggregateModifiers } = require('../../aggregator')
 
+/**
+ *
+ * @param state
+ * @param getters
+ * @param externals
+ * @returns {{[p: string]: number}}
+ */
 module.exports = (state, getters, externals) => {
     const { sorter } = aggregateModifiers([
         CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER,

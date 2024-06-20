@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-06-20T15:06:20.700Z
+// Date : 2024-06-20T22:45:49.932Z
 // List of files in ./src/store/mutations
 
 module.exports = {
@@ -8,6 +8,7 @@ module.exports = {
   'damage': require('./damage.js'),
   'defineActions': require('./defineActions.js'),
   'equipItem': require('./equipItem.js'),
+  'importCreatureState': require('./importCreatureState.js'),
   'removeDeadEffects': require('./removeDeadEffects.js'),
   'removeEffect': require('./removeEffect.js'),
   'removeItem': require('./removeItem.js'),

@@ -4,6 +4,8 @@ const { aggregateModifiers } = require('./aggregator')
 const EventEmitter = require('node:events')
 const Dice = require('./libs/dice')
 const CONSTS = require('./consts')
+const { deepClone } = require("@laboralphy/object-fusion");
+
 
 require('./types.doc')
 
@@ -85,6 +87,31 @@ class Creature {
      */
     set name(value) {
         this._name = value;
+    }
+
+    get state () {
+        /**
+         * @type {BFStoreState}
+         */
+        const state = this._store.state
+        return deepClone({
+            id: this._id,
+            abilities: state.abilities,
+            classType: state.classType,
+            specie: state.specie,
+            speed: state.speed,
+            race: state.race,
+            naturalArmorClass: state.naturalArmorClass,
+            level: state.level,
+            actions: state.actions,
+            selectedAction: state.selectedAction,
+            gauges: state.gauges,
+            effects: state.effects,
+            properties: state.properties,
+            offensiveSlot: state.offensiveSlot,
+            equipment: state.equipment,
+            encumbrance: state.encumbrance
+        })
     }
 
     /**

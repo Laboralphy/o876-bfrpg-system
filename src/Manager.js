@@ -370,7 +370,7 @@ class Manager {
      * @param ref {string}
      * @returns {Creature}
      */
-    createCreature ({ id = '', ref = '' } = {}) {
+    createCreature ({ id = '', ref = '', importData = null } = {}) {
         const oCreature = new Creature()
         if (ref) {
             const oBlueprint = this.getBlueprint(ref)
@@ -383,6 +383,9 @@ class Manager {
         }
         if (id !== '') {
             oCreature.id = id
+        }
+        if (importData) {
+            oCreature.mutations.importCreatureState({ data: importData })
         }
         oCreature.setHitPoints(oCreature.getters.getMaxHitPoints)
         this._horde.linkCreature(oCreature)

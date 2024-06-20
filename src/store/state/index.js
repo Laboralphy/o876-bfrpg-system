@@ -50,8 +50,7 @@ module.exports = () => ({
     race: 'RACE_UNKNOWN',
     naturalArmorClass: 11,
     level: 1,
-    actions: {
-    },
+    actions: {},
     selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
     gauges: {
         hitPoints: 1

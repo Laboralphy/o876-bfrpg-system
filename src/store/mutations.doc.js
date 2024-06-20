@@ -5,6 +5,7 @@
  * @property damage {function(amount: number)}
  * @property defineActions {function(actions: DefineActionDTO[])}
  * @property equipItem {function(item: BFItem, slot: string): BFEffect}
+ * @property importCreatureState {function(data: *)}
  * @property removeDeadEffects {function()}
  * @property removeEffect {function(effect: BFEffect)}
  * @property removeItem {function(slot: string): BFEffect}
