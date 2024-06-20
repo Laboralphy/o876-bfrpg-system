@@ -21,15 +21,13 @@ module.exports = (state, getters, externals) => {
         [CONSTS.THREAT_ILLUSION]: 0
     }
     const rd = getters.getRace
-    for (const [sThreat, value] of rd.savingThrows) {
+    for (const [sThreat, value] of Object.entries(rd.savingThrows)) {
         streg[sThreat] += value
     }
     Object
-        .fromEntries(
-            Object
-                .entries(sorter)
-                .forEach(([sThreat, { sum }]) => {
-
-                })
-        )
+        .entries(sorter)
+        .forEach(([sThreat, { sum }]) => {
+            streg[sThreat] += sum
+        })
+    return streg
 }

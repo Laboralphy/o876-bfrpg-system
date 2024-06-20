@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-06-19T15:40:52.660Z
+// Date : 2024-06-20T15:06:20.664Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -9,8 +9,6 @@ module.exports = {
   'getArmorClass': require('./getArmorClass.js'),
   'getAttackBonus': require('./getAttackBonus.js'),
   'getAttackRanges': require('./getAttackRanges.js'),
-  'getAttackRollCriticalValue': require('./getAttackRollCriticalValue.js'),
-  'getAttackRollFumbleValue': require('./getAttackRollFumbleValue.js'),
   'getCapabilities': require('./getCapabilities.js'),
   'getCharmerSet': require('./getCharmerSet.js'),
   'getClassTypeData': require('./getClassTypeData.js'),
@@ -22,6 +20,7 @@ module.exports = {
   'getEffects': require('./getEffects.js'),
   'getEncumbrance': require('./getEncumbrance.js'),
   'getEquipment': require('./getEquipment.js'),
+  'getFumbleSuccess': require('./getFumbleSuccess.js'),
   'getHitPoints': require('./getHitPoints.js'),
   'getImmunitySet': require('./getImmunitySet.js'),
   'getLevel': require('./getLevel.js'),
@@ -34,12 +33,12 @@ module.exports = {
   'getPropertySet': require('./getPropertySet.js'),
   'getRace': require('./getRace.js'),
   'getRangedActions': require('./getRangedActions.js'),
-  'getSavingThrowFailureValue': require('./getSavingThrowFailureValue.js'),
-  'getSavingThrowSuccessValue': require('./getSavingThrowSuccessValue.js'),
+  'getSavingThrowBonus': require('./getSavingThrowBonus.js'),
   'getSelectedAction': require('./getSelectedAction.js'),
   'getSelectedWeapon': require('./getSelectedWeapon.js'),
   'getSpecie': require('./getSpecie.js'),
   'getSpeed': require('./getSpeed.js'),
+  'getWeaponSizeRestrictionSet': require('./getWeaponSizeRestrictionSet.js'),
   'isDead': require('./isDead.js'),
   'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js'),
   'isSelectedWeaponUsable': require('./isSelectedWeaponUsable.js'),

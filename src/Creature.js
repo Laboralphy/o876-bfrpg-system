@@ -16,9 +16,10 @@ class Creature {
         this._id = getId()
         this._name = this._id
         this._dice = new Dice()
-        this._store = buildStore()
         this._events = new EventEmitter()
+        this._store = buildStore()
         this._ref = ''
+        this.mutations.setHitPoints({ value: Infinity })
     }
 
     set ref (value) {
@@ -218,10 +219,14 @@ class Creature {
      * @returns {BFAttackOutcome}
      */
     resolveAttackHit (oAttackOutcome) {
+        /**
+         * @var {{savingThrow: {fumble: number, success: number}, attack: {fumble: number, success: number}}}
+         */
+        const fs = this.getters.getFumbleSuccess
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
-        oAttackOutcome.critical = nRoll >= this.getters.getAttackRollCriticalValue
-        oAttackOutcome.hit = (nRoll > this.getters.getAttackRollFumbleValue) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        oAttackOutcome.critical = nRoll >= fs.attack.success
+        oAttackOutcome.hit = (nRoll > fs.attack.fumble) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
         return oAttackOutcome
     }
 
@@ -416,9 +421,13 @@ class Creature {
                 propFilter: prop => prop.data.threat === sSavingThrow || prop.data.threat === CONSTS.SAVING_THROW_ANY
             }).sum
             const nRollBonus = nRoll + nBonus
+            /**
+             * @var {{savingThrow: {fumble: number, success: number}, attack: {fumble: number, success: number}}}
+             */
+            const fs = this.getters.getFumbleSuccess
             const success =
-                nRoll >= this.getters.getSavingThrowSuccessValue ||
-                (nRoll > this.getters.getSavingThrowFailureValue && nRollBonus >= dc)
+                nRoll >= fs.savingThrow.success ||
+                (nRoll > fs.savingThrow.fumble && nRollBonus >= dc)
             const outcome = {
                 success,
                 ability: sAbility,

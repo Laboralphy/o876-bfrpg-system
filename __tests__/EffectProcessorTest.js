@@ -14,7 +14,8 @@ describe('apply-effect', function () {
         const effectProcessor = new EffectProcessor()
         effectProcessor.effectPrograms = EFFECTS
         expect(oCreature.getters.getMaxHitPoints).toBe(4)
-        expect(oCreature.getters.getHitPoints).toBe(1)
+        expect(oCreature.getters.getHitPoints).toBe(4)
+        oCreature.mutations.setHitPoints({ value: 1 })
         const eHeal = effectProcessor.createEffect(CONSTS.EFFECT_HEAL, 2)
         effectProcessor.applyEffect(eHeal, oCreature, 0)
         expect(oCreature.getters.getHitPoints).toBe(3)

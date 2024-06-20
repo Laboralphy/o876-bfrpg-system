@@ -6,8 +6,6 @@
  * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number}}
  * @property getAttackBonus {number}
  * @property getAttackRanges {{weapon: number, action: number}}
- * @property getAttackRollCriticalValue {number}
- * @property getAttackRollFumbleValue {number}
  * @property getCapabilities {{act: boolean, fight: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
  * @property getCharmerSet {Set<string>}
  * @property getClassTypeData {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
@@ -19,6 +17,7 @@
  * @property getEffects {{}[]}
  * @property getEncumbrance {{value: number, capacity: number}}
  * @property getEquipment {Object<string, BFItem>}
+ * @property getFumbleSuccess {{savingThrow: {fumble: number, success: number}, attack: {fumble: number, success: number}}}
  * @property getHitPoints {number}
  * @property getImmunitySet {Set<string>}
  * @property getLevel {number}
@@ -29,14 +28,14 @@
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
  * @property getPropertySet {Set<string>}
- * @property getRace {{name:string, specie:string, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
+ * @property getRace {{name:string, specie:{ ref: string, living: boolean, mind: boolean }, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
  * @property getRangedActions {string[]}
- * @property getSavingThrowFailureValue {number}
- * @property getSavingThrowSuccessValue {number}
+ * @property getSavingThrowBonus undefined
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpecie {{ ref: string, living: boolean, mind: boolean }}
  * @property getSpeed {number}
+ * @property getWeaponSizeRestrictionSet {Set<string>}
  * @property isDead {boolean}
  * @property isRangedWeaponLoaded {boolean}
  * @property isSelectedWeaponUsable {boolean}

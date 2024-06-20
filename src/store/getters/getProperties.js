@@ -6,7 +6,8 @@
  * @returns {BFItemProperty[]}
  */
 module.exports = (state, getters) => [
-    ...state.properties,
+    ...state.properties.slice(0),
+    ...getters.getRace.properties,
     ...getters.getDefensiveEquipmentProperties,
     ...getters.getOffensiveEquipmentProperties
 ]

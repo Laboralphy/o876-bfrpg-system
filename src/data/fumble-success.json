@@ -1,0 +1,10 @@
+{
+  "savingThrow": {
+    "fumble": 1,
+    "success": 20
+  },
+  "attack": {
+    "fumble": 1,
+    "success": 20
+  }
+}

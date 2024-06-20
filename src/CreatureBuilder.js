@@ -54,8 +54,6 @@ class CreatureBuilder {
         const props = []
         if (blueprint.race) {
             m.setRace({ value: blueprint.race })
-            const rd = oCreature.getters.getRace
-            props.push(...rd.properties)
         }
         props.push(...blueprint.properties)
         try {

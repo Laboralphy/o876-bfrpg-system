@@ -25,15 +25,19 @@ function extractRegistryLevel (reg, nLevel) {
 module.exports = (state, getters, externals) => {
     const data = externals['class-types'][state.classType]
     const nEffectiveLevel = getters.getLevel
+    const xpl = data.experienceLevels
+    const bHasLevels = Array.isArray(xpl)
+    const nMaxLevel = bHasLevels ? xpl.length : Infinity
     const nUndrainedLevel = Math.max(1, state.level)
     const bIsMonster = state.classType === CONSTS.CLASS_TYPE_MONSTER
     const oSavingThrows = bIsMonster
         ? externals['class-types'][state.classType].savingThrows
         : data.savingThrows
     return {
-        classType: state.classType,
+        ref: state.classType,
         level: nEffectiveLevel,
-        nextLevelExp: data.experienceLevels ? data.experienceLevels[nUndrainedLevel] : 0,
+        maxLevel: nMaxLevel,
+        nextLevelExp: bHasLevels && nUndrainedLevel < nMaxLevel ? xpl[nUndrainedLevel] : Infinity,
         hdPerLowerLevel: data.hdPerLowerLevel,
         hdPerHigherLevel: data.hdPerHigherLevel,
         lowerLevelCount: data.lowerLevelCount,

@@ -12,6 +12,7 @@
         "max": 17
       }
     },
+    "weaponRestrictions": {},
     "maxHdPerLevel": 6,
     "savingThrows": {
       "SAVING_THROW_PARALYSIS_PETRIFY": 1,
@@ -43,6 +44,9 @@
         "max": 17
       }
     },
+    "weaponRestrictions": {
+      "weaponSize": ["WEAPON_SIZE_SMALL", "WEAPON_SIZE_MEDIUM"]
+    },
     "savingThrows": {
       "SAVING_THROW_DEATH_RAY_POISON": 4,
       "SAVING_THROW_PARALYSIS_PETRIFY": 4,
@@ -67,6 +71,9 @@
       "ABILITY_STRENGTH": {
         "max": 17
       }
+    },
+    "weaponRestrictions": {
+      "weaponSize": ["WEAPON_SIZE_SMALL"]
     },
     "maxHdPerLevel": 6,
     "savingThrows": {

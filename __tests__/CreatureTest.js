@@ -4,6 +4,7 @@ const EffectProcessor = require('../src/EffectProcessor')
 const EFFECTS = require('../src/effects')
 const ItemProperties = require('../src/ItemProperties')
 const ItemBuilder = require('../src/ItemBuilder')
+const {getAbilities} = require("../src/store/getters");
 
 const DATA = {
     "default-actions": {
@@ -162,6 +163,7 @@ describe('getter getAbilities', function () {
     })
     it('should have 13 strength when applying an ability-modifier property of strength +3', function () {
         const c = new Creature()
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(10)
         const ipStrPlus = ItemProperties.build(CONSTS.ITEM_PROPERTY_ABILITY_MODIFIER, 3, { ability: CONSTS.ABILITY_STRENGTH })
         expect(ipStrPlus).toEqual({
             property: CONSTS.ITEM_PROPERTY_ABILITY_MODIFIER,
@@ -171,8 +173,9 @@ describe('getter getAbilities', function () {
             }
         })
         c.mutations
-            .addCreatureProperty({ property: ItemProperties.build(CONSTS.ITEM_PROPERTY_ABILITY_MODIFIER, 3, { ability: CONSTS.ABILITY_STRENGTH }) })
-        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(13)
+            .addCreatureProperty({ property: ipStrPlus })
+        const x = c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]
+        expect(x).toBe(13)
     })
 })
 
@@ -312,8 +315,8 @@ describe('attack-bonus', function () {
         expect(oDagger.damage).toBe('1d4')
         const c1 = new Creature()
         c1.id = 'c1'
-        c1.mutations.setLevel({ value: 5 })
         c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c1.mutations.setLevel({ value: 5 })
         c1.mutations.setAbilityValue({ ability: CONSTS.ABILITY_STRENGTH, value: 16 })
         c1.mutations.equipItem({ item: oDagger })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
@@ -473,22 +476,92 @@ describe('attack', function () {
 describe('race specialities', function () {
     it('should be able to create a human fighter', function () {
         const c = new Creature()
-        c.mutations.setLevel({ value: 5 })
         c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setLevel({ value: 5 })
         c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
         c.mutations.setRace({ value: CONSTS.RACE_HUMAN })
         c.mutations.setAbilityValue({ ability: CONSTS.ABILITY_CONSTITUTION, value: 18 })
-        expect(c.getters.getRace.maxHdPerLevel).toBeUndefined()
+        expect(c.getters.getRace.maxHdPerLevel).toBe(Infinity)
         expect(c.getters.getMaxHitPoints).toBe(5 * (8 + 3))
     })
     it('an elf fighter should have hp 45', function () {
         const c = new Creature()
-        c.mutations.setLevel({ value: 5 })
         c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setLevel({ value: 5 })
         c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
         c.mutations.setRace({ value: CONSTS.RACE_ELF })
         c.mutations.setAbilityValue({ ability: CONSTS.ABILITY_CONSTITUTION, value: 18 })
         expect(c.getters.getRace.maxHdPerLevel).toBe(6)
         expect(c.getters.getMaxHitPoints).toBe(5 * (6 + 3))
+    })
+})
+
+describe('class type tourist', function () {
+    it('should not have any bonus', function () {
+        const c = new Creature()
+        expect(c.getters.getClassTypeData.ref).toBe('CLASS_TYPE_TOURIST')
+        expect(c.getters.getMaxHitPoints).toBe(4)
+        expect(c.getters.getHitPoints).toBe(4)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(10)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_DEXTERITY]).toBe(10)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CONSTITUTION]).toBe(10)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_INTELLIGENCE]).toBe(10)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_WISDOM]).toBe(10)
+        expect(c.getters.getAbilities[CONSTS.ABILITY_CHARISMA]).toBe(10)
+        expect(c.getters.getLevel).toBe(1)
+        expect(c.getters.getSpecie.ref).toBe(CONSTS.SPECIE_HUMANOID)
+        expect(c.getters.getRace.ref).toBe(CONSTS.RACE_UNKNOWN)
+        expect(c.getters.getArmorClass).toEqual({"equipment": 11, "melee": 11, "natural": 11, "ranged": 11})
+    })
+})
+
+describe('savingThrow bonus', function () {
+    it('should not have any bonus when race is human', function () {
+        const c = new Creature()
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_HUMAN })
+        expect(c.getters.getSavingThrowBonus[CONSTS.SAVING_THROW_SPELL]).toBe(0)
+    })
+
+    it('should have bonus when race is elf', function () {
+        const c = new Creature()
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_ELF })
+        expect(c.getters.getSavingThrowBonus[CONSTS.SAVING_THROW_SPELL]).toBe(2)
+    })
+
+    it('should have bonus when race is elf and having property', function () {
+        const c = new Creature()
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_ELF })
+        c.mutations.addCreatureProperty({
+            property: ItemProperties.build(CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER, 4, { threat: CONSTS.SAVING_THROW_SPELL })
+        })
+        expect(c.getters.getSavingThrowBonus[CONSTS.SAVING_THROW_SPELL]).toBe(6)
+        expect(c.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION))
+    })
+
+    it('should not be able to use large and medium weapon when race is halfling', function () {
+        const c = new Creature()
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_HALFLING })
+        expect([...c.getters.getWeaponSizeRestrictionSet]).toEqual([
+            CONSTS.WEAPON_SIZE_SMALL
+        ])
+    })
+
+    it('should not be able to use large weapon when race is dwarf', function () {
+        const c = new Creature()
+        c.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
+        c.mutations.setRace({ value: CONSTS.RACE_DWARF })
+        expect([...c.getters.getWeaponSizeRestrictionSet]).toEqual([
+            CONSTS.WEAPON_SIZE_SMALL,
+            CONSTS.WEAPON_SIZE_MEDIUM,
+        ])
     })
 })

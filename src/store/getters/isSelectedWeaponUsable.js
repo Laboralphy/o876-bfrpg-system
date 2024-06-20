@@ -10,6 +10,10 @@ module.exports = (state, getters) => {
     if (!weapon) {
         return false
     }
+    const wr = getters.getWeaponSizeRestrictionSet
+    if (!wr.has(weapon.size)) {
+        return false
+    }
     if (weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)) {
         return getters.isRangedWeaponLoaded
     }
