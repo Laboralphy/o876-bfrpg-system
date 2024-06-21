@@ -368,6 +368,7 @@ class Manager {
      * Create a new creature
      * @param id {string}
      * @param ref {string}
+     * @param importData {*}
      * @returns {Creature}
      */
     createCreature ({ id = '', ref = '', importData = null } = {}) {
@@ -381,11 +382,17 @@ class Manager {
                 oCreature.mutations.equipItem({ item: oItem })
             })
         }
-        if (id !== '') {
-            oCreature.id = id
-        }
         if (importData) {
             oCreature.mutations.importCreatureState({ data: importData })
+            if (importData.id) {
+                oCreature.id = importData.id
+            }
+            if (importData.ref) {
+                oCreature.ref = importData.ref
+            }
+        }
+        if (id !== '') {
+            oCreature.id = id
         }
         oCreature.setHitPoints(oCreature.getters.getMaxHitPoints)
         this._horde.linkCreature(oCreature)

@@ -96,6 +96,7 @@ class Creature {
         const state = this._store.state
         return deepClone({
             id: this._id,
+            ref: this.ref,
             abilities: state.abilities,
             classType: state.classType,
             specie: state.specie,

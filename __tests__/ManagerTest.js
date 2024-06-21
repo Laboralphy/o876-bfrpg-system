@@ -359,3 +359,53 @@ describe('disease', function () {
         expect(c.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(8)
     })
 })
+
+describe('import/export creature', function () {
+    it('should export and import creature', async function () {
+        const m = new Manager()
+        await m.init()
+        m.loadModule('classic')
+        const c1 = m.createCreature({ id: 'abc' })
+        const d1 = c1.state
+        expect(d1).toEqual({
+            id: 'abc',
+            ref: '',
+            abilities: {
+                ABILITY_STRENGTH: 10,
+                ABILITY_DEXTERITY: 10,
+                ABILITY_CONSTITUTION: 10,
+                ABILITY_INTELLIGENCE: 10,
+                ABILITY_WISDOM: 10,
+                ABILITY_CHARISMA: 10
+            },
+            classType: 'CLASS_TYPE_TOURIST',
+            specie: 'SPECIE_HUMANOID',
+            speed: 30,
+            race: 'RACE_UNKNOWN',
+            naturalArmorClass: 11,
+            level: 1,
+            actions: {},
+            selectedAction: 'DEFAULT_ACTION_WEAPON',
+            gauges: { hitPoints: 4 },
+            effects: [],
+            properties: [],
+            offensiveSlot: 'EQUIPMENT_SLOT_WEAPON_MELEE',
+            equipment: {
+                EQUIPMENT_SLOT_HEAD: null,
+                EQUIPMENT_SLOT_NECK: null,
+                EQUIPMENT_SLOT_CHEST: null,
+                EQUIPMENT_SLOT_BACK: null,
+                EQUIPMENT_SLOT_ARMS: null,
+                EQUIPMENT_SLOT_WEAPON_MELEE: null,
+                EQUIPMENT_SLOT_WEAPON_RANGED: null,
+                EQUIPMENT_SLOT_SHIELD: null,
+                EQUIPMENT_SLOT_FINGER_LEFT: null,
+                EQUIPMENT_SLOT_FINGER_RIGHT: null,
+                EQUIPMENT_SLOT_AMMO: null,
+                EQUIPMENT_SLOT_WAIST: null,
+                EQUIPMENT_SLOT_FEET: null
+            },
+            encumbrance: 0
+        })
+    })
+})
