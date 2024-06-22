@@ -9,6 +9,7 @@ const SchemaValidator = require('./SchemaValidator')
 const CombatManager = require('./combat/CombatManager')
 const CreatureBuilder = require("./CreatureBuilder");
 const ResourceManager = require('./libs/resource-manager')
+const PublicAssets = require('./PublicAssets')
 
 const EFFECTS = require('./effects')
 const DATA = require('./data')
@@ -518,7 +519,8 @@ class Manager {
     }
 
     get publicAssets () {
-
+        const pa = new PublicAssets()
+        pa.resourceManager = this._rm
     }
 }
 

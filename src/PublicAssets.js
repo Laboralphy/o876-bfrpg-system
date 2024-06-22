@@ -1,4 +1,5 @@
 const CONSTS = require('./consts')
+
 class PublicAssets {
     constructor () {
         this._rm = null
@@ -24,3 +25,5 @@ class PublicAssets {
         }
     }
 }
+
+module.exports = PublicAssets
