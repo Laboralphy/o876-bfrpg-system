@@ -22,7 +22,6 @@ const RMK_DATA = 'data'
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
-const {BLUEPRINTS} = require("./modules/classic");
 
 const NEED_ATTACK_ROLL  = new Set([
     CONSTS.ATTACK_TYPE_ANY,
