@@ -516,6 +516,10 @@ class Manager {
         const source = this._horde.creatures(effect.source)
         return this._effectProcessor.removeEffect(effect, target, source)
     }
+
+    get publicAssets () {
+
+    }
 }
 
 module.exports = Manager
