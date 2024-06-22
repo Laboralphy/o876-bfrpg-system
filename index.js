@@ -7,6 +7,7 @@ const oTypes = require('./src/types.doc')
 module.exports = {
     Manager,
     Creature,
+    ItemProperties,
     CONSTS,
     types: oTypes
 }
