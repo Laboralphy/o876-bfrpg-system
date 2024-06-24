@@ -520,6 +520,7 @@ class Manager {
     get publicAssets () {
         const pa = new PublicAssets()
         pa.resourceManager = this._rm
+        return pa.data
     }
 }
 

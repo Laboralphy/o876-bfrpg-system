@@ -409,3 +409,14 @@ describe('import/export creature', function () {
         })
     })
 })
+
+describe('PublicAssets', function () {
+    it('should display public assets', async function () {
+        const m = new Manager()
+        await m.init()
+        m.loadModule('classic')
+        expect(m._rm).toBeDefined()
+        expect(m._rm.data).toBeDefined()
+        console.log(m.publicAssets)
+    })
+})

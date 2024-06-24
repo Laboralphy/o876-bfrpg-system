@@ -1,0 +1,1615 @@
+{
+  "strings": {
+    "entityType": {
+      "ENTITY_TYPE_ITEM": "Objet d'inventaire",
+      "ENTITY_TYPE_ACTOR": "Créature"
+    },
+    "ability": {
+      "ABILITY_STRENGTH": "Force",
+      "ABILITY_DEXTERITY": "Dextérité",
+      "ABILITY_CONSTITUTION": "Constitution",
+      "ABILITY_INTELLIGENCE": "Intelligence",
+      "ABILITY_WISDOM": "Sagesse",
+      "ABILITY_CHARISMA": "Charisme"
+    },
+    "size": {
+      "CREATURE_SIZE_TINY": "Minuscule",
+      "CREATURE_SIZE_SMALL": "Petite",
+      "CREATURE_SIZE_MEDIUM": "Moyenne",
+      "CREATURE_SIZE_LARGE": "Grande",
+      "CREATURE_SIZE_HUGE": "Enorme",
+      "CREATURE_SIZE_GARGANTUAN": "Gigantesque"
+    },
+    "specie": {
+      "SPECIE_ABERRATION": "Alien/Aberration",
+      "SPECIE_BEAST": "Animal/Bête",
+      "SPECIE_CELESTIAL": "Ange/Céleste",
+      "SPECIE_CONSTRUCT": "Golem/Construction artificielle",
+      "SPECIE_DRAGON": "Dragon",
+      "SPECIE_ELEMENTAL": "Élémentaire",
+      "SPECIE_FEY": "Fée",
+      "SPECIE_FIEND": "Démon",
+      "SPECIE_GIANT": "Géant",
+      "SPECIE_HUMANOID": "Humanoïde",
+      "SPECIE_MAGICAL_BEAST": "Animal/Bête magique",
+      "SPECIE_MONSTROSITY": "Monstruosité",
+      "SPECIE_OOZE": "Gelée",
+      "SPECIE_PLANT": "Plante/Végétal",
+      "SPECIE_UNDEAD": "Mort-vivant",
+      "SPECIE_VERMIN": "Vermine"
+    },
+    "itemType": {
+      "ITEM_TYPE_NATURAL_ARMOR": "Armure naturelle",
+      "ITEM_TYPE_NATURAL_WEAPON": "Arme naturelle",
+      "ITEM_TYPE_WEAPON": "Arme",
+      "ITEM_TYPE_AMMO": "Munition",
+      "ITEM_TYPE_ARMOR": "Armure",
+      "ITEM_TYPE_SHIELD": "Bouclier",
+      "ITEM_TYPE_HELM": "Casque/Heaume",
+      "ITEM_TYPE_NECKLACE": "Collier",
+      "ITEM_TYPE_CLOAK": "Manteau",
+      "ITEM_TYPE_GAUNTLETS": "Gantelets",
+      "ITEM_TYPE_GLOVES": "Gants",
+      "ITEM_TYPE_RING": "Bague",
+      "ITEM_TYPE_BELT": "Ceinture",
+      "ITEM_TYPE_BOOTS": "Bottes",
+      "ITEM_TYPE_TORCH": "Torche",
+      "ITEM_TYPE_HEALERSKIT": "Trousse médicale",
+      "ITEM_TYPE_MAGICROD": "Sceptre magique",
+      "ITEM_TYPE_MAGICWAND": "Baguette magique",
+      "ITEM_TYPE_POTION": "Potion",
+      "ITEM_TYPE_THIEVESTOOLS": "Outils de crochetage",
+      "ITEM_TYPE_KEY": "Clé",
+      "ITEM_TYPE_BOX": "Boîte",
+      "ITEM_TYPE_BAG": "Sac",
+      "ITEM_TYPE_BOOK": "Livre",
+      "ITEM_TYPE_SCROLL": "Parchemin",
+      "ITEM_TYPE_GOLD": "Unité monétaire",
+      "ITEM_TYPE_GEM": "Gemme",
+      "ITEM_TYPE_GRENADE": "Grenade",
+      "ITEM_TYPE_ENCAMPMENT": "Materiel de bivouac",
+      "ITEM_TYPE_CREATUREITEM": "Objet de créature",
+      "ITEM_TYPE_CRAFTMATERIAL": "Composant d'artisanat",
+      "ITEM_TYPE_MISCSMALL": "Divers petit",
+      "ITEM_TYPE_MISCMEDIUM": "Divers moyen",
+      "ITEM_TYPE_MISCLARGE": "Divers grand"
+    },
+    "material": {
+      "MATERIAL_UNKNOWN": "Inconnu",
+      "MATERIAL_WOOD": "Bois",
+      "MATERIAL_LEATHER": "Cuir",
+      "MATERIAL_FABRIC": "Tissu",
+      "MATERIAL_STONE": "Pierre",
+      "MATERIAL_METAL": "Métal",
+      "MATERIAL_IRON": "Fer",
+      "MATERIAL_SILVER": "Argent",
+      "MATERIAL_STEEL": "Acier",
+      "MATERIAL_ADAMANTINE": "Adamantium"
+    },
+    "rollType": {
+      "ROLL_TYPE_ATTACK": "Jet d'attaque",
+      "ROLL_TYPE_SAVE": "Jet de sauvegarde",
+      "ROLL_TYPE_CHECK": "Jet de compétence",
+      "ROLL_TYPE_DAMAGE": "Jet de dégâts"
+    },
+    "condition": {
+      "CONDITION_BLINDED": "Aveugle",
+      "CONDITION_CHARMED": "Charmé(e)",
+      "CONDITION_DEAFENED": "Sourd(e)",
+      "CONDITION_FRIGHTENED": "Terrorisé(e)",
+      "CONDITION_GRAPPLED": "Agrippé(e)",
+      "CONDITION_INCAPACITATED": "Hors de combat",
+      "CONDITION_INVISIBLE": "Invisible",
+      "CONDITION_PARALYZED": "Paralysé(e)",
+      "CONDITION_PETRIFIED": "Pétrifié(e)",
+      "CONDITION_POISONED": "Empoisonné(e)",
+      "CONDITION_PRONE": "À terre",
+      "CONDITION_RESTRAINED": "Enchevêtré(e)",
+      "CONDITION_STUNNED": "Étourdi(e)",
+      "CONDITION_UNCONSCIOUS": "Inconscient(e)",
+      "CONDITION_TRUE_SIGHT": "Vision véritable"
+    },
+    "damageType": {
+      "DAMAGE_TYPE_ANY": "Tout type",
+      "DAMAGE_TYPE_CRUSHING": "Contondant",
+      "DAMAGE_TYPE_PIERCING": "Perforant",
+      "DAMAGE_TYPE_SLASHING": "Tranchant",
+      "DAMAGE_TYPE_FIRE": "Feu",
+      "DAMAGE_TYPE_COLD": "Froid",
+      "DAMAGE_TYPE_ACID": "Acide",
+      "DAMAGE_TYPE_ELECTRICITY": "Électricité",
+      "DAMAGE_TYPE_FORCE": "Force",
+      "DAMAGE_TYPE_NECROTIC": "Flétrissement",
+      "DAMAGE_TYPE_POISON": "Poison",
+      "DAMAGE_TYPE_PSYCHIC": "Psychique",
+      "DAMAGE_TYPE_RADIANT": "Radiant",
+      "DAMAGE_TYPE_THUNDER": "Tonnerre"
+    },
+    "savingThrowType": {
+      "ABILITY_STRENGTH": "Force",
+      "ABILITY_DEXTERITY": "Dextérité",
+      "ABILITY_CONSTITUTION": "Constitution",
+      "ABILITY_INTELLIGENCE": "Intelligence",
+      "ABILITY_WISDOM": "Sagesse",
+      "ABILITY_CHARISMA": "Charisme",
+      "THREAT_TYPE_DEATH": "Mort",
+      "THREAT_TYPE_DISEASE": "Maladie",
+      "THREAT_TYPE_FEAR": "Terreur",
+      "THREAT_TYPE_MIND_SPELL": "Sorts mentaux",
+      "THREAT_TYPE_POISON": "Poison",
+      "THREAT_TYPE_SPELL": "Sorts",
+      "THREAT_TYPE_TRAP": "Pièges"
+    },
+    "itemProperty": {
+      "ITEM_PROPERTY_ABILITY_BONUS": "Bonus de caractéristique",
+      "ITEM_PROPERTY_AC_BONUS": "Bonus de classe d'armure",
+      "ITEM_PROPERTY_ADVANTAGE": "Avantage",
+      "ITEM_PROPERTY_ATTACK_BONUS": "Bonus au jet d'attaque",
+      "ITEM_PROPERTY_AURA": "Aura",
+      "ITEM_PROPERTY_CONDITION_IMMUNITY": "Immunité à la condition",
+      "ITEM_PROPERTY_CRITICAL_THREAT": "Plage de coup critique",
+      "ITEM_PROPERTY_CURSED": "Maudit",
+      "ITEM_PROPERTY_DAMAGE_BONUS": "Bonus aux dégâts",
+      "ITEM_PROPERTY_DAMAGE_IMMUNITY": "Immunité aux dégâts",
+      "ITEM_PROPERTY_DAMAGE_REDUCTION": "Réduction des dégâts",
+      "ITEM_PROPERTY_DAMAGE_RESISTANCE": "Résistance aux dégâts",
+      "ITEM_PROPERTY_DAMAGE_VULNERABILITY": "Vulnérabilité aux dégâts",
+      "ITEM_PROPERTY_DISADVANTAGE": "Désavantage",
+      "ITEM_PROPERTY_ENHANCEMENT": "Altération",
+      "ITEM_PROPERTY_HP_BONUS": "Points de vie supplémentaires",
+      "ITEM_PROPERTY_LIGHT": "Lumière",
+      "ITEM_PROPERTY_MASSIVE_CRITICAL": "Critiques massifs",
+      "ITEM_PROPERTY_MATERIAL_VULNERABILITY": "Vulnérabilité au matériau",
+      "ITEM_PROPERTY_MELEE_ATTACK_BONUS": "Bonus au jet d'attaque au contact",
+      "ITEM_PROPERTY_MUMMY_ROT": "Maladie de pourrissement de momie",
+      "ITEM_PROPERTY_ON_DAMAGE": "Si dégât reçu",
+      "ITEM_PROPERTY_ON_HIT": "Si coup porté",
+      "ITEM_PROPERTY_PHARMA": "Soins reçus augmentés",
+      "ITEM_PROPERTY_RANGED_ATTACK_BONUS": "Bonus au jet d'attaque à distance",
+      "ITEM_PROPERTY_REGEN": "Régénération",
+      "ITEM_PROPERTY_REROLL": "Relancer le dé",
+      "ITEM_PROPERTY_SAVING_THROW_BONUS": "Bonus au jet de sauvegarde",
+      "ITEM_PROPERTY_SKILL_BONUS": "Bonus de compétence",
+      "ITEM_PROPERTY_SPEED_BONUS": "Bonus vitesse de déplacement",
+      "ITEM_PROPERTY_UNIDENTIFIED": "Non identifié"
+    },
+    "weaponAttribute": {
+      "WEAPON_ATTRIBUTE_AMMUNITION": "à munitions",
+      "WEAPON_ATTRIBUTE_FINESSE": "finesse",
+      "WEAPON_ATTRIBUTE_HEAVY": "lourde",
+      "WEAPON_ATTRIBUTE_LIGHT": "légère",
+      "WEAPON_ATTRIBUTE_LOADING": "avec chargeur",
+      "WEAPON_ATTRIBUTE_SPECIAL": "spéciale",
+      "WEAPON_ATTRIBUTE_THROWN": "à lancer",
+      "WEAPON_ATTRIBUTE_TWO_HANDED": "à deux mains",
+      "WEAPON_ATTRIBUTE_VERSATILE": "versatile",
+      "WEAPON_ATTRIBUTE_REACH": "d'hast",
+      "WEAPON_ATTRIBUTE_RANGED": "à distance",
+      "WEAPON_ATTRIBUTE_SEMIAUTOMATIC": "semi-automatique",
+      "WEAPON_ATTRIBUTE_SPREAD": "à dispersion"
+    },
+    "class": {
+      "monster": "Monstre",
+      "tourist": "Touriste",
+      "fighter": "Guerrier",
+      "rogue": "Roublard"
+    },
+    "armorType": {
+      "armor-type-natural": "Armure naturelle",
+      "armor-type-breastplate": "Cuirasse",
+      "armor-type-chain-mail": "Cotte de maille",
+      "armor-type-chain-shirt": "Chemise de maille",
+      "armor-type-clothing": "Vêtement",
+      "armor-type-half-plate": "Armure de plaques",
+      "armor-type-hide": "Armure de peaux",
+      "armor-type-leather": "Armure de cuir",
+      "armor-type-padded": "Armure matelassée",
+      "armor-type-plate": "Harnois",
+      "armor-type-ring-mail": "Crevisse",
+      "armor-type-scale-mail": "Armure d'écailles",
+      "armor-type-splint": "Clibanion",
+      "armor-type-studded-leather": "Armure de cuir cloutée",
+      "armor-type-concealable-vest": "Treillis de camouflage",
+      "armor-type-forced-entry-unit": "Armure d'assaut",
+      "armor-type-leather-jacket": "Gilet de cuir",
+      "armor-type-light-duty-vest": "Armure de protection légère",
+      "armor-type-light-undercover-shirt": "Treillis léger d'infiltration",
+      "armor-type-special-response-vest": "Armure d'intervention spéciale",
+      "armor-type-tactical-vest": "Armure de combat tactique",
+      "armor-type-undercover-vest": "Armure d'infiltration",
+      "armor-type-flight-suit": "Combinaison de vol",
+      "armor-type-heavy-combat-armor": "Armure de combat lourde",
+      "armor-type-light-combat-armor": "Armure de combat légère",
+      "armor-type-medium-combat-armor": "Armure de combat intermédiaire"
+    },
+    "skill": {
+      "skill-perception": "Perception",
+      "skill-acrobatics": "Acrobatie",
+      "skill-animal-handling": "Empathie avec les animaux",
+      "skill-arcana": "Arcanes",
+      "skill-athletics": "Athlétisme",
+      "skill-deception": "Tromperie",
+      "skill-history": "Histoire",
+      "skill-insight": "Connaissances",
+      "skill-intimidation": "Intimidation",
+      "skill-investigation": "Investigation",
+      "skill-medicine": "Médecine",
+      "skill-nature": "Nature",
+      "skill-performance": "Interprétation",
+      "skill-persuasion": "Persuasion",
+      "skill-religion": "Religion",
+      "skill-sleight-of-hand": "Tour de passe-passe",
+      "skill-stealth": "Furtivité",
+      "skill-survival": "Survie"
+    },
+    "weaponType": {
+      "weapon-type-improvised": "Arme improvisée",
+      "weapon-type-unarmed": "Mains nues",
+      "weapon-type-battleaxe": "Hache de guerre",
+      "weapon-type-blowgun": "Sarbacane",
+      "weapon-type-flail": "Fléau",
+      "weapon-type-glaive": "Guisarme",
+      "weapon-type-greataxe": "Grande hache",
+      "weapon-type-greatsword": "Epée à deux mains",
+      "weapon-type-halberd": "Halebarde",
+      "weapon-type-lance": "Lance de tournois",
+      "weapon-type-longsword": "Epée longue",
+      "weapon-type-maul": "Marteau à deux mains",
+      "weapon-type-morningstar": "Etoile du matin",
+      "weapon-type-pike": "Pique",
+      "weapon-type-rapier": "Rapière",
+      "weapon-type-scimitar": "Cimeterre",
+      "weapon-type-shortsword": "Epée courte",
+      "weapon-type-trident": "trident",
+      "weapon-type-war-pick": "Piolet de guerre",
+      "weapon-type-warhammer": "Marteau de guerre",
+      "weapon-type-whip": "Fouet",
+      "weapon-type-heavy-crossbow": "Arbalète lourde",
+      "weapon-type-longbow": "Arc long",
+      "weapon-type-club": "Gourdin",
+      "weapon-type-dagger": "Dague",
+      "weapon-type-greatclub": "Gourdin à deux main",
+      "weapon-type-handaxe": "Hachette",
+      "weapon-type-javelin": "Javeline",
+      "weapon-type-light-hammer": "Marteau léger",
+      "weapon-type-mace": "Masse",
+      "weapon-type-quarterstaff": "Bâton",
+      "weapon-type-sickle": "Faucille",
+      "weapon-type-spear": "Lance courte",
+      "weapon-type-light-crossbow": "Arbalète légère",
+      "weapon-type-shortbow": "Arc court",
+      "weapon-type-anti-material-sniper-rifle": "Fusil de précision anti-matériel",
+      "weapon-type-anti-personnel-sniper-rifle": "Fusil de précision anti-personnel",
+      "weapon-type-assault-rifle": "Fusil d'assaut",
+      "weapon-type-heavy-machine-gun": "Mitrailleuse lourde",
+      "weapon-type-hunting-rifle": "Fusil de chasse",
+      "weapon-type-pump-action-shotgun": "Fusil à pompe",
+      "weapon-type-sawed-off-shotgun": "Fusil à canon scié",
+      "weapon-type-semiautomatic-shotgun": "Fusil urbain semi-automatique",
+      "weapon-type-submachine-gun": "Mitraillette",
+      "weapon-type-baton": "Matraque",
+      "weapon-type-cleaver": "Hachoir",
+      "weapon-type-machete": "Machette",
+      "weapon-type-chain": "Chaîne",
+      "weapon-type-chainsaw": "Tronçonneuse",
+      "weapon-type-autoloader": "Pistolet automatique",
+      "weapon-type-holdout-pistol": "Pistolet d'auto-défense",
+      "weapon-type-large-caliber-autoloader": "Pistolet automatique gros calibre",
+      "weapon-type-machine-pistol": "Pistolet mitrailleur",
+      "weapon-type-revolver": "Revolver",
+      "weapon-type-concussion-rod": "Matraque électrique",
+      "weapon-type-beam-sword": "Sabre laser",
+      "weapon-type-disrupt-pistol": "Pistolet perturbateur",
+      "weapon-type-laser-pistol": "Pistolet laser",
+      "weapon-type-concussion-rifle": "Fusil percutant",
+      "weapon-type-cryonic-rifle": "Fusil cryogénique",
+      "weapon-type-disrupt-rifle": "Fusil perturbateur",
+      "weapon-type-laser-rifle": "Fusil laser",
+      "weapon-type-plasma-rifle": "Fusil à plasma",
+      "weapon-type-rail-gun": "Canon accélérateur"
+    },
+    "equipmentSlot": {
+      "EQUIPMENT_SLOT_HEAD": "Tête",
+      "EQUIPMENT_SLOT_NECK": "Cou",
+      "EQUIPMENT_SLOT_CHEST": "Torse",
+      "EQUIPMENT_SLOT_BACK": "Dos",
+      "EQUIPMENT_SLOT_ARMS": "Bras",
+      "EQUIPMENT_SLOT_WEAPON_MELEE": "Arme contact",
+      "EQUIPMENT_SLOT_WEAPON_RANGED": "Arme distance",
+      "EQUIPMENT_SLOT_SHIELD": "Bouclier",
+      "EQUIPMENT_SLOT_LEFT_FINGER": "Doigt",
+      "EQUIPMENT_SLOT_RIGHT_FINGER": "Doigt",
+      "EQUIPMENT_SLOT_AMMO": "Munition",
+      "EQUIPMENT_SLOT_WAIST": "Bassin",
+      "EQUIPMENT_SLOT_FEET": "Pieds",
+      "EQUIPMENT_SLOT_NATURAL_ARMOR": "Armure naturelle",
+      "EQUIPMENT_SLOT_NATURAL_WEAPON": "Arme naturelle"
+    },
+    "ammoType": {
+      "ammo-type-arrow": "Flèche",
+      "ammo-type-bolt": "Carreau",
+      "ammo-type-cartridge-high-rof": "Munition à haute cadence de tir",
+      "ammo-type-cartridge-long-range": "Munition à longue portée",
+      "ammo-type-cartridge-small": "Munition",
+      "ammo-type-slug": "Cartouche à plombs",
+      "ammo-type-energy-cell-i": "Petite cellule d'énergie",
+      "ammo-type-energy-cell-ii": "Grande cellule d'énergie"
+    },
+    "shieldType": {
+      "shield-type-heavy": "Grand bouclier"
+    },
+    "spells": {
+      "acid-splash": "Aspersion acide",
+      "chill-touch": "Toucher glacial",
+      "fire-bolt": "Éclat de feu",
+      "light": "Lumière",
+      "mending": "Réparation",
+      "poison-spray": "Bombe au poivre",
+      "ray-of-frost": "Rayon de givre",
+      "zap": "Électrocution",
+      "true-strike": "Coup au but",
+      "burning-hands": "Mains brûlantes",
+      "charm-person": "Charme personne",
+      "color-spray": "Couleurs dansantes",
+      "false-life": "Simulâcre de vie",
+      "identify": "Identification",
+      "magic-missile": "Projectile magique",
+      "mage-armor": "Armure de mage",
+      "invisibility": "Invisibilité",
+      "acid-arrow": "Flèche acide",
+      "hold-person": "Immobilisation de personne",
+      "ray-of-enfeeblement": "Rayon affaiblissant",
+      "remove-curse": "Délivrance des malédictions"
+    }
+  },
+  "data": {
+    "weaponType": {
+      "weapon-type-improvised": {
+        "proficiency": "PROFICIENCY_WEAPON_UNARMED",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 0,
+        "attributes": []
+      },
+      "weapon-type-unarmed": {
+        "proficiency": "PROFICIENCY_WEAPON_UNARMED",
+        "damage": "1d3",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 0,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-battleaxe": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "1d10",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 4,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-blowgun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 1,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING"
+        ]
+      },
+      "weapon-type-flail": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 2,
+        "attributes": []
+      },
+      "weapon-type-glaive": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d10",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_REACH",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-greataxe": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d12",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 7,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-greatsword": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-halberd": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d10",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_REACH",
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-lance": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d12",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_REACH",
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-longsword": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "1d10",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-maul": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 10,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ]
+      },
+      "weapon-type-morningstar": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 4,
+        "attributes": []
+      },
+      "weapon-type-pike": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 18,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_REACH",
+          "WEAPON_ATTRIBUTE_HANDED"
+        ]
+      },
+      "weapon-type-rapier": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE"
+        ]
+      },
+      "weapon-type-scimitar": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-shortsword": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-trident": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "1d8",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 4,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_THROWN",
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-war-pick": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 2,
+        "attributes": []
+      },
+      "weapon-type-warhammer": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "1d10",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-whip": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_REACH"
+        ]
+      },
+      "weapon-type-heavy-crossbow": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d10",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 18,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-bolt",
+          "count": 1
+        }
+      },
+      "weapon-type-longbow": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_HEAVY",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-arrow",
+          "count": 1
+        }
+      },
+      "weapon-type-club": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-dagger": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 1,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_THROWN"
+        ]
+      },
+      "weapon-type-greatclub": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 10,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_HEAVY"
+        ]
+      },
+      "weapon-type-handaxe": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_THROWN"
+        ]
+      },
+      "weapon-type-javelin": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_THROWN"
+        ]
+      },
+      "weapon-type-light-hammer": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_THROWN"
+        ]
+      },
+      "weapon-type-mace": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 4,
+        "attributes": []
+      },
+      "weapon-type-quarterstaff": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "1d8",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 4,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-sickle": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-spear": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "1d8",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_THROWN",
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-light-crossbow": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 5,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-bolt",
+          "count": 1
+        }
+      },
+      "weapon-type-shortbow": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-arrow",
+          "count": 1
+        }
+      },
+      "weapon-type-chain": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_REACH"
+        ]
+      },
+      "weapon-type-chainsaw": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "3d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 10,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_HEAVY"
+        ]
+      },
+      "weapon-type-anti-material-sniper-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d12",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 35,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-long-range",
+          "count": 22
+        }
+      },
+      "weapon-type-anti-personnel-sniper-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d10",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 16,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-long-range",
+          "count": 5
+        }
+      },
+      "weapon-type-assault-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 10,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_AUTOMATIC",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-rof",
+          "count": 30
+        }
+      },
+      "weapon-type-heavy-machine-gun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d12",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 75,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_AUTOMATIC",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-rof",
+          "count": 1
+        }
+      },
+      "weapon-type-hunting-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d10",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 8,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-long-range",
+          "count": 5
+        }
+      },
+      "weapon-type-pump-action-shotgun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 7,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_SPREAD"
+        ],
+        "ammo": {
+          "type": "ammo-type-slug",
+          "count": 6
+        }
+      },
+      "weapon-type-sawed-off-shotgun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 4,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SPREAD",
+          "WEAPON_ATTRIBUTE_SEMIAUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-slug",
+          "count": 2
+        }
+      },
+      "weapon-type-semiautomatic-shotgun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 8,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SPREAD",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_SEMIAUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-slug",
+          "count": 7
+        }
+      },
+      "weapon-type-submachine-gun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 7,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_AUTOMATIC",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-rof",
+          "count": 30
+        }
+      },
+      "weapon-type-baton": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_CRUSHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-cleaver": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d4",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-machete": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_SLASHING",
+        "weight": 2,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ]
+      },
+      "weapon-type-autoloader": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-small",
+          "count": 15
+        }
+      },
+      "weapon-type-holdout-pistol": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 1,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LIGHT"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-small",
+          "count": 2
+        }
+      },
+      "weapon-type-large-caliber-autoloader": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 4,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-rof",
+          "count": 8
+        }
+      },
+      "weapon-type-machine-pistol": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-small",
+          "count": 20
+        }
+      },
+      "weapon-type-revolver": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_PIERCING",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-cartridge-high-small",
+          "count": 6
+        }
+      },
+      "weapon-type-beam-sword": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "2d12",
+        "damageType": "DAMAGE_TYPE_RADIANT",
+        "weight": 1,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_FINESSE",
+          "WEAPON_ATTRIBUTE_VERSATILE"
+        ]
+      },
+      "weapon-type-concussion-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_FORCE",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 25
+        }
+      },
+      "weapon-type-cryonic-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_COLD",
+        "weight": 8,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 10
+        }
+      },
+      "weapon-type-disrupt-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_NECROTIC",
+        "weight": 6,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 10
+        }
+      },
+      "weapon-type-laser-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_RADIANT",
+        "weight": 8,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 50
+        }
+      },
+      "weapon-type-plasma-rifle": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "2d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_FIRE",
+        "weight": 8,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED",
+          "WEAPON_ATTRIBUTE_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 50
+        }
+      },
+      "weapon-type-rail-gun": {
+        "proficiency": "PROFICIENCY_WEAPON_MARTIAL",
+        "damage": "6d12",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_FORCE",
+        "weight": 18,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_TWO_HANDED"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-ii",
+          "count": 10
+        }
+      },
+      "weapon-type-concussion-rod": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "1d8",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_FORCE",
+        "weight": 3,
+        "attributes": []
+      },
+      "weapon-type-disrupt-pistol": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_NECROTIC",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-i",
+          "count": 10
+        }
+      },
+      "weapon-type-laser-pistol": {
+        "proficiency": "PROFICIENCY_WEAPON_SIMPLE",
+        "damage": "2d6",
+        "versatileDamage": "",
+        "damageType": "DAMAGE_TYPE_RADIANT",
+        "weight": 3,
+        "attributes": [
+          "WEAPON_ATTRIBUTE_RANGED",
+          "WEAPON_ATTRIBUTE_AMMUNITION",
+          "WEAPON_ATTRIBUTE_LOADING",
+          "WEAPON_ATTRIBUTE_LIGHT",
+          "WEAPON_ATTRIBUTE_SEMI_AUTOMATIC"
+        ],
+        "ammo": {
+          "type": "ammo-type-energy-cell-i",
+          "count": 50
+        }
+      }
+    },
+    "armorType": {
+      "armor-type-natural": {
+        "proficiency": "",
+        "ac": 10,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 0
+      },
+      "armor-type-breastplate": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 14,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 20
+      },
+      "armor-type-chain-mail": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 16,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 55
+      },
+      "armor-type-chain-shirt": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 13,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 20
+      },
+      "armor-type-clothing": {
+        "proficiency": "",
+        "ac": 10,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 5
+      },
+      "armor-type-half-plate": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 15,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": true,
+        "weight": 40
+      },
+      "armor-type-hide": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 12,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 12
+      },
+      "armor-type-leather": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 11,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 10
+      },
+      "armor-type-padded": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 11,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": true,
+        "weight": 8
+      },
+      "armor-type-plate": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 18,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 65
+      },
+      "armor-type-ring-mail": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 14,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": true,
+        "weight": 40
+      },
+      "armor-type-scale-mail": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 14,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": true,
+        "weight": 45
+      },
+      "armor-type-splint": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 17,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 60
+      },
+      "armor-type-studded-leather": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 12,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 10
+      },
+      "armor-type-concealable-vest": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 14,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 4
+      },
+      "armor-type-forced-entry-unit": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 19,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 15,
+        "disadvantageStealth": true,
+        "weight": 20
+      },
+      "armor-type-leather-jacket": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 11,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 4
+      },
+      "armor-type-light-duty-vest": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 15,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 8
+      },
+      "armor-type-light-undercover-shirt": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 12,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 2
+      },
+      "armor-type-special-response-vest": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 17,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 15
+      },
+      "armor-type-tactical-vest": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 16,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 10
+      },
+      "armor-type-undercover-vest": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 13,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 3
+      },
+      "armor-type-flight-suit": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 12,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 2
+      },
+      "armor-type-heavy-combat-armor": {
+        "proficiency": "PROFICIENCY_ARMOR_HEAVY",
+        "ac": 19,
+        "maxDexterityModifier": 0,
+        "minStrengthRequired": 13,
+        "disadvantageStealth": true,
+        "weight": 40
+      },
+      "armor-type-light-combat-armor": {
+        "proficiency": "PROFICIENCY_ARMOR_LIGHT",
+        "ac": 13,
+        "maxDexterityModifier": false,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 6
+      },
+      "armor-type-medium-combat-armor": {
+        "proficiency": "PROFICIENCY_ARMOR_MEDIUM",
+        "ac": 14,
+        "maxDexterityModifier": 2,
+        "minStrengthRequired": 0,
+        "disadvantageStealth": false,
+        "weight": 8
+      }
+    },
+    "shieldType": {
+      "shield-type-heavy": {
+        "proficiency": "PROFICIENCY_SHIELD",
+        "ac": 2,
+        "weight": 6
+      }
+    },
+    "ammoType": {
+      "ammo-type-arrow": {
+        "weight": 0.1
+      },
+      "ammo-type-bolt": {
+        "weight": 0.15
+      },
+      "ammo-type-cartridge-high-rof": {
+        "weight": 0.015
+      },
+      "ammo-type-cartridge-long-range": {
+        "weight": 0.05
+      },
+      "ammo-type-cartridge-small": {
+        "weight": 0.01
+      },
+      "ammo-type-slug": {
+        "weight": 0.06
+      },
+      "ammo-type-energy-cell-i": {
+        "weight": 0.015
+      },
+      "ammo-type-energy-cell-ii": {
+        "weight": 0.03
+      }
+    },
+    "itemProperty": {
+      "ITEM_PROPERTY_ABILITY_BONUS": {
+        "ability": "ability",
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_AC_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_ADVANTAGE": {
+        "rollType": "rollType",
+        "abilitiy": "ability",
+        "rollTypes": "rollType[]",
+        "abilities": "ability[]",
+        "origin": "string"
+      },
+      "ITEM_PROPERTY_ATTACK_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_AURA": {
+        "amp": "dice",
+        "script": "string",
+        "data": "unknown"
+      },
+      "ITEM_PROPERTY_CONDITION_IMMUNITY": {
+        "condition": "condition"
+      },
+      "ITEM_PROPERTY_CRITICAL_THREAT": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_CURSED": {},
+      "ITEM_PROPERTY_DAMAGE_BONUS": {
+        "amp": "dice",
+        "type": "damageType"
+      },
+      "ITEM_PROPERTY_DAMAGE_IMMUNITY": {
+        "type": "damageType"
+      },
+      "ITEM_PROPERTY_DAMAGE_REDUCTION": {
+        "amp": "number",
+        "type": "damageType"
+      },
+      "ITEM_PROPERTY_DAMAGE_RESISTANCE": {
+        "type": "damageType"
+      },
+      "ITEM_PROPERTY_DAMAGE_VULNERABILITY": {
+        "type": "damageType"
+      },
+      "ITEM_PROPERTY_DARKVISION": {},
+      "ITEM_PROPERTY_DISADVANTAGE": {
+        "rollTypes": "rollType[]",
+        "abilities": "ability[]",
+        "origin": "string"
+      },
+      "ITEM_PROPERTY_ENHANCEMENT": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_EXTRA_ATTACKS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_EXTRA_PROFICIENCY": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_EXTRA_WEIGHT": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_HP_BONUS_BLOCKER": {},
+      "ITEM_PROPERTY_HP_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_LIGHT": {},
+      "ITEM_PROPERTY_MASSIVE_CRITICAL": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_MATERIAL_VULNERABILITY": {
+        "type": "material"
+      },
+      "ITEM_PROPERTY_MELEE_ATTACK_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_MUMMY_ROT": {},
+      "ITEM_PROPERTY_ON_DAMAGED": {
+        "amp": "dice",
+        "script": "string",
+        "data": "unknown"
+      },
+      "ITEM_PROPERTY_ON_HIT": {
+        "amp": "dice",
+        "script": "string",
+        "data": "unknown"
+      },
+      "ITEM_PROPERTY_PHARMA": {},
+      "ITEM_PROPERTY_RANGED_ATTACK_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_REGEN": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_REROLL": {
+        "amp": "number",
+        "when": "rollType"
+      },
+      "ITEM_PROPERTY_SAVING_THROW_BONUS": {
+        "amp": "number",
+        "type": "savingThrowType"
+      },
+      "ITEM_PROPERTY_SKILL_BONUS": {
+        "amp": "number",
+        "skill": "skill"
+      },
+      "ITEM_PROPERTY_SPEED_BONUS": {
+        "amp": "number"
+      },
+      "ITEM_PROPERTY_UNIDENTIFIED": {}
+    }
+  },
+  "templates": {
+    "ammo": {
+      "entityType": "ENTITY_TYPE_ITEM",
+      "itemType": "ITEM_TYPE_AMMO",
+      "ammoType": "ammoType",
+      "properties": [
+        "itemProperty"
+      ],
+      "material": "material"
+    },
+    "armor": {
+      "entityType": "ENTITY_TYPE_ITEM",
+      "itemType": "ITEM_TYPE_ARMOR",
+      "armorType": "armorType",
+      "properties": [
+        "itemProperty"
+      ],
+      "material": "material"
+    },
+    "shield": {
+      "entityType": "ENTITY_TYPE_ITEM",
+      "itemType": "ITEM_TYPE_SHIELD",
+      "shieldType": "shieldType",
+      "properties": [
+        "itemProperty"
+      ],
+      "material": "material"
+    },
+    "weapon": {
+      "entityType": "ENTITY_TYPE_ITEM",
+      "itemType": "ITEM_TYPE_WEAPON",
+      "weaponType": "weaponType",
+      "properties": [
+        "itemProperty"
+      ],
+      "material": "material"
+    }
+  }
+}

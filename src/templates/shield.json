@@ -1,0 +1,7 @@
+{
+  "entityType": "ENTITY_TYPE_ITEM",
+  "itemType": "ITEM_TYPE_SHIELD",
+  "shieldType": "shieldType",
+  "properties": ["itemProperty"],
+  "material": "material"
+}
