@@ -1,17 +1,11 @@
 const CONSTS = require('../../consts')
 
 /**
- * Attack script
- * @param attacker {Creature}
- * @param target {Creature}
- * @param manager {{}}
- * @param data {{}}
+ * @description This spell does 1d6 cold damage per caster level to up to 3 offenders.
+ * A saving throw against spell is allowed for half damage
  */
-function main ({
-    attacker,
-    target,
-    manager
-}) {
+function main (oActionPayload) {
+    const { attacker, target, manager } = oActionPayload
     manager
         .combatManager
         .getOffenders(attacker)

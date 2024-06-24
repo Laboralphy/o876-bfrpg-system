@@ -76,7 +76,8 @@ describe('createItem', function () {
             weight: 0.1,
             itemType: 'ITEM_TYPE_AMMO',
             ammoType: 'AMMO_TYPE_ARROW',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ]
+            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ],
+            material: 'MATERIAL_IRON'
         })
     })
     it('should create a stack of quarrel', function () {
@@ -89,7 +90,8 @@ describe('createItem', function () {
             weight: 0.15,
             itemType: 'ITEM_TYPE_AMMO',
             ammoType: 'AMMO_TYPE_QUARREL',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ]
+            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ],
+            material: 'MATERIAL_IRON'
         })
     })
     it('should create a chain mail', function () {

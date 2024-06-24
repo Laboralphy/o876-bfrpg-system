@@ -68,7 +68,7 @@ class PublicAssets {
             SavingThrow: this._cv(Object.values(CONSTS), 'SAVING_THROW_'),
             ClassType: this._cv(Object.values(CONSTS), 'CLASS_TYPE_'),
             Specie: this._cv(Object.values(CONSTS), 'SPECIE_'),
-            Race: this._cv(Object.values(CONSTS), 'RACE_'),
+            Race: this._cv(Object.values(CONSTS), 'RACE_')
         }
     }
 

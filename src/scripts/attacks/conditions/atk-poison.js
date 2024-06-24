@@ -2,10 +2,9 @@ const CONSTS = require('../../../consts')
 
 /**
  * @description This attack poisons target for an unlimited duration, dealing a small amount of damage each turn.
- * Parameters:
- * - duration (dice expression) duration of affliction
- * - potency (number) a modifier added to saving throw difficulty
- * - amount (dice expression)
+ * @var duration {string|number} (dice expression) duration of affliction
+ * @var potency {number} a modifier added to saving throw difficulty
+ * @var amount {string|number} (dice expression) amount of damage dealt each turn
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

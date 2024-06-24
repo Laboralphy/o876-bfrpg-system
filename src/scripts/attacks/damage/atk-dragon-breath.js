@@ -3,8 +3,7 @@ const CONSTS = require('../../../consts')
 /**
  * @description Damage is applied on all offending creatures : All creature attacking the attacker will take damage.
  * A saving throw against dragon breath is allowed
- * Parameters:
- * - potency (number) a modifier added to saving throw difficulty
+ * @var potency {number} a modifier added to saving throw difficulty
  *
  * @param oActionPayload {BFActionPayload}
  */

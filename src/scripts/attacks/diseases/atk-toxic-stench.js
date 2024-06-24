@@ -6,17 +6,16 @@ const SLA_TAGS = 'SLA_TOXIC_STENCH'
 /**
  * @description All melee offender (closer than a certain range) are affected by a -2 to attack & ac debuff
  * the debuff lasts for a certain duration. Save against POISON for avoidance and immunity for 24 hours (for this particular caster)
- * Parameters:
- * - duration : debuff duration once applied
- * - potency : adjustment for saving throw (default 0). positive value = easier to resist, negative value = harder to resist
- * - range : range of the stench (default 10 - reach range)
+ * @var duration {number|string} (dice expression) debuff duration once applied
+ * @var potency {number} adjustment for saving throw (default 0). positive value = easier to resist, negative value = harder to resist
+ * @var range {number} range of the stench (default 10 - reach range)
  */
 function main (oActionPayload) {
     const { attacker, manager, data } = oActionPayload
     const {
         duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0,
-        range = manager.data['weapon-ranges'].WEAPON_RANGE_MELEE
+        range = manager.data['weapon-ranges'].WEAPON_RANGE_REACH
     } = data
     manager
         .getOffenders(attacker, range)

@@ -3,9 +3,8 @@ const CONSTS = require('../../../consts')
 /**
  * @description Apply charm on target. If saving throw against spell is success, the effect is avoided.
  * The charmed creature will not be able to attack its charmer and may react aggressively against its charmer's opponents.
- * Parameters:
- * - duration (dice expression) duration of affliction
- * - potency (number) a modifier added to saving throw difficulty
+ * @var duration {number|string} (dice expression) duration of affliction
+ * @var potency {number} a modifier added to saving throw difficulty
  *
  * @param oActionPayload {BFActionPayload}
  */

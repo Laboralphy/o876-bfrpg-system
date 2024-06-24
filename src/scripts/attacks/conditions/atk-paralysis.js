@@ -3,9 +3,8 @@ const CONSTS = require('../../../consts')
 /**
  * @description Paralyzes target for a given duration, a saving throw against paralysis (with strength adjustment) is allowed to avoid the effect.
  * A paralyzed creature cannot move or act and may repeat its saving throw each turn to attempt to break the effect.
- * Parameters:
- * - duration (dice expression) duration of affliction
- * - potency (number) a modifier added to saving throw difficulty
+ * @var duration {number|string} (dice expression) duration of affliction
+ * @var potency {number} a modifier added to saving throw difficulty
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

@@ -1,9 +1,8 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-06-24T13:02:37.567Z
+// Date : 2024-06-24T18:19:03.890Z
 // List of files in ./src/scripts
 
 module.exports = {
-  'atk-base': require('./attacks/atk-base.js'),
   'atk-blindness': require('./attacks/conditions/atk-blindness.js'),
   'atk-charm': require('./attacks/conditions/atk-charm.js'),
   'atk-daze': require('./attacks/conditions/atk-daze.js'),

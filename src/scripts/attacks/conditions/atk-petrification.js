@@ -2,9 +2,9 @@ const CONSTS = require('../../../consts')
 const { durations: DURATIONS } = require('../../../data')
 
 /**
- * @description This attack petrifies target. This is a permanent effect. A saving throw against paralysis is allowed to avoid the effect.
- * Parameters:
- * - potency (number) a modifier added to saving throw difficulty
+ * @description This attack petrifies target. This is a permanent effect.
+ * A saving throw against paralysis is allowed to avoid the effect.
+ * @var potency {number} a modifier added to saving throw difficulty
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

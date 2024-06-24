@@ -8,10 +8,10 @@ function evaluateDiseaseDuration (aStages) {
 
 /**
  * @description Apply a disease on target if saving throw against death ray fails.
- * Parameters:
- * - disease (string) duration of affliction
- * - potency (number) a modifier added to saving throw difficulty
- * - chance (number) probability to catch disease
+ * An afflicted creature will suffer the corresponding disease.
+ * @var disease {string} reference to disease
+ * @var potency {number} a modifier added to saving throw difficulty
+ * @var chance {number} probability to catch disease
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

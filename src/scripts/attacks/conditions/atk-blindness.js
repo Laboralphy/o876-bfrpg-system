@@ -3,9 +3,8 @@ const CONSTS = require('../../../consts')
 /**
  * @description Apply blindness on target. If saving throw against death ray is success, the effect is avoided.
  * A blinded creature cannot clearly see its surroundings and have attack and ac debuffs.
- * Parameters:
- * - duration (dice expression) duration of affliction
- * - potency (number) a modifier added to saving throw difficulty
+ * @var duration {number|string} (dice expression) duration of affliction
+ * @var potency {number} a modifier added to saving throw difficulty
  *
  * @param oActionPayload {BFActionPayload}
  */
