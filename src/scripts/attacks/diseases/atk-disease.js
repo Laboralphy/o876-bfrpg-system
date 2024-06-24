@@ -7,33 +7,19 @@ function evaluateDiseaseDuration (aStages) {
 }
 
 /**
- * Attack script
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param damage {string|number}
- * @param manager {{}}
- * @param disease {string|object}
+ * @description Apply a disease on target if saving throw against death ray fails.
+ * Parameters:
+ * - disease (string) duration of affliction
+ * - potency (number) a modifier added to saving throw difficulty
+ * - chance (number) probability to catch disease
  */
-function main ({
-    turn,
-    tick,
-    attacker,
-    target,
-    attackOutcome,
-    script,
-    action,
-    manager,
-    data: {
+function main (oActionPayload) {
+    const { attacker, target, manager, data } = oActionPayload
+    const {
         disease,
         chance = 100,
         potency = 0
-    },
-}) {
+    } = data
     // rolling chance
     if (target.dice.roll(100) > chance) {
         return

@@ -1,39 +1,19 @@
 const CONSTS = require('../../../consts')
-const { durations: DURATIONS } = require('../../../data')
 
 /**
- * Effect:
- * apply EFFECT_STUN on target
- *
- * Saving throw:
- * Avoided if saving throw against Death ray
- *
- * Data:
- * - duration : specified in data
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param duration {number}
- * @param manager {{}}
+ * @description Apply a stun effect on target. A stunned creature is unable to do anything. It is pretty much like
+ * a paralysis effect except for two aspects : 1) the saving throw is against death ray instead of paralysis.
+ * 2) the paralyzed creature cannot roll a saving throw each turn to attempt breaking free.
+ * Parameters:
+ * - duration (dice expression) duration of affliction
+ * - potency (number) a modifier added to saving throw difficulty
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    data: {
-        duration = DURATIONS.DURATION_DEFAULT,
+function main (oActionPayload) {
+    const { attacker, target, manager, data } = oActionPayload
+    const {
+        duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0
-    },
-    manager
-}) {
+    } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
         adjustment: potency
     }).success) {

@@ -1,0 +1,69 @@
+{
+  "ITEM_PROPERTY_ABILITY_MODIFIER": {
+    "amp": "integer",
+    "ability": "Ability"
+  },
+  "ITEM_PROPERTY_ARMOR_CLASS_MODIFIER": {
+    "amp": "integer"
+  },
+  "ITEM_PROPERTY_ATTACK_MODIFIER": {
+    "amp": "integer",
+    "attackType": "AttackType"
+  },
+  "ITEM_PROPERTY_DAMAGE_IMMUNITY": {
+    "damageType": "DamageType"
+  },
+  "ITEM_PROPERTY_DAMAGE_MODIFIER": {
+    "amp": "Dice",
+    "damageType": "DamageType"
+  },
+  "ITEM_PROPERTY_DAMAGE_REDUCTION": {
+    "amp": "integer",
+    "damageType": "DamageType"
+  },
+  "ITEM_PROPERTY_DAMAGE_RESISTANCE": {
+    "damageType": "DamageType"
+  },
+  "ITEM_PROPERTY_DAMAGE_VULNERABILITY": {
+    "damageType": "DamageType"
+  },
+  "ITEM_PROPERTY_DARKVISION": {
+  },
+  "ITEM_PROPERTY_EXTRA_HITPOINTS": {
+    "amp": "integer"
+  },
+  "ITEM_PROPERTY_EXTRA_WEIGHT": {
+    "amp": "integer"
+  },
+  "ITEM_PROPERTY_HEALING_FACTOR": {
+    "amp": "float"
+  },
+  "ITEM_PROPERTY_IMMUNITY": {
+    "immunityType": "ImmunityType"
+  },
+  "ITEM_PROPERTY_MATERIAL_VULNERABILITY": {
+    "material": "Material"
+  },
+  "ITEM_PROPERTY_REGENERATION": {
+    "amp": "number"
+  },
+  "ITEM_PROPERTY_SAVING_THROW_MODIFIER": {
+    "amp": "integer",
+    "threat": "SavingThrow"
+  },
+  "ITEM_PROPERTY_SPECIAL_BEHAVIOR": {
+    "combat": "Script",
+    "damaged": "Script"
+  },
+  "ITEM_PROPERTY_SPEED_FACTOR": {
+    "amp": "float"
+  },
+  "ITEM_PROPERTY_SPELLCASTING": {
+    "amp": "integer"
+  },
+  "ITEM_PROPERTY_SPIKE_DAMAGE": {
+    "amp": "Dice",
+    "damageType": "DamageType",
+    "savingThrow": "boolean"
+  }
+}

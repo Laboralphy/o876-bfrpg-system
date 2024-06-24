@@ -105,9 +105,9 @@ These immunities block effects with some conditions.
 | IMMUNITY_TYPE_DAMAGE_DECREASE  | EFFECT_DAMAGE_MODIFIER       | amp < 0                     |
 | IMMUNITY_TYPE_DEATH            | EFFECT_DEATH                 | subtype = magical           |
 | IMMUNITY_TYPE_POISON           | EFFECT_DAMAGE                | damageType = poison         |
-| IMMUNITY_TYPE_SLOW | EFFECT_SPEED_MODIFIER        | amp < 0 && amp > -Infinity  |
+| IMMUNITY_TYPE_SLOW | EFFECT_SPEED_FACTOR        | amp < 0 && amp > -Infinity  |
 | IMMUNITY_TYPE_SAVING_THROW_DECREASE | EFFECT_SAVING_THROW_MODIFIER | amp < 0                     |
-| IMMUNITY_TYPE_ENTANGLE | EFFECT_SPEED_MODIFIER                 | amp = -Infinity |
+| IMMUNITY_TYPE_ENTANGLE | EFFECT_SPEED_FACTOR                 | amp = -Infinity |
 
 ## Immunities I want to implement - don't depends on effects
 

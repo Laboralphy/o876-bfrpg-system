@@ -1,35 +1,20 @@
 const CONSTS = require('../../../consts')
-const { duration: DURATIONS } = require('../../../data')
 
 /**
- * Attack script
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param damage {string|number}
- * @param manager {{}}
- * @param duration {number}
- * @param potency {number}
+ * @description Apply charm on target. If saving throw against spell is success, the effect is avoided.
+ * The charmed creature will not be able to attack its charmer and may react aggressively against its charmer's opponents.
+ * Parameters:
+ * - duration (dice expression) duration of affliction
+ * - potency (number) a modifier added to saving throw difficulty
+ *
+ * @param oActionPayload {BFActionPayload}
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    damage,
-    manager,
-    data: {
-        duration = DURATIONS.DURATION_DEFAULT,
+function main (oActionPayload) {
+    const { attacker, target, manager, data } = oActionPayload
+    const {
+        duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0
-    }
-}) {
+    } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, {
         threat: CONSTS.THREAT_MIND_SPELL,
         adjustment: potency

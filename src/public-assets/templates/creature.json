@@ -1,0 +1,21 @@
+{
+  "entityType": "ENTITY_TYPE_ACTOR",
+  "name": "string",
+  "ac": "integer",
+  "classType": "ClassType",
+  "level": "integer",
+  "specie": "Specie",
+  "race": "Race",
+  "abilities": {
+    "strength": "integer",
+    "dexterity": "integer",
+    "constitution": "integer",
+    "intelligence": "integer",
+    "wisdom": "integer",
+    "charisma": "integer"
+  },
+  "speed": "integer",
+  "equipment": "Item[]",
+  "actions": "Action[]",
+  "properties": "ItemProperty[]"
+}

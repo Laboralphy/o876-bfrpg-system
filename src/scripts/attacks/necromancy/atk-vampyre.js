@@ -1,14 +1,11 @@
 const CONSTS = require('../../../consts')
 
 /**
- * Effect:
- * This attack heals attacker, with an amount of hp equal to damage dealt by attack
+ * Effect: This attack heals attacker, with an amount of hp equal to damage dealt by attack
  *
- * Saving throw:
- * None
+ * Saving throw: None
  *
- * Data:
- * None
+ * Data: None
  *
  * Notes:
  * Often used on hit attack

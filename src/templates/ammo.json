@@ -1,7 +1,0 @@
-{
-  "entityType": "ENTITY_TYPE_ITEM",
-  "itemType": "ITEM_TYPE_AMMO",
-  "ammoType": "ammoType",
-  "properties": ["itemProperty"],
-  "material": "material"
-}

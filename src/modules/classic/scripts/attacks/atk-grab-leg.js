@@ -39,7 +39,7 @@ function main ({
     manager,
     data
 }) {
-    const eRoot = manager.createEffect(CONSTS.EFFECT_SPEED_MODIFIER, 0)
+    const eRoot = manager.createEffect(CONSTS.EFFECT_SPEED_FACTOR, 0)
     eRoot.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
     eRoot.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
     manager.applyEffect(eRoot, target, 2, attacker)

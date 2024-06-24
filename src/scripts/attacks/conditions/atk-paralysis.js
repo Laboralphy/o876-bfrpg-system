@@ -1,45 +1,18 @@
 const CONSTS = require('../../../consts')
-const { durations: DURATIONS } = require('../../../data')
 
 /**
- * Effect:
- * This attack paralyzes target for a given duration,
- *
- * Saving throw:
- * A saving throw against paralysis is allowed
- * with STRENGTH adjustment
- *
- * Data:
- * - duration : duration of the effect (default 10)
- *
- * Note:
- * This attack is used by ghouls.
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param damage {string|number}
- * @param duration {number}
- * @param manager {{}}
+ * @description Paralyzes target for a given duration, a saving throw against paralysis (with strength adjustment) is allowed to avoid the effect.
+ * A paralyzed creature cannot move or act and may repeat its saving throw each turn to attempt to break the effect.
+ * Parameters:
+ * - duration (dice expression) duration of affliction
+ * - potency (number) a modifier added to saving throw difficulty
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    data: {
-        duration = DURATIONS.DURATION_DEFAULT,
+function main (oActionPayload) {
+    const { attacker, target, manager, data } = oActionPayload
+    const {
+        duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0
-    },
-    manager
-}) {
+    } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, {
         ability: CONSTS.ABILITY_STRENGTH,
         adjustment: potency

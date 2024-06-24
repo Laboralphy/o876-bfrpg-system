@@ -15,7 +15,7 @@ function main ({ manager, creature, damageType: sDamageType, amount, resisted })
         case CONSTS.DAMAGE_TYPE_COLD:
         case CONSTS.DAMAGE_TYPE_FIRE: {
             // Applique un effet de ralenti pendant 2d6 tours
-            const eSlow = manager.createEffect(CONSTS.EFFECT_SPEED_MODIFIER, 0.5)
+            const eSlow = manager.createEffect(CONSTS.EFFECT_SPEED_FACTOR, 0.5)
             eSlow.tags.push(TAG_GOLEM_FLESH_FIRE_COLD_SLOW)
             manager.applyEffect(eSlow, creature, creature.dice.evaluate('2d6'))
             break

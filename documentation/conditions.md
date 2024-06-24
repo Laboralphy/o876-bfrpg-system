@@ -54,7 +54,7 @@ This condition may be removed by healing any poison damage over time.
 
 The creature cannot move, but may attack.
 
-This condition is applied when EFFECT_SPEED_MODIFIER is present and getSpeed getter returns 0.
+This condition is applied when EFFECT_SPEED_FACTOR is present and getSpeed getter returns 0.
 
 ### CONDITION_DAZED
 

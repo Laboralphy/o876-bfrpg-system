@@ -10,7 +10,7 @@ const { durations: DURATIONS } = require('../../../data')
  * No ability bonus.
  *
  * Data:
- * - ability : (required) the ability that will be damaged
+ * - potency : This number will raise up or down saving throw difficulty class
  * - amount : The amount of points of damage. (default 1)
  * - duration : The curse duration (default permanent)
  *

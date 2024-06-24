@@ -13,6 +13,7 @@ const { durations: DURATIONS } = require('../../../data')
  * - ability : (required) the ability that will be damaged
  * - amount : The amount of points of damage. (default 1)
  * - duration : The curse duration (default permanent)
+ * - potency : This number will raise up or down saving throw difficulty class
  *
  * Notes:
  * - Works on living creature only.

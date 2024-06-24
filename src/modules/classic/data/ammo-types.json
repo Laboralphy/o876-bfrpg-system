@@ -1,11 +1,14 @@
 {
   "AMMO_TYPE_ARROW": {
-    "weight": 0.1
+    "weight": 0.1,
+    "material": "MATERIAL_IRON"
   },
   "AMMO_TYPE_QUARREL": {
-    "weight": 0.15
+    "weight": 0.15,
+    "material": "MATERIAL_IRON"
   },
   "AMMO_TYPE_BULLET": {
-    "weight": 0.05
+    "weight": 0.05,
+    "material": "MATERIAL_STONE"
   }
 }

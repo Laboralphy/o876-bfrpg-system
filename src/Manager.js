@@ -224,7 +224,10 @@ class Manager {
             }
             if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
                 action.conveys.forEach(({ script: sScriptRef, data }) => {
-                    this.runScript(sScriptRef, {
+                    /**
+                     * @type {BFActionPayload}
+                     */
+                    const oActionPayload = {
                         turn,
                         tick,
                         data,
@@ -234,7 +237,8 @@ class Manager {
                         attackOutcome: oAttackOutcome,
                         action,
                         manager: this
-                    })
+                    }
+                    this.runScript(sScriptRef, oActionPayload)
                 })
             }
         }
@@ -284,10 +288,12 @@ class Manager {
 
     /**
      * Load a module of additional assets (blueprints and data)
-     * @param module {string} name of module (classic, modern, future)
+     * @param module {string|object} name of module (classic, modern, future)
      */
     loadModule (module) {
-        const { DATA, BLUEPRINTS, SCRIPTS } = require('./modules/' + module)
+        const { DATA, BLUEPRINTS, SCRIPTS } = typeof module === 'string'
+            ? require('./modules/' + module)
+            : { DATA: module.data, BLUEPRINTS: module.blueprints, SCRIPTS: module.scripts }
         this._rm.assign('data', DATA)
         this._rm.assign('blueprints', BLUEPRINTS)
         Object.assign(this._scripts, SCRIPTS)
@@ -520,7 +526,7 @@ class Manager {
     get publicAssets () {
         const pa = new PublicAssets()
         pa.resourceManager = this._rm
-        return pa.data
+        return pa.publicAssets('fr')
     }
 }
 

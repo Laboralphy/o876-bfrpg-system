@@ -191,7 +191,7 @@ class EffectProcessor {
                 return oEffect.data.damageType === CONSTS.DAMAGE_TYPE_POISON && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_POISON)
             }
 
-            case CONSTS.EFFECT_SPEED_MODIFIER: {
+            case CONSTS.EFFECT_SPEED_FACTOR: {
                 return (oEffect.amp === -Infinity && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_ENTANGLE)) ||
                     (oEffect.amp < 0 && oEffect.amp > -Infinity && aImmunitySet.has(CONSTS.IMMUNITY_TYPE_SLOW))
             }

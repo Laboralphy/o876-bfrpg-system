@@ -14,8 +14,8 @@ module.exports = (state, getters, externals) => {
         nModifier *= amp
     }
     aggregateModifiers([
-            CONSTS.EFFECT_SPEED_MODIFIER,
-            CONSTS.ITEM_PROPERTY_SPEED_MODIFIER
+            CONSTS.EFFECT_SPEED_FACTOR,
+            CONSTS.ITEM_PROPERTY_SPEED_FACTOR
         ], getters, {
             propForEach: f,
             effectForEach: f

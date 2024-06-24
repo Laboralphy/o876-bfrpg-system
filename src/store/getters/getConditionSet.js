@@ -42,7 +42,7 @@ module.exports = (state, getters) => {
                 break
             }
 
-            case CONSTS.EFFECT_SPEED_MODIFIER: {
+            case CONSTS.EFFECT_SPEED_FACTOR: {
                 if (effect.amp <= 0) {
                     if (getters.getSpeed <= 0) {
                         aConditionSet.add(CONSTS.CONDITION_RESTRAINED)

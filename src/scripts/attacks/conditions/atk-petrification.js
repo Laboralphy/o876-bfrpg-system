@@ -2,42 +2,15 @@ const CONSTS = require('../../../consts')
 const { durations: DURATIONS } = require('../../../data')
 
 /**
- * Effect:
- * This attack petrifies target
- *
- * Saving throw:
- * target must roll against petrification with no ability adjustment
- *
- * Data:
- * None
- *
- * Note:
- * The duration is always Infinite
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param damage {string|number}
- * @param data {{}}
- * @param manager {{}}
+ * @description This attack petrifies target. This is a permanent effect. A saving throw against paralysis is allowed to avoid the effect.
+ * Parameters:
+ * - potency (number) a modifier added to saving throw difficulty
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    data: {
+function main (oActionPayload) {
+    const { attacker, target, manager, data } = oActionPayload
+    const {
         potency = 0
-    },
-    manager
-}) {
+    } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_PARALYSIS_PETRIFY, {
         adjustment: potency
     }).success) {

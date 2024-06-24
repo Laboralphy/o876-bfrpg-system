@@ -1,41 +1,18 @@
 const CONSTS = require('../../../consts')
 
 /**
- * Effect:
- * Damage on all offending creatures : All creature attacking the attacker will take damage.
+ * @description Damage is applied on all offending creatures : All creature attacking the attacker will take damage.
+ * A saving throw against dragon breath is allowed
+ * Parameters:
+ * - potency (number) a modifier added to saving throw difficulty
  *
- * Saving throw:
- * A saving throw against dragon breath is allowed for half damage
- *
- * Data:
- * None
- *
- * Note:
- * The damage amount and type is fixed by the attack parameters.
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param manager {{}}
- * @param potency {number}
+ * @param oActionPayload {BFActionPayload}
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    manager,
-    data: {
+function main (oActionPayload) {
+    const { attacker, attackOutcome, action, manager, data } = oActionPayload
+    const {
         potency = 0
-    }
-}) {
+    } = data
     const sDamageType = attackOutcome.action.damageType
     manager
         .combatManager

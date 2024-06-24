@@ -1,0 +1,9 @@
+{
+  "name": "string",
+  "attackType": "AttackType",
+  "damage": "Dice",
+  "damageType": "DamageType",
+  "count": "integer",
+  "cooldown": "integer",
+  "conveys": "Convey[]"
+}

@@ -48,4 +48,17 @@
  * @property damages {BFAttackOutcomeDamages}
  */
 
+/**
+ * @typedef BFActionPayload {object}
+ * @property turn {number}
+ * @property tick {number}
+ * @property script {string}
+ * @property attacker {Creature}
+ * @property target {Creature}
+ * @property attackOutcome {BFAttackOutcome}
+ * @property action {BFStoreStateAction}
+ * @property manager {Manager}
+ * @property data {Object}
+ */
+
 module.exports = {}

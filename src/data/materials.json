@@ -10,6 +10,10 @@
     "description": "Standard non magical metallic material (iron, steel)",
     "parent": ""
   },
+  "MATERIAL_STONE": {
+    "description": "Stone or chipped stone, used in primitive weapons or in non-industrial civilizations (spears, arrowheads, bullet)",
+    "parent": ""
+  },
   "MATERIAL_FABRIC": {
     "description": "Standard non magical fabric",
     "parent": ""

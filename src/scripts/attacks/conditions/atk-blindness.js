@@ -1,39 +1,20 @@
 const CONSTS = require('../../../consts')
-const { durations: DURATIONS } = require('../../../data')
 
 /**
- * Effect:
- * apply EFFECT_BLINDNESS on target
+ * @description Apply blindness on target. If saving throw against death ray is success, the effect is avoided.
+ * A blinded creature cannot clearly see its surroundings and have attack and ac debuffs.
+ * Parameters:
+ * - duration (dice expression) duration of affliction
+ * - potency (number) a modifier added to saving throw difficulty
  *
- * Saving throw:
- * Avoided if saving throw against Death ray
- *
- * Data:
- * - duration : specified in data
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param duration {number}
- * @param manager {{}}
+ * @param oActionPayload {BFActionPayload}
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    data: {
-        duration = DURATIONS.DURATION_DEFAULT,
+function main (oActionPayload) {
+    const { manager, target, attacker, data } = oActionPayload
+    const {
+        duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0
-    },
-    manager
-}) {
+    } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, { adjustment: potency }).success) {
         const eBlindness = manager.createEffect(CONSTS.EFFECT_BLINDNESS)
         eBlindness.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
