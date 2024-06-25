@@ -1,49 +1,26 @@
 const CONSTS = require('../../../../../consts')
-const { durations: DURATIONS } = require('../../../../../data')
 
 /**
- * Effect:
- * This attack lowers attack bonus, and saving throw bonus by 2.
+ * @description This attack lowers attack bonus, and saving throw bonus by 2. There is no saving throw allowed for this attack
+ * The affliction cannot be stacked : several sources of distraction will not stack.
+ * @var duration {Dice}
  *
- * Saving throw:
- * None
- *
- * Data:
- * - duration: duration of the affliction.
- *
- * Notes:
- * - cannot be stacked : several sources of distraction will not stack
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param duration {number}
- * @param manager {{}}
+ * @param oActionPayload {BFActionPayload}
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    data: {
-        duration = DURATIONS.DURATION_DEFAULT
-    },
-    manager
-}) {
+function main (oActionPayload) {
+    const {
+        attacker, target, manager, data
+    } = oActionPayload
+    const {
+        duration = manager.data['durations'].DURATION_DEFAULT
+    } = data
     const eAtkMalus = manager.createEffect(CONSTS.EFFECT_ATTACK_MODIFIER, -2)
     const eSTMalus = manager.createEffect(CONSTS.EFFECT_SAVING_THROW_MODIFIER, -2)
     eAtkMalus.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
     eSTMalus.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
     eAtkMalus.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
     eSTMalus.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-    manager.applyEffectGroup([eAtkMalus, eSTMalus], 'SLA_DISTRACTION', target, duration, attacker)
+    manager.applyEffectGroup([eAtkMalus, eSTMalus], 'SLA_DISTRACTION', target, attacker.dice.evaluate(duration), attacker)
 }
 
 module.exports = main

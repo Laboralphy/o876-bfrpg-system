@@ -6,12 +6,12 @@ const TAG_GOLEM_FLESH_FIRE_COLD_SLOW = 'TAG_GOLEM_FLESH_FIRE_COLD_SLOW'
  *
  * @param manager {Manager}
  * @param creature {Creature}
- * @param sDamageType {string}
+ * @param damageType {string}
  * @param amount {number}
  * @param resisted {number}
  */
-function main ({ manager, creature, damageType: sDamageType, amount, resisted }) {
-    switch (sDamageType) {
+function main ({ manager, creature, damageType, amount, resisted }) {
+    switch (damageType) {
         case CONSTS.DAMAGE_TYPE_COLD:
         case CONSTS.DAMAGE_TYPE_FIRE: {
             // Applique un effet de ralenti pendant 2d6 tours
@@ -23,7 +23,7 @@ function main ({ manager, creature, damageType: sDamageType, amount, resisted })
 
         case CONSTS.DAMAGE_TYPE_ELECTRICITY: {
             // "Ça fait du bien par où ça passe !"
-            // - Franky, dans le Croque Monstre Show
+            // - Franky - le Croque Monstre Show
             const nDamage = amount + resisted
             const nHealing = Math.max(1, Math.floor(nDamage / 3))
             const eHeal = manager.createEffect(CONSTS.EFFECT_HEAL, nHealing)

@@ -1,5 +1,7 @@
 const CONSTS = require('./consts')
 const { deepClone } = require('@laboralphy/object-fusion')
+const { processScripts } = require('./libs/generate-script-description')
+const path = require('node:path')
 
 class PublicAssets {
     constructor () {
@@ -28,33 +30,15 @@ class PublicAssets {
         )
     }
 
-    publicAssets (sLang) {
-        const _filterData = (f, m = x => x) => {
-            const o = {}
-            Object
-                .entries(this._rm.data.data)
-                .filter(([k]) => k.startsWith(f))
-                .forEach(([k, v]) => {
-                    o[k] = deepClone(m(v))
-                })
-            return o
-        }
-        const data = {
-            weaponType: this._rm.data.data['weapon-types'],
-            armorType: this._rm.data.data['armor-types'],
-            shieldType: this._rm.data.data['shield-types'],
-            ammoType: this._rm.data.data['ammo-types'],
-            material: this._rm.data.data['material'],
-            itemProperty: require('./public-assets/templates/item-properties.json')
-        }
+    publicAssets () {
         return {
-            Ammo: require('./public-assets/templates/ammo.json'),
-            Armor: require('./public-assets/templates/armor.json'),
-            Shield: require('./public-assets/templates/shield.json'),
-            Weapon: require('./public-assets/templates/weapon.json'),
-            Creature: require('public-assets/templates/creature.json'),
-            Action: require('public-assets/templates/action.json'),
-            Convey: require('public-assets/templates/convey.json'),
+            Ammo: require('./public-assets/refs/ammo.json'),
+            Armor: require('./public-assets/refs/armor.json'),
+            Shield: require('./public-assets/refs/shield.json'),
+            Weapon: require('./public-assets/refs/weapon.json'),
+            Creature: require('./public-assets/refs/creature.json'),
+            Action: require('./public-assets/refs/action.json'),
+            Convey: require('./public-assets/refs/convey.json'),
             Material: this._cv(Object.values(CONSTS), 'MATERIAL_'),
             WeaponType: this._cv(Object.keys(this._rm.data.data['weapon-types']), 'WEAPON_TYPE_'),
             ArmorType: this._cv(Object.keys(this._rm.data.data['armor-types']), 'ARMOR_TYPE_'),
@@ -64,14 +48,22 @@ class PublicAssets {
             AttackType: this._cv(Object.values(CONSTS), 'ATTACK_TYPE_'),
             DamageType: this._cv(Object.values(CONSTS), 'DAMAGE_TYPE_'),
             ImmunityType: this._cv(Object.values(CONSTS), 'IMMUNITY_TYPE_'),
-            ItemProperties: require('./public-assets/templates/item-properties.json'),
+            ItemProperties: Object.fromEntries(Object
+                .entries(require('./public-assets/refs/item-properties.json'))
+                .map(([sItemProperty, oItemProperty]) => [sItemProperty, {
+                    description: this._cv1(sItemProperty, 'ITEM_PROPERTY_'),
+                    parameters: oItemProperty
+                }])),
             SavingThrow: this._cv(Object.values(CONSTS), 'SAVING_THROW_'),
             ClassType: this._cv(Object.values(CONSTS), 'CLASS_TYPE_'),
             Specie: this._cv(Object.values(CONSTS), 'SPECIE_'),
-            Race: this._cv(Object.values(CONSTS), 'RACE_')
+            Race: this._cv(Object.values(CONSTS), 'RACE_'),
+            Conveys: processScripts(
+                path.resolve(__dirname, 'scripts'),
+                path.resolve(__dirname, 'modules'),
+            )
         }
     }
-
 }
 
 module.exports = PublicAssets

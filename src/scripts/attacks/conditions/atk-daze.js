@@ -3,8 +3,10 @@ const CONSTS = require('../../../consts')
 /**
  * @description Apply a daze effect on target if saving throw against spell (mind spells) fails.
  * The dazed creature can't use attacks, spells or other complex actions, but it can move and escape the place.
- * @var duration {number|string} (dice expression) duration of affliction
+ * @var duration {Dice} (dice expression) duration of affliction
  * @var potency {number} a modifier added to saving throw difficulty
+ *
+ * @param oActionPayload {BFActionPayload}
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

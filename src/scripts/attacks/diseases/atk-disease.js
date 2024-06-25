@@ -12,6 +12,8 @@ function evaluateDiseaseDuration (aStages) {
  * @var disease {string} reference to disease
  * @var potency {number} a modifier added to saving throw difficulty
  * @var chance {number} probability to catch disease
+ *
+ * @param oActionPayload {BFActionPayload}
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

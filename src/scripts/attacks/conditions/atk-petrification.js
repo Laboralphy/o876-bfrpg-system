@@ -5,6 +5,8 @@ const { durations: DURATIONS } = require('../../../data')
  * @description This attack petrifies target. This is a permanent effect.
  * A saving throw against paralysis is allowed to avoid the effect.
  * @var potency {number} a modifier added to saving throw difficulty
+ *
+ * @param oActionPayload {BFActionPayload}
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

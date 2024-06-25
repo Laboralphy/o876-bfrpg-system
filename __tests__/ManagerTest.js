@@ -417,6 +417,6 @@ describe('PublicAssets', function () {
         m.loadModule('classic')
         expect(m._rm).toBeDefined()
         expect(m._rm.data).toBeDefined()
-        // console.log(m.publicAssets)
+        expect(m.publicAssets).toBeDefined()
     })
 })

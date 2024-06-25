@@ -1,48 +1,23 @@
 const CONSTS = require('../../../../../consts')
-const { durations: DURATIONS } = require('../../../../../data')
 
 /**
- * Effect:
- * This attack deals damage to all non-flying creatures
+ * @description This attack deals damage to all non-flying creatures, no saving throw allowed.
  *
- * Saving throw:
- * None
- *
- * Data:
- * - amount : damage dealt by this attack, this damage is lower than main damage dealt to target.
- *
- *
- * @param turn {number}
- * @param tick {number}
- * @param attackOutcome {BFAttackOutcome}
- * @param attacker {Creature}
- * @param target {Creature}
- * @param action {BFStoreStateAction}
- * @param script {string}
- * @param damage {string|number}
- * @param manager {{}}
- * @param amount {number}
+ * @param oActionPayload {BFActionPayload}
  */
-function main ({
-    turn,
-    tick,
-    attackOutcome,
-    attacker,
-    target,
-    action,
-    script,
-    damage,
-    manager,
-    data: {
-        amount
-    }
-}) {
+function main (oActionPayload) {
+    const {
+        attacker,
+        target,
+        manager,
+        damage
+    } = oActionPayload
     manager
         .getOffenders(attacker)
         .filter(oCreature => target !== oCreature)
         .forEach(oCreature => {
-            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, amount, { damageType: CONSTS.DAMAGE_TYPE_FORCE })
-            manager.applyEffect(eDamage, oCreature, DURATIONS.DURATION_INSTANT, attacker)
+            const eDamage = manager.createEffect(CONSTS.EFFECT_DAMAGE, attacker.dice.evaluate(damage), { damageType: CONSTS.DAMAGE_TYPE_FORCE })
+            manager.applyEffect(eDamage, oCreature, manager.data['durations'].DURATION_INSTANT, attacker)
         })
 }
 

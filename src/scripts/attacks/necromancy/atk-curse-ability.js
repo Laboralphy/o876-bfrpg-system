@@ -6,8 +6,10 @@ const CONSTS = require('../../../consts')
  * The effect is supernatural : cannot be dispelled or removed by resting.
  * @var ability {string} (Ability) ability cursed
  * @var amount {number} ability reduction value
- * @var duration {number|string} (dice expression) debuff duration once applied
+ * @var duration {Dice} (dice expression) debuff duration once applied
  * @var potency {number} adjustment for saving throw (default 0). positive value = easier to resist, negative value = harder to resist
+ *
+ * @param oActionPayload {BFActionPayload}
  */
 function main (oActionPayload) {
     const { attacker, target, manager, data } = oActionPayload

@@ -2,7 +2,9 @@ const CONSTS = require('../../consts')
 
 /**
  * @description This spell does 1d6 cold damage per caster level to up to 3 offenders.
- * A saving throw against spell is allowed for half damage
+ * A saving throw against spell is allowed for half damage.
+ *
+ * @param oActionPayload {BFActionPayload}
  */
 function main (oActionPayload) {
     const { attacker, target, manager } = oActionPayload

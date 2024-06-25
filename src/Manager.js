@@ -54,6 +54,7 @@ class Manager {
         this._rm.assign(RMK_DATA, DATA)
         this._validBlueprints = {}
         this._events = new EventEmitter()
+        this._modules = new Set()
 
         cm.defaultDistance = 50
         cm.resourceManager = this._rm
@@ -288,12 +289,11 @@ class Manager {
 
     /**
      * Load a module of additional assets (blueprints and data)
-     * @param module {string|object} name of module (classic, modern, future)
+     * @param module {string} name of module (classic, modern, future)
      */
     loadModule (module) {
-        const { DATA, BLUEPRINTS, SCRIPTS } = typeof module === 'string'
-            ? require('./modules/' + module)
-            : { DATA: module.data, BLUEPRINTS: module.blueprints, SCRIPTS: module.scripts }
+        this._modules.add(module)
+        const { DATA, BLUEPRINTS, SCRIPTS } = require('./modules/' + module)
         this._rm.assign('data', DATA)
         this._rm.assign('blueprints', BLUEPRINTS)
         Object.assign(this._scripts, SCRIPTS)
