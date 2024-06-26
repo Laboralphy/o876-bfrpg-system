@@ -1,6 +1,4 @@
 {
-  "entityType": "ENTITY_TYPE_ITEM",
-  "itemType": "ITEM_TYPE_SHIELD",
   "shieldType": "ShieldType",
   "properties": "ItemProperty[]",
   "material": "Material"

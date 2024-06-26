@@ -1,6 +1,7 @@
 const Manager = require('../src/Manager')
 const CONSTS = require('../src/consts')
 const { DURATION_PERMANENT} = require("../src/data/durations");
+const util = require('node:util')
 
 describe('createCreature', function () {
     it('should create a creatures when calling the function', function () {
@@ -418,5 +419,6 @@ describe('PublicAssets', function () {
         expect(m._rm).toBeDefined()
         expect(m._rm.data).toBeDefined()
         expect(m.publicAssets).toBeDefined()
+        console.log(util.inspect(m.publicAssets, { depth: 5 }))
     })
 })

@@ -32,32 +32,42 @@ class PublicAssets {
 
     publicAssets () {
         return {
-            Ammo: require('./public-assets/refs/ammo.json'),
-            Armor: require('./public-assets/refs/armor.json'),
-            Shield: require('./public-assets/refs/shield.json'),
-            Weapon: require('./public-assets/refs/weapon.json'),
-            Creature: require('./public-assets/refs/creature.json'),
+            data: {
+                WeaponType: this._rm.data.data['weapon-types'],
+                ArmorType: this._rm.data.data['armor-types'],
+                ShieldType: this._rm.data.data['shield-types'],
+                AmmoType: this._rm.data.data['ammo-types']
+            },
+            templates: {
+                Ammo: require('./public-assets/refs/ammo.json'),
+                Armor: require('./public-assets/refs/armor.json'),
+                Shield: require('./public-assets/refs/shield.json'),
+                Weapon: require('./public-assets/refs/weapon.json'),
+                Creature: require('./public-assets/refs/creature.json'),
+            },
             Action: require('./public-assets/refs/action.json'),
             Convey: require('./public-assets/refs/convey.json'),
-            Material: this._cv(Object.values(CONSTS), 'MATERIAL_'),
-            WeaponType: this._cv(Object.keys(this._rm.data.data['weapon-types']), 'WEAPON_TYPE_'),
-            ArmorType: this._cv(Object.keys(this._rm.data.data['armor-types']), 'ARMOR_TYPE_'),
-            AmmoType: this._cv(Object.keys(this._rm.data.data['ammo-types']), 'AMMO_TYPE_'),
-            ShieldType: this._cv(Object.keys(this._rm.data.data['shield-types']), 'SHIELD_TYPE_'),
-            Ability: this._cv(Object.values(CONSTS), 'ABILITY_'),
-            AttackType: this._cv(Object.values(CONSTS), 'ATTACK_TYPE_'),
-            DamageType: this._cv(Object.values(CONSTS), 'DAMAGE_TYPE_'),
-            ImmunityType: this._cv(Object.values(CONSTS), 'IMMUNITY_TYPE_'),
+            types: {
+                Material: this._cv(Object.values(CONSTS), 'MATERIAL_'),
+                WeaponType: this._cv(Object.keys(this._rm.data.data['weapon-types']), 'WEAPON_TYPE_'),
+                ArmorType: this._cv(Object.keys(this._rm.data.data['armor-types']), 'ARMOR_TYPE_'),
+                AmmoType: this._cv(Object.keys(this._rm.data.data['ammo-types']), 'AMMO_TYPE_'),
+                ShieldType: this._cv(Object.keys(this._rm.data.data['shield-types']), 'SHIELD_TYPE_'),
+                Ability: this._cv(Object.values(CONSTS), 'ABILITY_'),
+                AttackType: this._cv(Object.values(CONSTS), 'ATTACK_TYPE_'),
+                DamageType: this._cv(Object.values(CONSTS), 'DAMAGE_TYPE_'),
+                ImmunityType: this._cv(Object.values(CONSTS), 'IMMUNITY_TYPE_'),
+                SavingThrow: this._cv(Object.values(CONSTS), 'SAVING_THROW_'),
+                ClassType: this._cv(Object.values(CONSTS), 'CLASS_TYPE_'),
+                Specie: this._cv(Object.values(CONSTS), 'SPECIE_'),
+                Race: this._cv(Object.values(CONSTS), 'RACE_'),
+            },
             ItemProperties: Object.fromEntries(Object
                 .entries(require('./public-assets/refs/item-properties.json'))
                 .map(([sItemProperty, oItemProperty]) => [sItemProperty, {
                     description: this._cv1(sItemProperty, 'ITEM_PROPERTY_'),
                     parameters: oItemProperty
                 }])),
-            SavingThrow: this._cv(Object.values(CONSTS), 'SAVING_THROW_'),
-            ClassType: this._cv(Object.values(CONSTS), 'CLASS_TYPE_'),
-            Specie: this._cv(Object.values(CONSTS), 'SPECIE_'),
-            Race: this._cv(Object.values(CONSTS), 'RACE_'),
             Conveys: processScripts(
                 path.resolve(__dirname, 'scripts'),
                 path.resolve(__dirname, 'modules'),
