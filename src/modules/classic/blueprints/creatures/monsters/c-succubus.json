@@ -23,7 +23,7 @@
         {
           "script": "atk-charm",
           "data": {
-            "duration": 10
+            "duration": 3
           }
         }
       ]

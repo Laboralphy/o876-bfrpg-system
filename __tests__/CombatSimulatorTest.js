@@ -75,7 +75,7 @@ describe('cooldown', function () {
                     {
                         "script": "atk-stun",
                         "data": {
-                            "duration": '3d6'
+                            "duration": 3
                         }
                     }
                 ]
@@ -100,7 +100,7 @@ describe('cooldown', function () {
             "conveys": [
                 {
                     data: {
-                        duration: '3d6'
+                        duration: 3
                     },
                     script: "atk-stun"
                 }

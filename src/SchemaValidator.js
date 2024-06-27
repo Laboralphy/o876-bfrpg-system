@@ -1,21 +1,29 @@
 const jsonschema = require('jsonschema')
 const Validator = jsonschema.Validator
-const TreeAsync = require('./libs/o876-xtree/async')
-const path = require('path')
 
 class SchemaValidator {
     constructor () {
         this._schemas = {}
         this._validator = null
-        this._schemaLocation = path.resolve(__dirname, './schemas')
+        /**
+         * @type {Object<string, Object>}
+         * @private
+         */
+        this._schemaIndex = {}
     }
 
-    set schemaLocation (value) {
-        this._schemaLocation = value
+    /**
+     * @param value {Object<string, Object>}
+     */
+    set schemaIndex (value) {
+        this._schemaIndex = value
     }
 
-    get schemaLocation () {
-        return this._schemaLocation
+    /**
+     * @returns {Object<string, Object>}
+     */
+    get schemaIndex () {
+        return this._schemaIndex
     }
 
     get validator () {
@@ -26,20 +34,32 @@ class SchemaValidator {
         return this._schemas
     }
 
-    async init () {
+    /**
+     *
+     * @param oSchemaRegistry {Object<string, Object>}
+     */
+    initValidator (oSchemaRegistry) {
         const v = new Validator()
-        const s = await TreeAsync.recursiveRequire(this._schemaLocation, true)
         this._validator = v
         /**
          * @type {object}
          * @private
          */
-        this._schemas = s
-        for (const [sId, oData] of Object.entries(s)) {
+        this._schemas = oSchemaRegistry
+        for (const [sId, oData] of Object.entries(oSchemaRegistry)) {
             const sSchemaId = sId
             oData.id = sSchemaId
             v.addSchema(oData, '/' + sSchemaId)
         }
+    }
+
+    /**
+     * Load all schemas
+     * You may choose between async and sync by setting asyncMode prior to call init
+     * @returns {Promise<void>|void}
+     */
+    init () {
+        this.initValidator(this._schemaIndex)
     }
 
     validate (oObject, sSchemaId) {

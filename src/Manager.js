@@ -15,6 +15,7 @@ const EFFECTS = require('./effects')
 const DATA = require('./data')
 const CONSTS = require('./consts')
 const SCRIPTS = require('./scripts')
+const SCHEMAS = require('./schemas')
 
 const RMK_BLUEPRINTS = 'blueprints'
 const RMK_DATA = 'data'
@@ -253,8 +254,9 @@ class Manager {
         }
     }
 
-    async init () {
+    init () {
         this._schemaValidator = new SchemaValidator()
+        this._schemaValidator.schemaIndex = SCHEMAS
         return this._schemaValidator.init()
     }
 

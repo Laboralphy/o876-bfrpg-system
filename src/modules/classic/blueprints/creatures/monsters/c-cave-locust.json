@@ -32,7 +32,7 @@
         {
           "script": "atk-stun",
           "data": {
-            "duration": "3d6"
+            "duration": 3
           }
         }
       ]

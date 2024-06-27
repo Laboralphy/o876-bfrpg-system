@@ -46,5 +46,8 @@ node ./bin/generate-indexes.js ./src/data REQUIRE > ./src/data/index.js
 echo scripts
 node ./bin/generate-indexes.js ./src/scripts REQUIRE > ./src/scripts/index.js
 
+echo schemas
+node ./bin/generate-indexes.js ./src/schemas REQUIRE > ./src/schemas/index.js
+
 buildModuleThings classic
 
