@@ -6,7 +6,7 @@ const SLA_TAGS = 'SLA_TOXIC_STENCH'
 /**
  * @description All melee offender (closer than a certain range) are affected by a -2 to attack & ac debuff
  * the debuff lasts for a certain duration. Save against POISON for avoidance and immunity for 24 hours (for this particular caster)
- * @var duration {Dice} (dice expression) debuff duration once applied
+ * @var duration {integer} debuff duration once applied
  * @var potency {number} adjustment for saving throw (default 0). positive value = easier to resist, negative value = harder to resist
  * @var range {number} range of the stench (default 10 - reach range)
  *
@@ -48,7 +48,7 @@ function main (oActionPayload) {
             const eACDebuff = manager.createEffect(CONSTS.EFFECT_ARMOR_CLASS_MODIFIER, -2)
             eACDebuff.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
             eACDebuff.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
-            manager.applyEffectGroup([eAtkDebuff, eACDebuff], [SLA_TAGS], oCreature, attacker.dice.evaluate(duration), attacker)
+            manager.applyEffectGroup([eAtkDebuff, eACDebuff], [SLA_TAGS], oCreature, duration, attacker)
         })
 }
 

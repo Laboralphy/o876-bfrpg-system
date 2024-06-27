@@ -3,7 +3,7 @@ const CONSTS = require('../../../../../consts')
 /**
  * @description This attack lowers attack bonus, and saving throw bonus by 2. There is no saving throw allowed for this attack
  * The affliction cannot be stacked : several sources of distraction will not stack.
- * @var duration {Dice}
+ * @var duration {integer}
  *
  * @param oActionPayload {BFActionPayload}
  */
@@ -20,7 +20,7 @@ function main (oActionPayload) {
     eSTMalus.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
     eAtkMalus.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
     eSTMalus.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-    manager.applyEffectGroup([eAtkMalus, eSTMalus], 'SLA_DISTRACTION', target, attacker.dice.evaluate(duration), attacker)
+    manager.applyEffectGroup([eAtkMalus, eSTMalus], 'SLA_DISTRACTION', target, duration, attacker)
 }
 
 module.exports = main

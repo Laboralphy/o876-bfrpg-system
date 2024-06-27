@@ -3,7 +3,7 @@ const CONSTS = require('../../../consts')
 /**
  * @description Apply charm on target. If saving throw against spell is success, the effect is avoided.
  * The charmed creature will not be able to attack its charmer and may react aggressively against its charmer's opponents.
- * @var duration {Dice} (dice expression) duration of affliction
+ * @var duration {integer} duration of affliction
  * @var potency {number} a modifier added to saving throw difficulty
  *
  * @param oActionPayload {BFActionPayload}
@@ -19,7 +19,7 @@ function main (oActionPayload) {
         adjustment: potency
     }).success) {
         const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)
-        manager.applyEffect(eCharm, target, attacker.dice.evaluate(duration), attacker)
+        manager.applyEffect(eCharm, target, duration, attacker)
     }
 }
 

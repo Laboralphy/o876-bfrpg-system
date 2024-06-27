@@ -2,7 +2,7 @@ const CONSTS = require('../../../consts')
 
 /**
  * @description This attack poisons target for an unlimited duration, dealing a small amount of damage each turn.
- * @var duration {Dice} (dice expression) duration of affliction
+ * @var duration {integer} duration of affliction
  * @var potency {number} a modifier added to saving throw difficulty
  *
  * @param oActionPayload {BFActionPayload}
@@ -22,7 +22,7 @@ function main (oActionPayload) {
             damageType: CONSTS.DAMAGE_TYPE_POISON
         })
         ePoison.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
-        manager.applyEffect(ePoison, target, attacker.dice.evaluate(duration), attacker)
+        manager.applyEffect(ePoison, target, duration, attacker)
     }
 }
 

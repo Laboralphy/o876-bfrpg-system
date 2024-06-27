@@ -5,7 +5,7 @@ const TreeSync = require('../o876-xtree/sync')
 /**
  * Will process a script content
  * @param sContent
- * @returns {{parameters: {name:string, type:string, description: string}[], description: string[]}}
+ * @returns {{parameters: {name:string, type:string, description: string}[], description: string}}
  */
 function processContent (sContent) {
     const aDescription = []
@@ -38,7 +38,7 @@ function processContent (sContent) {
         })
     return aDescription.length > 0
         ? {
-            description: aDescription,
+            description: aDescription.join(' '),
             parameters: aVars
         }
         : null
@@ -47,7 +47,7 @@ function processContent (sContent) {
 /**
  * Will process all scripts in specified directory
  * @param aPaths {string} path to script - scripts are scanned recursively
- * @returns {{parameters : {name:string, type:string, description: string}[], description: string[], script: string}[]}
+ * @returns {{parameters : {name:string, type:string, description: string}[], description: string, script: string}[]}
  */
 function processScripts (...aPaths) {
     const oResult = {}

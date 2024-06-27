@@ -39,14 +39,12 @@ class PublicAssets {
                 AmmoType: this._rm.data.data['ammo-types']
             },
             templates: {
-                Ammo: require('./public-assets/refs/ammo.json'),
-                Armor: require('./public-assets/refs/armor.json'),
-                Shield: require('./public-assets/refs/shield.json'),
-                Weapon: require('./public-assets/refs/weapon.json'),
-                Creature: require('./public-assets/refs/creature.json'),
+                Ammo: require('./public-assets/ammo.json'),
+                Armor: require('./public-assets/armor.json'),
+                Shield: require('./public-assets/shield.json'),
+                Weapon: require('./public-assets/weapon.json'),
+                Creature: require('./public-assets/creature.json'),
             },
-            Action: require('./public-assets/refs/action.json'),
-            Convey: require('./public-assets/refs/convey.json'),
             types: {
                 Material: this._cv(Object.values(CONSTS), 'MATERIAL_'),
                 WeaponType: this._cv(Object.keys(this._rm.data.data['weapon-types']), 'WEAPON_TYPE_'),
@@ -61,17 +59,19 @@ class PublicAssets {
                 ClassType: this._cv(Object.values(CONSTS), 'CLASS_TYPE_'),
                 Specie: this._cv(Object.values(CONSTS), 'SPECIE_'),
                 Race: this._cv(Object.values(CONSTS), 'RACE_'),
-            },
-            ItemProperties: Object.fromEntries(Object
-                .entries(require('./public-assets/refs/item-properties.json'))
-                .map(([sItemProperty, oItemProperty]) => [sItemProperty, {
-                    description: this._cv1(sItemProperty, 'ITEM_PROPERTY_'),
-                    parameters: oItemProperty
-                }])),
-            Conveys: processScripts(
-                path.resolve(__dirname, 'scripts'),
-                path.resolve(__dirname, 'modules'),
-            )
+                Action: require('./public-assets/action.json'),
+                Convey: require('./public-assets/convey.json'),
+                ItemProperty: Object.fromEntries(Object
+                    .entries(require('./public-assets/item-properties.json'))
+                    .map(([sItemProperty, oItemProperty]) => [sItemProperty, {
+                        description: this._cv1(sItemProperty, 'ITEM_PROPERTY_'),
+                        parameters: oItemProperty
+                    }])),
+                ConveyorScript: processScripts(
+                    path.resolve(__dirname, 'scripts'),
+                    path.resolve(__dirname, 'modules'),
+                )
+            }
         }
     }
 }

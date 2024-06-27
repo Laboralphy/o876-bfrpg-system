@@ -419,6 +419,6 @@ describe('PublicAssets', function () {
         expect(m._rm).toBeDefined()
         expect(m._rm.data).toBeDefined()
         expect(m.publicAssets).toBeDefined()
-        console.log(util.inspect(m.publicAssets, { depth: 5 }))
+        // console.log(util.inspect(m.publicAssets.types, { depth: 5 }))
     })
 })
