@@ -257,7 +257,7 @@ class Manager {
     init () {
         this._schemaValidator = new SchemaValidator()
         this._schemaValidator.schemaIndex = SCHEMAS
-        return this._schemaValidator.init()
+        this._schemaValidator.init()
     }
 
     /**
