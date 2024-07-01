@@ -13,6 +13,7 @@
  * @property setAbilityValue {function(ability: string, value: number)}
  * @property setClassType {function(value: string)}
  * @property setEffectDuration {function(effect: BFEffect, duration: number)}
+ * @property setEncumbrance {function(value: number)}
  * @property setHitPoints {function(value: number)}
  * @property setLevel {function(value: number)}
  * @property setNaturalArmorClass {function(value: number)}

@@ -1,6 +1,7 @@
 /**
  * @typedef BFStoreGetters {object}
  * @property getAbilities {Object<string, number>}
+ * @property getAbilityBaseValues {Object<string, number>}
  * @property getAbilityModifiers {Object<string, number>}
  * @property getActions {Object<string, BFStoreStateAction>}
  * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number}}
