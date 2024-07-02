@@ -19,6 +19,7 @@
  * @property getEncumbrance {{value: number, capacity: number}}
  * @property getEquipment {Object<string, BFItem>}
  * @property getFumbleSuccess {{savingThrow: {fumble: number, success: number}, attack: {fumble: number, success: number}}}
+ * @property getGender {string}
  * @property getHitPoints {number}
  * @property getImmunitySet {Set<string>}
  * @property getLevel {number}
