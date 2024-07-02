@@ -31,9 +31,14 @@ function getMeleeAttackModifiers (getters) {
 function getSelectedWeaponAttackBonus (state, getters) {
     const weapon = getters.getSelectedWeapon
     const ranged = weapon && weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+    const finesse = weapon && weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_FINESSE)
+    const strength = getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
+    const dexterity = getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY]
     return ranged
-        ? (getRangedAttackModifiers(getters) + getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY])
-        : (getMeleeAttackModifiers(getters) + getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH])
+        ? (getRangedAttackModifiers(getters) + dexterity)
+        : finesse
+            ? (getMeleeAttackModifiers(getters) + Math.max(dexterity, strength))
+            : (getMeleeAttackModifiers(getters) + strength)
 }
 
 /**

@@ -21,6 +21,7 @@ const CONSTS = require('../../consts')
  * @property race {string}
  * @property naturalArmorClass {number}
  * @property level {number}
+ * @property gender {string}
  * @property actions {object<string, BFStoreStateAction>}
  * @property selectedAction {string}
  * @property gauges {BFStoreStateGauges}
@@ -52,6 +53,7 @@ module.exports = () => ({
     level: 1,
     actions: {},
     selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
+    gender: CONSTS.GENDER_NONE,
     gauges: {
         hitPoints: 1
     },

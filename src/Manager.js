@@ -290,15 +290,32 @@ class Manager {
     }
 
     /**
-     * Load a module of additional assets (blueprints and data)
-     * @param module {string} name of module (classic, modern, future)
+     * Load module as a required module (from disk, using require)
+     * @param module {string}
+     * @private
      */
-    loadModule (module) {
-        this._modules.add(module)
-        const { DATA, BLUEPRINTS, SCRIPTS } = require('./modules/' + module)
+    _requireModule (module) {
+        const { DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name = module } = require('./modules/' + module)
+        this._registerModule({ DATA, BLUEPRINTS, SCRIPTS, name })
+    }
+
+    _registerModule ({ DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name }) {
+        this._modules.add(name)
         this._rm.assign('data', DATA)
         this._rm.assign('blueprints', BLUEPRINTS)
         Object.assign(this._scripts, SCRIPTS)
+    }
+
+    /**
+     * Load a module of additional assets (blueprints and data)
+     * @param module {string|object} name or structure of module (classic, modern, future)
+     */
+    loadModule (module) {
+        if (typeof module === 'string') {
+            this._requireModule(module)
+        } else {
+            this._registerModule(module)
+        }
     }
 
     /**
