@@ -35,6 +35,12 @@
       "description": "Nom éventuel de la créature",
       "type": "string"
     },
+    "genre": {
+      "description": "Genre de la créature. Utile pour les personnages. Généralement GENDER_NONE pour les monstres. Non exploité par le système de combat.",
+      "type": "string",
+      "pattern": "^GENRE_",
+      "examples": ["GENRE_NONE", "GENRE_MALE", "GENRE_FEMALE"]
+    },
     "abilities": {
       "description": "Liste des caractéristique de la créature",
       "type": "object",
