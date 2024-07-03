@@ -102,6 +102,7 @@ class Creature {
             specie: state.specie,
             speed: state.speed,
             race: state.race,
+            gender: state.gender,
             naturalArmorClass: state.naturalArmorClass,
             level: state.level,
             actions: state.actions,

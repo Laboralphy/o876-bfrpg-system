@@ -383,6 +383,7 @@ describe('import/export creature', function () {
             specie: 'SPECIE_HUMANOID',
             speed: 30,
             race: 'RACE_UNKNOWN',
+            gender: 'GENDER_NONE',
             naturalArmorClass: 11,
             level: 1,
             actions: {},

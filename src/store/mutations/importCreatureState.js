@@ -15,6 +15,7 @@ module.exports = ({ state, getters }, { data }) => {
     state.naturalArmorClass = data.naturalArmorClass
     state.level = data.level
     state.actions = data.actions
+    state.gender = data.gender
     state.selectedAction = data.selectedAction
     state.gauges = data.gauges
     ArrayMutations.update(state.effects, data.effects)
