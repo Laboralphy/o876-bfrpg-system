@@ -1,11 +1,12 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-07-02T13:10:44.829Z
+// Date : 2024-07-03T15:45:53.578Z
 // List of files in ./src/item-properties
 
 module.exports = {
   'ITEM_PROPERTY_ABILITY_MODIFIER': require('./ability-modifier.js'),
   'ITEM_PROPERTY_ARMOR_CLASS_MODIFIER': require('./armor-class-modifier.js'),
   'ITEM_PROPERTY_ATTACK_MODIFIER': require('./attack-modifier.js'),
+  'ITEM_PROPERTY_CURSED': require('./cursed.js'),
   'ITEM_PROPERTY_DAMAGE_IMMUNITY': require('./damage-immunity.js'),
   'ITEM_PROPERTY_DAMAGE_MODIFIER': require('./damage-modifier.js'),
   'ITEM_PROPERTY_DAMAGE_REDUCTION': require('./damage-reduction.js'),
@@ -22,5 +23,6 @@ module.exports = {
   'ITEM_PROPERTY_SPECIAL_BEHAVIOR': require('./special-behavior.js'),
   'ITEM_PROPERTY_SPEED_FACTOR': require('./speed-factor.js'),
   'ITEM_PROPERTY_SPELLCASTING': require('./spellcasting.js'),
-  'ITEM_PROPERTY_SPIKE_DAMAGE': require('./spike-damage.js')
+  'ITEM_PROPERTY_SPIKE_DAMAGE': require('./spike-damage.js'),
+  'ITEM_PROPERTY_UNIDENTIFIED': require('./unidentified.js')
 }
