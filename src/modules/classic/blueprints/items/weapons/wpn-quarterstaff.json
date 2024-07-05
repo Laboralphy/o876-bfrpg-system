@@ -1,6 +1,6 @@
 {
   "entityType": "ENTITY_TYPE_ITEM",
   "itemType": "ITEM_TYPE_WEAPON",
-  "weaponType": "WEAPON_TYPE_QUATERSTAFF",
+  "weaponType": "WEAPON_TYPE_QUARTERSTAFF",
   "properties": []
 }

@@ -136,7 +136,7 @@
     "attributes": [],
     "material": "MATERIAL_WOOD"
   },
-  "WEAPON_TYPE_QUATERSTAFF": {
+  "WEAPON_TYPE_QUARTERSTAFF": {
     "size": "WEAPON_SIZE_MEDIUM",
     "weight": 4,
     "damage": "1d6",

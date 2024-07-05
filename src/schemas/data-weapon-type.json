@@ -2,12 +2,11 @@
   "description": "Définition des données concernant le type d'arme",
   "type": "object",
   "required": [
-    "proficiency",
-    "damage",
-    "versatileDamage",
-    "damageType",
+    "size",
     "weight",
-    "attributes"
+    "damage",
+    "attributes",
+    "material"
   ],
   "additionalProperties": false,
   "properties": {
