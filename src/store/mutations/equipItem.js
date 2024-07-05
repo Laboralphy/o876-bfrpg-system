@@ -4,10 +4,10 @@ const CONSTS = require('../../consts')
  * @param externals {{}}
  * @param item {BFItem}
  * @param slot {string}
- * @param bByPassCurse {boolean}
+ * @param bypassCurse {boolean}
  * @returns {BFEffect}
  */
-module.exports = ({ state, externals }, { item, slot = '', bByPassCurse = false }) => {
+module.exports = ({ state, externals }, { item, slot = '', bypassCurse = false }) => {
     const oItemTypes = externals['item-types']
     const aAllowedSlots = []
     if (item.itemType === CONSTS.ITEM_TYPE_WEAPON) {
@@ -32,7 +32,7 @@ module.exports = ({ state, externals }, { item, slot = '', bByPassCurse = false 
     const oPrevItem = state.equipment[sUseSlot]
     if (oPrevItem) {
         // Verifier si l'objet est maudit
-        if (!bByPassCurse && !!oPrevItem.properties.find(ip => ip.property === CONSTS.ITEM_PROPERTY_CURSED)) {
+        if (!bypassCurse && !!oPrevItem.properties.find(ip => ip.property === CONSTS.ITEM_PROPERTY_CURSED)) {
             return {
                 previousItem: oPrevItem,
                 newItem: item,
