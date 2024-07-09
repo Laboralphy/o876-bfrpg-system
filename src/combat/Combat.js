@@ -5,6 +5,27 @@ const DATA = require('../data')
 
 const { WEAPON_RANGE_MELEE, WEAPON_RANGE_REACH } = DATA['weapon-ranges']
 
+/*
+mutations
+    setOffensiveSlot
+
+getters
+    getActions
+    getRangedActions
+    getMeleeActions
+
+    targetInWeaponRange
+        getSelectedWeapon
+        getEquipment
+        isRangedWeaponLoaded
+
+    _switchOffensiveSlot
+        getOffensiveSlot
+
+    getSpeed
+    isDead
+ */
+
 class Combat {
     constructor () {
         this._attacker = null
@@ -282,7 +303,6 @@ class Combat {
         }
         return atkr.getters.getSelectedWeapon
     }
-
 
     /**
      * Equip the most suitable weapon according to target distance

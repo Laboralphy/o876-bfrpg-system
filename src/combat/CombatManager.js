@@ -43,68 +43,13 @@ class CombatManager {
         return this._defaultTickCount
     }
 
-    processCombats () {
-        this.combats
-            .forEach(combat => {
-                const oAttacker = combat.attacker.creature
-                if (oAttacker.getters.isDead || combat.defender.isDead) {
-                    this.endCombat(oAttacker, true)
-                } else {
-                    combat.advance()
-                }
-            })
-    }
-
-    isCreatureFighting (oCreature) {
-        return oCreature.id in this._fighters
-    }
 
     /**
-     * Will end combat where creature is involved.
-     * @param oCreature {Creature}
-     * @param bBothSides {boolean} if true and if this is a one-to-one combat : ends both combats
+     * Adds this instance to given object. Returns a new version of object with this instance insert in property 'combatManager'
+     * @param oObject {*}
+     * @returns {*&{combatManager: CombatManager}}
+     * @private
      */
-    endCombat (oCreature, bBothSides = false) {
-        if (this.isCreatureFighting(oCreature)) {
-            const oCombat = this._fighters[oCreature.id]
-            const oDefender = oCombat.defender
-            oCombat.events.removeAllListeners()
-            this._events.emit('combat.end', this._addManagerToObject({
-                ...oCombat.defaultPayload,
-            }))
-            delete this._fighters[oCreature.id]
-            if (bBothSides && this.isCreatureFightingWithTarget(oDefender, oCreature)) {
-                this.endCombat(oDefender)
-            }
-        }
-    }
-
-    /**
-     * Returns all creature attacking specified creature
-     * @param oCreature {Creature}
-     * @param nRange {number} maximum range
-     * @return {Creature[]}
-     */
-    getOffenders (oCreature, nRange = Infinity) {
-        return this.combats
-            .filter(combat => combat.defender === oCreature && combat.distance <= nRange)
-            .map(combat => combat.attacker.creature)
-    }
-
-    /**
-     * This creature is being removed from the game
-     * All combats involved are to be ended
-     * @param oCreature {Creature}
-     */
-    removeFighter (oCreature) {
-        this
-            .getOffenders(oCreature)
-            .forEach(creature => {
-                this.endCombat(creature, true)
-            })
-        this.endCombat(oCreature)
-    }
-
     _addManagerToObject (oObject) {
         return {
             ...oObject,
@@ -131,7 +76,7 @@ class CombatManager {
         combat.events.on('combat.distance', ev => {
             const { attacker, target, distance } = ev
             this._events.emit('combat.distance', this._addManagerToObject(ev))
-            if (this.isCreatureFightingWithTarget(attacker, target)) {
+            if (this.isCreatureFighting(attacker, target)) {
                 // also change target distance with attacker if different
                 const oTargetCombat = this.getCombat(oTarget)
                 if (oTargetCombat && oTargetCombat.distance !== distance) {
@@ -145,6 +90,13 @@ class CombatManager {
         return combat
     }
 
+    /**
+     * sends a combat action event.
+     * if action is a multi melee attack, change target to match one of the offender (random)
+     * this is because multi melee action have no default target
+     * @param ev
+     * @private
+     */
     _sendCombatActionEvent (ev) {
         // Special case concerning multi melee actions :
         // Instead of striking target we strike a random offending target
@@ -159,8 +111,79 @@ class CombatManager {
         this._events.emit('combat.action', this._addManagerToObject(ev))
     }
 
-    isCreatureFightingWithTarget (oCreature, oTarget) {
-        return this.isCreatureFighting(oCreature) && this._fighters[oCreature.id].defender === oTarget
+    /**
+     * Processing all registered combats
+     */
+    processCombats () {
+        this.combats
+            .forEach(combat => {
+                const oAttacker = combat.attacker.creature
+                if (oAttacker.getters.isDead || combat.defender.getters.isDead) {
+                    this.endCombat(oAttacker, true)
+                } else {
+                    combat.advance()
+                }
+            })
+    }
+
+    /**
+     * Return true if Creature is involved in a combat (optionnaly with a specific target creature)
+     * @param oCreature {Creature}
+     * @param oTarget {Creature}
+     * @returns {boolean}
+     */
+    isCreatureFighting (oCreature, oTarget = null) {
+        return oTarget
+            ? this.isCreatureFighting(oCreature) && this._fighters[oCreature.id].defender === oTarget
+            : oCreature.id in this._fighters
+    }
+
+    /**
+     * Returns all creature attacking specified creature
+     * @param oCreature {Creature}
+     * @param nRange {number} maximum range
+     * @return {Creature[]}
+     */
+    getOffenders (oCreature, nRange = Infinity) {
+        return this.combats
+            .filter(combat => combat.defender === oCreature && combat.distance <= nRange)
+            .map(combat => combat.attacker.creature)
+    }
+
+    /**
+     * This creature is being removed from the game
+     * All combats involved are to be ended.
+     * Call this method when a creature is leaving the game or combat.
+     * @param oCreature {Creature}
+     */
+    removeFighter (oCreature) {
+        this
+            .getOffenders(oCreature)
+            .forEach(creature => {
+                this.endCombat(creature, true)
+            })
+        this.endCombat(oCreature)
+    }
+
+    /**
+     * Will end combat where creature is involved.
+     * Call this when you want to technically stop a combat, but all involved creature remain registered
+     * @param oCreature {Creature}
+     * @param bBothSides {boolean} if true and if this is a one-to-one combat : ends both combats
+     */
+    endCombat (oCreature, bBothSides = false) {
+        if (this.isCreatureFighting(oCreature)) {
+            const oCombat = this._fighters[oCreature.id]
+            const oDefender = oCombat.defender
+            oCombat.events.removeAllListeners()
+            this._events.emit('combat.end', this._addManagerToObject({
+                ...oCombat.defaultPayload,
+            }))
+            delete this._fighters[oCreature.id]
+            if (bBothSides && this.isCreatureFighting(oDefender, oCreature)) {
+                this.endCombat(oDefender)
+            }
+        }
     }
 
     /**
@@ -171,7 +194,7 @@ class CombatManager {
      * @return {Combat}
      */
     startCombat (oCreature, oTarget) {
-        if (this.isCreatureFightingWithTarget(oCreature, oTarget)) {
+        if (this.isCreatureFighting(oCreature, oTarget)) {
             // creature is already in fight with target
             return this._fighters[oCreature.id]
         }
