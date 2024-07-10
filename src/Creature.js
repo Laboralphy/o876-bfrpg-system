@@ -18,6 +18,10 @@ class Creature {
         this._id = getId()
         this._name = this._id
         this._dice = new Dice()
+        /**
+         * @type {EventEmitter}
+         * @private
+         */
         this._events = new EventEmitter()
         this._store = buildStore()
         this._ref = ''
@@ -37,7 +41,6 @@ class Creature {
     }
 
     /**
-     *
      * @returns {EventEmitter}
      */
     get events () {
@@ -389,7 +392,7 @@ class Creature {
      * @typedef SavingThrowOutcome {object}
      * @property success {boolean} if true then saving throw is success, threat is avoided or diminished
      * @property ability {string} ability involved in saving throw adjustment
-     * @property threat {string} threat involved in saving throw adjustement
+     * @property savingThrow {string}
      * @property dc {number} difficulty class
      * @property roll {number} roll
      * @property bonus {number} bonus
@@ -399,39 +402,11 @@ class Creature {
      * @param sSavingThrow {string} SAVING_THROW_*
      * @param adjustment {number}
      * @param ability {string} ABILITY_*
-     * @param threat {string} THREAT_*
-     *
      */
-    rollSavingThrow (sSavingThrow, { ability = '', adjustment = 0, threat = '' } = {}) {
+    rollSavingThrow (sSavingThrow, { ability = '', adjustment = 0} = {}) {
         const st = this.getters.getClassTypeData.savingThrows
         if (sSavingThrow in st) {
             let sAbility = ability
-            if (ability === '') {
-                switch (threat) {
-                    case '': {
-                        break
-                    }
-
-                    case CONSTS.THREAT_POISON: {
-                        sAbility = CONSTS.ABILITY_CONSTITUTION
-                        break
-                    }
-
-                    case CONSTS.THREAT_ILLUSION: {
-                        sAbility = CONSTS.ABILITY_INTELLIGENCE
-                        break
-                    }
-
-                    case CONSTS.THREAT_MIND_SPELL: {
-                        sAbility = CONSTS.ABILITY_WISDOM
-                        break
-                    }
-
-                    default: {
-                        throw new Error('Unsupported threat : ' + threat)
-                    }
-                }
-            }
             const nAbilityBonus = sAbility
                 ? this.getters.getAbilityModifiers[sAbility]
                 : 0
@@ -441,8 +416,8 @@ class Creature {
                 CONSTS.EFFECT_SAVING_THROW_MODIFIER,
                 CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER
             ],  {
-                effectFilter: effect => effect.data.threat === sSavingThrow || effect.data.threat === CONSTS.SAVING_THROW_ANY,
-                propFilter: prop => prop.data.threat === sSavingThrow || prop.data.threat === CONSTS.SAVING_THROW_ANY
+                effectFilter: effect => effect.data.savingThrow === sSavingThrow || effect.data.savingThrow === CONSTS.SAVING_THROW_ANY,
+                propFilter: prop => prop.data.savingThrow === sSavingThrow || prop.data.savingThrow === CONSTS.SAVING_THROW_ANY
             }).sum
             const nRollBonus = nRoll + nBonus
             /**
@@ -456,7 +431,6 @@ class Creature {
                 success,
                 ability: sAbility,
                 savingThrow: sSavingThrow,
-                threat,
                 dc,
                 roll: nRoll,
                 bonus: nBonus,

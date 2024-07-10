@@ -411,21 +411,22 @@ class Combat {
         }
     }
 
+    /**
+     * This action is used when a creature has no ranged capabilities and is trying to move toward its target
+     */
     approachTarget () {
-        const nRunSpeed = this._attacker.speed
+        const nRunSpeed = this._attacker.creature.getters.getSpeed
         const previousDistance = this.distance
         let nNewDistance = Math.max(this.weaponMeleeRange, this.distance - nRunSpeed)
         this._events.emit('combat.move', {
             ...this.defaultPayload,
             speed: nRunSpeed,
-            factor: this._attacker.speedFactor,
             previousDistance,
             distance: d => {
                 nNewDistance = parseFloat(d) || 0
             }
         })
         this.distance = nNewDistance
-        this._attacker.healSpeedPenalty()
     }
 
     /**

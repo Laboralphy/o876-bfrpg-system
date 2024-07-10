@@ -13,7 +13,6 @@ class CombatFighterState {
          */
         this._creature = null
         this._currentAction = null
-        this._speedPenalty = 0
         this._actionCooldown = {}
     }
 
@@ -43,27 +42,6 @@ class CombatFighterState {
      */
     get plan () {
         return this._plan
-    }
-
-    get speedPenalty () {
-        return this._speedPenalty
-    }
-
-    set speedPenalty (value) {
-        this._speedPenalty = value
-    }
-
-    get speed () {
-        return Math.ceil(this.creature.getters.getSpeed * this.speedFactor)
-    }
-
-    get speedFactor () {
-        const nSpeedPenalty = Math.max(Math.min(4, this.speedPenalty + 1), 1)
-        return 1 / nSpeedPenalty
-    }
-
-    healSpeedPenalty () {
-        this.speedPenalty = 0
     }
 
     /**

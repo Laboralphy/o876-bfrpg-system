@@ -57,7 +57,7 @@ class Manager {
         this._events = new EventEmitter()
         this._modules = new Set()
 
-        cm.defaultDistance = 50
+        cm.defaultDistance = this.data['variables'].defaultCombatDistance
         cm.resourceManager = this._rm
         cm.events.on('combat.action', ev => this._combatAction(ev))
         cm.events.on('combat.distance', ev => this._events.emit('combat.distance', ev))
@@ -208,9 +208,6 @@ class Manager {
                     })
                     // the target will have penalty of speed
                     const oTargetCombat = this.combatManager.getCombat(target)
-                    if (oTargetCombat) {
-                        ++oTargetCombat.attacker.speedPenalty
-                    }
                     this.runPropEffectScript(target, 'attacked', {
                         attacker,
                         creature: target,

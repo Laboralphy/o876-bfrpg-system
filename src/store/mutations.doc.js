@@ -4,7 +4,7 @@
  * @property addEffect {function(): BFEffect}
  * @property damage {function(amount: number)}
  * @property defineActions {function(actions: DefineActionDTO[])}
- * @property equipItem {function(item: BFItem, slot: string): BFEffect}
+ * @property equipItem {function(item: BFItem, slot: string, bypassCurse: boolean): BFEffect}
  * @property importCreatureState {function(data: *)}
  * @property removeDeadEffects {function()}
  * @property removeEffect {function(effect: BFEffect)}

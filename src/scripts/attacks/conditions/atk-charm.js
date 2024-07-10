@@ -15,7 +15,6 @@ function main (oActionPayload) {
         potency = 0
     } = data
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_SPELL, {
-        threat: CONSTS.THREAT_MIND_SPELL,
         adjustment: potency
     }).success) {
         const eCharm = manager.createEffect(CONSTS.EFFECT_CHARM)

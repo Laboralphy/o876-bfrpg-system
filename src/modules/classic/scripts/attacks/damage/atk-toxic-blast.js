@@ -17,8 +17,7 @@ function main (oActionPayload) {
         .forEach(oCreature => {
             let nDamage = oCreature.dice.evaluate(damage)
             const bSuccess = oCreature.rollSavingThrow(
-                CONSTS.SAVING_THROW_DEATH_RAY_POISON,
-                { threat: CONSTS.THREAT_POISON }
+                CONSTS.SAVING_THROW_DEATH_RAY_POISON
             ).success
             if (bSuccess) {
                 nDamage = nDamage >> 1

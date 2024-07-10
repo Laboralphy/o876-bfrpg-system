@@ -125,8 +125,8 @@ class CombatSim {
             console.log(this._tt(turn, tick), attacker.name, 'will now use :', weapon.ref)
         })
         this._manager.events.on('creature.saving-throw', ev => {
-            const { creature, success, roll, bonus, dc, threat } = ev
-            console.log(creature.name, 'saving throw against', threat.substring(13).toLowerCase(), ':', roll, '+', bonus, 'vs.', dc, ':', success ? 'SUCCESS' : 'FAILURE')
+            const { creature, success, roll, bonus, dc, savingThrow } = ev
+            console.log(creature.name, 'saving throw against', savingThrow.substring(13).toLowerCase(), ':', roll, '+', bonus, 'vs.', dc, ':', success ? 'SUCCESS' : 'FAILURE')
         })
         this._manager.events.on('creature.damage', ev => {
             const { creature, amount, damageType: sDamageType, source, subtype } = ev

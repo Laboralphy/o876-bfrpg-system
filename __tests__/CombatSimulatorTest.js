@@ -579,7 +579,7 @@ describe('Succubus vs Goblin', function () {
         })
 
         manager.events.on('creature.saving-throw', ev => {
-            aLog.push([ev.creature.id, 'saving throw against', ev.threat, 'roll', ev.total, 'vs.', ev.dc, ev.success ? 'SUCCESS' : 'FAILURE'].join(' '))
+            aLog.push([ev.creature.id, 'saving throw against', ev.savingThrow, 'roll', ev.total, 'vs.', ev.dc, ev.success ? 'SUCCESS' : 'FAILURE'].join(' '))
         })
 
         manager.events.on('creature.effect.applied', ev => {

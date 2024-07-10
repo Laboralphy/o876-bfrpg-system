@@ -15,8 +15,7 @@ function main (oActionPayload) {
     } = data
     // if saving throw against poison fail then apply poison
     if (!target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
-        adjustment: potency,
-        threat: CONSTS.THREAT_POISON
+        adjustment: potency
     }).success) {
         const ePoison = manager.createEffect(CONSTS.EFFECT_DAMAGE, damage, {
             damageType: CONSTS.DAMAGE_TYPE_POISON

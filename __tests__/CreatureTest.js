@@ -538,7 +538,7 @@ describe('savingThrow bonus', function () {
         c.mutations.setSpecie({ value: CONSTS.SPECIE_HUMANOID })
         c.mutations.setRace({ value: CONSTS.RACE_ELF })
         c.mutations.addCreatureProperty({
-            property: ItemProperties.build(CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER, 4, { threat: CONSTS.SAVING_THROW_SPELL })
+            property: ItemProperties.build(CONSTS.ITEM_PROPERTY_SAVING_THROW_MODIFIER, 4, { savingThrow: CONSTS.SAVING_THROW_SPELL })
         })
         expect(c.getters.getSavingThrowBonus[CONSTS.SAVING_THROW_SPELL]).toBe(6)
         expect(c.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION))

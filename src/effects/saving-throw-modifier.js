@@ -1,7 +1,7 @@
 const CONSTS = require('../consts')
 
-function init ({ effect, threat = CONSTS.SAVING_THROW_ANY }) {
-    effect.data.threat = threat
+function init ({ effect, savingThrow = CONSTS.SAVING_THROW_ANY }) {
+    effect.data.savingThrow = savingThrow
 }
 
 module.exports = {

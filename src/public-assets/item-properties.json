@@ -49,7 +49,7 @@
   },
   "ITEM_PROPERTY_SAVING_THROW_MODIFIER": {
     "amp": "integer",
-    "threat": "SavingThrow"
+    "savingThrow": "SavingThrow"
   },
   "ITEM_PROPERTY_SPECIAL_BEHAVIOR": {
     "combat": "Script",

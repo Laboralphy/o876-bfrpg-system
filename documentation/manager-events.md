@@ -177,7 +177,6 @@ This event occurs when a creature's HP drop down to 0.
 | creature    | Creature  | Creature instance                          |
 | manager     | Manager   | instance of manager                        |
 | savingThrow | string    | Saving throw type SAVING_THROW_*           |
-| threat      | string    | Theat type THREAT_* (poison, mindspell...) |
 | success     | boolean   | If true then ST is success                 |
 | ability     | string    | ABILITY_* involve in ST modification       |
 | dc          | number    | numerical difficulty                       |
