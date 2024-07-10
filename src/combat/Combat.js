@@ -10,20 +10,27 @@ mutations
     setOffensiveSlot
 
 getters
-    getActions
-    getRangedActions
-    getMeleeActions
+    Combat.getMostSuitableAction
+        getActions
+        getRangedActions
+        getMeleeActions
 
-    targetInWeaponRange
+    Combat.targetInWeaponRange
         getSelectedWeapon
         getEquipment
         isRangedWeaponLoaded
 
-    _switchOffensiveSlot
+    Combat._switchOffensiveSlot
         getOffensiveSlot
 
-    getSpeed
-    isDead
+    CombatFighterState.getActionCooldownRegistry
+        getActions
+
+    CombatFighterState.speed
+        getSpeed
+
+    CombatManager.processCombat
+        isDead
  */
 
 class Combat {
