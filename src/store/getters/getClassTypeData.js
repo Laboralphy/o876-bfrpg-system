@@ -1,4 +1,5 @@
 const CONSTS = require('../../consts')
+const {shallowMap} = require("@laboralphy/object-fusion");
 
 function getArrayValue (arr, index) {
     const value = arr[Math.min(arr.length, Math.max(1, index)) - 1]
@@ -10,9 +11,7 @@ function getArrayValue (arr, index) {
 }
 
 function extractRegistryLevel (reg, nLevel) {
-    return Object.fromEntries(
-        Object.entries(reg).map(([key, arr]) => [key, getArrayValue(arr, nLevel)])
-    )
+    return shallowMap(reg, arr => getArrayValue(arr, nLevel))
 }
 
 /**

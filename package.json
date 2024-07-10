@@ -1,6 +1,6 @@
 {
   "name": "@laboralphy/bfrpg-system",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
-    "@laboralphy/object-fusion": "^1.0.0",
+    "@laboralphy/object-fusion": "^1.2.0",
     "@laboralphy/store": "^1.4.1",
     "jsonschema": "^1.4.1",
     "uuid": "^9.0.1"

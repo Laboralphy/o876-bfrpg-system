@@ -1,4 +1,5 @@
 const { checkCombatActionSchema } = require('../libs/check-combat-action-schema')
+const {shallowMap} = require("@laboralphy/object-fusion");
 
 class CombatFighterState {
     constructor () {
@@ -102,9 +103,7 @@ class CombatFighterState {
 
     getActionCooldownRegistry (nTurn) {
         const oActions = this._creature.getters.getActions
-        return Object.fromEntries(Object.entries(oActions).map(([sKey, oAction]) => {
-            return [sKey, this.getActionCooldown(oAction, nTurn)]
-        }))
+        return shallowMap(oActions, action => this.getActionCooldown(action, nTurn))
     }
 }
 

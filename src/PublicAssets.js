@@ -1,5 +1,5 @@
 const CONSTS = require('./consts')
-const { deepClone } = require('@laboralphy/object-fusion')
+const { shallowMap} = require('@laboralphy/object-fusion')
 const { processScripts } = require('./libs/generate-script-description')
 const path = require('node:path')
 
@@ -61,12 +61,11 @@ class PublicAssets {
                 Race: this._cv(Object.values(CONSTS), 'RACE_'),
                 Action: require('./public-assets/action.json'),
                 Convey: require('./public-assets/convey.json'),
-                ItemProperty: Object.fromEntries(Object
-                    .entries(require('./public-assets/item-properties.json'))
-                    .map(([sItemProperty, oItemProperty]) => [sItemProperty, {
+                ItemProperty: shallowMap(require('./public-assets/item-properties.json'),
+                    (oItemProperty, sItemProperty) => ({
                         description: this._cv1(sItemProperty, 'ITEM_PROPERTY_'),
                         parameters: oItemProperty
-                    }])),
+                    })),
                 ConveyorScript: processScripts(
                     path.resolve(__dirname, 'scripts'),
                     path.resolve(__dirname, 'modules'),

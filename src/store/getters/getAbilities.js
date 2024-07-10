@@ -1,5 +1,6 @@
 const CONSTS = require('../../consts')
 const { aggregateModifiers } = require("../../aggregator");
+const {shallowMap} = require("@laboralphy/object-fusion");
 
 /**
  * List of all ability modifiers
@@ -18,11 +19,8 @@ module.exports = (state, getters) => {
             propSorter: prop => prop.data.ability
         }
     )
-    return Object.fromEntries(Object
-        .entries(state.abilities)
-        .map(([sAbility, nValue]) => {
-            const nModifier = (sAbility in sorter) ? sorter[sAbility].sum : 0
-            return [sAbility, Math.max(1, nValue + nModifier)]
-        })
-    )
+    return shallowMap(state.abilities, (nValue, sAbility) => {
+        const nModifier = (sAbility in sorter) ? sorter[sAbility].sum : 0
+        return Math.max(1, nValue + nModifier)
+    })
 }

@@ -1,4 +1,6 @@
 const PickInputOutput = require('../../libs/pick-input-output')
+const ObjectFusion = require('@laboralphy/object-fusion')
+const {shallowMap} = require("@laboralphy/object-fusion");
 
 /**
  * List of all ability modifiers
@@ -9,7 +11,5 @@ const PickInputOutput = require('../../libs/pick-input-output')
  */
 module.exports = (state, getters, externals) => {
     const p = new PickInputOutput(externals['ability-modifiers'], 'values', 'modifier')
-    return Object.fromEntries(Object
-        .entries(getters.getAbilities)
-        .map(([ability, value]) => [ability, p.getValue(value)]))
+    return shallowMap(getters.getAbilities, value => p.getValue(value))
 }
