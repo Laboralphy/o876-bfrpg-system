@@ -22,7 +22,7 @@ function addMitigation(oMitig, am) {
 }
 
 /**
- * @typedef D20OneDamageMitigation {object}
+ * @typedef BFOneDamageMitigation {object}
  * @property reduction {number}
  * @property factor {number}
  * @property resistance {boolean}
@@ -32,7 +32,7 @@ function addMitigation(oMitig, am) {
  * @param state
  * @param getters
  * @param externals {*}
- * @returns {Object<string, D20OneDamageMitigation>}}
+ * @returns {Object<string, BFOneDamageMitigation>}}
  */
 module.exports = (state, getters, externals) => {
     const {

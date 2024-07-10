@@ -11,7 +11,7 @@
  * @property getCharmerSet {Set<string>}
  * @property getClassTypeData {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
  * @property getConditionSet {Set<string>}
- * @property getDamageMitigation {Object<string, D20OneDamageMitigation>}}
+ * @property getDamageMitigation {Object<string, BFOneDamageMitigation>}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}
  * @property getEffectRegistry {Object<string, BFEffect>}
  * @property getEffectSet {Set<string>}
