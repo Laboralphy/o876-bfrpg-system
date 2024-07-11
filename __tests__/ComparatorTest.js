@@ -53,7 +53,7 @@ describe('extractDamagesFromOutcome', function () {
         })
         expect(c1.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(10)
         expect(ao.action.damage).toBe('1d3') // (3 + 1) / 2
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ DAMAGE_TYPE_PHYSICAL: 2 })
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 2 }, amount: 2 })
     })
     it('extracted (physical 5.5) of an action should not be multiplied by its count', function () {
         const m = init()
@@ -68,7 +68,7 @@ describe('extractDamagesFromOutcome', function () {
                 damageType: CONSTS.DAMAGE_TYPE_PHYSICAL
             }
         })
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ DAMAGE_TYPE_PHYSICAL: 5.5 })
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 5.5 }, amount: 5.5})
     })
     it('extracted damage should be 0 if defender is immune to damage type', function () {
         const m = init()
@@ -83,7 +83,7 @@ describe('extractDamagesFromOutcome', function () {
                 damageType: CONSTS.DAMAGE_TYPE_PHYSICAL
             }
         })
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ DAMAGE_TYPE_PHYSICAL: 0 })
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 5.5 }, amount: 0 })
     })
 })
 
@@ -109,7 +109,7 @@ describe('getActionStats', function () {
             damageTypes: {
                 DAMAGE_TYPE_PHYSICAL: 2
             },
-            damages: 2
+            amount: 2
         })
     })
     it('should return more than 2 average damage when specifying an unarmed action with a bonus in strength', function () {
@@ -121,13 +121,21 @@ describe('getActionStats', function () {
             damageTypes: {
                 DAMAGE_TYPE_PHYSICAL: 5
             },
-            damages: 5
+            amount: 5
         })
     })
-})
-
-
-describe('Comparator.getActionStats', function () {
+    it('should lower dps because of targer damage resistance', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-solar' })
+        c1.mutations.setAbilityValue({ ability: CONSTS.ABILITY_STRENGTH, value: 18 })
+        expect(Comparator.getActionStats(c1, c2, m.data['default-actions'].DEFAULT_ACTION_UNARMED)).toEqual({
+            damageTypes: {
+                DAMAGE_TYPE_PHYSICAL: 5
+            },
+            amount: 2.5
+        })
+    })
     it('should get action stat of an ogre strike', function () {
         const m = new Manager()
         m.init()
@@ -137,83 +145,61 @@ describe('Comparator.getActionStats', function () {
         const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
         // console.log(Comparator.getWeaponStats(c1, c2, c1.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]))
         expect(Comparator.getActionStats(c2, c1, c2.getters.getActions.strike)).toEqual({
-            hp: 8,
-            ac: 13,
-            atk: 4,
             damageTypes: { DAMAGE_TYPE_PHYSICAL: 7 },
-            damages: 7
+            amount: 7
         })
     })
-    it('should have irrevelant wepaon stat when having actions', function () {
+    it('should have irrevelant weapon stat when having actions', function () {
         const m = new Manager()
         m.init()
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
-        expect(Comparator.getMeleeWeaponStats(c3, c1, c3.getters.getActions.claws)).toBeNull()
+        expect(Comparator.getMeleeWeaponStats(c3, c1)).toEqual({"damageTypes": {"DAMAGE_TYPE_PHYSICAL": 2}, "amount": 2})
     })
 })
 
-describe('Test mixed dpt with cooldown', function () {
-    it('should equally distribute action damage when several action have different cooldown', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
-            {
-                damages: 10,
-                cooldown: 10
+describe('getWeaponStats', function () {
+    it('should delivrer 3.5 damage when equipping shortsword', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        const sword = m.createItem({ ref: 'wpn-shortsword' })
+        c1.mutations.equipItem({ item: sword })
+        c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(Comparator.getWeaponStats(c1, c2)).toEqual({
+            damageTypes: {
+                DAMAGE_TYPE_PHYSICAL: 3.5
             },
-            {
-                damages: 7,
-                cooldown: 3
-            },
-            {
-                damages: 3,
-                cooldown: 0
-            }
-        ]))
-        expect(damageMap).toEqual([
-            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
-            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
-            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
-            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
-            10, 7, 3, 3
-        ])
-        expect(mean).toBeCloseTo(4.9773, 4)
-    })
-    it('should blend several action damage with equal cooldown', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
-            {
-                damages: 5,
-                cooldown: 0
-            },
-            {
-                damages: 3,
-                cooldown: 0
-            },
-            {
-                damages: 2,
-                cooldown: 0
-            }
-        ]))
-        expect(damageMap).toEqual([5, 3, 2])
-        expect(mean).toBeCloseTo(3.3333, 4)
-    })
-    it('should fill missing action with 0', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
-            {
-                damages: 5,
-                cooldown: 5
-            },
-            {
-                damages: 3,
-                cooldown: 3
-            }
-        ]))
-        expect(damageMap).toEqual([5, 3, 0, 0, 3, 5, 0, 3, 0, 0, 5, 3])
-        expect(mean).toBeCloseTo(2.25, 4)
+            amount: 3.5
+        })
     })
 })
 
-describe('Comparator.getMeleeWeaponStats', function () {
+describe('getMeleeWeaponStats', function () {
+    it('should selected melee weapon and delivrer 3.5 damage when equipping shortsword', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        const sword = m.createItem({ ref: 'wpn-shortsword' })
+        c1.mutations.equipItem({ item: sword })
+        expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
+            damageTypes: {
+                DAMAGE_TYPE_PHYSICAL: 3.5
+            },
+            amount: 3.5
+        })
+    })
+    it('should return null when equipping no melee weapon', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
+            damageTypes: { DAMAGE_TYPE_PHYSICAL: 2 },
+            amount: 2
+        })
+    })
     it('should compute melee damage', function () {
         const m = new Manager()
         m.init()
@@ -221,11 +207,8 @@ describe('Comparator.getMeleeWeaponStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
         expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            hp: 32,
-            ac: 14,
-            atk: 1,
             damageTypes: { DAMAGE_TYPE_PHYSICAL: 2.5 },
-            damages: 2.5
+            amount: 2.5
         })
     })
     it('should lower damage per turn when target is weapon resistant (like solars)', function () {
@@ -253,14 +236,123 @@ describe('Comparator.getMeleeWeaponStats', function () {
             }
         })
         expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            hp: 56,
-            ac: 17,
-            atk: 1,
-            damageTypes: { DAMAGE_TYPE_PHYSICAL: 1.25 },
-            damages: 1.25
+            damageTypes: { DAMAGE_TYPE_PHYSICAL: 2.5 },
+            amount: 1.25
         })
     })
 })
+
+describe('getRangedWeaponStats', function () {
+    it('should selected ranged weapon and delivrer 3.5 damage when equipping shortsword', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        const xbow = m.createItem({ ref: 'wpn-heavy-crossbow' })
+        const ammo = m.createItem({ ref: 'ammo-quarrel' })
+        c1.mutations.equipItem({ item: xbow })
+        c1.mutations.equipItem({ item: ammo })
+        expect(Comparator.getRangedWeaponStats(c1, c2)).toEqual({
+            damageTypes: {
+                DAMAGE_TYPE_PHYSICAL: 4.5
+            },
+            amount: 4.5
+        })
+    })
+    it('should return null when equipping no ranged weapon', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        expect(Comparator.getRangedWeaponStats(c1, c2)).toBeNull()
+    })
+})
+
+describe('getAllMeleeActionsStats', function () {
+    it('should enumerate all melee action stats', function () {
+        const m = init()
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        const { actions, damageMap, mean } = Comparator.getAllMeleeActionsStats(c1, c2)
+        console.log(actions)
+        expect(actions).toEqual([
+            { damage: 5, cooldown: 0, _lastTime: 0 },
+            { damage: 3.5, cooldown: 0, _lastTime: 1 },
+            { damage: 2.5, cooldown: 0, _lastTime: 2 }
+        ])
+        expect(damageMap).toEqual([ 5, 3.5, 2.5 ])
+        expect(mean).toBeCloseTo(3.6667, 4)
+    })
+})
+
+describe('blendDPT', function () {
+    it('should equally distribute action damage when several action have different cooldown', function () {
+        const { damageMap, mean } = (Comparator.blendDPT([
+            {
+                damage: 10,
+                cooldown: 10
+            },
+            {
+                damage: 7,
+                cooldown: 3
+            },
+            {
+                damage: 3,
+                cooldown: 0
+            }
+        ]))
+        expect(damageMap).toEqual([
+            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
+            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
+            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
+            10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
+            10, 7, 3, 3
+        ])
+        expect(mean).toBeCloseTo(4.9773, 4)
+    })
+    it('should blend several action damage with equal cooldown', function () {
+        const { damageMap, mean } = (Comparator.blendDPT([
+            {
+                damage: 5,
+                cooldown: 0
+            },
+            {
+                damage: 3,
+                cooldown: 0
+            },
+            {
+                damage: 2,
+                cooldown: 0
+            }
+        ]))
+        expect(damageMap).toEqual([5, 3, 2])
+        expect(mean).toBeCloseTo(3.3333, 4)
+    })
+    it('should fill missing action with 0', function () {
+        const { damageMap, mean } = (Comparator.blendDPT([
+            {
+                damage: 5,
+                cooldown: 5
+            },
+            {
+                damage: 3,
+                cooldown: 3
+            }
+        ]))
+        expect(damageMap).toEqual([5, 3, 0, 0, 3, 5, 0, 3, 0, 0, 5, 3])
+        expect(mean).toBeCloseTo(2.25, 4)
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 describe('Comparator.getAllMeleeActionsStats', function () {
     it('should equaly distribute actions, when all actions have cooldown 0', function () {
@@ -282,6 +374,6 @@ describe('Comparator.consider', function () {
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
-        console.log(Comparator.consider(c1, c2))
+        console.log(Comparator.gatherCreatureInformation(c1, c2))
     })
 })

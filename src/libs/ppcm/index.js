@@ -1,5 +1,6 @@
 function ppcm (a, b, x, ...y) {
-    if ((a * b) === 0) {
+    if (!a || !b) {
+        console.error('ppcm is not happy with', a, 'or', b)
         throw new Error('ppcm does not accept null parameters')
     }
     if (a === 1 || b === 1) {

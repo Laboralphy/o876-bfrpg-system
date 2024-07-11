@@ -6,7 +6,7 @@ const ppcm = require('./libs/ppcm')
 /**
  * @typedef DamagePerTypeRegistry {{[p: string]: number}}
  *
- * @typedef WeaponOrActionStats {{damages: number, damageTypes: DamagePerTypeRegistry}}
+ * @typedef WeaponOrActionStats {{amount: number, damageTypes: DamagePerTypeRegistry}}
  */
 
 class Comparator {
@@ -31,7 +31,7 @@ class Comparator {
     /**
      * Estime les dégat infligé par une attaque à partir de l'attack outcome spécifié
      * @param oAttackOutcome
-     * @returns {DamagePerTypeRegistry}
+     * @returns {WeaponOrActionStats}
      * @private
      */
     static extractDamagesFromOutcome (oAttackOutcome) {
@@ -44,10 +44,10 @@ class Comparator {
         const oDamageMitigation = oDefender.getters.getDamageMitigation
         oAttacker.dice.cheat(false)
         oDefender.dice.cheat(false)
-        return shallowMap(damageTypes, ((n, sDamType) => sDamType in oDamageMitigation
-                ? oDamageMitigation[sDamType].factor * n
-                : n
-        ))
+        return {
+            damageTypes,
+            amount: Comparator.computeMitigatedDamage(damageTypes, oDamageMitigation)
+        }
     }
 
     /**
@@ -73,10 +73,10 @@ class Comparator {
             action
         })
         oAttacker._attackUsingAction(oAttackOutcome)
-        const oDamageTypes = Comparator.extractDamagesFromOutcome(oAttackOutcome)
+        const { damageTypes: oDamageTypes, amount } = Comparator.extractDamagesFromOutcome(oAttackOutcome)
         return {
             damageTypes: oDamageTypes,
-            damages: Comparator.getObjectValueSum(oDamageTypes) * action.count
+            amount: amount * action.count
         }
     }
 
@@ -94,14 +94,10 @@ class Comparator {
         if (!oAttackOutcome.weapon) {
             return {
                 damageTypes: {},
-                damages: 0
+                amount: 0
             }
         }
-        const oDamageTypes = Comparator.extractDamagesFromOutcome(oAttackOutcome)
-        return {
-            damageTypes: oDamageTypes,
-            damages: Comparator.getObjectValueSum(oDamageTypes)
-        }
+        return Comparator.extractDamagesFromOutcome(oAttackOutcome)
     }
 
     /**
@@ -113,7 +109,7 @@ class Comparator {
      */
     static getMeleeWeaponStats (c, d) {
         if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
-            return null
+            return Comparator.getUnarmedStats(c, d)
         }
         c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         return Comparator.getWeaponStats(c, d)
@@ -145,115 +141,12 @@ class Comparator {
         return Comparator.getWeaponStats(c, d)
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * compute chance to hit target with atk and ac
-     * @param nAtkBonus
-     * @param nAdvAC
-     * @returns {number}
-     */
-    static computeHitProbability (nAtkBonus, nAdvAC) {
-        const nAtkDelta = nAdvAC - nAtkBonus
-        let nProbToHit = 0
-        if (nAtkDelta >= 20) {
-            nProbToHit = 5
-        } else if (nAtkDelta <= 1) {
-            nProbToHit = 95
-        } else {
-            // entre 2 et 19
-            nProbToHit = (20 - nAtkDelta) * 5
-        }
-        return nProbToHit / 100
-    }
-
     /**
      *
-     * @param oDamageBonus {Object<string, number>}
-     * @param oDamageMitigation {Object<string, BFOneDamageMitigation>}
-     * @returns {number}
+     * @param c
+     * @param d
+     * @returns {{mean: number, damageMap: [], actions: *}}
      */
-    static computeMitigatedDamage (oDamageBonus, oDamageMitigation) {
-        // pour chaque damage bonus, voir s'il existe une mitigation
-        let nTotalDamage = 0
-        for (const [sDamType, nDamage] of Object.entries(oDamageBonus)) {
-            const { factor = 1, reduction = 0 } = sDamType in oDamageMitigation
-                ? oDamageMitigation[sDamType]
-                : { factor: 1, reduction: 0 }
-            nTotalDamage += Math.max(0, factor * nDamage - reduction)
-        }
-        return nTotalDamage
-    }
-
-    static computeDamagePerTurn(nChanceToHit, nAverageDamage, nAttackCount) {
-        return nChanceToHit * nAverageDamage * nAttackCount
-    }
-
-    /**
-     * @typedef ComparatorTTK {object}
-     * @property hp {number}
-     * @property ac {number}
-     * @property damageMitigation {Object<string, D20OneDamageMitigation>}
-     * @property atk {number}
-     * @property atkCount {number}
-     * @property damages {Object<string, number>}
-     *
-     *
-     *
-     * @param adv {ComparatorTTK}
-     * @param you {ComparatorTTK}
-     * @return {*}
-     */
-    static computeTurnsToKill({ adv, you }) {
-        const hp = adv.hp
-        const tohit = Comparator.computeHitProbability(you.atk, adv.ac)
-        const dpa = Comparator.computeMitigatedDamage(you.damages, adv.damageMitigation)
-        const apt = you.atkCount
-        const dpt = Comparator.computeDamagePerTurn(tohit, dpa, apt)
-        const attacks = Math.ceil(hp / (tohit * dpa))
-        const turns = Math.ceil(hp / dpt)
-        return {
-            hasWeapon: !!you.weapon,
-            tohit,
-            dpa,
-            dpt,
-            hp,
-            apt,
-            turns,
-            attacks
-        }
-    }
-
-
-
-
     static getAllMeleeActionsStats (c, d) {
         const aMeleeActions = c
             .getters
@@ -261,8 +154,8 @@ class Comparator {
             .map(s => c.getters.getActions[s])
         const aActions = aMeleeActions.map(a => {
             return {
-                ...Comparator.getActionStats(c, d, a),
-                cooldown: a.cooldown
+                damage: Comparator.getActionStats(c, d, a).amount,
+                cooldown: a.cooldown || 0
             }
         })
         return {
@@ -287,9 +180,18 @@ class Comparator {
     }
     /**
      *
-     * @param aDPT {{ damages: number, cooldown: number, _lastTime: number }[]}
+     * @param aDPT {{ damage: number, cooldown: number, _lastTime: number }[]}
      */
     static blendDPT (aDPT) {
+        if (aDPT.length === 0) {
+            return {
+                damageMap: [],
+                mean: 0
+            }
+        }
+        if (aDPT.length === 1) {
+            aDPT.push({ ...aDPT[0] })
+        }
         const nPPCM = Math.max(aDPT.length, ppcm(...aDPT.map(({ cooldown }) => cooldown + 1)))
         aDPT.forEach(d => {
             d._lastTime = -Infinity
@@ -303,7 +205,11 @@ class Comparator {
             if (ai.length === 0) {
                 a.push(0)
             } else {
-                a.push(ai[0].damages)
+                if (ai[0].damage === undefined) {
+                    console.log(ai)
+                    throw new Error('ERR_UNDEFINED damage')
+                }
+                a.push(ai[0].damage)
                 ai[0]._lastTime = i
             }
         }
@@ -313,6 +219,112 @@ class Comparator {
                 ? a.reduce((prev, curr) => prev + curr) / a.length
                 : 0
         }
+    }
+
+    /**
+     *
+     * @param oDamageBonus {Object<string, number>}
+     * @param oDamageMitigation {Object<string, BFOneDamageMitigation>}
+     * @returns {number}
+     */
+    static computeMitigatedDamage (oDamageBonus, oDamageMitigation) {
+        // pour chaque damage bonus, voir s'il existe une mitigation
+        let nTotalDamage = 0
+        for (const [sDamType, nDamage] of Object.entries(oDamageBonus)) {
+            const { factor = 1, reduction = 0 } = sDamType in oDamageMitigation
+                ? oDamageMitigation[sDamType]
+                : { factor: 1, reduction: 0 }
+            nTotalDamage += Math.max(0, factor * nDamage - reduction)
+        }
+        return nTotalDamage
+    }
+
+    /**
+     * compute chance to hit target with atk and ac
+     * @param nAtkBonus
+     * @param nAdvAC
+     * @returns {number}
+     */
+    static computeHitProbability (nAtkBonus, nAdvAC) {
+        const nAtkDelta = nAdvAC - nAtkBonus
+        let nProbToHit = 0
+        if (nAtkDelta >= 20) {
+            nProbToHit = 5
+        } else if (nAtkDelta <= 1) {
+            nProbToHit = 95
+        } else {
+            // entre 2 et 19
+            nProbToHit = (20 - nAtkDelta) * 5
+        }
+        return nProbToHit / 100
+    }
+
+    static gatherCreatureInformation (oAttacker, oTarget) {
+        const info = {
+            actions: {
+                ranged: Comparator.getAllRangedActionsStats(oAttacker, oTarget),
+                melee: Comparator.getAllMeleeActionsStats(oAttacker, oTarget)
+            },
+            weapon: {
+                ranged: Comparator.getRangedWeaponStats(oAttacker, oTarget),
+                melee: Comparator.getMeleeWeaponStats(oAttacker, oTarget)
+            }
+        }
+        return info
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Compute number of turn to kill target using the given DPT, atk, hp...
+     *
+     * @typedef ComparatorTTK {object}
+     * @property hp {number}
+     * @property ac {number}
+     * @property atk {number}
+     * @property dpt {number} amount of damage (mitigated) per turn
+     *
+     * @param attacker {ComparatorTTK}
+     * @param target {ComparatorTTK}
+     * @return {*}
+     */
+    static computeTurnsToKill({ attacker, target }) {
+        const hp = target.hp
+        const tohit = Comparator.computeHitProbability(attacker.atk, target.ac)
+        const dpt = attacker.dpt
+        const turns = Math.ceil(hp / dpt)
+        return {
+            tohit,
+            dpt,
+            hp,
+            turns
+        }
+    }
+
+    static generateComparatorTTK (oCreature) {
     }
 
     static getWeaponActionStatus (c) {
@@ -328,10 +340,11 @@ class Comparator {
         }
     }
 
-    static considerP1 (you, adv) {
+
+    static considerP1 (oAttackingCreature, oTargetCreature) {
         const r = {
-            you: Comparator.getWeaponActionStatus(you),
-            adv: Comparator.getWeaponActionStatus(adv)
+            attacker: Comparator.getWeaponActionStatus(oAttackingCreature),
+            target: Comparator.getWeaponActionStatus(oTargetCreature)
         }
         const ryou = r.you.weapon.ranged
             ? Comparator.getRangedWeaponStats(you, adv)
@@ -349,6 +362,8 @@ class Comparator {
                 adv: radv
             })
             : null
+        const youExtraData = {
+        }
         const melee = Comparator.computeTurnsToKill({
             you: r.you.weapon.melee
                 ? Comparator.getMeleeWeaponStats(you, adv)
