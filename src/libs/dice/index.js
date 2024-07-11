@@ -6,14 +6,18 @@ const REGEX_XDY = /^([-+]?) *(\d+) *d *(\d+) *(([-+]) *(\d+))?$/
 class Dice {
   constructor () {
     this._cachexdy = {}
+    this._DEBUG = false
+    this._FORCE_RANDOM_VALUE = 0
+    this._FORCE_AVG = false
   }
 
   /**
    * Force a value, usefull for testing
-   * @param value {number|boolean} this number will be use instead of random value
+   * @param value {number|boolean|undefined|string} this number will be use instead of random value
    */
   cheat (value = 0) {
     const t = typeof value
+    this._FORCE_AVG = false
     switch (t) {
       case 'undefined': {
         this._DEBUG = false
@@ -21,6 +25,14 @@ class Dice {
       }
       case 'boolean': {
         this._DEBUG = value
+        break
+      }
+      case 'string': {
+        if (value.toLowerCase() === 'avg') {
+          this._FORCE_AVG = true
+        } else {
+          throw new Error('unsupported string value (supported values are : "avg"')
+        }
         break
       }
       case 'number': {
@@ -60,8 +72,12 @@ class Dice {
     if (nCount < 0) {
       return -this.roll(nSides, -nCount, nModifier)
     }
-    for (let i = 0; i < nCount; ++i) {
-      nAcc += Math.floor(this.random() * nSides) + 1
+    if (this._FORCE_AVG) {
+      nAcc = nCount * (nSides + 1) / 2
+    } else {
+      for (let i = 0; i < nCount; ++i) {
+        nAcc += Math.floor(this.random() * nSides) + 1
+      }
     }
     return nAcc + nModifier
   }
