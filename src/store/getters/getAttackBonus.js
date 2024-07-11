@@ -66,10 +66,21 @@ module.exports = (state, getters) => {
                     getRangedAttackModifiers(getters)
             }
 
-            default: {
+            case CONSTS.ATTACK_TYPE_MELEE_TOUCH: {
+                return nLevelAttackBonus + nBlindnessMalus +
+                    getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] +
+                    getMeleeAttackModifiers(getters)
+            }
+
+            case CONSTS.ATTACK_TYPE_MELEE:
+            case CONSTS.ATTACK_TYPE_MULTI_MELEE: {
                 return nLevelAttackBonus + nBlindnessMalus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] +
                     getMeleeAttackModifiers(getters)
+            }
+
+            default: {
+                return nLevelAttackBonus + nBlindnessMalus
             }
         }
     } else {

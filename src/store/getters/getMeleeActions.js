@@ -9,7 +9,7 @@ const CONSTS = require('../../consts')
 module.exports = (state, getters) => {
     return Object
         .entries(getters.getActions)
-        .filter(([sKey, action]) => {
+        .filter(([, action]) => {
             const at = action.attackType
             return at === CONSTS.ATTACK_TYPE_MELEE_TOUCH ||
                 at === CONSTS.ATTACK_TYPE_MELEE ||

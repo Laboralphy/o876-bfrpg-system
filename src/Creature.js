@@ -347,6 +347,9 @@ class Creature {
     rollDamage (oAttackOutcome) {
         const action = oAttackOutcome.action
         let damage, material, damageType
+        if (!action) {
+            throw new Error('This attack outcome has no action specified')
+        }
         if (action.name === CONSTS.DEFAULT_ACTION_WEAPON) {
             const { weapon, ammo } = this.getters.getOffensiveEquipment
             let nAbilityBonus = weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
@@ -356,7 +359,15 @@ class Creature {
             damageType = CONSTS.DAMAGE_TYPE_PHYSICAL
             material = ammo ? ammo.material : weapon.material
         } else {
-            damage = this.dice.evaluate(action.damage)
+            const aat = action.attackType
+            // Attack type melee touch will not use strength for damage bonus
+            // as they often don't rely on physical strength to apply damage
+            let nAbilityBonus =
+                (aat === CONSTS.ATTACK_TYPE_MELEE ||
+                aat === CONSTS.ATTACK_TYPE_MULTI_MELEE)
+                    ? this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
+                    : 0
+            damage = Math.max(1, this.dice.evaluate(action.damage) + nAbilityBonus)
             damageType = action.damageType
             material = CONSTS.MATERIAL_UNKNOWN
         }

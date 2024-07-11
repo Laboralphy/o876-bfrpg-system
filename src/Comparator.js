@@ -3,7 +3,177 @@ const { DEFAULT_ACTION_WEAPON, DEFAULT_ACTION_UNARMED } = require('./data/defaul
 const { shallowMap } = require("@laboralphy/object-fusion");
 const ppcm = require('./libs/ppcm')
 
+/**
+ * @typedef DamagePerTypeRegistry {{[p: string]: number}}
+ *
+ * @typedef WeaponOrActionStats {{damages: number, damageTypes: DamagePerTypeRegistry}}
+ */
+
 class Comparator {
+    /**
+     * Configure un attack outcome avec target et attacker
+     * @param oAttacker
+     * @param oDefender
+     * @param oDefault
+     * @returns {BFAttackOutcome}
+     */
+    static configAttackOutcome(oAttacker, oDefender, oDefault = {}) {
+        if (!oAttacker || !oDefender) {
+            throw new Error('target or attacker not specified')
+        }
+        return oAttacker._createAttackOutcome({
+            attacker: oAttacker,
+            target: oDefender,
+            ...oDefault
+        })
+    }
+
+    /**
+     * Estime les dégat infligé par une attaque à partir de l'attack outcome spécifié
+     * @param oAttackOutcome
+     * @returns {DamagePerTypeRegistry}
+     * @private
+     */
+    static extractDamagesFromOutcome (oAttackOutcome) {
+        oAttackOutcome.hit = true
+        const oAttacker = oAttackOutcome.attacker
+        const oDefender = oAttackOutcome.target
+        oAttacker.dice.cheat('avg')
+        oDefender.dice.cheat('avg')
+        const { types: damageTypes } = oAttacker.rollDamage(oAttackOutcome)
+        const oDamageMitigation = oDefender.getters.getDamageMitigation
+        oAttacker.dice.cheat(false)
+        oDefender.dice.cheat(false)
+        return shallowMap(damageTypes, ((n, sDamType) => sDamType in oDamageMitigation
+                ? oDamageMitigation[sDamType].factor * n
+                : n
+        ))
+    }
+
+    /**
+     * Renvoie la somme de toutes les valeurs de l'objet spécifié
+     * @param oObject
+     * @returns {number}
+     */
+    static getObjectValueSum (oObject) {
+        return Object
+            .values(oObject)
+            .reduce((prev, curr) => curr + prev, 0)
+    }
+
+    /**
+     * Renvoie les dégâts moyens occasionnés par une action spécifiée contre un adversaire donné
+     * @param oAttacker {Creature}
+     * @param oDefender {Creature}
+     * @param action {BFStoreStateAction}
+     * @returns {WeaponOrActionStats}
+     */
+    static getActionStats (oAttacker, oDefender, action) {
+        const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender,  {
+            action
+        })
+        oAttacker._attackUsingAction(oAttackOutcome)
+        const oDamageTypes = Comparator.extractDamagesFromOutcome(oAttackOutcome)
+        return {
+            damageTypes: oDamageTypes,
+            damages: Comparator.getObjectValueSum(oDamageTypes) * action.count
+        }
+    }
+
+    /**
+     * Renvoie les dégâts moyen occasionné par l'arme actuellement équipée et selectionnée
+     * @param oAttacker {Creature}
+     * @param oDefender {Creature}
+     * @returns {WeaponOrActionStats}
+     */
+    static getWeaponStats (oAttacker, oDefender) {
+        const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender, {
+            action: DEFAULT_ACTION_WEAPON
+        })
+        oAttacker._attackUsingWeapon(oAttackOutcome)
+        if (!oAttackOutcome.weapon) {
+            return {
+                damageTypes: {},
+                damages: 0
+            }
+        }
+        const oDamageTypes = Comparator.extractDamagesFromOutcome(oAttackOutcome)
+        return {
+            damageTypes: oDamageTypes,
+            damages: Comparator.getObjectValueSum(oDamageTypes)
+        }
+    }
+
+    /**
+     * Revoie les dégâts moyen de l'arme de mélée actuellement équipée
+     * Renvoie null s'il n'y a pas d'arme de mélée equipée
+     * @param c {Creature}
+     * @param d {Creature}
+     * @returns {WeaponOrActionStats|null}
+     */
+    static getMeleeWeaponStats (c, d) {
+        if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
+            return null
+        }
+        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        return Comparator.getWeaponStats(c, d)
+    }
+
+    /**
+     * Renvoie les dégâts moyens d'une attaque non armée
+     * @param c {Creature}
+     * @param d {Creature}
+     * @returns {WeaponOrActionStats}
+     */
+    static getUnarmedStats (c, d) {
+        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
+        return Comparator.getActionStats(c, d, DEFAULT_ACTION_UNARMED)
+    }
+
+    /**
+     * Renvoie les dégâts moyens de l'arme à distance actuellement équippée
+     * Renvoie null si on n'est pas equipé d'arme de melée
+     * @param c {Creature}
+     * @param d {Creature}
+     * @returns {WeaponOrActionStats}
+     */
+    static getRangedWeaponStats (c, d) {
+        if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]) {
+            return null
+        }
+        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
+        return Comparator.getWeaponStats(c, d)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * compute chance to hit target with atk and ac
      * @param nAtkBonus
@@ -64,7 +234,6 @@ class Comparator {
     static computeTurnsToKill({ adv, you }) {
         const hp = adv.hp
         const tohit = Comparator.computeHitProbability(you.atk, adv.ac)
-        console.log(you)
         const dpa = Comparator.computeMitigatedDamage(you.damages, adv.damageMitigation)
         const apt = you.atkCount
         const dpt = Comparator.computeDamagePerTurn(tohit, dpa, apt)
@@ -82,107 +251,8 @@ class Comparator {
         }
     }
 
-    static configAttackOutcome(oAttacker, oDefender, oDefault = {}) {
-        return oAttacker._createAttackOutcome({
-            attacker: oAttacker,
-            target: oDefender,
-            ...oDefault
-        })
-    }
-
-    static _extractDamagesFromOutcome (oAttackOutcome) {
-        oAttackOutcome.hit = true
-        const oAttacker = oAttackOutcome.attacker
-        const oDefender = oAttackOutcome.target
-        oAttacker.dice.cheat('avg')
-        oDefender.dice.cheat('avg')
-        const { types: damageTypes } = oAttacker.rollDamage(oAttackOutcome)
-        const oDamageMitigation = oDefender.getters.getDamageMitigation
-        oAttacker.dice.cheat(false)
-        oDefender.dice.cheat(false)
-        return shallowMap(damageTypes, ((n, sDamType) => sDamType in oDamageMitigation
-            ? oDamageMitigation[sDamType].factor * n
-            : n
-        ))
-    }
-
-    /**
-     * DPT is damage per turn, but DPT increases if more thant one attack per turn is allowed
-     * DPT decreases if cooldown is greater than 0
-     * @param nDPT
-     * @param nAttackPerTurn
-     * @param nCooldown
-     */
-    static getDillutedDPT (nDPT, nAttackPerTurn, nCooldown) {
-        return (nAttackPerTurn * nDPT) / (nCooldown + 1)
-    }
-
-    static getObjectValueSum (oObject) {
-        return Object
-            .values(oObject)
-            .reduce((prev, curr) => curr + prev, 0)
-    }
-
-    static getActionStats (oAttacker, oDefender, action) {
-        const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender,  {
-            action
-        })
-        oAttacker._attackUsingAction(oAttackOutcome)
-        const oDamageTypes = Comparator._extractDamagesFromOutcome(oAttackOutcome)
-        return {
-            hp: oDefender.getters.getHitPoints,
-            atk: oAttackOutcome.bonus,
-            ac: oAttackOutcome.ac,
-            damageTypes: oDamageTypes,
-            damages: Comparator.getObjectValueSum(oDamageTypes) * action.count
-        }
-    }
-
-    static getWeaponStats (oAttacker, oDefender) {
-        const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender, {
-            action: DEFAULT_ACTION_WEAPON
-        })
-        oAttacker._attackUsingWeapon(oAttackOutcome)
-        if (!oAttackOutcome.weapon) {
-            return {
-                hp: oDefender.getters.getHitPoints,
-                atk: oAttackOutcome.bonus,
-                ac: oAttackOutcome.ac,
-                damageTypes: {},
-                damages: 0
-            }
-        }
-        const oDamageTypes = Comparator._extractDamagesFromOutcome(oAttackOutcome)
-        return {
-            hp: oDefender.getters.getHitPoints,
-            atk: oAttackOutcome.bonus,
-            ac: oAttackOutcome.ac,
-            damageTypes: oDamageTypes,
-            damages: Comparator.getObjectValueSum(oDamageTypes)
-        }
-    }
-
-    static getMeleeWeaponStats (c, d) {
-        if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
-            return null
-        }
-        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
-        return Comparator.getWeaponStats(c, d)
-    }
 
 
-    static getUnarmedStats (c, d) {
-        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
-        return Comparator.getActionStats(c, d, DEFAULT_ACTION_UNARMED)
-    }
-
-    static getRangedWeaponStats (c, d) {
-        if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]) {
-            return null
-        }
-        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
-        return Comparator.getWeaponStats(c, d)
-    }
 
     static getAllMeleeActionsStats (c, d) {
         const aMeleeActions = c
@@ -245,28 +315,23 @@ class Comparator {
         }
     }
 
+    static getWeaponActionStatus (c) {
+        return {
+            action: {
+                ranged: c.getters.getRangedActions.length > 0,
+                melee: c.getters.getMeleeActions.length > 0,
+            },
+            weapon: {
+                ranged: c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED] !== null,
+                melee: c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE] !== null
+            }
+        }
+    }
+
     static considerP1 (you, adv) {
         const r = {
-            you: {
-                action: {
-                    ranged: you.getters.getRangedActions.length > 0,
-                    melee: you.getters.getMeleeActions.length > 0
-                },
-                weapon: {
-                    ranged: you.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED] !== null,
-                    melee: you.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE] !== null
-                }
-            },
-            adv: {
-                action: {
-                    ranged: adv.getters.getRangedActions.length > 0,
-                    melee: adv.getters.getMeleeActions.length > 0
-                },
-                weapon: {
-                    ranged: adv.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED] !== null,
-                    melee: adv.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE] !== null
-                }
-            }
+            you: Comparator.getWeaponActionStatus(you),
+            adv: Comparator.getWeaponActionStatus(adv)
         }
         const ryou = r.you.weapon.ranged
             ? Comparator.getRangedWeaponStats(you, adv)
