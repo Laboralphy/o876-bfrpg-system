@@ -6,15 +6,21 @@ const ppcm = require('./libs/ppcm')
 /**
  * @typedef DamagePerTypeRegistry {{[p: string]: number}}
  *
- * @typedef WeaponOrActionStats {{amount: number, damageTypes: DamagePerTypeRegistry}}
+ * @typedef WeaponOrActionStats {Object}
+ * @property dpt {number} average amount of damage that can deliver this weapon or action
+ * @property attack {number} attack bonus when using this weapon or action
+ * @property ac {number} target armor class when attacker uses this weapon or action
+ * @property hp {number}
+ * @property toHit {number}
+ * @property turn {number}
  */
 
 class Comparator {
     /**
      * Configure un attack outcome avec target et attacker
-     * @param oAttacker
-     * @param oDefender
-     * @param oDefault
+     * @param oAttacker {Creature}
+     * @param oDefender {Creature}
+     * @param oDefault {*}
      * @returns {BFAttackOutcome}
      */
     static configAttackOutcome(oAttacker, oDefender, oDefault = {}) {
@@ -29,8 +35,8 @@ class Comparator {
     }
 
     /**
-     * Estime les dégat infligé par une attaque à partir de l'attack outcome spécifié
-     * @param oAttackOutcome
+     * Estime les dégats infligés par une attaque à partir de l'attack outcome spécifié
+     * @param oAttackOutcome {BFAttackOutcome}
      * @returns {WeaponOrActionStats}
      * @private
      */
@@ -44,21 +50,19 @@ class Comparator {
         const oDamageMitigation = oDefender.getters.getDamageMitigation
         oAttacker.dice.cheat(false)
         oDefender.dice.cheat(false)
+        const dpt = Comparator.computeMitigatedDamage(damageTypes, oDamageMitigation)
+        const atk = oAttackOutcome.bonus
+        const ac = oAttackOutcome.ac
+        const hp = oAttackOutcome.target.getters.getHitPoints
+        const { toHit, turns } = Comparator.computeTurnsToKill(dpt, atk, ac, hp)
         return {
-            damageTypes,
-            amount: Comparator.computeMitigatedDamage(damageTypes, oDamageMitigation)
+            attack: atk,
+            targetAC: oAttackOutcome.ac,
+            targetHP: hp,
+            dpt,
+            toHit,
+            turns
         }
-    }
-
-    /**
-     * Renvoie la somme de toutes les valeurs de l'objet spécifié
-     * @param oObject
-     * @returns {number}
-     */
-    static getObjectValueSum (oObject) {
-        return Object
-            .values(oObject)
-            .reduce((prev, curr) => curr + prev, 0)
     }
 
     /**
@@ -73,18 +77,14 @@ class Comparator {
             action
         })
         oAttacker._attackUsingAction(oAttackOutcome)
-        const { damageTypes: oDamageTypes, amount } = Comparator.extractDamagesFromOutcome(oAttackOutcome)
-        return {
-            damageTypes: oDamageTypes,
-            amount: amount * action.count
-        }
+        return  Comparator.extractDamagesFromOutcome(oAttackOutcome)
     }
 
     /**
      * Renvoie les dégâts moyen occasionné par l'arme actuellement équipée et selectionnée
      * @param oAttacker {Creature}
      * @param oDefender {Creature}
-     * @returns {WeaponOrActionStats}
+     * @returns {WeaponOrActionStats|null}
      */
     static getWeaponStats (oAttacker, oDefender) {
         const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender, {
@@ -92,10 +92,7 @@ class Comparator {
         })
         oAttacker._attackUsingWeapon(oAttackOutcome)
         if (!oAttackOutcome.weapon) {
-            return {
-                damageTypes: {},
-                amount: 0
-            }
+            return null
         }
         return Comparator.extractDamagesFromOutcome(oAttackOutcome)
     }
@@ -143,41 +140,56 @@ class Comparator {
 
     /**
      *
-     * @param c
-     * @param d
-     * @returns {{mean: number, damageMap: [], actions: *}}
+     * @param c {Creature}
+     * @param d {Creature}
+     * @param aActions {BFStoreStateAction[]}
+     * @returns {{amount: number, damageMap: ([]|[]), actions: *}|null}
      */
-    static getAllMeleeActionsStats (c, d) {
-        const aMeleeActions = c
-            .getters
-            .getMeleeActions
-            .map(s => c.getters.getActions[s])
-        const aActions = aMeleeActions.map(a => {
-            return {
-                damage: Comparator.getActionStats(c, d, a).amount,
-                cooldown: a.cooldown || 0
-            }
-        })
-        return {
-            actions: aActions,
-            ...Comparator.blendDPT(aActions)
-        }
-    }
-
-    static getAllRangedActionsStats (c, d) {
-        const aRangedActions = c
-            .getters
-            .getRangedActions
-            .map(s => c.getters.getActions[s])
-        const aActions = aRangedActions.map(a => ({
+    static getActionListStats (c, d, aActions) {
+        const aProcessedActions = aActions.map(a => ({
             ...Comparator.getActionStats(c, d, a),
             cooldown: a.cooldown
         }))
-        return {
-            actions: aActions,
-            ...Comparator.blendDPT(aActions)
-        }
+        return aProcessedActions.length > 1
+            ? {
+                actions: aProcessedActions,
+                ...Comparator.blendDPT(aProcessedActions.map(a => ({
+                    damage: a.dpt,
+                    cooldown: a.cooldown,
+                    _lastTime: 0,
+                })))
+            }
+            : null
     }
+
+    /**
+     * Compute average damages of all melee actions
+     *
+     * @param c {Creature}
+     * @param d {Creature}
+     * @returns {{ amount: number, damageMap: [], actions: { damage: number, cooldown: number}[] } }
+     */
+    static getAllMeleeActionsStats (c, d) {
+        return Comparator.getActionListStats(c, d, c
+            .getters
+            .getMeleeActions
+            .map(s => c.getters.getActions[s]))
+    }
+
+    /**
+     * Compute average damages of all ranged actions
+     *
+     * @param c {Creature}
+     * @param d {Creature}
+     * @returns {{ amount: number, damageMap: [], actions: { damage: number, cooldown: number}[] } }
+     */
+    static getAllRangedActionsStats (c, d) {
+        return Comparator.getActionListStats(c, d, c
+            .getters
+            .getRangedActions
+            .map(s => c.getters.getActions[s]))
+    }
+
     /**
      *
      * @param aDPT {{ damage: number, cooldown: number, _lastTime: number }[]}
@@ -186,7 +198,7 @@ class Comparator {
         if (aDPT.length === 0) {
             return {
                 damageMap: [],
-                mean: 0
+                amount: 0
             }
         }
         if (aDPT.length === 1) {
@@ -215,7 +227,7 @@ class Comparator {
         }
         return {
             damageMap: a,
-            mean: a.length > 0
+            amount: a.length > 0
                 ? a.reduce((prev, curr) => prev + curr) / a.length
                 : 0
         }
@@ -260,7 +272,7 @@ class Comparator {
     }
 
     static gatherCreatureInformation (oAttacker, oTarget) {
-        const info = {
+        return {
             actions: {
                 ranged: Comparator.getAllRangedActionsStats(oAttacker, oTarget),
                 melee: Comparator.getAllMeleeActionsStats(oAttacker, oTarget)
@@ -270,78 +282,42 @@ class Comparator {
                 melee: Comparator.getMeleeWeaponStats(oAttacker, oTarget)
             }
         }
-        return info
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Compute number of turn to kill target using the given DPT, atk, hp...
-     *
-     * @typedef ComparatorTTK {object}
-     * @property hp {number}
-     * @property ac {number}
-     * @property atk {number}
-     * @property dpt {number} amount of damage (mitigated) per turn
-     *
-     * @param attacker {ComparatorTTK}
-     * @param target {ComparatorTTK}
-     * @return {*}
+     * @param nAttackerDPT {number}
+     * @param nAttackerAtkBonus {number}
+     * @param nTargetAC {number}
+     * @param nTargetHP {number}
+     * @return {{ toHit: number, turns: number }}
      */
-    static computeTurnsToKill({ attacker, target }) {
-        const hp = target.hp
-        const tohit = Comparator.computeHitProbability(attacker.atk, target.ac)
-        const dpt = attacker.dpt
-        const turns = Math.ceil(hp / dpt)
+    static computeTurnsToKill(nAttackerDPT, nAttackerAtkBonus, nTargetAC, nTargetHP) {
+        const toHit = Comparator.computeHitProbability(nAttackerAtkBonus, nTargetAC)
+        const turns = Math.ceil(nTargetHP / nAttackerDPT)
         return {
-            tohit,
-            dpt,
-            hp,
+            toHit,
             turns
         }
     }
 
-    static generateComparatorTTK (oCreature) {
+    static considerP2 (oAttackingCreature, oTargetCreature) {
     }
 
-    static getWeaponActionStatus (c) {
-        return {
-            action: {
-                ranged: c.getters.getRangedActions.length > 0,
-                melee: c.getters.getMeleeActions.length > 0,
-            },
-            weapon: {
-                ranged: c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED] !== null,
-                melee: c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE] !== null
-            }
-        }
-    }
+
+
 
 
     static considerP1 (oAttackingCreature, oTargetCreature) {
+        const gwa = Comparator.getWeaponActionStatus(oAttackingCreature)
+        const attacker = {
+            hp: oAttackingCreature.getters.getHitPoints,
+        }
+
+
+
+
+
         const r = {
             attacker: Comparator.getWeaponActionStatus(oAttackingCreature),
             target: Comparator.getWeaponActionStatus(oTargetCreature)
@@ -362,8 +338,6 @@ class Comparator {
                 adv: radv
             })
             : null
-        const youExtraData = {
-        }
         const melee = Comparator.computeTurnsToKill({
             you: r.you.weapon.melee
                 ? Comparator.getMeleeWeaponStats(you, adv)
@@ -382,13 +356,10 @@ class Comparator {
         }
     }
 
-    static considerHPLeft (you, adv) {
-        const youHP = adv.hp
-        const advHP = you.hp
+    static considerHPLeft (nAttackerHP, nAttackerTurns, nTargetDPT, nTargetToHit) {
         // Combien de HP vont être emportés le temps que vous mettez à terminer votre adversaire
-        const nTurns = you.turns
-        const nAdvDamages = nTurns * adv.dpt
-        return youHP - nAdvDamages
+        const nAdvDamages = nAttackerTurns * nTargetDPT * nTargetToHit
+        return nAttackerHP - nAdvDamages
     }
 
     /**

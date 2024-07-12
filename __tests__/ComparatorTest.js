@@ -87,18 +87,6 @@ describe('extractDamagesFromOutcome', function () {
     })
 })
 
-describe('getObjectValueSum', function () {
-    it('should returns sum of an object', function () {
-        expect(Comparator.getObjectValueSum({
-            x: 1,
-            y: 2,
-            z: 30
-        })).toBe(33)
-    })
-    it('should returns 0 when object is empty (no props)', function () {
-        expect(Comparator.getObjectValueSum({})).toBe(0)
-    })
-})
 
 describe('getActionStats', function () {
     it('should return 2 average damage when specifying an unarmed action', function () {
@@ -272,7 +260,6 @@ describe('getAllMeleeActionsStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         const { actions, damageMap, mean } = Comparator.getAllMeleeActionsStats(c1, c2)
-        console.log(actions)
         expect(actions).toEqual([
             { damage: 5, cooldown: 0, _lastTime: 0 },
             { damage: 3.5, cooldown: 0, _lastTime: 1 },
@@ -373,6 +360,27 @@ describe('Comparator.consider', function () {
         m.init()
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
+        expect(Comparator.gatherCreatureInformation(c1, c2)).toEqual({
+            actions: { ranged: null, melee: null },
+            weapon: {
+                ranged: null,
+                melee: {
+                    attack: 1,
+                    targetAC: 14,
+                    targetHP: 32,
+                    dpt: 2.5,
+                    toHit: 0.35,
+                    turns: 13
+                }
+            }
+        })
+    })
+    it('should return consider report', function () {
+        const m = new Manager()
+        m.init()
+        m.loadModule('classic')
+        const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
         console.log(Comparator.gatherCreatureInformation(c1, c2))
     })
