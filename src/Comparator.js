@@ -1,6 +1,5 @@
 const CONSTS = require('./consts')
 const { DEFAULT_ACTION_WEAPON, DEFAULT_ACTION_UNARMED } = require('./data/default-actions.json')
-const { shallowMap } = require("@laboralphy/object-fusion");
 const ppcm = require('./libs/ppcm')
 
 /**
@@ -219,7 +218,6 @@ class Comparator {
         aDPT.forEach(d => {
             d._lastTime = -Infinity
         })
-        let time = 0
         const a = []
         for (let i = 0; i < nPPCM; ++i) {
             const ai = aDPT
@@ -270,7 +268,7 @@ class Comparator {
      */
     static computeHitProbability (nAtkBonus, nAdvAC) {
         const nAtkDelta = nAdvAC - nAtkBonus
-        let nProbToHit = 0
+        let nProbToHit
         if (nAtkDelta >= 20) {
             nProbToHit = 5
         } else if (nAtkDelta <= 1) {
@@ -320,10 +318,6 @@ class Comparator {
 
 
     static considerP1 (oAttackingCreature, oTargetCreature) {
-        const gwa = Comparator.getWeaponActionStatus(oAttackingCreature)
-        const attacker = {
-            hp: oAttackingCreature.getters.getHitPoints,
-        }
 
 
 
