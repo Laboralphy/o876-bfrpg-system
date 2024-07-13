@@ -66,6 +66,17 @@ class Comparator {
     }
 
     /**
+     * Renvoie la somme de toutes les valeurs de l'objet spécifié
+     * @param oObject
+     * @returns {number}
+     */
+    static getObjectValueSum (oObject) {
+        return Object
+            .values(oObject)
+            .reduce((prev, curr) => curr + prev, 0)
+    }
+
+    /**
      * Renvoie les dégâts moyens occasionnés par une action spécifiée contre un adversaire donné
      * @param oAttacker {Creature}
      * @param oDefender {Creature}
