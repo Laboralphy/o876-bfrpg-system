@@ -83,6 +83,9 @@ class Comparator {
      * @returns {WeaponOrActionStats}
      */
     static getActionStats (oAttacker, oDefender, action) {
+        if (!action) {
+            throw new Error('this action is undefined')
+        }
         const oAttackOutcome = Comparator.configAttackOutcome(oAttacker, oDefender,  {
             action
         })
@@ -116,7 +119,7 @@ class Comparator {
      */
     static getMeleeWeaponStats (c, d) {
         if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
-            return Comparator.getUnarmedStats(c, d)
+            return null
         }
         c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         return Comparator.getWeaponStats(c, d)
@@ -138,7 +141,7 @@ class Comparator {
      * Renvoie null si on n'est pas equipé d'arme de melée
      * @param c {Creature}
      * @param d {Creature}
-     * @returns {WeaponOrActionStats}
+     * @returns {WeaponOrActionStats|null}
      */
     static getRangedWeaponStats (c, d) {
         if (!c.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]) {
@@ -160,7 +163,7 @@ class Comparator {
      * @param c {Creature}
      * @param d {Creature}
      * @param aActions {BFStoreStateAction[]}
-     * @returns {{attackType: string, dpt: number}|null}
+     * @returns {WeaponOrActionStats|null}
      */
     static getActionListStats (c, d, aActions) {
         const aProcessedActions = aActions.map(a => ({
@@ -179,6 +182,8 @@ class Comparator {
                 ...aProcessedActions[0],
                 dpt: amount,
             }
+        } else if (aProcessedActions.length === 1) {
+            return aProcessedActions[0]
         } else {
             return null
         }
@@ -189,7 +194,7 @@ class Comparator {
      *
      * @param c {Creature}
      * @param d {Creature}
-     * @returns {{ amount: number, damageMap: [], actions: { damage: number, cooldown: number}[] } }
+     * @returns {WeaponOrActionStats|null}
      */
     static getAllMeleeActionsStats (c, d) {
         return Comparator.getActionListStats(c, d, c
@@ -203,7 +208,7 @@ class Comparator {
      *
      * @param c {Creature}
      * @param d {Creature}
-     * @returns {{ amount: number, damageMap: [], actions: { damage: number, cooldown: number}[] } }
+     * @returns {WeaponOrActionStats|null}
      */
     static getAllRangedActionsStats (c, d) {
         return Comparator.getActionListStats(c, d, c
@@ -292,6 +297,12 @@ class Comparator {
         return nProbToHit / 100
     }
 
+    /**
+     *
+     * @param oAttacker
+     * @param oTarget
+     * @returns {{actions: {ranged: WeaponOrActionStats[], melee: WeaponOrActionStats[]}, weapons: {ranged: WeaponOrActionStats|null, melee: (WeaponOrActionStats|null)}}}
+     */
     static gatherCreatureInformation (oAttacker, oTarget) {
         return {
             actions: {
@@ -391,92 +402,91 @@ class Comparator {
      * @property advDamage {number} dégâts moyen par tour
      * @property turns {number} nombre de tours nécessaires pour tuer l'adversaire
      * @property hp {ComparatorConsiderHP}
-     * @property hasWeapon {boolean} true si une arme est utilisée pour ce type d'attaque
      *
      * @typedef ComparatorConsiderCombatType {{you : ComparatorConsiderAttackType, adv : ComparatorConsiderAttackType}}
      *
-     * @typedef ComparatorConsiderResult {{ranged: ComparatorConsiderCombatType, melee: ComparatorConsiderCombatType}}
+     * @typedef ComparatorConsiderResult {{ranged : ComparatorConsiderCombatType, melee : ComparatorConsiderCombatType}}
      *
      * @param c1 {Creature}
      * @param c2 {Creature}
      * @returns {ComparatorConsiderResult}
      */
     static consider (c1, c2) {
-        const info1 = Comparator.gatherCreatureInformation(c1, c2)
-        const c1melee = info1.weapons.melee || info1.actions.melee
-        const c1ranged = info1.weapon.ranged || info1.actions.ranged
-        const info2 = Comparator.gatherCreatureInformation(c2, c1)
-        const c2melee = info2.weapons.melee || info2.actions.melee
-        const c2ranged = info2.weapon.ranged || info2.actions.ranged
-        const c1MeleeHPLeft = Comparator.considerHPLeft(c2melee.targetHP,  c1.getters.getHitPoints, c1melee.turns, nTargetDPT, nTargetToHit        c1melee, c2melee)
-        const c2MeleeHPLeft = Comparator.considerHPLeft(c2melee, c1melee)
-        const c1RangedHPLeft = Comparator.considerHPLeft(c1ranged, c2ranged)
-        const c2RangedHPLeft = Comparator.considerHPLeft(c2ranged, c1ranged)
-        /*
-            tohit,
-            dpa,
-            dpt,
-            hp,
-            apt,
-            turns,
-            attacks
+        /**
+         * Takes 2 creatures and computes melee/ranged information gathering
+         * competes info with HP data (curret and max)
+         * @param creature1 {Creature}
+         * @param creature2 {Creature}
+         * @returns {{r: (*|WeaponOrActionStats[]), m: (*|WeaponOrActionStats[])}}
          */
-        const c1hpmax = c1.getters.getMaxHitPoints
-        const c1hp = c1.getters.getHitPoints
-        const c2hpmax = c2.getters.getMaxHitPoints
-        const c2hp = c2.getters.getHitPoints
+        const f0 = (creature1, creature2) => {
+            const info = Comparator.gatherCreatureInformation(creature1, creature2)
+            const m = info.weapons.melee || info.actions.melee
+            const r = info.weapons.ranged || info.actions.ranged
+            if (m) {
+                m.hp = creature1.getters.getHitPoints
+                m.hpmax = creature1.getters.getMaxHitPoints
+            }
+            if (r) {
+                r.hp = creature1.getters.getHitPoints
+                r.hpmax = creature1.getters.getMaxHitPoints
+            }
+            return { m, r }
+        }
+
+        /**
+         * Takes 2 weaponORActionStats and computes a "considerHPLeft" to get how many HP is left with the
+         * attackinbg creature.
+         * @param x1 {WeaponOrActionStats}
+         * @param x2 {WeaponOrActionStats}
+         * @returns {{before: number, lost: number, lost100: number, after: number}|null}
+         */
+        const f1 = (x1, x2) => {
+            if (x1 && x2) {
+                const hp = x1.hp
+                const hpmax = x1.hpmax
+                const hp1left = Comparator.considerHPLeft(hp, x1.turns, x2.dpt, x2.toHit)
+                const hp1lost = hp - hp1left
+                const hp1lost100 = (hp - hp1left) / hpmax
+                return {
+                    before: hp,
+                    after: hp1left,
+                    lost: hp1lost,
+                    lost100: hp1lost100
+                }
+            } else {
+                return null
+            }
+        }
+
+        /**
+         * Takes 2 WeaponOrActionStats and compose a structure which enlights about how long a combat will last
+         * @param x1 {WeaponOrActionStats}
+         * @param x2 {WeaponOrActionStats}
+         * @returns {{hp: ({before: number, lost: number, lost100: number, after: number}|null), dpt: (number|*|number), toHit: (number|*), turns: (number|*)}|null}
+         */
+        const f2 = (x1, x2) => {
+            if (x1?.toHit === undefined) {
+                return null
+            } else {
+                return {
+                    toHit: x1?.toHit,
+                    turns: x1?.turns,
+                    dpt: x1?.dpt && Math.round(x1?.dpt * 10) / 10,
+                    hp: f1(x1, x2)
+                }
+            }
+        }
+        const { m: m1, r: r1 } = f0(c1, c2)
+        const { m: m2, r: r2 } = f0(c2, c1)
         return {
             melee: {
-                you: {
-                    toHit: cc1.melee.tohit,
-                    turns: cc1.melee.turns,
-                    dpt: cc1.melee.dpt,
-                    hp: {
-                        before: c1hp,
-                        after: c1MeleeHPLeft,
-                        lost: c1hp - c1MeleeHPLeft,
-                        lost100: (c1hp - c1MeleeHPLeft) / c1hpmax
-                    },
-                    hasWeapon: cc1.melee.hasWeapon
-                },
-                adv: {
-                    toHit: cc2.melee.tohit,
-                    turns: cc2.melee.turns,
-                    dpt: cc2.melee.dpt,
-                    hp: {
-                        before: c2hp,
-                        after: c2MeleeHPLeft,
-                        lost: c2hp - c2MeleeHPLeft,
-                        lost100: (c2hp - c2MeleeHPLeft) / c2hpmax,
-                    },
-                    hasWeapon: cc2.melee.hasWeapon
-                }
+                you: f2(m1, m2),
+                adv: f2(m2, m1)
             },
             ranged: {
-                you: {
-                    toHit: cc1.ranged.tohit,
-                    turns: cc1.ranged.turns,
-                    dpt: cc1.ranged.dpt,
-                    hp: {
-                        before: c1hp,
-                        after: c1RangedHPLeft,
-                        lost: c1hp - c1RangedHPLeft,
-                        lost100: (c1hp - c1RangedHPLeft) / c1hpmax
-                    },
-                    hasWeapon: cc1.ranged.hasWeapon
-                },
-                adv: {
-                    toHit: cc2.ranged.tohit,
-                    turns: cc2.ranged.turns,
-                    dpt: cc2.ranged.dpt,
-                    hp: {
-                        before: c2hp,
-                        after: c2RangedHPLeft,
-                        lost: c2hp - c2RangedHPLeft,
-                        lost100: (c2hp - c2RangedHPLeft) / c2hpmax
-                    },
-                    hasWeapon: cc2.ranged.hasWeapon
-                }
+                you: f2(r1, r2),
+                adv: f2(r2, r1)
             }
         }
     }

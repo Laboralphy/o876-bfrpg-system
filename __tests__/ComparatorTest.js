@@ -1,5 +1,6 @@
 const { Manager, Creature, CONSTS} = require('../')
 const Comparator = require('../src/Comparator')
+const util = require('util')
 
 function init () {
     const m = new Manager()
@@ -53,7 +54,14 @@ describe('extractDamagesFromOutcome', function () {
         })
         expect(c1.getters.getAbilities[CONSTS.ABILITY_STRENGTH]).toBe(10)
         expect(ao.action.damage).toBe('1d3') // (3 + 1) / 2
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 2 }, amount: 2 })
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({
+            "attack": 0,
+            "dpt": 2,
+            "targetAC": 0,
+            "targetHP": 8,
+            "toHit": 0.95,
+            "turns": 4,
+        })
     })
     it('extracted (physical 5.5) of an action should not be multiplied by its count', function () {
         const m = init()
@@ -68,9 +76,15 @@ describe('extractDamagesFromOutcome', function () {
                 damageType: CONSTS.DAMAGE_TYPE_PHYSICAL
             }
         })
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 5.5 }, amount: 5.5})
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ "attack": 0,
+            "dpt": 5.5,
+            "targetAC": 0,
+            "targetHP": 8,
+            "toHit": 0.95,
+            "turns": 2
+        })
     })
-    it('extracted damage should be 0 if defender is immune to damage type', function () {
+    it('extracted damage should be 0 if defender is immune to damage type, and turn count should be infinity', function () {
         const m = init()
         const c1 = m.createCreature({ id: 'c1', ref: 'c-centaur' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
@@ -83,7 +97,13 @@ describe('extractDamagesFromOutcome', function () {
                 damageType: CONSTS.DAMAGE_TYPE_PHYSICAL
             }
         })
-        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ damageTypes: { DAMAGE_TYPE_PHYSICAL: 5.5 }, amount: 0 })
+        expect(Comparator.extractDamagesFromOutcome(ao)).toEqual({ "attack": 0,
+            "dpt": 0,
+            "targetAC": 0,
+            "targetHP": 32,
+            "toHit": 0.95,
+            "turns": Infinity
+        })
     })
 })
 
@@ -94,10 +114,12 @@ describe('getActionStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         expect(Comparator.getActionStats(c1, c2, m.data['default-actions'].DEFAULT_ACTION_UNARMED)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 2
-            },
-            amount: 2
+            "attack": 1,
+            "dpt": 2,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.4,
+            "turns": 4
         })
     })
     it('should return more than 2 average damage when specifying an unarmed action with a bonus in strength', function () {
@@ -106,10 +128,12 @@ describe('getActionStats', function () {
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         c1.mutations.setAbilityValue({ ability: CONSTS.ABILITY_STRENGTH, value: 18 })
         expect(Comparator.getActionStats(c1, c2, m.data['default-actions'].DEFAULT_ACTION_UNARMED)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 5
-            },
-            amount: 5
+            "attack": 4,
+            "dpt": 5,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.55,
+            "turns": 2,
         })
     })
     it('should lower dps because of targer damage resistance', function () {
@@ -363,7 +387,7 @@ describe('Comparator.consider', function () {
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
         expect(Comparator.gatherCreatureInformation(c1, c2)).toEqual({
             actions: { ranged: null, melee: null },
-            weapon: {
+            weapons: {
                 ranged: null,
                 melee: {
                     attack: 1,
@@ -382,19 +406,67 @@ describe('Comparator.consider', function () {
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
-        expect(Comparator.gatherCreatureInformation(c1, c2)).toEqual({
-            actions: { ranged: null, melee: { dpt: 2.8333333333333335 } },
-            weapon: {
-                ranged: null,
-                melee: {
-                    attack: 4,
-                    targetAC: 14,
-                    targetHP: 32,
-                    dpt: 2,
-                    toHit: 0.5,
-                    turns: 16
-                }
-            }
+        expect(c2.getters.getMeleeActions.length).toBe(1)
+        expect(c2.getters.getMeleeActions).toEqual(['strike'])
+        expect(Comparator.getAllMeleeActionsStats(c2, c1)).not.toBeNull()
+        expect(c1.getters.getMeleeActions).toEqual(['claw', 'bite', 'horn'])
+        expect(c1.getters.getActions['claw']).toBeDefined()
+        expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['claw'])).toEqual({
+            attack: 4,
+            targetAC: 14,
+            targetHP: 32,
+            dpt: 2.5,
+            toHit: 0.5,
+            turns: 13
         })
+        expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['bite'])).toEqual({
+            attack: 4,
+            targetAC: 14,
+            targetHP: 32,
+            dpt: 3.5,
+            toHit: 0.5,
+            turns: 10
+        })
+        expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['horn'])).toEqual({
+            attack: 4,
+            targetAC: 14,
+            targetHP: 32,
+            dpt: 2.5,
+            toHit: 0.5,
+            turns: 13
+        })
+        expect(
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['claw']).dpt +
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['bite']).dpt +
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['horn']).dpt
+        ).toBe(2.5 + 3.5 + 2.5)
+        expect(
+            (Comparator.getActionStats(c1, c2, c1.getters.getActions['claw']).dpt +
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['bite']).dpt +
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['horn']).dpt) / 3
+        ).toBeCloseTo(2.8, 1)
+        expect(Comparator.consider(c1, c2)).toEqual({
+          melee: {
+            you: {
+              toHit: 0.5,
+              turns: 13,
+              dpt: 2.8,
+              hp: { before: 32, after: 32, lost: 0, lost100: 0 }
+            },
+            adv: {
+              toHit: 0.45,
+              turns: Infinity,
+              dpt: 0,
+              hp: {
+                before: 32,
+                after: -Infinity,
+                lost: Infinity,
+                lost100: Infinity
+              }
+            }
+          },
+          ranged: { you: null, adv: null }
+        })
+        console.log(util.inspect(Comparator.consider(c1, c2), false, { depth: 5 }))
     })
 })
