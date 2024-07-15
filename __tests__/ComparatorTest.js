@@ -355,7 +355,7 @@ describe('Comparator.getAllMeleeActionsStats', function () {
 })
 
 describe('Comparator.consider', function () {
-    it('should return consider report', function () {
+    it('should return consider report 1', function () {
         const m = new Manager()
         m.init()
         m.loadModule('classic')
@@ -376,12 +376,25 @@ describe('Comparator.consider', function () {
             }
         })
     })
-    it('should return consider report', function () {
+    it('should return consider report 2', function () {
         const m = new Manager()
         m.init()
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
-        console.log(Comparator.gatherCreatureInformation(c1, c2))
+        expect(Comparator.gatherCreatureInformation(c1, c2)).toEqual({
+            actions: { ranged: null, melee: { dpt: 2.8333333333333335 } },
+            weapon: {
+                ranged: null,
+                melee: {
+                    attack: 4,
+                    targetAC: 14,
+                    targetHP: 32,
+                    dpt: 2,
+                    toHit: 0.5,
+                    turns: 16
+                }
+            }
+        })
     })
 })

@@ -148,28 +148,40 @@ class Comparator {
         return Comparator.getWeaponStats(c, d)
     }
 
+    static avg (aObjects, key) {
+        let n = 0
+        for (const oObject of aObjects) {
+            n += oObject[key]
+        }
+        return n / aObjects.length
+    }
+
     /**
-     *
      * @param c {Creature}
      * @param d {Creature}
      * @param aActions {BFStoreStateAction[]}
-     * @returns {{amount: number, damageMap: ([]|[]), actions: *}|null}
+     * @returns {{attackType: string, dpt: number}|null}
      */
     static getActionListStats (c, d, aActions) {
         const aProcessedActions = aActions.map(a => ({
             ...Comparator.getActionStats(c, d, a),
             cooldown: a.cooldown
         }))
-        return aProcessedActions.length > 1
-            ? {
-                actions: aProcessedActions,
-                ...Comparator.blendDPT(aProcessedActions.map(a => ({
-                    damage: a.dpt,
-                    cooldown: a.cooldown,
+        if (aProcessedActions.length > 1) {
+            const { amount } = Comparator.blendDPT(
+                aProcessedActions.map(({ dpt, cooldown }) => ({
+                    damage: dpt,
+                    cooldown: cooldown,
                     _lastTime: 0,
-                })))
+                }))
+            )
+            return {
+                ...aProcessedActions[0],
+                dpt: amount,
             }
-            : null
+        } else {
+            return null
+        }
     }
 
     /**
@@ -286,7 +298,7 @@ class Comparator {
                 ranged: Comparator.getAllRangedActionsStats(oAttacker, oTarget),
                 melee: Comparator.getAllMeleeActionsStats(oAttacker, oTarget)
             },
-            weapon: {
+            weapons: {
                 ranged: Comparator.getRangedWeaponStats(oAttacker, oTarget),
                 melee: Comparator.getMeleeWeaponStats(oAttacker, oTarget)
             }
@@ -390,12 +402,16 @@ class Comparator {
      * @returns {ComparatorConsiderResult}
      */
     static consider (c1, c2) {
-        const cc1 = Comparator.considerP1(c1, c2)
-        const cc2 = Comparator.considerP1(c2, c1)
-        const c1MeleeHPLeft = Comparator.considerHPLeft(cc1.melee, cc2.melee)
-        const c2MeleeHPLeft = Comparator.considerHPLeft(cc2.melee, cc1.melee)
-        const c1RangedHPLeft = Comparator.considerHPLeft(cc1.ranged, cc2.ranged)
-        const c2RangedHPLeft = Comparator.considerHPLeft(cc2.ranged, cc1.ranged)
+        const info1 = Comparator.gatherCreatureInformation(c1, c2)
+        const c1melee = info1.weapons.melee || info1.actions.melee
+        const c1ranged = info1.weapon.ranged || info1.actions.ranged
+        const info2 = Comparator.gatherCreatureInformation(c2, c1)
+        const c2melee = info2.weapons.melee || info2.actions.melee
+        const c2ranged = info2.weapon.ranged || info2.actions.ranged
+        const c1MeleeHPLeft = Comparator.considerHPLeft(c2melee.targetHP,  c1.getters.getHitPoints, c1melee.turns, nTargetDPT, nTargetToHit        c1melee, c2melee)
+        const c2MeleeHPLeft = Comparator.considerHPLeft(c2melee, c1melee)
+        const c1RangedHPLeft = Comparator.considerHPLeft(c1ranged, c2ranged)
+        const c2RangedHPLeft = Comparator.considerHPLeft(c2ranged, c1ranged)
         /*
             tohit,
             dpa,
