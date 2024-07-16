@@ -142,10 +142,12 @@ describe('getActionStats', function () {
         const c2 = m.createCreature({ id: 'c2', ref: 'c-solar' })
         c1.mutations.setAbilityValue({ ability: CONSTS.ABILITY_STRENGTH, value: 18 })
         expect(Comparator.getActionStats(c1, c2, m.data['default-actions'].DEFAULT_ACTION_UNARMED)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 5
-            },
-            amount: 2.5
+            "attack": 4,
+            "dpt": 2.5,
+            "targetAC": 17,
+            "targetHP": 56,
+            "toHit": 0.35,
+            "turns": 23
         })
     })
     it('should get action stat of an ogre strike', function () {
@@ -157,8 +159,12 @@ describe('getActionStats', function () {
         const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
         // console.log(Comparator.getWeaponStats(c1, c2, c1.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]))
         expect(Comparator.getActionStats(c2, c1, c2.getters.getActions.strike)).toEqual({
-            damageTypes: { DAMAGE_TYPE_PHYSICAL: 7 },
-            amount: 7
+            "attack": 4,
+            "dpt": 7,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.55,
+            "turns": 2
         })
     })
     it('should have irrevelant weapon stat when having actions', function () {
@@ -167,7 +173,7 @@ describe('getActionStats', function () {
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
-        expect(Comparator.getMeleeWeaponStats(c3, c1)).toEqual({"damageTypes": {"DAMAGE_TYPE_PHYSICAL": 2}, "amount": 2})
+        expect(Comparator.getMeleeWeaponStats(c3, c1)).toBeNull()
     })
 })
 
@@ -180,10 +186,12 @@ describe('getWeaponStats', function () {
         c1.mutations.equipItem({ item: sword })
         c1.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         expect(Comparator.getWeaponStats(c1, c2)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 3.5
-            },
-            amount: 3.5
+            "attack": 1,
+            "dpt": 3.5,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.4,
+            "turns": 3
         })
     })
 })
@@ -196,10 +204,12 @@ describe('getMeleeWeaponStats', function () {
         const sword = m.createItem({ ref: 'wpn-shortsword' })
         c1.mutations.equipItem({ item: sword })
         expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 3.5
-            },
-            amount: 3.5
+            "attack": 1,
+            "dpt": 3.5,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.4,
+            "turns": 3
         })
     })
     it('should return null when equipping no melee weapon', function () {
@@ -207,10 +217,7 @@ describe('getMeleeWeaponStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         c1.mutations.removeItem({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
-        expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            damageTypes: { DAMAGE_TYPE_PHYSICAL: 2 },
-            amount: 2
-        })
+        expect(Comparator.getMeleeWeaponStats(c1, c2)).toBeNull()
     })
     it('should compute melee damage', function () {
         const m = new Manager()
@@ -219,8 +226,12 @@ describe('getMeleeWeaponStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
         expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            damageTypes: { DAMAGE_TYPE_PHYSICAL: 2.5 },
-            amount: 2.5
+            "attack": 1,
+            "dpt": 2.5,
+            "targetAC": 14,
+            "targetHP": 32,
+            "toHit": 0.35,
+            "turns": 13,
         })
     })
     it('should lower damage per turn when target is weapon resistant (like solars)', function () {
@@ -248,8 +259,12 @@ describe('getMeleeWeaponStats', function () {
             }
         })
         expect(Comparator.getMeleeWeaponStats(c1, c2)).toEqual({
-            damageTypes: { DAMAGE_TYPE_PHYSICAL: 2.5 },
-            amount: 1.25
+            "attack": 1,
+            "dpt": 1.25,
+            "targetAC": 17,
+            "targetHP": 56,
+            "toHit": 0.2,
+            "turns": 45,
         })
     })
 })
@@ -264,10 +279,12 @@ describe('getRangedWeaponStats', function () {
         c1.mutations.equipItem({ item: xbow })
         c1.mutations.equipItem({ item: ammo })
         expect(Comparator.getRangedWeaponStats(c1, c2)).toEqual({
-            damageTypes: {
-                DAMAGE_TYPE_PHYSICAL: 4.5
-            },
-            amount: 4.5
+            "attack": 1,
+            "dpt": 4.5,
+            "targetAC": 13,
+            "targetHP": 8,
+            "toHit": 0.4,
+            "turns": 2
         })
     })
     it('should return null when equipping no ranged weapon', function () {
@@ -283,20 +300,20 @@ describe('getAllMeleeActionsStats', function () {
         const m = init()
         const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
-        const { actions, damageMap, mean } = Comparator.getAllMeleeActionsStats(c1, c2)
-        expect(actions).toEqual([
-            { damage: 5, cooldown: 0, _lastTime: 0 },
-            { damage: 3.5, cooldown: 0, _lastTime: 1 },
-            { damage: 2.5, cooldown: 0, _lastTime: 2 }
-        ])
-        expect(damageMap).toEqual([ 5, 3.5, 2.5 ])
-        expect(mean).toBeCloseTo(3.6667, 4)
+        expect(Comparator.getAllRangedActionsStats(c1, c2)).toBeNull()
+        const { attack, targetAC, targetHP, dpt, toHit, turns, cooldown } = Comparator.getAllMeleeActionsStats(c1, c2)
+        expect(attack).toBe(4)
+        expect(targetAC).toBe(13)
+        expect(targetHP).toBe(8)
+        expect(dpt).toBeCloseTo(2.8, 1)
+        expect(toHit).toBe(0.55)
+        expect(turns).toBe(4)
     })
 })
 
 describe('blendDPT', function () {
     it('should equally distribute action damage when several action have different cooldown', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
+        const { damageMap, amount } = (Comparator.blendDPT([
             {
                 damage: 10,
                 cooldown: 10
@@ -317,10 +334,10 @@ describe('blendDPT', function () {
             10, 7, 3, 3, 7, 3, 3, 7, 3, 3,
             10, 7, 3, 3
         ])
-        expect(mean).toBeCloseTo(4.9773, 4)
+        expect(amount).toBeCloseTo(4.9773, 4)
     })
     it('should blend several action damage with equal cooldown', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
+        const { damageMap, amount } = (Comparator.blendDPT([
             {
                 damage: 5,
                 cooldown: 0
@@ -335,10 +352,10 @@ describe('blendDPT', function () {
             }
         ]))
         expect(damageMap).toEqual([5, 3, 2])
-        expect(mean).toBeCloseTo(3.3333, 4)
+        expect(amount).toBeCloseTo(3.3333, 4)
     })
     it('should fill missing action with 0', function () {
-        const { damageMap, mean } = (Comparator.blendDPT([
+        const { damageMap, amount } = (Comparator.blendDPT([
             {
                 damage: 5,
                 cooldown: 5
@@ -349,21 +366,9 @@ describe('blendDPT', function () {
             }
         ]))
         expect(damageMap).toEqual([5, 3, 0, 0, 3, 5, 0, 3, 0, 0, 5, 3])
-        expect(mean).toBeCloseTo(2.25, 4)
+        expect(amount).toBeCloseTo(2.25, 4)
     })
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 describe('Comparator.getAllMeleeActionsStats', function () {
     it('should equaly distribute actions, when all actions have cooldown 0', function () {
@@ -372,9 +377,14 @@ describe('Comparator.getAllMeleeActionsStats', function () {
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
-        const { damageMap, mean } = Comparator.getAllMeleeActionsStats(c3, c1)
-        expect(damageMap).toEqual([ 5, 3.5, 2.5 ])
-        expect(mean).toBeCloseTo(3.6667, 4)
+        expect(Comparator.getAllMeleeActionsStats(c3, c1)).toEqual({
+            attack: 4,
+            targetAC: 13,
+            targetHP: 8,
+            dpt: 2.8333333333333335,
+            toHit: 0.55,
+            turns: 4
+        })
     })
 })
 
@@ -386,7 +396,17 @@ describe('Comparator.consider', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
         expect(Comparator.gatherCreatureInformation(c1, c2)).toEqual({
-            actions: { ranged: null, melee: null },
+            actions: {
+                ranged: null,
+                melee: {
+                    attack: 1,
+                    dpt: 2,
+                    targetAC: 14,
+                    targetHP: 32,
+                    toHit: 0.35,
+                    turns: 16
+                }
+            },
             weapons: {
                 ranged: null,
                 melee: {
@@ -467,6 +487,40 @@ describe('Comparator.consider', function () {
           },
           ranged: { you: null, adv: null }
         })
-        console.log(util.inspect(Comparator.consider(c1, c2), false, { depth: 5 }))
+    })
+    it('should use unarmed attack when having no other choice in melee action', function () {
+        const m = new Manager()
+        m.init()
+        m.loadModule('classic')
+        const c1 = m.createCreature({ id: 'c1' })
+        const c2 = m.createCreature({ id: 'c2' })
+        expect(c1).toBeInstanceOf(Creature)
+        expect(Comparator.getMeleeWeaponStats(c1, c2)).toBeNull()
+        expect(Comparator.getUnarmedStats(c1, c2)).toEqual({
+            dpt: 2,
+            attack: 0,
+            targetAC: 11,
+            targetHP: 4,
+            toHit: 0.45,
+            turns: 2
+        })
+        expect(Comparator.consider(c1, c2)).toEqual({
+            melee: {
+                you: { toHit: 0.45, turns: 2, dpt: 2, hp: {
+                    after: 2,
+                    before: 4,
+                    lost: 2,
+                    lost100: 0.5
+                } },
+                adv: { toHit: 0.45, turns: 2, dpt: 2, hp: {
+                    after: 2,
+                    before: 4,
+                    lost: 2,
+                    lost100: 0.5
+                } }
+            },
+            ranged: { you: null, adv: null }
+        })
+
     })
 })

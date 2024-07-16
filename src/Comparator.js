@@ -166,24 +166,28 @@ class Comparator {
      * @returns {WeaponOrActionStats|null}
      */
     static getActionListStats (c, d, aActions) {
-        const aProcessedActions = aActions.map(a => ({
-            ...Comparator.getActionStats(c, d, a),
-            cooldown: a.cooldown
-        }))
+        const aProcessedActions = aActions.map(a => {
+            const action = Comparator.getActionStats(c, d, a)
+            const blend = {
+                cooldown: a.cooldown,
+                _lastTime: 0,
+                damage: action.dpt
+            }
+            return {
+                action,
+                blend
+            }
+        })
         if (aProcessedActions.length > 1) {
             const { amount } = Comparator.blendDPT(
-                aProcessedActions.map(({ dpt, cooldown }) => ({
-                    damage: dpt,
-                    cooldown: cooldown,
-                    _lastTime: 0,
-                }))
+                aProcessedActions.map(({ blend}) => blend)
             )
             return {
-                ...aProcessedActions[0],
+                ...aProcessedActions[0].action,
                 dpt: amount,
             }
         } else if (aProcessedActions.length === 1) {
-            return aProcessedActions[0]
+            return aProcessedActions[0].action
         } else {
             return null
         }
@@ -386,7 +390,7 @@ class Comparator {
 
     static considerHPLeft (nAttackerHP, nAttackerTurns, nTargetDPT, nTargetToHit) {
         // Combien de HP vont être emportés le temps que vous mettez à terminer votre adversaire
-        const nAdvDamages = nAttackerTurns * nTargetDPT * nTargetToHit
+        const nAdvDamages = Math.round(nAttackerTurns * nTargetDPT * nTargetToHit)
         return nAttackerHP - nAdvDamages
     }
 
@@ -421,7 +425,7 @@ class Comparator {
          */
         const f0 = (creature1, creature2) => {
             const info = Comparator.gatherCreatureInformation(creature1, creature2)
-            const m = info.weapons.melee || info.actions.melee
+            const m = info.weapons.melee || info.actions.melee || Comparator.getUnarmedStats(creature1, creature2)
             const r = info.weapons.ranged || info.actions.ranged
             if (m) {
                 m.hp = creature1.getters.getHitPoints
