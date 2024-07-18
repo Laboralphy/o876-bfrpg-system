@@ -330,61 +330,10 @@ class Comparator {
      */
     static computeTurnsToKill(nAttackerDPT, nAttackerAtkBonus, nTargetAC, nTargetHP) {
         const toHit = Comparator.computeHitProbability(nAttackerAtkBonus, nTargetAC)
-        const turns = Math.ceil(nTargetHP / nAttackerDPT)
+        const turns = Math.ceil(nTargetHP / (nAttackerDPT * toHit))
         return {
             toHit,
             turns
-        }
-    }
-
-    static considerP2 (oAttackingCreature, oTargetCreature) {
-    }
-
-
-
-
-
-    static considerP1 (oAttackingCreature, oTargetCreature) {
-
-
-
-
-
-        const r = {
-            attacker: Comparator.getWeaponActionStatus(oAttackingCreature),
-            target: Comparator.getWeaponActionStatus(oTargetCreature)
-        }
-        const ryou = r.you.weapon.ranged
-            ? Comparator.getRangedWeaponStats(you, adv)
-            : r.you.action.ranged
-                ? Comparator.getAllRangedActionsStats(you, adv)
-                : null
-        const radv = r.adv.weapon.ranged
-            ? Comparator.getRangedWeaponStats(adv, you)
-            : r.adv.action.ranged
-                ? Comparator.getAllRangedActionsStats(adv, you)
-                : null
-        const ranged = ryou
-            ? Comparator.computeTurnsToKill({
-                you: ryou,
-                adv: radv
-            })
-            : null
-        const melee = Comparator.computeTurnsToKill({
-            you: r.you.weapon.melee
-                ? Comparator.getMeleeWeaponStats(you, adv)
-                : r.you.action.melee
-                    ? Comparator.getAllMeleeActionsStats(you, adv)
-                    : Comparator.getUnarmedStats(you, adv), // unarmed
-            adv: r.adv.weapon.melee
-                ? Comparator.getMeleeWeaponStats(adv, you)
-                : r.adv.action.melee
-                    ? Comparator.getAllMeleeActionsStats(adv, you)
-                    : Comparator.getUnarmedStats(adv, you)
-        })
-        return {
-            melee,
-            ranged
         }
     }
 
@@ -449,7 +398,7 @@ class Comparator {
             if (x1 && x2) {
                 const hp = x1.hp
                 const hpmax = x1.hpmax
-                const hp1left = Comparator.considerHPLeft(hp, x1.turns, x2.dpt, x2.toHit)
+                const hp1left = Comparator.considerHPLeft(hp, x2.turns, x2.dpt, x2.toHit)
                 const hp1lost = hp - hp1left
                 const hp1lost100 = (hp - hp1left) / hpmax
                 return {

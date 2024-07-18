@@ -502,25 +502,38 @@ describe('Comparator.consider', function () {
             targetAC: 11,
             targetHP: 4,
             toHit: 0.45,
-            turns: 2
+            turns: 5
         })
         expect(Comparator.consider(c1, c2)).toEqual({
             melee: {
-                you: { toHit: 0.45, turns: 2, dpt: 2, hp: {
-                    after: 2,
+                you: { toHit: 0.45, turns: 5, dpt: 2, hp: {
+                    after: -1,
                     before: 4,
-                    lost: 2,
-                    lost100: 0.5
+                    lost: 5,
+                    lost100: 1.25
                 } },
-                adv: { toHit: 0.45, turns: 2, dpt: 2, hp: {
-                    after: 2,
+                adv: { toHit: 0.45, turns: 5, dpt: 2, hp: {
+                    after: -1,
                     before: 4,
-                    lost: 2,
-                    lost100: 0.5
+                    lost: 5,
+                    lost100: 1.25
                 } }
             },
             ranged: { you: null, adv: null }
         })
 
+    })
+    it('should use unarmed attack when having no other choice in melee action', function () {
+        const m = new Manager()
+        m.init()
+        m.loadModule('classic')
+        const c1 = m.createCreature({ id: 'c1' })
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_FIGHTER })
+        expect(c1.getters.getLevel).toBe(1)
+        expect(c1.getters.getMaxHitPoints).toBe(8)
+        expect(c1.mutations.setHitPoints({ value: c1.getters.getMaxHitPoints }))
+        expect(c1.getters.getHitPoints).toBe(8)
+        const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
+        console.log(util.inspect(Comparator.consider(c1, c2), false, { depth: 5 }))
     })
 })
