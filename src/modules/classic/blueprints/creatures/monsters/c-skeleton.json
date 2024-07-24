@@ -1,7 +1,7 @@
 {
   "name": "c-skeleton",
   "ac": 13,
-  "classType": "CLASS_TYPE_MAGIC_USER",
+  "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
       "name": "fist",
@@ -14,13 +14,6 @@
     }
   ],
   "properties": [
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
-      }
-    },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
@@ -53,16 +46,18 @@
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_NECROTIC"
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
       }
     }
   ],
-  "equipment": [],
+  "equipment": [
+    "wpn-shortsword"
+  ],
   "abilities": {
     "strength": 10,
     "dexterity": 10,
     "constitution": 10,
-    "intelligence": 17,
+    "intelligence": 10,
     "wisdom": 10,
     "charisma": 10
   },

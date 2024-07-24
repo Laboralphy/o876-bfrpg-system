@@ -58,13 +58,6 @@
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
       "data": {
-        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
         "immunityType": "IMMUNITY_TYPE_CHARM"
       }
     },
@@ -93,7 +86,7 @@
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
       "data": {
-        "damageType": "DAMAGE_TYPE_NECROTIC"
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
       }
     }
   ],

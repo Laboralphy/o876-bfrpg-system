@@ -18,13 +18,6 @@
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
       "data": {
-        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
-      }
-    },
-    {
-      "property": "ITEM_PROPERTY_IMMUNITY",
-      "amp": 0,
-      "data": {
         "immunityType": "IMMUNITY_TYPE_CHARM"
       }
     },
@@ -50,13 +43,6 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
-      "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_NECROTIC"
-      }
-    },
-    {
       "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
       "amp": 0,
       "data": {
@@ -76,7 +62,7 @@
     "arm-leather"
   ],
   "abilities": {
-    "strength": 10,
+    "strength": 15,
     "dexterity": 10,
     "constitution": 10,
     "intelligence": 10,

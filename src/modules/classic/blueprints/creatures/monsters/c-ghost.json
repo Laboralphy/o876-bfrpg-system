@@ -62,13 +62,6 @@
       }
     },
     {
-      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
-      "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_NECROTIC"
-      }
-    },
-    {
       "property": "ITEM_PROPERTY_DAMAGE_VULNERABILITY",
       "amp": 0,
       "data": {

@@ -43,6 +43,34 @@
       }
     },
     {
+      "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
+      "amp": 0,
+      "data": {
+        "damageType": "DAMAGE_TYPE_PHYSICAL"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_CHARM"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_STUN"
+      }
+    },
+    {
+      "property": "ITEM_PROPERTY_IMMUNITY",
+      "amp": 0,
+      "data": {
+        "immunityType": "IMMUNITY_TYPE_DAZED"
+      }
+    },
+    {
       "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
       "data": {
         "value": 12
@@ -51,7 +79,7 @@
   ],
   "equipment": [],
   "abilities": {
-    "strength": 10,
+    "strength": 20,
     "dexterity": 10,
     "constitution": 10,
     "intelligence": 10,

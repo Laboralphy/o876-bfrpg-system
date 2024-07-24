@@ -1,14 +1,14 @@
 {
-  "name": "c-golem-bone",
-  "ac": 19,
-  "classType": "CLASS_TYPE_MONSTER",
+  "name": "c-skeleton-wizard",
+  "ac": 13,
+  "classType": "CLASS_TYPE_MAGIC_USER",
   "actions": [
     {
-      "name": "strike",
-      "attackType": "ATTACK_TYPE_MULTI_MELEE",
+      "name": "fist",
+      "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d6",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
-      "count": 4,
+      "count": 1,
       "cooldown": 0,
       "conveys": []
     }
@@ -52,15 +52,15 @@
   ],
   "equipment": [],
   "abilities": {
-    "strength": 18,
+    "strength": 10,
     "dexterity": 10,
     "constitution": 10,
-    "intelligence": 10,
+    "intelligence": 17,
     "wisdom": 10,
     "charisma": 10
   },
-  "specie": "SPECIE_CONSTRUCT",
-  "level": 8,
-  "speed": 40,
+  "specie": "SPECIE_UNDEAD",
+  "level": 1,
+  "speed": 30,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

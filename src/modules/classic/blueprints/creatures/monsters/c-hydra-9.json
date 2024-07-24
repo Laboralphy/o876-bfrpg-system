@@ -32,5 +32,6 @@
   },
   "specie": "SPECIE_MONSTROSITY",
   "level": 9,
+  "speed": 10,
   "entityType": "ENTITY_TYPE_ACTOR"
 }

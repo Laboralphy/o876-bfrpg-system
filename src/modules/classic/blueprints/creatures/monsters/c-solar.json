@@ -3,7 +3,6 @@
   "ac": 17,
   "classType": "CLASS_TYPE_CLERIC",
   "actions": [],
-  "speed": 40,
   "properties": [
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
@@ -45,5 +44,6 @@
   },
   "specie": "SPECIE_CELESTIAL",
   "level": 7,
+  "speed": 40,
   "entityType": "ENTITY_TYPE_ACTOR"
 }
