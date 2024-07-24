@@ -1,6 +1,5 @@
 const { Manager, Creature, CONSTS} = require('../')
 const Comparator = require('../src/Comparator')
-const util = require('util')
 
 function init () {
     const m = new Manager()
@@ -29,10 +28,9 @@ describe('configAttackOutcome', function () {
     })
     it('should throw an error when attack is not specified', function () {
         const m = init()
-        const c1 = m.createCreature({ id: 'c1', ref: 'c-centaur' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         expect(() => {
-            const ao = Comparator.configAttackOutcome(null, c2)
+            Comparator.configAttackOutcome(null, c2)
         }).toThrow()
     })
 })
@@ -60,7 +58,7 @@ describe('extractDamagesFromOutcome', function () {
             "targetAC": 0,
             "targetHP": 8,
             "toHit": 0.95,
-            "turns": 4,
+            "turns": 5,
         })
     })
     it('extracted (physical 5.5) of an action should not be multiplied by its count', function () {
@@ -119,7 +117,7 @@ describe('getActionStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.4,
-            "turns": 4
+            "turns": 10
         })
     })
     it('should return more than 2 average damage when specifying an unarmed action with a bonus in strength', function () {
@@ -133,7 +131,7 @@ describe('getActionStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.55,
-            "turns": 2,
+            "turns": 3,
         })
     })
     it('should lower dps because of targer damage resistance', function () {
@@ -147,7 +145,7 @@ describe('getActionStats', function () {
             "targetAC": 17,
             "targetHP": 56,
             "toHit": 0.35,
-            "turns": 23
+            "turns": 64
         })
     })
     it('should get action stat of an ogre strike', function () {
@@ -156,7 +154,6 @@ describe('getActionStats', function () {
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'c1', ref: 'c-goblin' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-ogre' })
-        const c3 = m.createCreature({ id: 'c2', ref: 'c-gargoyle' })
         // console.log(Comparator.getWeaponStats(c1, c2, c1.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]))
         expect(Comparator.getActionStats(c2, c1, c2.getters.getActions.strike)).toEqual({
             "attack": 4,
@@ -164,7 +161,7 @@ describe('getActionStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.55,
-            "turns": 2
+            "turns": 3
         })
     })
     it('should have irrevelant weapon stat when having actions', function () {
@@ -191,7 +188,7 @@ describe('getWeaponStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.4,
-            "turns": 3
+            "turns": 6
         })
     })
 })
@@ -209,7 +206,7 @@ describe('getMeleeWeaponStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.4,
-            "turns": 3
+            "turns": 6
         })
     })
     it('should return null when equipping no melee weapon', function () {
@@ -231,7 +228,7 @@ describe('getMeleeWeaponStats', function () {
             "targetAC": 14,
             "targetHP": 32,
             "toHit": 0.35,
-            "turns": 13,
+            "turns": 37,
         })
     })
     it('should lower damage per turn when target is weapon resistant (like solars)', function () {
@@ -264,7 +261,7 @@ describe('getMeleeWeaponStats', function () {
             "targetAC": 17,
             "targetHP": 56,
             "toHit": 0.2,
-            "turns": 45,
+            "turns": 224,
         })
     })
 })
@@ -284,7 +281,7 @@ describe('getRangedWeaponStats', function () {
             "targetAC": 13,
             "targetHP": 8,
             "toHit": 0.4,
-            "turns": 2
+            "turns": 5
         })
     })
     it('should return null when equipping no ranged weapon', function () {
@@ -301,13 +298,13 @@ describe('getAllMeleeActionsStats', function () {
         const c1 = m.createCreature({ id: 'c1', ref: 'c-gargoyle' })
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
         expect(Comparator.getAllRangedActionsStats(c1, c2)).toBeNull()
-        const { attack, targetAC, targetHP, dpt, toHit, turns, cooldown } = Comparator.getAllMeleeActionsStats(c1, c2)
+        const { attack, targetAC, targetHP, dpt, toHit, turns } = Comparator.getAllMeleeActionsStats(c1, c2)
         expect(attack).toBe(4)
         expect(targetAC).toBe(13)
         expect(targetHP).toBe(8)
         expect(dpt).toBeCloseTo(2.8, 1)
         expect(toHit).toBe(0.55)
-        expect(turns).toBe(4)
+        expect(turns).toBe(6)
     })
 })
 
@@ -383,7 +380,7 @@ describe('Comparator.getAllMeleeActionsStats', function () {
             targetHP: 8,
             dpt: 2.8333333333333335,
             toHit: 0.55,
-            turns: 4
+            turns: 6
         })
     })
 })
@@ -404,7 +401,7 @@ describe('Comparator.consider', function () {
                     targetAC: 14,
                     targetHP: 32,
                     toHit: 0.35,
-                    turns: 16
+                    turns: 46
                 }
             },
             weapons: {
@@ -415,7 +412,7 @@ describe('Comparator.consider', function () {
                     targetHP: 32,
                     dpt: 2.5,
                     toHit: 0.35,
-                    turns: 13
+                    turns: 37
                 }
             }
         })
@@ -437,7 +434,7 @@ describe('Comparator.consider', function () {
             targetHP: 32,
             dpt: 2.5,
             toHit: 0.5,
-            turns: 13
+            turns: 26
         })
         expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['bite'])).toEqual({
             attack: 4,
@@ -445,7 +442,7 @@ describe('Comparator.consider', function () {
             targetHP: 32,
             dpt: 3.5,
             toHit: 0.5,
-            turns: 10
+            turns: 19
         })
         expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['horn'])).toEqual({
             attack: 4,
@@ -453,7 +450,7 @@ describe('Comparator.consider', function () {
             targetHP: 32,
             dpt: 2.5,
             toHit: 0.5,
-            turns: 13
+            turns: 26
         })
         expect(
             Comparator.getActionStats(c1, c2, c1.getters.getActions['claw']).dpt +
@@ -469,7 +466,7 @@ describe('Comparator.consider', function () {
           melee: {
             you: {
               toHit: 0.5,
-              turns: 13,
+              turns: 26,
               dpt: 2.8,
               hp: { before: 32, after: 32, lost: 0, lost100: 0 }
             },
@@ -479,9 +476,9 @@ describe('Comparator.consider', function () {
               dpt: 0,
               hp: {
                 before: 32,
-                after: -Infinity,
-                lost: Infinity,
-                lost100: Infinity
+                after: -5,
+                lost: 37,
+                lost100: 1.15625
               }
             }
           },
@@ -534,6 +531,22 @@ describe('Comparator.consider', function () {
         expect(c1.mutations.setHitPoints({ value: c1.getters.getMaxHitPoints }))
         expect(c1.getters.getHitPoints).toBe(8)
         const c2 = m.createCreature({ id: 'c2', ref: 'c-goblin' })
-        console.log(util.inspect(Comparator.consider(c1, c2), false, { depth: 5 }))
+        expect(Comparator.consider(c1, c2)).toEqual({
+            melee: {
+                you: {
+                    toHit: 0.4,
+                    turns: 10,
+                    dpt: 2,
+                    hp: { before: 8, after: -1, lost: 9, lost100: 1.125 }
+                },
+                adv: {
+                    toHit: 0.5,
+                    turns: 7,
+                    dpt: 2.5,
+                    hp: { before: 8, after: 0, lost: 8, lost100: 1 }
+                }
+            },
+            ranged: { you: null, adv: null }
+        })
     })
 })

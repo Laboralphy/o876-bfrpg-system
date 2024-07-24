@@ -338,8 +338,9 @@ class Comparator {
     }
 
     static considerHPLeft (nAttackerHP, nAttackerTurns, nTargetDPT, nTargetToHit) {
+        const nHPPerTurn = nTargetDPT * nTargetToHit
         // Combien de HP vont être emportés le temps que vous mettez à terminer votre adversaire
-        const nAdvDamages = Math.round(nAttackerTurns * nTargetDPT * nTargetToHit)
+        const nAdvDamages = nHPPerTurn === 0 ? 0 : Math.round(nAttackerTurns * nTargetDPT * nTargetToHit)
         return nAttackerHP - nAdvDamages
     }
 
