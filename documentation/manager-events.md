@@ -219,6 +219,19 @@ This event is fired when a creature is damaged.
 
 ## creature.heal 
 
+This event is fired when a creature is healed.
+
+### Parameters
+
+| Parameter  | Type     | Description                 |
+|------------|----------|-----------------------------|
+| manager    | Manager  | Instance of Manager         |
+| creature   | Creature | Damaged Creature instance   |
+| amount     | number   | amount of hp restored       |
+| factor     | number   | amount multiplier from base |
+| baseAmount | string   | base amount of healing      |
+
+
 ## combat.end
 
 The combat is over : one of the opponent has gone or is dead.
