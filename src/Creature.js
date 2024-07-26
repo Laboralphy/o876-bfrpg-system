@@ -248,7 +248,7 @@ class Creature {
         const fs = this.getters.getFumbleSuccess
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
-        oAttackOutcome.critical = nRoll >= fs.attack.success
+        oAttackOutcome.critical = nRoll >= fs.attack.success || nRoll <= fs.attack.fumble
         const nAtkRoll = nRoll + oAttackOutcome.bonus
         oAttackOutcome.hit = nRoll > fs.attack.fumble && nAtkRoll >= oAttackOutcome.ac
         return oAttackOutcome
