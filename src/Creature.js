@@ -139,7 +139,6 @@ class Creature {
             ac: 0, // target armor class
             bonus: 0, // attack bonus
             critical: false, // auto hit
-            deflector: '', // part of armor that deflect the attack (critical missed, missed, dodged, equipped armor, natural armor)
             distance: 0, // distance between target and attacker
             hit: false, // target hit by attack
             range: 0, // weapon range
@@ -250,7 +249,8 @@ class Creature {
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
         oAttackOutcome.critical = nRoll >= fs.attack.success
-        oAttackOutcome.hit = (nRoll > fs.attack.fumble) && (nRoll + oAttackOutcome.bonus >= oAttackOutcome.ac)
+        const nAtkRoll = nRoll + oAttackOutcome.bonus
+        oAttackOutcome.hit = nRoll > fs.attack.fumble && nAtkRoll >= oAttackOutcome.ac
         return oAttackOutcome
     }
 
@@ -453,40 +453,6 @@ class Creature {
         } else {
             throw new Error('this threat cannot be saved : ' + sSavingThrow)
         }
-    }
-
-    get challengeRating () {
-        const m = this.mutations
-        const g = this.getters
-        const d = this.dice
-        d.cheat('avg')
-        const ampMapper = ({ amp }) => d.evaluate(amp)
-        const nDamageBonus = this.aggregateModifiers([
-            CONSTS.ITEM_PROPERTY_DAMAGE_MODIFIER,
-            CONSTS.EFFECT_DAMAGE_MODIFIER
-        ], {
-            effectAmpMapper: ampMapper,
-            propAmpMapper: ampMapper
-        }).sum
-        this.dice.cheat(false)
-
-        const r = {}
-        const sSlotBak = g.getOffensiveSlot
-        if (g.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE]) {
-            m.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
-            r.melee = {
-                attack: g.getAttackBonus,
-                damage: nDamageBonus + g.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
-            }
-        }
-        if (g.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]) {
-            m.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED })
-            r.ranged = {
-                attack: g.getAttackBonus,
-                damage: nDamageBonus
-            }
-        }
-        m.setOffensiveSlot({ slot: sSlotBak })
     }
 }
 

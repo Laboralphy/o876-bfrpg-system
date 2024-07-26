@@ -127,7 +127,6 @@ Indicated that a creature used an action.
  * @property ac {number}
  * @property bonus {number}
  * @property critical {boolean}
- * @property deflector {string}
  * @property distance {number}
  * @property hit {boolean}
  * @property range {number}

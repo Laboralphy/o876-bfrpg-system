@@ -8,7 +8,7 @@ const {
 /**
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
- * @return {{natural: number, ranged: number, equipment: number, melee: number}}
+ * @return {{natural: number, ranged: number, equipment: number, melee: number, details: {shield: number, dexterity: number, armor: number}}}
  */
 module.exports = (state, getters) => {
     const oArmor = getters.getEquipment[CONSTS.EQUIPMENT_SLOT_CHEST]
@@ -40,6 +40,11 @@ module.exports = (state, getters) => {
         natural: naturalArmorClass,
         equipment: nEquipmentAC,
         melee: nEquipmentAC + nACBonusMelee,
-        ranged: nEquipmentAC + nACBonusRanged
+        ranged: nEquipmentAC + nACBonusRanged,
+        details: {
+            shield: nACShieldBonus,
+            armor: nACArmorBonus,
+            dexterity: nACDexBonus
+        }
     }
 }

@@ -4,7 +4,7 @@
  * @property getAbilityBaseValues {Object<string, number>}
  * @property getAbilityModifiers {Object<string, number>}
  * @property getActions {Object<string, BFStoreStateAction>}
- * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number}}
+ * @property getArmorClass {{natural: number, ranged: number, equipment: number, melee: number, details: {shield: number, dexterity: number, armor: number}}}
  * @property getAttackBonus {number}
  * @property getAttackRanges {{weapon: number, action: number}}
  * @property getCapabilities {{act: boolean, fight: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}

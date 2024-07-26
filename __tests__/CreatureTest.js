@@ -511,7 +511,17 @@ describe('class type tourist', function () {
         expect(c.getters.getLevel).toBe(1)
         expect(c.getters.getSpecie.ref).toBe(CONSTS.SPECIE_HUMANOID)
         expect(c.getters.getRace.ref).toBe(CONSTS.RACE_UNKNOWN)
-        expect(c.getters.getArmorClass).toEqual({"equipment": 11, "melee": 11, "natural": 11, "ranged": 11})
+        expect(c.getters.getArmorClass).toEqual({
+            "equipment": 11,
+            "melee": 11,
+            "natural": 11,
+            "ranged": 11,
+            "details": {
+                "armor": 0,
+                "dexterity": 0,
+                "shield": 0
+            }
+        })
     })
 })
 

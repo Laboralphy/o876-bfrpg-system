@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-07-10T21:50:46.714Z
+// Date : 2024-07-26T18:34:55.003Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
@@ -28,6 +28,7 @@ module.exports = {
   'c-griffon': require('./creatures/monsters/c-griffon.json'),
   'c-harpy': require('./creatures/monsters/c-harpy.json'),
   'c-hippogriff': require('./creatures/monsters/c-hippogriff.json'),
+  'c-hydra-12': require('./creatures/monsters/c-hydra-12.json'),
   'c-hydra-5': require('./creatures/monsters/c-hydra-5.json'),
   'c-hydra-6': require('./creatures/monsters/c-hydra-6.json'),
   'c-hydra-7': require('./creatures/monsters/c-hydra-7.json'),
@@ -47,6 +48,7 @@ module.exports = {
   'c-rat-giant': require('./creatures/monsters/c-rat-giant.json'),
   'c-skeleton-chieftain': require('./creatures/monsters/c-skeleton-chieftain.json'),
   'c-skeleton-warrior': require('./creatures/monsters/c-skeleton-warrior.json'),
+  'c-skeleton-wizard': require('./creatures/monsters/c-skeleton-wizard.json'),
   'c-skeleton': require('./creatures/monsters/c-skeleton.json'),
   'c-solar': require('./creatures/monsters/c-solar.json'),
   'c-spectre': require('./creatures/monsters/c-spectre.json'),
@@ -59,7 +61,9 @@ module.exports = {
   'c-zombie': require('./creatures/monsters/c-zombie.json'),
   'c-zombraire': require('./creatures/monsters/c-zombraire.json'),
   'ammo-arrow': require('./items/ammunitions/ammo-arrow.json'),
+  'ammo-fire-arrow': require('./items/ammunitions/ammo-fire-arrow.json'),
   'ammo-quarrel': require('./items/ammunitions/ammo-quarrel.json'),
+  'ammo-silver-arrow': require('./items/ammunitions/ammo-silver-arrow.json'),
   'arm-chain-mail': require('./items/armors/arm-chain-mail.json'),
   'arm-clothing': require('./items/armors/arm-clothing.json'),
   'arm-leather': require('./items/armors/arm-leather.json'),
