@@ -175,14 +175,16 @@ class CombatManager {
         if (this.isCreatureFighting(oCreature)) {
             const oCombat = this._fighters[oCreature.id]
             const oDefender = oCombat.defender
-            oCombat.events.removeAllListeners()
             this._events.emit('combat.end', this._addManagerToObject({
                 ...oCombat.defaultPayload,
+                victory: !oCreature.getters.isDead && oDefender.getters.isDead,
+                defeat: oCreature.getters.isDead && !oDefender.getters.isDead
             }))
             delete this._fighters[oCreature.id]
             if (bBothSides && this.isCreatureFighting(oDefender, oCreature)) {
                 this.endCombat(oDefender)
             }
+            oCombat.events.removeAllListeners()
         }
     }
 

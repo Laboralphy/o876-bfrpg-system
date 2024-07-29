@@ -237,14 +237,16 @@ The combat is over : one of the opponent has gone or is dead.
 
 ### Parameters
 
-| Parameter          | Type           | Description                             |
-|--------------------|----------------|-----------------------------------------|
-| combat             | Combat         | Instance of combat                      |
-| combatManager      | CombatManager  | Instance of combat manager              |
-| turn               | number         | Elapsed turns since beginning of combat |
-| tick               | number         | Number of ticks since beginning of turn |
-| attacker           | Creature       | Attacking creature                      |
-| target             | Creature       | Attacker's target                       |
+| Parameter     | Type          | Description                                       |
+|---------------|---------------|---------------------------------------------------|
+| combat        | Combat        | Instance of combat                                |
+| combatManager | CombatManager | Instance of combat manager                        |
+| turn          | number        | Elapsed turns since beginning of combat           |
+| tick          | number        | Number of ticks since beginning of turn           |
+| attacker      | Creature      | Attacking creature                                |
+| target        | Creature      | Attacker's target                                 |
+| victory       | boolean       | If true then attacker has killed target           |
+| defeat        | boolean       | If true then attacker has been killed by target   |
 
 ## creature.effect.applied
 
