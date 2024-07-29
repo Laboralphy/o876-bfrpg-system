@@ -76,6 +76,9 @@ class Manager {
         cm.events.on('combat.offensive-slot', ev => {
             this._events.emit('combat.offensive-slot', ev)
         })
+        cm.events.on('combat.end', ev => {
+            this._events.emit('combat.end', ev)
+        })
 
         this._itemBuilder = ib
         this._creatureBuilder = cb
