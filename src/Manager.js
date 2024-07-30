@@ -166,13 +166,25 @@ class Manager {
         // weaponized action is an action that uses standard attack system (roll + bonus vs. ac)
         const bWeaponizedAction = action.name === CONSTS.DEFAULT_ACTION_WEAPON ||
             action.name === CONSTS.DEFAULT_ACTION_UNARMED
+        const bUnilateralFight = !combatManager.isCreatureAttacked(attacker)
+        const bAttackerDetected = target.getCreatureVisibility(attacker) === CONSTS.CREATURE_VISIBILITY_VISIBLE
+        const bTargetDetected = attacker.getCreatureVisibility(target) === CONSTS.CREATURE_VISIBILITY_VISIBLE
+        const bAttackerEmbush = bTargetDetected && !bAttackerDetected
+        const bHasSneak = attacker.getters.getCapabilities.sneak
+        const sneak = bHasSneak && (bUnilateralFight || bAttackerEmbush)
         for (let iAtk = 0; iAtk < count; ++iAtk) {
             // creates a new attack outcome if weaponized action
             const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
-                ? attacker.attack(target, action, combat.distance)
+                ? attacker.attack(target, action, {
+                    distance: combat.distance,
+                    sneak
+                })
                 : attacker.getNoAttackOutcome(action)
-            if (oAttackOutcome) {
-                if (oAttackOutcome.hit) {
+            this.runPropEffectScript(attacker, 'attack', {
+                target,
+                attackOutcome: oAttackOutcome
+            })
+            if (oAttackOutcome.hit) {
                     // the attack has landed : rolling damages
                     const { material: sWeaponMaterial, types: oWeaponDamages} = attacker
                         .rollDamage(oAttackOutcome)
@@ -210,20 +222,18 @@ class Manager {
                         oAttackOutcome.damages.amount += eAppliedDamage.data.appliedAmount
                     })
                     // the target will have penalty of speed
-                    const oTargetCombat = this.combatManager.getCombat(target)
                     this.runPropEffectScript(target, 'attacked', {
                         attacker,
                         creature: target,
                         attackOutcome: oAttackOutcome
                     })
                 }
-                if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
+            if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
                     this._events.emit('combat.attack', {
                         turn, tick, attackIndex: iAtk,
                         outcome: oAttackOutcome
                     })
                 }
-            }
             if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
                 action.conveys.forEach(({ script: sScriptRef, data }) => {
                     /**

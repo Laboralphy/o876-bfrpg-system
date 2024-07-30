@@ -45,6 +45,7 @@
  * @property failed {boolean}
  * @property failure {string}
  * @property sneakable {boolean}
+ * @property visibility {string}
  * @property damages {BFAttackOutcomeDamages}
  */
 

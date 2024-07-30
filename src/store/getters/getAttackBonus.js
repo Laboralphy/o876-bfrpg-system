@@ -55,36 +55,35 @@ module.exports = (state, getters) => {
     if (weapon) {
         return nLevelAttackBonus + getSelectedWeaponAttackBonus(state, getters)
     }
-    const nBlindnessMalus = getters.getCapabilities.see ? 0 : -4
     const action = getters.getSelectedAction
     if (action) {
         switch (action.attackType) {
             case CONSTS.ATTACK_TYPE_RANGED:
             case CONSTS.ATTACK_TYPE_RANGED_TOUCH: {
-                return nLevelAttackBonus + nBlindnessMalus +
+                return nLevelAttackBonus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] +
                     getRangedAttackModifiers(getters)
             }
 
             case CONSTS.ATTACK_TYPE_MELEE_TOUCH: {
-                return nLevelAttackBonus + nBlindnessMalus +
+                return nLevelAttackBonus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_DEXTERITY] +
                     getMeleeAttackModifiers(getters)
             }
 
             case CONSTS.ATTACK_TYPE_MELEE:
             case CONSTS.ATTACK_TYPE_MULTI_MELEE: {
-                return nLevelAttackBonus + nBlindnessMalus +
+                return nLevelAttackBonus +
                     getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] +
                     getMeleeAttackModifiers(getters)
             }
 
             default: {
-                return nLevelAttackBonus + nBlindnessMalus
+                return nLevelAttackBonus
             }
         }
     } else {
-        return nLevelAttackBonus + nBlindnessMalus +
+        return nLevelAttackBonus +
             getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH] +
             getMeleeAttackModifiers(getters)
     }

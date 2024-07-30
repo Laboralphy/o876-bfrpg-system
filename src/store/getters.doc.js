@@ -9,7 +9,7 @@
  * @property getAttackRanges {{weapon: number, action: number}}
  * @property getCapabilities {{act: boolean, fight: boolean, move: boolean, see: boolean, cast: { self: boolean, target: boolean } }}
  * @property getCharmerSet {Set<string>}
- * @property getClassTypeData {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number[]>, savingThrows: Object<string, number[]>, attackBonus: number[]}}
+ * @property getClassTypeData {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number>, savingThrows: Object<string, number>, attackBonus: number}}
  * @property getConditionSet {Set<string>}
  * @property getDamageMitigation {Object<string, BFOneDamageMitigation>}}
  * @property getDefensiveEquipmentProperties {BFItemProperty[]}

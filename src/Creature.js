@@ -36,8 +36,8 @@ class Creature {
         return this._ref
     }
 
-    get _data () {
-        return this._store.externals.data.data
+    get data () {
+        return this._store.externals
     }
 
     /**
@@ -152,6 +152,7 @@ class Creature {
             failed: false, // could not attack
             failure: '', // reason why attack failed (out of range, condition, etc...)
             sneakable: false, // This attack is made from behind, a rogue may have damage bonus
+            visibility: CONSTS.CREATURE_VISIBILITY_VISIBLE,
             damages: {
                 amount: 0, // amount of damage if attack hit
                 types: {} // amount of damage taken and resisted by type
@@ -181,10 +182,11 @@ class Creature {
             weapon ? weapon.attributes : [CONSTS.WEAPON_ATTRIBUTE_FINESSE]
         )
         const bRanged = weaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+        oAttackOutcome.sneakable = oAttackOutcome.sneakable && !bRanged
         const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
         oAttackOutcome.ac = bRanged ? oArmorClass.ranged : oArmorClass.melee
-        oAttackOutcome.bonus = this.getters.getAttackBonus
+        oAttackOutcome.bonus += this.getters.getAttackBonus
         oAttackOutcome.weapon = weapon
         oAttackOutcome.ammo = ammo
     }
@@ -196,7 +198,7 @@ class Creature {
         const { damage, conveys, attackType } = oAttackOutcome.action
         const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
-        oAttackOutcome.bonus = this.getters.getAttackBonus
+        oAttackOutcome.bonus += this.getters.getAttackBonus
         switch (attackType) {
             case CONSTS.ATTACK_TYPE_MULTI_MELEE:
             case CONSTS.ATTACK_TYPE_MELEE: {
@@ -211,12 +213,27 @@ class Creature {
 
             case CONSTS.ATTACK_TYPE_RANGED: {
                 oAttackOutcome.ac = oArmorClass.ranged
+                oAttackOutcome.sneakable = false
                 break
             }
 
             case CONSTS.ATTACK_TYPE_RANGED_TOUCH: {
                 oAttackOutcome.ac = oArmorClass.natural
+                oAttackOutcome.sneakable = false
                 break
+            }
+
+            case CONSTS.ATTACK_TYPE_HOMING: {
+                // Homing attacks require to clearly see target
+                if (oAttackOutcome.visibility !== CONSTS.CREATURE_VISIBILITY_VISIBLE) {
+                    oAttackOutcome.failed = true
+                    oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_VISIBILITY
+                }
+                break
+            }
+
+            default: {
+                oAttackOutcome.sneakable = false
             }
         }
     }
@@ -248,9 +265,11 @@ class Creature {
         const fs = this.getters.getFumbleSuccess
         const nRoll = this._dice.roll(20)
         oAttackOutcome.roll = nRoll
-        oAttackOutcome.critical = nRoll >= fs.attack.success || nRoll <= fs.attack.fumble
+        const bAutoHit = nRoll >= fs.attack.success
+        const bAutoMiss = nRoll <= fs.attack.fumble
+        oAttackOutcome.critical = bAutoHit || bAutoMiss
         const nAtkRoll = nRoll + oAttackOutcome.bonus
-        oAttackOutcome.hit = nRoll > fs.attack.fumble && nAtkRoll >= oAttackOutcome.ac
+        oAttackOutcome.hit = bAutoHit || (!bAutoMiss && nAtkRoll >= oAttackOutcome.ac)
         return oAttackOutcome
     }
 
@@ -263,9 +282,15 @@ class Creature {
      * @param oTarget {Creature}
      * @param action {BFStoreStateAction}
      * @param distance {number} Distance at which attack is done (default 0 means : we don't mind)
+     * @param sneak {boolean} if true then this is a sneak attack
+     * @param darkness {boolean} if true then the attack is in darkness
      * @returns {BFAttackOutcome}
      */
-    attack (oTarget, action, distance = 0) {
+    attack (oTarget, action, {
+        distance = 0,
+        sneak = false,
+        darkness = false
+    } = {}) {
         if (!oTarget) {
             throw new Error('Creature.attack target must be defined')
         }
@@ -291,8 +316,16 @@ class Creature {
             target: oTarget,
             action: oSelectedAction,
             distance,
-            range
+            range,
+            sneakable: sneak,
+            visibility: this.getCreatureVisibility(oTarget)
         })
+        if (darkness && !this.getters.getEffectSet.has(CONSTS.EFFECT_DARKVISION) && !this.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
+            oAttackOutcome.visibility = CONSTS.CREATURE_VISIBILITY_DARKNESS
+        }
+        if (oAttackOutcome.visibility !== CONSTS.CREATURE_VISIBILITY_VISIBLE) {
+            oAttackOutcome.bonus -= this.data.variables.undetectableTargetAttackMalus
+        }
         if (distance > range) {
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_TARGET_UNREACHABLE
@@ -334,6 +367,9 @@ class Creature {
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
             return oAttackOutcome
         }
+        if (oAttackOutcome.sneakable) {
+            oAttackOutcome.bonus += this.data.variables.sneakAttackBonus
+        }
         if (!oAttackOutcome.failed) {
             this.resolveAttackHit(oAttackOutcome)
         }
@@ -346,6 +382,7 @@ class Creature {
      */
     rollDamage (oAttackOutcome) {
         const action = oAttackOutcome.action
+        const sneakable = oAttackOutcome.sneakable
         let damage, material, damageType
         if (!action) {
             throw new Error('This attack outcome has no action specified')
@@ -382,10 +419,17 @@ class Creature {
             effectSorter: sorterFunc,
             propSorter: sorterFunc
         })
+        const nSneakAttackMultiplier = this.data.variables.sneakAttackMultiplier
+        if (sneakable) {
+            damage *= nSneakAttackMultiplier
+        }
         const oDamageTypes = {
             [damageType]: damage
         }
         Object.entries(oDamageBonusRegistry.sorter).forEach(([sType, { sum }]) => {
+            if (sneakable) {
+                sum *= nSneakAttackMultiplier
+            }
             if (!(sType in oDamageTypes)) {
                 oDamageTypes[sType] = sum
             } else {
@@ -398,6 +442,13 @@ class Creature {
         }
     }
 
+    rollSkill (skill) {
+        const score = this.getters.getClassTypeData.rogueSkills[skill]
+        const roll = this.dice.roll(100)
+        const success = roll <= score
+        this.events.emit('skill', { skill, score, roll, success })
+        return success
+    }
 
     /**
      * @typedef SavingThrowOutcome {object}
@@ -453,6 +504,21 @@ class Creature {
         } else {
             throw new Error('this threat cannot be saved : ' + sSavingThrow)
         }
+    }
+
+    /**
+     * Returns true if this creature can detect its target
+     * @param oTarget {Creature}
+     * @return {string} CREATURE_VISIBILITY_*
+     */
+    getCreatureVisibility (oTarget) {
+        if (this.getters.getConditionSet.has(CONSTS.CONDITION_BLINDED)) {
+            return CONSTS.CREATURE_VISIBILITY_BLINDED
+        }
+        if (oTarget.getters.getEffectSet.has(CONSTS.EFFECT_INVISIBILITY) && !this.getters.getEffectSet.has(CONSTS.EFFECT_SEE_INVISIBILITY)) {
+            return CONSTS.CREATURE_VISIBILITY_INVISIBLE
+        }
+        return CONSTS.CREATURE_VISIBILITY_VISIBLE
     }
 }
 

@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-07-26T19:50:47.896Z
+// Date : 2024-07-30T12:34:52.825Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -15,17 +15,20 @@ module.exports = {
   'EFFECT_DAMAGE_RESISTANCE': require('./damage-resistance.js'),
   'EFFECT_DAMAGE_VULNERABILITY': require('./damage-vulnerability.js'),
   'EFFECT_DAMAGE': require('./damage.js'),
+  'EFFECT_DARKVISION': require('./darkvision.js'),
   'EFFECT_DAZE': require('./daze.js'),
   'EFFECT_DEATH': require('./death.js'),
   'EFFECT_DISEASE': require('./disease.js'),
   'EFFECT_FLAG': require('./flag.js'),
   'EFFECT_HEAL': require('./heal.js'),
   'EFFECT_IMMUNITY': require('./immunity.js'),
+  'EFFECT_INVISIBILITY': require('./invisibility.js'),
   'EFFECT_MATERIAL_VULNERABILITY': require('./material-vulnerability.js'),
   'EFFECT_NEGATIVE_LEVEL': require('./negative-level.js'),
   'EFFECT_PARALYSIS': require('./paralysis.js'),
   'EFFECT_PETRIFICATION': require('./petrification.js'),
   'EFFECT_SAVING_THROW_MODIFIER': require('./saving-throw-modifier.js'),
+  'EFFECT_SEE_INVISIBILITY': require('./see-invisibility.js'),
   'EFFECT_SPEED_FACTOR': require('./speed-factor.js'),
   'EFFECT_SPIKE_DAMAGE': require('./spike-damage.js'),
   'EFFECT_STUN': require('./stun.js')

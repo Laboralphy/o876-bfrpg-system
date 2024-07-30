@@ -4,7 +4,6 @@ const EffectProcessor = require('../src/EffectProcessor')
 const EFFECTS = require('../src/effects')
 const ItemProperties = require('../src/ItemProperties')
 const ItemBuilder = require('../src/ItemBuilder')
-const {getAbilities} = require("../src/store/getters");
 
 const DATA = {
     "default-actions": {
@@ -573,5 +572,72 @@ describe('savingThrow bonus', function () {
             CONSTS.WEAPON_SIZE_SMALL,
             CONSTS.WEAPON_SIZE_MEDIUM,
         ])
+    })
+})
+
+describe('attacking with visibility issues', function () {
+    it('should attack creature when clearly see target', function () {
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const o1 = c1.attack(c2, DATA["default-actions"].DEFAULT_ACTION_UNARMED)
+        expect(o1.failed).toBeFalsy()
+        expect(o1.bonus).toBe(0)
+        expect(o1.visibility).toBe('CREATURE_VISIBILITY_VISIBLE')
+    })
+
+    it('should have attack malus of -4 when attacker is blinded', function () {
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eBlind = ep.createEffect(CONSTS.EFFECT_BLINDNESS)
+        ep.applyEffect(eBlind, c1, 10)
+        const o1 = c1.attack(c2, DATA["default-actions"].DEFAULT_ACTION_UNARMED)
+        expect(o1.failed).toBeFalsy()
+        expect(o1.visibility).toBe('CREATURE_VISIBILITY_BLINDED')
+        expect(o1.bonus).toBe(-4)
+    })
+
+    it('should have attack malus of -4 when target is invisible', function () {
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eBlind = ep.createEffect(CONSTS.EFFECT_INVISIBILITY)
+        ep.applyEffect(eBlind, c2, 10)
+        const o1 = c1.attack(c2, DATA["default-actions"].DEFAULT_ACTION_UNARMED)
+        expect(o1.failed).toBeFalsy()
+        expect(o1.visibility).toBe('CREATURE_VISIBILITY_INVISIBLE')
+        expect(o1.bonus).toBe(-4)
+    })
+
+    it('should NOT have attack malus of -4 when target is invisible, and we have EFFECT_SEE_INVISIBILITY', function () {
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eInvis = ep.createEffect(CONSTS.EFFECT_INVISIBILITY)
+        const eSeeInvis = ep.createEffect(CONSTS.EFFECT_SEE_INVISIBILITY)
+        ep.applyEffect(eInvis, c2, 10)
+        ep.applyEffect(eSeeInvis, c1, 10)
+        const o1 = c1.attack(c2, DATA["default-actions"].DEFAULT_ACTION_UNARMED)
+        expect(o1.failed).toBeFalsy()
+        expect(o1.visibility).toBe('CREATURE_VISIBILITY_VISIBLE')
+        expect(o1.bonus).toBe(0)
+    })
+
+    it('should have attack malus of -4 when target is invisible, and we have Blindness ; maluses should not stack', function () {
+        const c1 = new Creature()
+        const c2 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const eInvis = ep.createEffect(CONSTS.EFFECT_INVISIBILITY)
+        const eSeeInvis = ep.createEffect(CONSTS.EFFECT_BLINDNESS)
+        ep.applyEffect(eInvis, c2, 10)
+        ep.applyEffect(eSeeInvis, c1, 10)
+        const o1 = c1.attack(c2, DATA["default-actions"].DEFAULT_ACTION_UNARMED)
+        expect(o1.failed).toBeFalsy()
+        expect(o1.visibility).toBe('CREATURE_VISIBILITY_BLINDED')
+        expect(o1.bonus).toBe(-4)
     })
 })

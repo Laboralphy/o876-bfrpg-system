@@ -43,6 +43,7 @@ class Combat {
         this._events = new Events()
         this._distance = 0
         this._rm = null
+        this._usedSneak = false
     }
 
     get defaultActionUnarmed () {

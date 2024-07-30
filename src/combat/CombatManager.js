@@ -150,6 +150,12 @@ class CombatManager {
             .map(combat => combat.attacker.creature)
     }
 
+    isCreatureAttacked (oCreature) {
+        return this
+            .combats
+            .some(combat => combat.defender === oCreature)
+    }
+
     /**
      * This creature is being removed from the game
      * All combats involved are to be ended.

@@ -23,12 +23,16 @@ module.exports = (state, getters) => {
         self: castSelf,
         target: castTarget
     }
-
+    const sClassTypeRef = getters.getClassTypeData.ref
+    const sneak =
+        sClassTypeRef === CONSTS.CLASS_TYPE_ROGUE ||
+        sClassTypeRef === CONSTS.CLASS_TYPE_ROGUE_MAGIC_USER
     return {
         act,
         move,
         cast,
         fight,
-        see
+        see,
+        sneak
     }
 }

@@ -1,4 +1,5 @@
 const Manager = require('../src/Manager')
+const CONSTS = require("../src/consts");
 
 describe('cooldown', function () {
     it('should register action correctly', async function () {
@@ -493,6 +494,7 @@ describe('Succubus vs Goblin', function () {
 
         c.attacker.nextAction = c.attackerActions.kiss
         c.playFighterAction(c.attacker, c.defender)
+        expect(oLastOutcome.distance).toBe(30)
         expect(oLastOutcome).not.toBeNull()
         expect(oLastOutcome.failed).toBeTruthy()
         expect(oLastOutcome.failure).toBe('ATTACK_FAILURE_TARGET_UNREACHABLE')
@@ -612,5 +614,66 @@ describe('Succubus vs Goblin', function () {
         advance()
         advance()
         // console.log(aLog)
+    })
+})
+
+describe('testing sneak attacks', function () {
+    it('shoud do sneak attack when attacking target already in fight', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const c1 = manager.createCreature({ id: 'c1' })
+        c1.mutations.setClassType({ value: 'CLASS_TYPE_FIGHTER' })
+        c1.mutations.setLevel({ value: 10 })
+        c1.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        c1.mutations.setRace({ value: 'RACE_HUMAN' })
+        c1.mutations.setHitPoints({ value: c1.getters.getMaxHitPoints })
+        const c2 = manager.createCreature({ id: 'c2' })
+        c2.mutations.setClassType({ value: 'CLASS_TYPE_FIGHTER' })
+        c2.mutations.setLevel({ value: 10 })
+        c2.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        c2.mutations.setRace({ value: 'RACE_HUMAN' })
+        c2.mutations.setHitPoints({ value: c2.getters.getMaxHitPoints })
+
+        const c3 = manager.createCreature({ id: 'c3' })
+        c3.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        c3.mutations.setLevel({ value: 10 })
+        c3.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        c3.mutations.setRace({ value: 'RACE_HUMAN' })
+        c3.mutations.setHitPoints({ value: c3.getters.getMaxHitPoints })
+
+        manager.combatManager.startCombat(c1, c2)
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+        advance()
+        advance()
+        expect(manager.combatManager.isCreatureFighting(c1, c2)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(c2, c1)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(c3, c1)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(c3, c2)).toBeFalsy()
+        manager.combatManager.startCombat(c3, c2)
+        expect(manager.combatManager.isCreatureFighting(c3, c2)).toBeTruthy()
+        advance()
+        advance()
+        expect(manager.combatManager.isCreatureFighting(c1, c2)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(c2, c1)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(c3, c2)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(c2, c3)).toBeFalsy()
+        let oOutcome
+        manager.events.on('combat.attack', ev => {
+            if (ev.outcome.attacker === c3) {
+                oOutcome = ev.outcome
+            }
+        })
+        advance()
+        expect(oOutcome).toBeDefined()
+        expect(oOutcome.attacker).toBe(c3)
+        expect(oOutcome.target).toBe(c2)
+        expect(c3.getters.getCapabilities.sneak).toBeTruthy()
+        expect(oOutcome.sneakable).toBeTruthy()
     })
 })
