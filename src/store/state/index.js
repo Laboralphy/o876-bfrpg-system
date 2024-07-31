@@ -14,6 +14,7 @@ const CONSTS = require('../../consts')
  * @property damage {string|number}
  *
  * @typedef BFStoreState {object}
+ * @property id {string}
  * @property abilities {Object<string, number>}
  * @property classType {string}
  * @property specie {string}
@@ -37,6 +38,7 @@ const CONSTS = require('../../consts')
  * @returns {BFStoreState}
  */
 module.exports = () => ({
+    id: '',
     abilities: {
         [CONSTS.ABILITY_STRENGTH]: 10,
         [CONSTS.ABILITY_DEXTERITY]: 10,

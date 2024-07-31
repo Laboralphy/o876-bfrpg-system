@@ -83,6 +83,9 @@
       "SAVING_THROW_SPELL": 4,
       "SAVING_THROW_DRAGON_BREATH": 3
     },
+    "rogueSkills": {
+      "hide": 70
+    },
     "properties": [
       {
         "property": "ITEM_PROPERTY_ATTACK_MODIFIER",

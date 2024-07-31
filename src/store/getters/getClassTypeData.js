@@ -23,6 +23,7 @@ function extractRegistryLevel (reg, nLevel) {
  */
 module.exports = (state, getters, externals) => {
     const data = externals['class-types'][state.classType]
+    const raceData = getters.getRace
     const nEffectiveLevel = getters.getLevel
     const xpl = data.experienceLevels
     const bHasLevels = Array.isArray(xpl)
@@ -32,6 +33,29 @@ module.exports = (state, getters, externals) => {
     const oSavingThrows = bIsMonster
         ? externals['class-types'][state.classType].savingThrows
         : data.savingThrows
+    /**
+     * @type {{[p: string]: number}}
+     */
+    const rogueSkills = data.rogueSkills
+        ? extractRegistryLevel(data.rogueSkills, nEffectiveLevel)
+        : {
+            unlock: 0,
+            disarm: 0,
+            pickpocket: 0,
+            move: 0,
+            climb: 0,
+            hide: 0,
+            listen: 0
+        }
+    Object
+        .entries(raceData.rogueSkills)
+        /**
+         * @param skill {string}
+         * @param value {number}
+         */
+        .forEach(([skill, value]) => {
+            rogueSkills[skill] = Math.max(rogueSkills[skill], value)
+        })
     return {
         ref: state.classType,
         level: nEffectiveLevel,
@@ -41,17 +65,7 @@ module.exports = (state, getters, externals) => {
         hdPerHigherLevel: data.hdPerHigherLevel,
         lowerLevelCount: data.lowerLevelCount,
         attackBonus: getArrayValue(data.attackBonus, nEffectiveLevel),
-        rogueSkills: data.rogueSkills
-            ? extractRegistryLevel(data.rogueSkills, nEffectiveLevel)
-            : {
-                unlock: 0,
-                disarm: 0,
-                pickpocket: 0,
-                move: 0,
-                climb: 0,
-                hide: 0,
-                listen: 0
-            },
+        rogueSkills,
         savingThrows: extractRegistryLevel(oSavingThrows, nEffectiveLevel)
     }
 }

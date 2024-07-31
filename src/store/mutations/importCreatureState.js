@@ -7,6 +7,7 @@ const ArrayMutations = require('../../libs/array-mutations')
  * @param data {*}
  */
 module.exports = ({ state, getters }, { data }) => {
+    state.id = data.id
     state.abilities = data.abilities
     state.classType = data.classType
     state.specie = data.specie

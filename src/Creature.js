@@ -283,13 +283,11 @@ class Creature {
      * @param action {BFStoreStateAction}
      * @param distance {number} Distance at which attack is done (default 0 means : we don't mind)
      * @param sneak {boolean} if true then this is a sneak attack
-     * @param darkness {boolean} if true then the attack is in darkness
      * @returns {BFAttackOutcome}
      */
     attack (oTarget, action, {
         distance = 0,
-        sneak = false,
-        darkness = false
+        sneak = false
     } = {}) {
         if (!oTarget) {
             throw new Error('Creature.attack target must be defined')
@@ -320,9 +318,6 @@ class Creature {
             sneakable: sneak,
             visibility: this.getCreatureVisibility(oTarget)
         })
-        if (darkness && !this.getters.getEffectSet.has(CONSTS.EFFECT_DARKVISION) && !this.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
-            oAttackOutcome.visibility = CONSTS.CREATURE_VISIBILITY_DARKNESS
-        }
         if (oAttackOutcome.visibility !== CONSTS.CREATURE_VISIBILITY_VISIBLE) {
             oAttackOutcome.bonus -= this.data.variables.undetectableTargetAttackMalus
         }
@@ -444,8 +439,8 @@ class Creature {
 
     rollSkill (skill) {
         const score = this.getters.getClassTypeData.rogueSkills[skill]
-        const roll = this.dice.roll(100)
-        const success = roll <= score
+        const roll = 100 - this.dice.roll(100) // 0 - 99
+        const success = roll < score
         this.events.emit('skill', { skill, score, roll, success })
         return success
     }
@@ -512,11 +507,27 @@ class Creature {
      * @return {string} CREATURE_VISIBILITY_*
      */
     getCreatureVisibility (oTarget) {
-        if (this.getters.getConditionSet.has(CONSTS.CONDITION_BLINDED)) {
+        if (oTarget === this) {
+            return CONSTS.CREATURE_VISIBILITY_VISIBLE
+        }
+        const tc = this.getters.getConditionSet
+        const te = oTarget.getters.getEffectSet
+        if (tc.has(CONSTS.CONDITION_BLINDED)) {
             return CONSTS.CREATURE_VISIBILITY_BLINDED
         }
-        if (oTarget.getters.getEffectSet.has(CONSTS.EFFECT_INVISIBILITY) && !this.getters.getEffectSet.has(CONSTS.EFFECT_SEE_INVISIBILITY)) {
+        if (te.has(CONSTS.EFFECT_INVISIBILITY) && !this.getters.getEffectSet.has(CONSTS.EFFECT_SEE_INVISIBILITY)) {
             return CONSTS.CREATURE_VISIBILITY_INVISIBLE
+        }
+        if (te.has(CONSTS.EFFECT_STEALTH)) {
+            return CONSTS.CREATURE_VISIBILITY_HIDDEN
+        }
+        let nLightLevel = 1
+        const result = n => {
+            nLightLevel = n
+        }
+        this.events.emit('request-light-level', { creature: this, result })
+        if (nLightLevel < 0.5 && !this.getters.getEffectSet.has(CONSTS.EFFECT_DARKVISION) && !this.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
+            return CONSTS.CREATURE_VISIBILITY_DARKNESS
         }
         return CONSTS.CREATURE_VISIBILITY_VISIBLE
     }

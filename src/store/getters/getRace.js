@@ -1,11 +1,25 @@
 /**
  *
+ * @typedef BFRaceData {object}
+ * @property maxHdPerLevel {number}
+ * @property specie {{ ref: string, living: boolean, mind: boolean }}
+ * @property abilityRestrictions {Object<string, {min?: number, max?: number}>}
+ * @property weaponRestrictions {Object<string, {weaponSize?: string[]}>}
+ * @property savingThrows {Object<string, number>}
+ * @property properties {[]}
+ * @property ref {string}
+ * @property rogueSkills {Object<string, number>}
+ *
+ *
  * @param state {BFStoreState}
  * @param getters {BFStoreGetters}
  * @param externals {*}
- * @returns {{name:string, specie:{ ref: string, living: boolean, mind: boolean }, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
+ * @returns {BFRaceData}
  */
 module.exports = (state, getters, externals) => {
+    /**
+     * @type {string}
+     */
     const sRaceName = state.race
     const oRaceData = sRaceName in externals['races'] ? externals['races'][sRaceName] : {
         maxHdPerLevel: Infinity,
@@ -14,7 +28,8 @@ module.exports = (state, getters, externals) => {
         weaponRestrictions: {},
         savingThrows: {},
         properties: [],
-        ref: sRaceName
+        ref: sRaceName,
+        rogueSkills: {}
     }
     return {
         maxHdPerLevel: oRaceData.maxHdPerLevel || Infinity,
@@ -23,6 +38,7 @@ module.exports = (state, getters, externals) => {
         weaponRestrictions: oRaceData.weaponRestrictions || {},
         savingThrows: oRaceData.savingThrows || {},
         properties: oRaceData.properties || [],
-        ref: sRaceName
+        ref: sRaceName,
+        rogueSkills: oRaceData.rogueSkills || {}
     }
 }

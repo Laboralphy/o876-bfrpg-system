@@ -676,4 +676,199 @@ describe('testing sneak attacks', function () {
         expect(c3.getters.getCapabilities.sneak).toBeTruthy()
         expect(oOutcome.sneakable).toBeTruthy()
     })
+
+    it('should do sneak attack when entering hide mode', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const fighter = manager.createCreature({ id: 'fighter' })
+        fighter.mutations.setClassType({ value: 'CLASS_TYPE_FIGHTER' })
+        fighter.mutations.setLevel({ value: 10 })
+        fighter.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        fighter.mutations.setRace({ value: 'RACE_HUMAN' })
+        fighter.mutations.setHitPoints({ value: fighter.getters.getMaxHitPoints })
+
+        const rogue = manager.createCreature({ id: 'rogue' })
+        rogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        rogue.mutations.setLevel({ value: 10 })
+        rogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        rogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        rogue.mutations.setHitPoints({ value: rogue.getters.getMaxHitPoints })
+
+        let oOutcomeFighter
+        let oOutcomeRogue
+        manager.events.on('combat.attack', ev => {
+            if (ev.outcome.attacker === rogue) {
+                oOutcomeRogue = ev.outcome
+            }
+            if (ev.outcome.attacker === fighter) {
+                oOutcomeFighter = ev.outcome
+            }
+        })
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        rogue.dice.cheat(0.999)
+
+        manager.applyEffect(manager.createEffect(CONSTS.EFFECT_STEALTH), rogue, Infinity)
+        expect(rogue.getters.getEffectSet.has(CONSTS.EFFECT_STEALTH))
+        expect(fighter.getCreatureVisibility(rogue)).toBe(CONSTS.CREATURE_VISIBILITY_HIDDEN)
+        const c = manager.combatManager.startCombat(rogue, fighter)
+        expect(oOutcomeRogue).toBeUndefined()
+        expect(manager.combatManager.isCreatureAttacked(fighter)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(fighter)).toBeFalsy()
+        expect(manager.combatManager.isCreatureAttacked(rogue)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(rogue)).toBeTruthy()
+        expect(c.distance).toBe(50)
+
+        advance()
+        expect(c.distance).toBe(20) // still far from target
+        expect(oOutcomeRogue).toBeUndefined() // no attack made by rogue so far
+        expect(oOutcomeFighter).toBeUndefined() // no attack made by fighter so far
+        expect(fighter.getCreatureVisibility(rogue)).toBe(CONSTS.CREATURE_VISIBILITY_HIDDEN)
+        advance()
+        expect(c.distance).toBe(5) // came at close range, attack will be done next turn
+        expect(oOutcomeRogue).toBeUndefined() // no attack made by rogue so far
+        expect(oOutcomeFighter).toBeUndefined() // no attack made by fighter so far
+        expect(fighter.getCreatureVisibility(rogue)).toBe(CONSTS.CREATURE_VISIBILITY_HIDDEN)
+        advance()
+        expect(c.distance).toBe(5)
+        expect(oOutcomeRogue).toBeDefined() // attack has occured
+        expect(oOutcomeRogue.hit).toBeTruthy()
+        expect(oOutcomeFighter).toBeUndefined()
+        expect(oOutcomeRogue.sneakable).toBeTruthy()
+        expect(rogue.getters.getEffectSet.has(CONSTS.EFFECT_STEALTH)).toBeFalsy()
+        // rogue is now visible to the fighter
+        expect(fighter.getCreatureVisibility(rogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+
+        // attack occured, next turn, fighter will attack back
+        expect(manager.combatManager.isCreatureFighting(fighter, rogue)).toBeTruthy()
+
+        advance()
+        // Now fighter should be aware of rogue
+        expect(manager.combatManager.isCreatureFighting(fighter, rogue)).toBeTruthy()
+        // no more sneak attack for the combat
+        expect(oOutcomeRogue.sneakable).toBeFalsy()
+    })
+    it('should be hide 70 when race is halfling', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+        const rogue = manager.createCreature({ id: 'rogue' })
+        rogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        rogue.mutations.setLevel({ value: 10 })
+        rogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        rogue.mutations.setRace({ value: 'RACE_HALFLING' })
+        rogue.mutations.setHitPoints({ value: rogue.getters.getMaxHitPoints })
+        const humanHogue = manager.createCreature({ id: 'hrogue' })
+        humanHogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanHogue.mutations.setLevel({ value: 10 })
+        humanHogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanHogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanHogue.mutations.setHitPoints({ value: humanHogue.getters.getMaxHitPoints })
+        expect(humanHogue.getters.getClassTypeData.rogueSkills.hide).toBe(53)
+        const humanFighter = manager.createCreature({ id: 'hrogue' })
+        humanFighter.mutations.setClassType({ value: 'CLASS_TYPE_FIGHTER' })
+        humanFighter.mutations.setLevel({ value: 10 })
+        humanFighter.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanFighter.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanFighter.mutations.setHitPoints({ value: humanFighter.getters.getMaxHitPoints })
+        expect(humanFighter.getters.getClassTypeData.rogueSkills.hide).toBe(0)
+    })
+    it('should be able to sneak attack when room is dark and rogue is elven (darkvision', async function (){
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const elfRogue = manager.createCreature({ id: 'elfrogue' })
+        elfRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        elfRogue.mutations.setLevel({ value: 10 })
+        elfRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfRogue.mutations.setRace({ value: 'RACE_ELF' })
+        elfRogue.mutations.setHitPoints({ value: elfRogue.getters.getMaxHitPoints })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        let nRoomLightLevel = 1
+        manager.events.on('creature.request-light-level', ev => {
+            ev.result(nRoomLightLevel)
+        })
+        expect(humanRogue.getCreatureVisibility(elfRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+        expect(elfRogue.getCreatureVisibility(humanRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+        nRoomLightLevel = 0
+        expect(humanRogue.getCreatureVisibility(elfRogue)).toBe(CONSTS.CREATURE_VISIBILITY_DARKNESS)
+        expect(elfRogue.getCreatureVisibility(humanRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+
+        let oOutcomeElf
+        let oOutcomeHum
+        manager.events.on('combat.attack', ev => {
+            if (ev.outcome.attacker === elfRogue) {
+                oOutcomeElf = ev.outcome
+            }
+            if (ev.outcome.attacker === humanRogue) {
+                oOutcomeHum = ev.outcome
+            }
+        })
+
+        const c = manager.combatManager.startCombat(elfRogue, humanRogue)
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        // elf should sneak all the time
+        // human should have an attack malus
+
+        elfRogue.dice.cheat(0.999)
+        humanRogue.dice.cheat(0.999)
+
+        advance()
+        expect(c.distance).toBe(20)
+        advance()
+        expect(c.distance).toBe(5)
+        expect(oOutcomeElf).toBeUndefined()
+        expect(oOutcomeHum).toBeUndefined()
+        expect(manager.combatManager.isCreatureFighting(elfRogue, humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue, elfRogue)).toBeFalsy()
+        advance()
+        expect(c.distance).toBe(5)
+        expect(oOutcomeElf).toBeDefined()
+        expect(oOutcomeHum).toBeUndefined() // human cannot see elf at this moment
+        expect(manager.combatManager.isCreatureFighting(elfRogue, humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue, elfRogue)).toBeTruthy()
+        expect(c.distance).toBe(5)
+        expect(manager.combatManager.combats.length).toBe(2)
+        expect(c.distance).toBe(5)
+        advance()
+        expect(c.distance).toBe(5)
+        expect(manager.combatManager.combats.length).toBe(2)
+        expect(oOutcomeElf).toBeDefined()
+        expect(c.distance).toBe(5)
+        expect(oOutcomeHum).toBeDefined() // human is trying to hit elf at this moment
+        expect(oOutcomeElf.bonus).toBe(9) // because darkvision in darkness -> ok, fine -> sneak attack bonus applies
+        expect(oOutcomeHum.bonus).toBe(1) // because being in dark room with no darkvision -> non dection bonus
+        expect(oOutcomeElf.sneakable).toBeTruthy()
+        expect(oOutcomeHum.sneakable).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(elfRogue, humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue, elfRogue)).toBeTruthy()
+        nRoomLightLevel = 1
+
+        advance()
+        // room is now bright
+        expect(oOutcomeElf.bonus).toBe(5) // no sneak, no darkness penalty
+        expect(oOutcomeHum.bonus).toBe(5) // no sneak, no darkness penalty
+        expect(oOutcomeElf.sneakable).toBeFalsy()
+        expect(oOutcomeHum.sneakable).toBeFalsy()
+    })
 })

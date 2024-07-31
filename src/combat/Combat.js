@@ -43,7 +43,6 @@ class Combat {
         this._events = new Events()
         this._distance = 0
         this._rm = null
-        this._usedSneak = false
     }
 
     get defaultActionUnarmed () {
@@ -202,7 +201,6 @@ class Combat {
         if (this._tick === 0) {
             const atkr = this._attacker
             this.selectMostSuitableAction()
-            this.checkCurrentActionCooldown()
             // Start of turn
             // attack-types planning
             this._events.emit('combat.turn', {

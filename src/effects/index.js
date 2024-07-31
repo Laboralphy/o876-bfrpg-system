@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-07-30T12:34:52.825Z
+// Date : 2024-07-31T09:16:09.083Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -31,5 +31,6 @@ module.exports = {
   'EFFECT_SEE_INVISIBILITY': require('./see-invisibility.js'),
   'EFFECT_SPEED_FACTOR': require('./speed-factor.js'),
   'EFFECT_SPIKE_DAMAGE': require('./spike-damage.js'),
+  'EFFECT_STEALTH': require('./stealth.js'),
   'EFFECT_STUN': require('./stun.js')
 }

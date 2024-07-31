@@ -465,6 +465,14 @@ class Manager {
             }
             this._events.emit('creature.death', oPayload)
         })
+        oCreature.events.on('request-light-level', ev => {
+            const oPayload = {
+                ...ev,
+                creature: oCreature,
+                manager: this
+            }
+            this._events.emit('creature.request-light-level', oPayload)
+        })
         return oCreature
     }
 

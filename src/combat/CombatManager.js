@@ -61,10 +61,11 @@ class CombatManager {
      * Creates a new combat and plugs events
      * @param oCreature {Creature}
      * @param oTarget {Creature}
+     * @param nStartingDistance {number}
      * @returns {Combat}
      * @private
      */
-    _createCombat (oCreature, oTarget) {
+    _createCombat (oCreature, oTarget, nStartingDistance = null) {
         const combat = new Combat()
         combat.resourceManager = this.resourceManager
         combat.tickCount = this._defaultTickCount
@@ -86,7 +87,7 @@ class CombatManager {
         })
         combat.events.on('combat.move', ev => this._events.emit('combat.move', this._addManagerToObject(ev)))
         combat.setFighters(oCreature, oTarget)
-        combat.distance = this.defaultDistance
+        combat.distance = nStartingDistance === null ? this.defaultDistance : nStartingDistance
         return combat
     }
 
@@ -109,6 +110,9 @@ class CombatManager {
             // If attacker is not attacked back, there is no offender
         }
         this._events.emit('combat.action', this._addManagerToObject(ev))
+        if (!this.isCreatureFighting(ev.target)) {
+            this.startCombat(ev.target, ev.attacker, ev.combat.distance)
+        }
     }
 
     /**
@@ -199,17 +203,18 @@ class CombatManager {
      * if creature already in combat : switch to new combat, discard old combat
      * @param oCreature {Creature}
      * @param oTarget {Creature}
+     * @param nStartingDistance {number}
      * @return {Combat}
      */
-    startCombat (oCreature, oTarget) {
+    startCombat (oCreature, oTarget, nStartingDistance = null) {
         if (this.isCreatureFighting(oCreature, oTarget)) {
             // creature is already in fight with target
             return this._fighters[oCreature.id]
         }
         this.endCombat(oCreature)
-        this._fighters[oCreature.id] = this._createCombat(oCreature, oTarget)
-        if (!this.isCreatureFighting(oTarget)) {
-            this._fighters[oTarget.id] = this._createCombat(oTarget, oCreature)
+        this._fighters[oCreature.id] = this._createCombat(oCreature, oTarget, nStartingDistance)
+        if (!this.isCreatureFighting(oTarget) && oTarget.getCreatureVisibility(oCreature) === CONSTS.CREATURE_VISIBILITY_VISIBLE) {
+            this._fighters[oTarget.id] = this._createCombat(oTarget, oCreature, nStartingDistance)
         }
         return this._fighters[oCreature.id]
     }
