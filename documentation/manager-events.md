@@ -286,7 +286,7 @@ Occurs when a effect removed from a creature. Either this effect has been dispel
 | target    | Creature | Creature on which the effect is running out |
 | source    | Creature | Creature which produced the effect          |
 
-## creature.request-light-level
+## creature.request-environment-brightness
 
 Triggered when a creature is asking its light level.
 This will help computing visibility bonus / sneak possibilities etc...

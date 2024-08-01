@@ -799,7 +799,7 @@ describe('testing sneak attacks', function () {
         humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
 
         let nRoomLightLevel = 1
-        manager.events.on('creature.request-light-level', ev => {
+        manager.events.on('creature.request-environment-brightness', ev => {
             ev.result(nRoomLightLevel)
         })
         expect(humanRogue.getCreatureVisibility(elfRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)

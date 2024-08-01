@@ -523,9 +523,12 @@ class Creature {
         }
         let nLightLevel = 1
         const result = n => {
+            if (typeof n !== 'number') {
+                throw new TypeError('request-environment-brightness - needs floating number between 0 and 1 parameter as result')
+            }
             nLightLevel = n
         }
-        this.events.emit('request-light-level', { creature: this, result })
+        this.events.emit('request-environment-brightness', { creature: this, result })
         if (nLightLevel < 0.5 && !this.getters.getEffectSet.has(CONSTS.EFFECT_DARKVISION) && !this.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
             return CONSTS.CREATURE_VISIBILITY_DARKNESS
         }
