@@ -11,7 +11,6 @@ function mutate ({ effect: oEffect, target }) {
         nFactor *= amp
     }
     target.aggregateModifiers([
-        CONSTS.EFFECT_HEALING_FACTOR,
         CONSTS.ITEM_PROPERTY_HEALING_FACTOR
     ], {
         propForEach: f,

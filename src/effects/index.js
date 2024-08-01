@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-07-31T09:16:09.083Z
+// Date : 2024-08-01T15:32:43.131Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -23,6 +23,7 @@ module.exports = {
   'EFFECT_HEAL': require('./heal.js'),
   'EFFECT_IMMUNITY': require('./immunity.js'),
   'EFFECT_INVISIBILITY': require('./invisibility.js'),
+  'EFFECT_LIGHT': require('./light.js'),
   'EFFECT_MATERIAL_VULNERABILITY': require('./material-vulnerability.js'),
   'EFFECT_NEGATIVE_LEVEL': require('./negative-level.js'),
   'EFFECT_PARALYSIS': require('./paralysis.js'),

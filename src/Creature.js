@@ -510,15 +510,20 @@ class Creature {
         if (oTarget === this) {
             return CONSTS.CREATURE_VISIBILITY_VISIBLE
         }
-        const tc = this.getters.getConditionSet
-        const te = oTarget.getters.getEffectSet
-        if (tc.has(CONSTS.CONDITION_BLINDED)) {
+        const mg = this.getters
+        const tg = oTarget.getters
+        const myConditions = mg.getConditionSet
+        const myEffects = mg.getEffectSet
+        const myProps = mg.getPropertySet
+        const targetEffects = tg.getEffectSet
+        const targetProps = tg.getPropertySet
+        if (myConditions.has(CONSTS.CONDITION_BLINDED)) {
             return CONSTS.CREATURE_VISIBILITY_BLINDED
         }
-        if (te.has(CONSTS.EFFECT_INVISIBILITY) && !this.getters.getEffectSet.has(CONSTS.EFFECT_SEE_INVISIBILITY)) {
+        if (targetEffects.has(CONSTS.EFFECT_INVISIBILITY) && !myEffects.has(CONSTS.EFFECT_SEE_INVISIBILITY)) {
             return CONSTS.CREATURE_VISIBILITY_INVISIBLE
         }
-        if (te.has(CONSTS.EFFECT_STEALTH)) {
+        if (targetEffects.has(CONSTS.EFFECT_STEALTH)) {
             return CONSTS.CREATURE_VISIBILITY_HIDDEN
         }
         let nLightLevel = 1
@@ -529,8 +534,15 @@ class Creature {
             nLightLevel = n
         }
         this.events.emit('request-environment-brightness', { creature: this, result })
-        if (nLightLevel < 0.5 && !this.getters.getEffectSet.has(CONSTS.EFFECT_DARKVISION) && !this.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
-            return CONSTS.CREATURE_VISIBILITY_DARKNESS
+        if (nLightLevel < 0.5 && !myEffects.has(CONSTS.EFFECT_DARKVISION) && !myProps.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
+            // if environment is dark, then one of the two opponent must have a source light
+            if (myProps.has(CONSTS.ITEM_PROPERTY_LIGHT) || targetProps.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
+                myEffects.has(CONSTS.ITEM_PROPERTY_LIGHT) || targetEffects.has(CONSTS.ITEM_PROPERTY_LIGHT)
+            ) {
+                return CONSTS.CREATURE_VISIBILITY_VISIBLE
+            } else {
+                return CONSTS.CREATURE_VISIBILITY_DARKNESS
+            }
         }
         return CONSTS.CREATURE_VISIBILITY_VISIBLE
     }

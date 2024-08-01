@@ -16,6 +16,7 @@
  * @property setEncumbrance {function(value: number)}
  * @property setGender {function(value: string GENDER_*)}
  * @property setHitPoints {function(value: number)}
+ * @property setId {function(value: string)}
  * @property setLevel {function(value: number)}
  * @property setNaturalArmorClass {function(value: number)}
  * @property setOffensiveSlot {function(slot: string)}

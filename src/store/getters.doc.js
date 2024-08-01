@@ -30,7 +30,7 @@
  * @property getOffensiveSlot {string}
  * @property getProperties {BFItemProperty[]}
  * @property getPropertySet {Set<string>}
- * @property getRace {{name:string, specie:{ ref: string, living: boolean, mind: boolean }, abilityRestrictions:Object, maxHdPerLevel:number, savingThrows:Object, properties:Array }}
+ * @property getRace {BFRaceData}
  * @property getRangedActions {string[]}
  * @property getSavingThrowBonus {{[p: string]: number}}
  * @property getSelectedAction {BFStoreStateAction}
