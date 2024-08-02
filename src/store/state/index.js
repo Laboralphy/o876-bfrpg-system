@@ -64,10 +64,10 @@ module.exports = () => ({
     properties: [],
     offensiveSlot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE,
     environment: {
-        darkness: false,
-        windy: false,
-        difficultTerrain: false,
-        underwater: false
+        [CONSTS.ENVIRONMENT_DARKNESS]: false,
+        [CONSTS.ENVIRONMENT_WINDY]: false,
+        [CONSTS.ENVIRONMENT_DIFFICULT_TERRAIN]: false,
+        [CONSTS.ENVIRONMENT_UNDERWATER]: false
     },
     equipment: {
         [CONSTS.EQUIPMENT_SLOT_HEAD]: null,

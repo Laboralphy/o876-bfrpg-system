@@ -1,0 +1,6 @@
+{
+  "ENVIRONMENT_DARKNESS": "darkness",
+  "ENVIRONMENT_UNDERWATER": "underwater",
+  "ENVIRONMENT_WINDY": "windy",
+  "ENVIRONMENT_DIFFICULT_TERRAIN": "difficultTerrain"
+}

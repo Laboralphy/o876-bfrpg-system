@@ -526,7 +526,7 @@ class Creature {
         if (targetEffects.has(CONSTS.EFFECT_STEALTH)) {
             return CONSTS.CREATURE_VISIBILITY_HIDDEN
         }
-        const bInDarkness = mg.getEnvironment.darkness
+        const bInDarkness = mg.getEnvironment[CONSTS.ENVIRONMENT_DARKNESS]
         if (bInDarkness && !myEffects.has(CONSTS.EFFECT_DARKVISION) && !myProps.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
             // if environment is dark, then one of the two opponent must have a source light
             if (myProps.has(CONSTS.ITEM_PROPERTY_LIGHT) || targetProps.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
