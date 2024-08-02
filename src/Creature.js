@@ -526,15 +526,8 @@ class Creature {
         if (targetEffects.has(CONSTS.EFFECT_STEALTH)) {
             return CONSTS.CREATURE_VISIBILITY_HIDDEN
         }
-        let nLightLevel = 1
-        const result = n => {
-            if (typeof n !== 'number') {
-                throw new TypeError('request-environment-brightness - needs floating number between 0 and 1 parameter as result')
-            }
-            nLightLevel = n
-        }
-        this.events.emit('request-environment-brightness', { creature: this, result })
-        if (nLightLevel < 0.5 && !myEffects.has(CONSTS.EFFECT_DARKVISION) && !myProps.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
+        const bInDarkness = mg.getEnvironment.darkness
+        if (bInDarkness && !myEffects.has(CONSTS.EFFECT_DARKVISION) && !myProps.has(CONSTS.ITEM_PROPERTY_DARKVISION)) {
             // if environment is dark, then one of the two opponent must have a source light
             if (myProps.has(CONSTS.ITEM_PROPERTY_LIGHT) || targetProps.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
                 myEffects.has(CONSTS.ITEM_PROPERTY_LIGHT) || targetEffects.has(CONSTS.ITEM_PROPERTY_LIGHT)

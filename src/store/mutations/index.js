@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-08-01T15:32:43.096Z
+// Date : 2024-08-02T09:10:44.795Z
 // List of files in ./src/store/mutations
 
 module.exports = {
@@ -17,6 +17,7 @@ module.exports = {
   'setClassType': require('./setClassType.js'),
   'setEffectDuration': require('./setEffectDuration.js'),
   'setEncumbrance': require('./setEncumbrance.js'),
+  'setEnvironment': require('./setEnvironment.js'),
   'setGender': require('./setGender.js'),
   'setHitPoints': require('./setHitPoints.js'),
   'setId': require('./setId.js'),

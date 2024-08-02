@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-08-01T15:32:43.060Z
+// Date : 2024-08-02T09:10:44.757Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -20,6 +20,7 @@ module.exports = {
   'getEffectSet': require('./getEffectSet.js'),
   'getEffects': require('./getEffects.js'),
   'getEncumbrance': require('./getEncumbrance.js'),
+  'getEnvironment': require('./getEnvironment.js'),
   'getEquipment': require('./getEquipment.js'),
   'getFumbleSuccess': require('./getFumbleSuccess.js'),
   'getGender': require('./getGender.js'),

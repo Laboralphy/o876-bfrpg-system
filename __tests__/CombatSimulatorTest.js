@@ -798,13 +798,15 @@ describe('testing sneak attacks', function () {
         humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
         humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
 
-        let nRoomLightLevel = 1
-        manager.events.on('creature.request-environment-brightness', ev => {
-            ev.result(nRoomLightLevel)
-        })
+        const setRoomBrightness = n => {
+            humanRogue.mutations.setEnvironment({ environment: 'darkness', value: n < 0.5 })
+            elfRogue.mutations.setEnvironment({ environment: 'darkness', value: n < 0.5 })
+        }
+
+
         expect(humanRogue.getCreatureVisibility(elfRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
         expect(elfRogue.getCreatureVisibility(humanRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
-        nRoomLightLevel = 0
+        setRoomBrightness(0)
         expect(humanRogue.getCreatureVisibility(elfRogue)).toBe(CONSTS.CREATURE_VISIBILITY_DARKNESS)
         expect(elfRogue.getCreatureVisibility(humanRogue)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
 
@@ -862,7 +864,7 @@ describe('testing sneak attacks', function () {
         expect(oOutcomeHum.sneakable).toBeFalsy()
         expect(manager.combatManager.isCreatureFighting(elfRogue, humanRogue)).toBeTruthy()
         expect(manager.combatManager.isCreatureFighting(humanRogue, elfRogue)).toBeTruthy()
-        nRoomLightLevel = 1
+        setRoomBrightness(1)
 
         advance()
         // room is now bright

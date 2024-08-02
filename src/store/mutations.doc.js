@@ -14,6 +14,7 @@
  * @property setClassType {function(value: string)}
  * @property setEffectDuration {function(effect: BFEffect, duration: number)}
  * @property setEncumbrance {function(value: number)}
+ * @property setEnvironment {function(environment, value)}
  * @property setGender {function(value: string GENDER_*)}
  * @property setHitPoints {function(value: number)}
  * @property setId {function(value: string)}

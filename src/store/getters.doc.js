@@ -17,6 +17,7 @@
  * @property getEffectSet {Set<string>}
  * @property getEffects {{}[]}
  * @property getEncumbrance {{value: number, capacity: number}}
+ * @property getEnvironment {{ darkness: boolean, windy: boolean, difficultTerrain: boolean, underwater: boolean }}
  * @property getEquipment {Object<string, BFItem>}
  * @property getFumbleSuccess {{savingThrow: {fumble: number, success: number}, attack: {fumble: number, success: number}}}
  * @property getGender {string}

@@ -31,6 +31,7 @@ const CONSTS = require('../../consts')
  * @property offensiveSlot {string}
  * @property equipment {{}}
  * @property encumbrance {number}
+ * @property environment {{ darkness: boolean, windy: boolean, difficultTerrain: boolean, underwater: boolean }}
  */
 
 /**
@@ -62,6 +63,12 @@ module.exports = () => ({
     effects: [],
     properties: [],
     offensiveSlot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE,
+    environment: {
+        darkness: false,
+        windy: false,
+        difficultTerrain: false,
+        underwater: false
+    },
     equipment: {
         [CONSTS.EQUIPMENT_SLOT_HEAD]: null,
         [CONSTS.EQUIPMENT_SLOT_NECK]: null,
