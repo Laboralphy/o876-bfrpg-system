@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-08-02T10:45:08.465Z
+// Date : 2024-08-02T14:27:41.283Z
 // List of files in ./src/modules/classic/data
 
 module.exports = {

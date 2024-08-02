@@ -1,0 +1,14 @@
+{
+  "entityType": "ENTITY_TYPE_ITEM",
+  "itemType": "ITEM_TYPE_MAGICWAND",
+  "properties": [],
+  "size": "WEAPON_SIZE_SMALL",
+  "weight": 1,
+  "damage": "1d8",
+  "damageType": "DAMAGE_TYPE_FIRE",
+  "attributes": [
+    "WEAPON_ATTRIBUTE_RANGED",
+    "WEAPON_ATTRIBUTE_IGNORE_ARMOR"
+  ],
+  "material": "MATERIAL_WOOD"
+}

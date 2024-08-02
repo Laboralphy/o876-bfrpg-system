@@ -56,11 +56,11 @@
     "defaultWeight": 3
   },
   "ITEM_TYPE_MAGICROD": {
-    "slots": [],
+    "slots": ["EQUIPMENT_SLOT_WEAPON_RANGED"],
     "defaultWeight": 1
   },
   "ITEM_TYPE_MAGICWAND": {
-    "slots": [],
+    "slots": ["EQUIPMENT_SLOT_WEAPON_RANGED"],
     "defaultWeight": 0.5
   },
   "ITEM_TYPE_POTION": {

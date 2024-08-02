@@ -10,7 +10,7 @@ const CONSTS = require("../../consts");
 module.exports = (state, getters) => {
     const weapon = getters.getSelectedWeapon
     if (weapon && getters.isSelectedWeaponUsable) {
-        const aAmmoProperties = weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+        const aAmmoProperties = weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_AMMUNITION)
             ? state.equipment[CONSTS.EQUIPMENT_SLOT_AMMO].properties
             : []
         return [

@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-08-02T10:45:08.425Z
+// Date : 2024-08-02T14:27:41.235Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {
@@ -68,8 +68,10 @@ module.exports = {
   'arm-clothing': require('./items/armors/arm-clothing.json'),
   'arm-leather': require('./items/armors/arm-leather.json'),
   'arm-plate': require('./items/armors/arm-plate.json'),
+  'misc-torch': require('./items/misc/misc-torch.json'),
   'shd-medium': require('./items/shields/shd-medium.json'),
   'shd-small': require('./items/shields/shd-small.json'),
+  'wand-firebolt': require('./items/wands/wand-firebolt.json'),
   'wpn-battleaxe': require('./items/weapons/wpn-battleaxe.json'),
   'wpn-club': require('./items/weapons/wpn-club.json'),
   'wpn-dagger-sharp': require('./items/weapons/wpn-dagger-sharp.json'),

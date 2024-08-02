@@ -23,6 +23,9 @@ function extractRegistryLevel (reg, nLevel) {
  */
 module.exports = (state, getters, externals) => {
     const data = externals['class-types'][state.classType]
+    if (!data) {
+        throw new Error('no data for class type ' + state.classType)
+    }
     const raceData = getters.getRace
     const nEffectiveLevel = getters.getLevel
     const xpl = data.experienceLevels

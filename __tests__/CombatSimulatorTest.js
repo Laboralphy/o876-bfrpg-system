@@ -874,3 +874,84 @@ describe('testing sneak attacks', function () {
         expect(oOutcomeHum.sneakable).toBeFalsy()
     })
 })
+
+describe('liaght source', function () {
+    it('should have property LIGHT when equiping torch', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+
+        const torch = manager.createItem({ id: 'torch', ref: 'misc-torch' })
+        elfWizard.mutations.equipItem({ item: torch })
+
+        expect(elfWizard.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_SHIELD]).toEqual(torch)
+        expect(elfWizard.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_LIGHT)).toBeTruthy()
+    })
+})
+
+describe('wands', function () {
+    it('should attack with damage fire when using wand firefolt', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        const wand = manager.createItem({ id: 'wandfire', ref: 'wand-firebolt' })
+        elfWizard.mutations.equipItem({ item: wand })
+        expect(elfWizard.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED]).toEqual(wand)
+
+        elfWizard.dice.cheat(0.99)
+
+        let oOutcomeElf
+        let oOutcomeHum
+        manager.events.on('combat.attack', ev => {
+            if (ev.outcome.attacker === elfWizard) {
+                oOutcomeElf = ev.outcome
+            }
+            if (ev.outcome.attacker === humanRogue) {
+                oOutcomeHum = ev.outcome
+            }
+        })
+
+        const c = manager.combatManager.startCombat(elfWizard, humanRogue)
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        advance()
+        expect(oOutcomeElf).toBeDefined()
+        expect(oOutcomeElf.damages).toEqual({
+            amount: 8,
+            types: {
+                DAMAGE_TYPE_FIRE: {
+                    amount: 8,
+                    resisted: 0
+                }
+            }
+        })
+
+    })
+})

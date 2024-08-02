@@ -182,10 +182,13 @@ class Creature {
             weapon ? weapon.attributes : [CONSTS.WEAPON_ATTRIBUTE_FINESSE]
         )
         const bRanged = weaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+        const bIgnoreArmor = weaponAttributeSet.has(CONSTS.WEAPON_ATTRIBUTE_IGNORE_ARMOR)
         oAttackOutcome.sneakable = oAttackOutcome.sneakable && !bRanged
         const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
-        oAttackOutcome.ac = bRanged ? oArmorClass.ranged : oArmorClass.melee
+        oAttackOutcome.ac = bIgnoreArmor
+            ? oArmorClass.natural + oArmorClass.details.dexterity
+            : bRanged ? oArmorClass.ranged : oArmorClass.melee
         oAttackOutcome.bonus += this.getters.getAttackBonus
         oAttackOutcome.weapon = weapon
         oAttackOutcome.ammo = ammo
@@ -384,11 +387,21 @@ class Creature {
         }
         if (action.name === CONSTS.DEFAULT_ACTION_WEAPON) {
             const { weapon, ammo } = this.getters.getOffensiveEquipment
-            let nAbilityBonus = weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+            const wa = new Set(weapon.attributes)
+            const waRanged = wa.has(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+            const wa2Hands = wa.has(CONSTS.WEAPON_ATTRIBUTE_TWO_HANDED)
+            let nAbilityBonus = waRanged
                 ? 0
                 : this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
+            if (wa2Hands) {
+                nAbilityBonus *= 2
+            }
             damage = Math.max(1, this.dice.evaluate(weapon.damage) + nAbilityBonus)
-            damageType = CONSTS.DAMAGE_TYPE_PHYSICAL
+            damageType = (ammo && ammo.damageType)
+                ? ammo.damageType
+                : (weapon && weapon.damageType)
+                    ? weapon.damageType
+                    : CONSTS.DAMAGE_TYPE_PHYSICAL
             material = ammo ? ammo.material : weapon.material
         } else {
             const aat = action.attackType

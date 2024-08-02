@@ -65,10 +65,12 @@ class ItemBuilder {
         if (!oItemTypeData) {
             throw new Error('This weapon data is undefined : ' + sItemTypeDataKey)
         }
-        const { defaultWeight } = data['item-types'].ITEM_TYPE_WEAPON
-        const slot = oItemTypeData.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
-            ? CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
-            : CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE
+        const { defaultWeight } = data['item-types'][oBlueprint.itemType]
+        const slot = oBlueprint.slots.length === 1
+            ? oBlueprint.slots[0]
+            : oItemTypeData.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+                ? CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
+                : CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE
         return this.mixData(oBlueprint, oItemTypeData, [slot], defaultWeight)
     }
 
@@ -129,7 +131,9 @@ class ItemBuilder {
             case CONSTS.ITEM_TYPE_RING:
             case CONSTS.ITEM_TYPE_BELT:
             case CONSTS.ITEM_TYPE_BOOTS:
-            case CONSTS.ITEM_TYPE_TORCH: {
+            case CONSTS.ITEM_TYPE_TORCH:
+            case CONSTS.ITEM_TYPE_MAGICWAND:
+            case CONSTS.ITEM_TYPE_MAGICROD: {
                 return this.createItemGear(oBlueprint, oData)
             }
 
