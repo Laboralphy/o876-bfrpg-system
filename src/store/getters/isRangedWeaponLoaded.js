@@ -10,7 +10,6 @@ module.exports = (state, getters) => {
     if (!weapon) {
         return false
     }
-    if (!weapon.attributes) console.log(weapon)
     if (weapon.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_AMMUNITION)) {
         const sAmmoType = weapon.ammoType
         const oAmmo = getters.getEquipment[CONSTS.EQUIPMENT_SLOT_AMMO]
