@@ -336,9 +336,15 @@ class Manager {
     getBlueprint (sRef) {
         const sType = typeof sRef
         if (sType === 'object') {
-            this._schemaValidator.validate(sRef, 'blueprint-item')
-            this._validBlueprints[sRef] = sRef
-            return sRef
+            /**
+             * @type {BFItem}
+             */
+            const oRef = sRef
+            if (oRef.entityType === CONSTS.ENTITY_TYPE_ITEM) {
+                this._schemaValidator.validate(oRef, 'blueprint-item')
+                this._validBlueprints[sRef] = sRef
+                return sRef
+            }
         }
         if (typeof sRef !== 'string') {
             throw new TypeError('reference must be a string')
@@ -356,6 +362,7 @@ class Manager {
                     try {
                         this._schemaValidator.validate(bp, 'blueprint-item')
                     } catch (e) {
+                        console.error(e.message)
                         throw new Error('Error while getting blueprint ref : ' + sRef, {
                             cause: e
                         })
@@ -367,6 +374,7 @@ class Manager {
                     try {
                         this._schemaValidator.validate(bp, 'blueprint-actor')
                     } catch (e) {
+                        console.error(e.message)
                         throw new Error('Error while getting blueprint ref : ' + sRef, {
                             cause: e
                         })

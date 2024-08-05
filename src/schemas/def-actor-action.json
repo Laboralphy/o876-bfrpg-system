@@ -1,6 +1,16 @@
 {
   "description": "action definition",
   "type": "object",
+  "allowAdditionnalProperties": false,
+  "required": [
+    "name",
+    "attackType",
+    "damage",
+    "damageType",
+    "count",
+    "cooldown",
+    "conveys"
+  ],
   "properties": {
     "name": {
       "description": "action name - unused for mechanics",
@@ -10,14 +20,24 @@
       "description": "attack type - script used to determine if attack hits",
       "type": "string"
     },
+    "damage": {
+      "description": "Amount of damage dealt by the action",
+      "$ref": "type-number-or-string"
+    },
+    "damageType": {
+      "description": "Nature of damage",
+      "type": "string",
+      "pattern": "^DAMAGE_TYPE_"
+    },
     "count": {
       "description": "number of times, the attack is made in a turn",
       "type": "number"
     },
-    "amp": {
-      "$ref": "def-effect-amp"
+    "cooldown": {
+      "description": "number of turns the action is locked and cannot be used again",
+      "type": "number"
     },
-    "scripts": {
+    "conveys": {
       "description": "list of scripts to be run of attack hits",
       "type": "array",
       "items": {

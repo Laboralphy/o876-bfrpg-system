@@ -875,29 +875,50 @@ describe('testing sneak attacks', function () {
     })
 })
 
-describe('liaght source', function () {
-    it('should have property LIGHT when equiping torch', async function () {
+describe('dark room and light source', function () {
+    it('should have property LIGHT and see others when equipping torch', async function () {
         const manager = new Manager()
         await manager.init()
         manager.loadModule('classic')
 
-        const elfWizard = manager.createCreature({ id: 'elfwizard' })
-        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
-        elfWizard.mutations.setLevel({ value: 10 })
-        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
-        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
-        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+        const humWizard = manager.createCreature({ id: 'elfwizard' })
+        humWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        humWizard.mutations.setLevel({ value: 10 })
+        humWizard.mutations.setRace({ value: 'RACE_HUMAN' })
+        humWizard.mutations.setHitPoints({ value: humWizard.getters.getMaxHitPoints })
 
         const torch = manager.createItem({ id: 'torch', ref: 'misc-torch' })
-        elfWizard.mutations.equipItem({ item: torch })
 
-        expect(elfWizard.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_SHIELD]).toEqual(torch)
-        expect(elfWizard.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_LIGHT)).toBeTruthy()
+        const other = manager.createCreature({ id: 'other' })
+
+        // normal room : all visible
+        expect(humWizard.getCreatureVisibility(other)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+        expect(other.getCreatureVisibility(humWizard)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+
+        // room becomes dark
+        humWizard.mutations.setEnvironment({ environment: CONSTS.ENVIRONMENT_DARKNESS, value: true })
+        other.mutations.setEnvironment({ environment: CONSTS.ENVIRONMENT_DARKNESS, value: true })
+
+        expect(humWizard.getters.getEnvironment[CONSTS.ENVIRONMENT_DARKNESS]).toBeTruthy()
+
+        // nothing visible
+        expect(humWizard.getCreatureVisibility(other)).toBe(CONSTS.CREATURE_VISIBILITY_DARKNESS)
+        expect(other.getCreatureVisibility(humWizard)).toBe(CONSTS.CREATURE_VISIBILITY_DARKNESS)
+
+        // equipping human wizard with torch
+        humWizard.mutations.equipItem({ item: torch })
+
+        expect(humWizard.getters.getEquipment[CONSTS.EQUIPMENT_SLOT_SHIELD]).toEqual(torch)
+        expect(humWizard.getters.getPropertySet.has(CONSTS.ITEM_PROPERTY_LIGHT)).toBeTruthy()
+
+        // all visible again
+        expect(humWizard.getCreatureVisibility(other)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
+        expect(other.getCreatureVisibility(humWizard)).toBe(CONSTS.CREATURE_VISIBILITY_VISIBLE)
     })
 })
 
 describe('wands', function () {
-    it('should attack with damage fire when using wand firefolt', async function () {
+    it('should attack with damage fire when using wand firebolt', async function () {
         const manager = new Manager()
         await manager.init()
         manager.loadModule('classic')
@@ -952,6 +973,5 @@ describe('wands', function () {
                 }
             }
         })
-
     })
 })

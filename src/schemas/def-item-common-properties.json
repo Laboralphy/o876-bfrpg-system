@@ -16,9 +16,6 @@
     "properties": {
       "type": "array"
     },
-    "identified": {
-      "type": "boolean",
-      "default": true
-    }
+    "material": {}
   }
 }

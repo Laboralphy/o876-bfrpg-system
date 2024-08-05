@@ -60,6 +60,14 @@
     "defaultWeight": 1
   },
   "ITEM_TYPE_MAGICWAND": {
+    "size": "WEAPON_SIZE_SMALL",
+    "damage": "1d4",
+    "damageType": "DAMAGE_TYPE_FORCE",
+    "attributes": [
+      "WEAPON_ATTRIBUTE_RANGED",
+      "WEAPON_ATTRIBUTE_IGNORE_ARMOR"
+    ],
+    "material": "MATERIAL_WOOD",
     "slots": ["EQUIPMENT_SLOT_WEAPON_RANGED"],
     "defaultWeight": 0.5
   },

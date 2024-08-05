@@ -10,7 +10,14 @@
  *
  * @param state {BFStoreState}
  * @param value {string}
+ * @param externals {*}
  */
-module.exports = ({ state }, { value }) => {
-    state.race = value
+module.exports = ({ state, externals }, { value }) => {
+    const oRaceData = externals['races'][value]
+    if (oRaceData) {
+        state.specie = oRaceData.specie
+        state.race = value
+    } else {
+        throw new Error('Unknown race : ' + value)
+    }
 }

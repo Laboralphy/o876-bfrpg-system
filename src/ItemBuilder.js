@@ -7,10 +7,10 @@ class ItemBuilder {
      * @param oBlueprint
      * @param oData
      * @param slots
-     * @param defaultWeight
+     * @param defaultWeight {number}
      * @returns {BFItem}
      */
-    mixData(oBlueprint, oData, slots, defaultWeight) {
+    mixData(oBlueprint, oData, slots, defaultWeight = 0) {
         const properties = oBlueprint.properties.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip))
         let nExtraWeight = 0
         properties.forEach(p => {
@@ -25,6 +25,10 @@ class ItemBuilder {
             ...oBlueprint
         }
         delete oBlueprintCopy.properties
+        const sDefaultWeightType = typeof defaultWeight
+        if (sDefaultWeightType !== 'number') {
+            throw new TypeError('defaultWeight must be a number, ' + sDefaultWeightType + ' given')
+        }
         if (oBlueprintCopy.entityType === CONSTS.ENTITY_TYPE_ITEM) {
             oBlueprintCopy.weight = nExtraWeight + (oData.weight || oBlueprint.weight || defaultWeight || 0)
         }
@@ -61,17 +65,21 @@ class ItemBuilder {
         if (!(sItemTypeDataKey in data['weapon-types'])) {
             throw new Error('This weapon type is undefined : ' + sItemTypeDataKey)
         }
-        const oItemTypeData = data['weapon-types'][sItemTypeDataKey]
-        if (!oItemTypeData) {
+        const oWeaponTypeData = data['weapon-types'][sItemTypeDataKey]
+        if (!oWeaponTypeData) {
             throw new Error('This weapon data is undefined : ' + sItemTypeDataKey)
         }
-        const { defaultWeight } = data['item-types'][oBlueprint.itemType]
-        const slot = oBlueprint.slots.length === 1
-            ? oBlueprint.slots[0]
-            : oItemTypeData.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
+        const oItemTypeData = data['item-types'][oBlueprint.itemType]
+        const {
+            defaultWeight,
+            slots
+        } = oItemTypeData
+        const slot = slots.length === 1
+            ? slots[0]
+            : oWeaponTypeData.attributes.includes(CONSTS.WEAPON_ATTRIBUTE_RANGED)
                 ? CONSTS.EQUIPMENT_SLOT_WEAPON_RANGED
                 : CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE
-        return this.mixData(oBlueprint, oItemTypeData, [slot], defaultWeight)
+        return this.mixData(oBlueprint, oWeaponTypeData, [slot], defaultWeight)
     }
 
     createItemShield (oBlueprint, data) {
@@ -101,11 +109,11 @@ class ItemBuilder {
     }
 
     createItemGear (oBlueprint, data) {
-        const { slots } = data['item-types'][oBlueprint.itemType]
-        return this.mixData(oBlueprint, {}, slots, data)
+        const oItemData = data['item-types'][oBlueprint.itemType]
+        return this.mixData(oBlueprint, oItemData, oItemData.slots, oItemData.defaultWeight)
     }
 
-    createItem (oBlueprint = null, oData = null) {
+    createItem (oBlueprint, oData = null) {
         switch (oBlueprint.itemType) {
             case CONSTS.ITEM_TYPE_ARMOR: {
                 return this.createItemArmor(oBlueprint, oData)

@@ -222,8 +222,10 @@ class Comparator {
     }
 
     /**
-     *
+     * this function will blend all DPT and theirs cooldowns to get an average DPT
+     * this returns the average amount, and the damage map (maximum damage done each turn)
      * @param aDPT {{ damage: number, cooldown: number, _lastTime: number }[]}
+     * @return {{ amount: number, damageMap: number[] }}
      */
     static blendDPT (aDPT) {
         if (aDPT.length === 0) {
@@ -235,6 +237,7 @@ class Comparator {
         if (aDPT.length === 1) {
             aDPT.push({ ...aDPT[0] })
         }
+        // we need to compute PPCM to get an accurate number of turns
         const nPPCM = Math.max(aDPT.length, ppcm(...aDPT.map(({ cooldown }) => cooldown + 1)))
         aDPT.forEach(d => {
             d._lastTime = -Infinity
@@ -248,7 +251,7 @@ class Comparator {
                 a.push(0)
             } else {
                 if (ai[0].damage === undefined) {
-                    console.log(ai)
+                    console.error(ai)
                     throw new Error('ERR_UNDEFINED damage')
                 }
                 a.push(ai[0].damage)

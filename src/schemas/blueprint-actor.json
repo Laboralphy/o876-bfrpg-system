@@ -9,7 +9,8 @@
     "level",
     "specie",
     "speed",
-    "equipment"
+    "equipment",
+    "actions"
   ],
   "properties": {
     "entityType": {
@@ -98,38 +99,7 @@
       "type": "array",
       "description": "List of possible actions",
       "items": {
-        "type": "object",
-        "description": "action definition",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "action name"
-          },
-          "count": {
-            "type": "number",
-            "description": "number of times the creature may call the associated script with this action"
-          },
-          "script": {
-            "type": "string",
-            "description": "when used, this action will call this script"
-          },
-          "data": {
-            "type": "object",
-            "description": "a simple objet to customize script behavior"
-          },
-          "amp": {
-            "oneOf": [
-              {
-                "type": "number",
-                "description": "numeric value of the action amplitude"
-              },
-              {
-                "type": "string",
-                "description": "random value of the action amplitude, using dice notation 1d6, 2d8, 1d6+2 etc..."
-              }
-            ]
-          }
-        }
+        "$ref": "def-actor-action"
       }
     }
   }
