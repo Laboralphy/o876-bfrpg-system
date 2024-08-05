@@ -450,12 +450,16 @@ class Creature {
         }
     }
 
-    rollSkill (skill) {
-        const score = this.getters.getClassTypeData.rogueSkills[skill]
+    /**
+     * Roll a skill
+     * @param skill {string}
+     * @param nDifficulty {number}
+     * @returns {boolean}
+     */
+    rollSkill (skill, nDifficulty = 0) {
+        const score = this.getters.getClassTypeData.rogueSkills[skill] - nDifficulty
         const roll = 100 - this.dice.roll(100) // 0 - 99
-        const success = roll < score
-        this.events.emit('skill', { skill, score, roll, success })
-        return success
+        return roll < score
     }
 
     /**
