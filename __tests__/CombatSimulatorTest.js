@@ -974,4 +974,104 @@ describe('wands', function () {
             }
         })
     })
+
+    it('should use a spell attached to a wand', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const MY_MODULE = {
+            DATA: {},
+            BLUEPRINTS: {
+                'wand-vampire': {
+                    "entityType": "ENTITY_TYPE_ITEM",
+                    "itemType": "ITEM_TYPE_MAGICWAND",
+                    "properties": [{
+                        "property": "ITEM_PROPERTY_SPECIAL_BEHAVIOR",
+                        "attack": "ai-spell-wand"
+                    }],
+                    "damageType": "DAMAGE_TYPE_NECROTIC"
+                }
+            },
+            SCRIPTS: {
+                'ai-spell-wand': function ({ attackOutcome }) {
+                    if (attackOutcome.hit) {
+                        attackOutcome.attacker.mutations.setHitPoints({ value: attackOutcome.attacker.getters.getHitPoints + 1 })
+                    }
+                }
+            },
+            name: 'spell-wand-module'
+        }
+
+        manager.loadModule(MY_MODULE)
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints >> 1 })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        const wand = manager.createItem({ id: 'wand', ref: 'wand-vampire'})
+
+        expect(wand.properties[0]).toEqual({
+          property: 'ITEM_PROPERTY_SPECIAL_BEHAVIOR',
+          amp: 0,
+          data: { scripts: { combat: '', damaged: '', attack: 'ai-spell-wand' } }
+        })
+        elfWizard.mutations.equipItem({ item: wand })
+
+        expect(elfWizard.getters.getHitPoints).toBe(18)
+
+        const c = manager.combatManager.startCombat(elfWizard, humanRogue)
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+        humanRogue.dice.cheat(0.01)
+        elfWizard.dice.cheat(0.95)
+
+        const aLog = []
+
+        manager.events.on('combat.move', ev => {
+            aLog.push({
+                ev: 'MOVE',
+                d: ev.previousDistance,
+                between: [ev.attacker.id, ev.target.id]
+            })
+        })
+        manager.events.on('combat.attack', ev => {
+            aLog.push({
+                ev: 'ATTACK',
+                between: [ev.outcome.attacker.id, ev.outcome.target.id],
+                hit: ev.outcome.hit,
+                action: ev.outcome.action && ev.outcome.action.name,
+                weapon: ev.outcome.weapon && ev.outcome.weapon.ref,
+
+            })
+        })
+
+        expect(elfWizard.getters.getHitPoints).toBe(18)
+        advance()
+        expect(aLog).toEqual([
+            { ev: 'MOVE', d: 50, between: [ 'humrogue', 'elfwizard' ] },
+            {
+                ev: 'ATTACK',
+                between: [ 'elfwizard', 'humrogue' ],
+                hit: true,
+                action: 'DEFAULT_ACTION_WEAPON',
+                weapon: 'wand-vampire'
+            }
+        ])
+        expect(elfWizard.getters.getHitPoints).toBe(19)
+    })
 })
