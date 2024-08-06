@@ -42,13 +42,13 @@ module.exports = (state, getters, externals) => {
     const rogueSkills = data.rogueSkills
         ? extractRegistryLevel(data.rogueSkills, nEffectiveLevel)
         : {
-            unlock: 0,
-            disarm: 0,
-            pickpocket: 0,
-            move: 0,
-            climb: 0,
-            hide: 0,
-            listen: 0
+            [CONSTS.SKILL_OPEN_LOCK]: 0,
+            [CONSTS.SKILL_REMOVE_TRAP]: 0,
+            [CONSTS.SKILL_PICK_POCKET]: 0,
+            [CONSTS.SKILL_MOVE_SILENTLY]: 0,
+            [CONSTS.SKILL_CLIMB_WALL]: 0,
+            [CONSTS.SKILL_HIDE]: 0,
+            [CONSTS.SKILL_LISTEN]: 0
         }
     Object
         .entries(raceData.rogueSkills)

@@ -84,7 +84,7 @@
       "SAVING_THROW_DRAGON_BREATH": 3
     },
     "rogueSkills": {
-      "hide": 70
+      "SKILL_HIDE": 70
     },
     "properties": [
       {

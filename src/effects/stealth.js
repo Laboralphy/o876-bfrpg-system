@@ -19,7 +19,7 @@ function attack ({ effect, attackOutcome }) {
 }
 
 function mutate ({ effect, target }) {
-    if (!target.rollSkill('hide')) {
+    if (!target.rollSkill(CONSTS.SKILL_HIDE)) {
         target.mutations.removeEffect({ effect })
     }
 }
