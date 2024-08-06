@@ -18,14 +18,7 @@ function attack ({ effect, attackOutcome }) {
     attackOutcome.attacker.mutations.removeEffect({ effect })
 }
 
-function mutate ({ effect, target }) {
-    if (!target.rollSkill(CONSTS.SKILL_HIDE)) {
-        target.mutations.removeEffect({ effect })
-    }
-}
-
 module.exports = {
     attack,
-    init,
-    mutate
+    init
 }
