@@ -464,7 +464,16 @@ class Creature {
         }
         const score = nSkillValue - nDifficulty
         const roll = 100 - this.dice.roll(100) // 0 - 99
-        return roll < score
+        const success = roll < score
+        const oPayload = {
+            skill,
+            skillValue: nSkillValue,
+            difficulty: nDifficulty,
+            roll,
+            success
+        }
+        this._events.emit('roll-skill', oPayload)
+        return success
     }
 
     /**

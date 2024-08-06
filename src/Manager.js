@@ -444,6 +444,11 @@ class Manager {
             creature: oCreature,
             manager: this
         }))
+        oCreature.events.on('roll-skill', ev => this._events.emit('creature.roll-skill', {
+            ...ev,
+            creature: oCreature,
+            manager: this
+        }))
         oCreature.events.on('friend-check', ev => this._events.emit('creature.friend-check', {
             ...ev,
             creature: oCreature,
@@ -472,14 +477,6 @@ class Manager {
                 manager: this
             }
             this._events.emit('creature.death', oPayload)
-        })
-        oCreature.events.on('request-environment-brightness', ev => {
-            const oPayload = {
-                ...ev,
-                creature: oCreature,
-                manager: this
-            }
-            this._events.emit('creature.request-environment-brightness', oPayload)
         })
         return oCreature
     }
