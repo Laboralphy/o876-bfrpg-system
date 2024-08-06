@@ -457,7 +457,12 @@ class Creature {
      * @returns {boolean}
      */
     rollSkill (skill, nDifficulty = 0) {
-        const score = this.getters.getClassTypeData.rogueSkills[skill] - nDifficulty
+        const oRogueSkills = this.getters.getClassTypeData.rogueSkills
+        const nSkillValue = oRogueSkills[skill]
+        if (isNaN(nSkillValue)) {
+            throw new Error('This skill in not valid : ' + skill + ', allowed skill values are : ' + Object.keys(oRogueSkills).join(', '))
+        }
+        const score = nSkillValue - nDifficulty
         const roll = 100 - this.dice.roll(100) // 0 - 99
         return roll < score
     }
