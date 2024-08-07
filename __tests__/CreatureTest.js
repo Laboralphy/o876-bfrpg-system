@@ -652,7 +652,9 @@ describe('rollskill', function () {
             oRollSkillEvent = ev
         })
         c1.dice.cheat(0.75)
-        c1.rollSkill(CONSTS.SKILL_HIDE, 0)
+        const b = c1.rollSkill(CONSTS.SKILL_HIDE, 0)
+        expect(b).toBeTruthy()
+        expect(c1.getters.getClassTypeData.rogueSkills['SKILL_HIDE']).toBe(30)
         expect(oRollSkillEvent).toEqual({
             difficulty: 70,
             roll: 76,
