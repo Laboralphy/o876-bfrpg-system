@@ -462,13 +462,13 @@ class Creature {
         if (isNaN(nSkillValue)) {
             throw new Error('This skill in not valid : ' + skill + ', allowed skill values are : ' + Object.keys(oRogueSkills).join(', '))
         }
-        const score = nSkillValue - nDifficulty
-        const roll = 100 - this.dice.roll(100) // 0 - 99
-        const success = roll < score
+        const difficulty = 100 - nSkillValue + nDifficulty
+        const roll = this.dice.roll(100)
+        const success = roll >= difficulty
         const oPayload = {
             skill,
             skillValue: nSkillValue,
-            difficulty: nDifficulty,
+            difficulty,
             roll,
             success
         }

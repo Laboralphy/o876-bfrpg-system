@@ -641,3 +641,78 @@ describe('attacking with visibility issues', function () {
         expect(o1.bonus).toBe(-4)
     })
 })
+
+describe('rollskill', function () {
+    it('should success roll skill', function () {
+        const c1 = new Creature()
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_ROGUE })
+        c1.mutations.setLevel({ value: 5 })
+        let oRollSkillEvent
+        c1.events.on('roll-skill', ev => {
+            oRollSkillEvent = ev
+        })
+        c1.dice.cheat(0.75)
+        c1.rollSkill(CONSTS.SKILL_HIDE, 0)
+        expect(oRollSkillEvent).toEqual({
+            difficulty: 70,
+            roll: 76,
+            skill: 'SKILL_HIDE',
+            skillValue: 30,
+            success: true
+        })
+    })
+    it('should fail roll skill', function () {
+        const c1 = new Creature()
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_ROGUE })
+        c1.mutations.setLevel({ value: 5 })
+        let oRollSkillEvent
+        c1.events.on('roll-skill', ev => {
+            oRollSkillEvent = ev
+        })
+        c1.dice.cheat(0.2)
+        c1.rollSkill(CONSTS.SKILL_HIDE, 0)
+        expect(oRollSkillEvent).toEqual({
+            difficulty: 70,
+            roll: 21,
+            skill: 'SKILL_HIDE',
+            skillValue: 30,
+            success: false
+        })
+    })
+    it('should fail roll skill because of difficulty', function () {
+        const c1 = new Creature()
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_ROGUE })
+        c1.mutations.setLevel({ value: 5 })
+        let oRollSkillEvent
+        c1.events.on('roll-skill', ev => {
+            oRollSkillEvent = ev
+        })
+        c1.dice.cheat(0.75)
+        c1.rollSkill(CONSTS.SKILL_HIDE, 20)
+        expect(oRollSkillEvent).toEqual({
+            difficulty: 90,
+            roll: 76,
+            skill: 'SKILL_HIDE',
+            skillValue: 30,
+            success: false
+        })
+    })
+    it('should pass roll skill when difficulty is lowered', function () {
+        const c1 = new Creature()
+        c1.mutations.setClassType({ value: CONSTS.CLASS_TYPE_ROGUE })
+        c1.mutations.setLevel({ value: 5 })
+        let oRollSkillEvent
+        c1.events.on('roll-skill', ev => {
+            oRollSkillEvent = ev
+        })
+        c1.dice.cheat(0.2)
+        c1.rollSkill(CONSTS.SKILL_HIDE, -60)
+        expect(oRollSkillEvent).toEqual({
+            difficulty: 10,
+            roll: 21,
+            skill: 'SKILL_HIDE',
+            skillValue: 30,
+            success: true
+        })
+    })
+})
