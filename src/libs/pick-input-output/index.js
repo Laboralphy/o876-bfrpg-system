@@ -1,3 +1,43 @@
+/**
+ * Une classe spécialisée qui va chercher dans une structure la bonne valeur de sortie (output)
+ * en fonction d'une valeur d'entrée (input)
+ *
+ * La structure "S" est idéalement un Array dont chaque élément "S[i]" possèdera deux propriétés exploitées par cette classe
+ * - une propriété d'entrée, qui sera un tableau de une ou deux valeurs numériques (représentant une valeur min et max)
+ * - une propriété de sortie de n'importe quel type.
+ *
+ * la fonction principale est getValue qui accepte une valeur numérique "X" comme paramètre
+ * On recherchera parmi les S[i], l'élément ayant la propriété d'entrée dont les valeurs min/max incluent X
+ * Si un tel élément est trouvé, getValue renvoi la valeur de la propriété de sortie.
+ *
+ * Structure d'exemple
+ * const data = [
+ *     {
+ *         inputValues: [ 1, 3 ],
+ *         outputValue: 10
+ *     },
+ *     {
+ *         inputValues: [ 4 ],
+ *         outputValue: 20
+ *     },
+ *     {
+ *          inputValues: [ 5, 10 ],
+ *          outputValue: 30
+ *     }
+ * ]
+ * dans cet exemple on construit l'instance ainsi : new PickInputOutput(data, 'inputValues', 'outputValue')
+ *
+ * un appel à    renvoie
+ * -----------   -------
+ * getValue(1)   10
+ * getValue(2)   10
+ * getValue(3)   10
+ * getValue(4)   20
+ * getValue(5)   30
+ * getValue(6)   30
+ * ...
+ * getValue(10)  30
+ */
 class PickInputOutput {
     constructor (data, input, output) {
         this._checkAllItems(data, input, output)
