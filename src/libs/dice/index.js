@@ -1,4 +1,5 @@
 const REGEX_XDY = /^([-+]?) *(\d+) *d *(\d+) *(([-+]) *(\d+))?$/
+const REGEX_NUM = /^([-+]?) *(\d+) *$/
 
 /**
  * @class
@@ -82,45 +83,63 @@ class Dice {
     return nAcc + nModifier
   }
 
+  _parseSignedInt (value, sign = undefined) {
+    const nSignedValue = sign === '-' ? -1 : 1
+    if (value === undefined || value === null || value === '') {
+      return 0
+    }
+    // Si la valeur est équivalente à 0 en nombre, retourner 0
+    if (Number(value) === 0) {
+      return 0
+    }
+    // Sinon, retourner la valeur entière analysée
+    return nSignedValue * parseInt(value)
+  }
+
   /**
    * Analyze an expression of type xDy+z
-   * @param value {string}
-   * @returns {{count: number, sides: number}}
+   * @param value {string|number}
+   * @returns {{count: number, sides: number, modifier: number}}
    */
   xdy (value) {
-    const bString = typeof value === 'string'
-    if (bString && (value in this._cachexdy)) {
+    const sValueType = typeof value
+    if (sValueType === 'number') {
+      return {
+        sides: 0,
+        count: 0,
+        modifier: this._parseSignedInt(value)
+      }
+    }
+    if (sValueType !== 'string') {
+      throw new TypeError('value of type ' + sValueType + ' is not allowed')
+    }
+    value = value
+        .trim()
+        .replace(/ +/g, '')
+        .toLowerCase()
+    if (value in this._cachexdy) {
       return this._cachexdy[value]
     }
-    if (bString && isNaN(value)) {
-      const r = value.trim().match(REGEX_XDY)
-      if (!r) {
-        throw new Error('This dice formula is invalid : "' + value + '"')
-      }
-      const [, sCountSign, sCount, sSides, , sModifierSign, sModifier] = r
-      const count = parseInt(sCount) * (sCountSign === '-' ? -1 : 1)
-      const sides = parseInt(sSides)
-      const modifier = sModifier === undefined
-        ? 0
-        : parseInt(sModifier) * (sModifierSign === '-' ? -1 : 1)
-      if (r) {
-        return this._cachexdy[value] = {
-          sides,
-          count,
-          modifier
-        }
-      } else {
-        throw new Error('This formula does not compute : "' + value + '". Expected format is xDy+z where x, y and z are numbers (x and z may be negative)')
+    const bIsNumeric = !!value.match(REGEX_NUM)
+    if (bIsNumeric) {
+      return {
+        sides: 0,
+        count: 0,
+        modifier: this._parseSignedInt(value)
       }
     }
-    const nModifier = parseInt(value)
-    if (isNaN(nModifier)) {
-      throw new Error('an error occured while evaluating "' + value + '"')
+    const r = value.match(REGEX_XDY)
+    if (!r) {
+      throw new Error('This dice formula is invalid : "' + value + '"')
     }
+    const [, sCountSign, sCount, sSides, , sModifierSign, sModifier] = r
+    const count = this._parseSignedInt(sCount, sCountSign)
+    const sides = this._parseSignedInt(sSides)
+    const modifier = this._parseSignedInt(sModifier, sModifierSign)
     return this._cachexdy[value] = {
-      sides: 0,
-      count: 0,
-      modifier: parseInt(value)
+      sides,
+      count,
+      modifier
     }
   }
 

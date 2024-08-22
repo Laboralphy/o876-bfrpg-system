@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-08-05T13:25:57.304Z
+// Date : 2024-08-21T17:29:10.835Z
 // List of files in ./src/modules/classic/blueprints
 
 module.exports = {

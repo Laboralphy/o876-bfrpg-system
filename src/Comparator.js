@@ -90,7 +90,7 @@ class Comparator {
             action
         })
         oAttacker._attackUsingAction(oAttackOutcome)
-        return  Comparator.extractDamagesFromOutcome(oAttackOutcome)
+        return Comparator.extractDamagesFromOutcome(oAttackOutcome)
     }
 
     /**
@@ -132,7 +132,6 @@ class Comparator {
      * @returns {WeaponOrActionStats}
      */
     static getUnarmedStats (c, d) {
-        c.mutations.setOffensiveSlot({ slot: CONSTS.EQUIPMENT_SLOT_WEAPON_MELEE })
         return Comparator.getActionStats(c, d, DEFAULT_ACTION_UNARMED)
     }
 

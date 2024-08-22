@@ -468,7 +468,7 @@ describe('Succubus vs Goblin', function () {
         })
 
         c.attacker.nextAction = c.attackerActions.kiss
-        c.playFighterAction(c.attacker, c.defender)
+        c.playFighterAction(c.attacker)
 
         expect(sLastActionName).toBe('kiss')
     })
@@ -493,7 +493,7 @@ describe('Succubus vs Goblin', function () {
         })
 
         c.attacker.nextAction = c.attackerActions.kiss
-        c.playFighterAction(c.attacker, c.defender)
+        c.playFighterAction(c.attacker)
         expect(oLastOutcome.distance).toBe(30)
         expect(oLastOutcome).not.toBeNull()
         expect(oLastOutcome.failed).toBeTruthy()
@@ -1074,4 +1074,124 @@ describe('wands', function () {
         ])
         expect(elfWizard.getters.getHitPoints).toBe(19)
     })
+
+    it('should not use a spell attached to a wand when attacking with melee weapon', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        let nWandTimes = 0
+
+        const MY_MODULE = {
+            DATA: {},
+            BLUEPRINTS: {
+                'wand-dummy': {
+                    "entityType": "ENTITY_TYPE_ITEM",
+                    "itemType": "ITEM_TYPE_MAGICWAND",
+                    "properties": [{
+                        "property": "ITEM_PROPERTY_SPECIAL_BEHAVIOR",
+                        "attack": "ai-spell-wand"
+                    }],
+                    "damageType": "DAMAGE_TYPE_NECROTIC"
+                }
+            },
+            SCRIPTS: {
+                'ai-spell-wand': function ({ attackOutcome }) {
+                    ++nWandTimes
+                }
+            },
+            name: 'spell-wand-module'
+        }
+
+        manager.loadModule(MY_MODULE)
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        const wand = manager.createItem({ id: 'wand', ref: 'wand-dummy'})
+        const dagger = manager.createItem({ id: 'wand', ref: 'wpn-dagger'})
+
+        elfWizard.mutations.equipItem({ item: wand })
+        elfWizard.mutations.equipItem({ item: dagger })
+
+        expect(elfWizard.getters.getHitPoints).toBe(37)
+
+        const c = manager.combatManager.startCombat(elfWizard, humanRogue)
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+        humanRogue.dice.cheat(0.01)
+        elfWizard.dice.cheat(0.95)
+
+        const aLogMove = []
+        const aLogAttack = []
+
+        manager.events.on('combat.move', ev => {
+            aLogMove.push({
+                ev: 'MOVE',
+                d: ev.previousDistance,
+                between: [ev.attacker.id, ev.target.id]
+            })
+        })
+        manager.events.on('combat.attack', ev => {
+            if (ev.outcome.attacker.id === 'elfwizard') {
+                aLogAttack.push({
+                    ev: 'ATTACK',
+                    between: [ev.outcome.attacker.id, ev.outcome.target.id],
+                    hit: ev.outcome.hit,
+                    action: ev.outcome.action && ev.outcome.action.name,
+                    weapon: ev.outcome.weapon && ev.outcome.weapon.ref,
+
+                })
+            }
+        })
+
+        expect(nWandTimes).toBe(0)
+        advance()
+        expect(aLogAttack[aLogAttack.length - 1]).toEqual({
+            ev: 'ATTACK',
+            between: ['elfwizard', 'humrogue'],
+            hit: true,
+            action: 'DEFAULT_ACTION_WEAPON',
+            weapon: 'wand-dummy'
+        })
+        expect(c.distance).toBe(20)
+        expect(nWandTimes).toBe(1)
+        advance()
+        expect(aLogAttack[aLogAttack.length - 1]).toEqual({
+            ev: 'ATTACK',
+            between: ['elfwizard', 'humrogue'],
+            hit: true,
+            action: 'DEFAULT_ACTION_WEAPON',
+            weapon: 'wand-dummy'
+        })
+        expect(c.distance).toBe(5)
+        expect(nWandTimes).toBe(2)
+        advance()
+        expect(aLogAttack[aLogAttack.length - 1]).toEqual({
+            ev: 'ATTACK',
+            between: ['elfwizard', 'humrogue'],
+            hit: true,
+            action: 'DEFAULT_ACTION_WEAPON',
+            weapon: 'wpn-dagger'
+        })
+        expect(c.distance).toBe(5)
+        expect(nWandTimes).toBe(2) // wand is not used : script has not been triggered
+
+    })
+
 })

@@ -174,10 +174,10 @@ class Combat {
     /**
      *
      * @param attacker {CombatFighterState}
-     * @param defender {Creature}
+     * @param bPartingShot {boolean} si true alors attaque d'opportunité
      */
-    playFighterAction (attacker, defender) {
-        const nAttackCount = attacker.getAttackCount(this._tick)
+    playFighterAction (attacker, bPartingShot = false) {
+        const nAttackCount = bPartingShot ? 1 : attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
             const action = attacker.nextAction
             if (action) {
@@ -231,7 +231,7 @@ class Combat {
                 this.approachTarget()
             }
         }
-        this.playFighterAction(this._attacker, this._defender)
+        this.playFighterAction(this._attacker)
         this._events.emit('combat.tick.end', {
             ...this.defaultPayload
         })

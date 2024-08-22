@@ -237,6 +237,7 @@ class Creature {
 
             default: {
                 oAttackOutcome.sneakable = false
+                break
             }
         }
     }
@@ -396,7 +397,8 @@ class Creature {
             if (wa2Hands) {
                 nAbilityBonus *= 2
             }
-            damage = Math.max(1, this.dice.evaluate(weapon.damage) + nAbilityBonus)
+            const rawWeaponDamage = this.dice.evaluate(weapon.damage)
+            damage = rawWeaponDamage > 0 ? Math.max(1, rawWeaponDamage + nAbilityBonus) : 0
             damageType = (ammo && ammo.damageType)
                 ? ammo.damageType
                 : (weapon && weapon.damageType)
@@ -412,7 +414,8 @@ class Creature {
                 aat === CONSTS.ATTACK_TYPE_MULTI_MELEE)
                     ? this.getters.getAbilityModifiers[CONSTS.ABILITY_STRENGTH]
                     : 0
-            damage = Math.max(1, this.dice.evaluate(action.damage) + nAbilityBonus)
+            const rawWeaponDamage = this.dice.evaluate(action.damage)
+            damage = rawWeaponDamage > 0 ? Math.max(1, rawWeaponDamage + nAbilityBonus) : 0
             damageType = action.damageType
             material = CONSTS.MATERIAL_UNKNOWN
         }

@@ -520,7 +520,7 @@ describe('Comparator.consider', function () {
         })
 
     })
-    it('should use unarmed attack when having no other choice in melee action', function () {
+    it('should use unarmed attack when fighting against armed goblin', function () {
         const m = new Manager()
         m.init()
         m.loadModule('classic')
