@@ -172,21 +172,25 @@ class Combat {
     }
 
     /**
-     *
-     * @param attacker {CombatFighterState}
      * @param bPartingShot {boolean} si true alors attaque d'opportunité
      */
-    playFighterAction (attacker, bPartingShot = false) {
+    playFighterAction (bPartingShot = false, bDebug = false) {
+        if (bDebug) console.log('playFighterAction')
+        const attacker = this._attacker
         const nAttackCount = bPartingShot ? 1 : attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
+            if (bDebug) console.log('playFighterAction attack count > 0')
             const action = attacker.nextAction
             if (action) {
+                if (bDebug) console.log('playFighterAction has action')
                 attacker.setActionCooldown(action, this._turn)
                 this._events.emit('combat.action', {
                     ...this.defaultPayload,
                     action,
                     count: nAttackCount
                 })
+            } else {
+                if (bDebug) console.log('playFighterAction has no action')
             }
         }
     }
@@ -231,7 +235,7 @@ class Combat {
                 this.approachTarget()
             }
         }
-        this.playFighterAction(this._attacker)
+        this.playFighterAction()
         this._events.emit('combat.tick.end', {
             ...this.defaultPayload
         })

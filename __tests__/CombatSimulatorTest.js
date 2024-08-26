@@ -1195,3 +1195,63 @@ describe('wands', function () {
     })
 
 })
+
+describe('fleeing from combat', function () {
+    it('should end combat just after fleeCombat', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        const aLogAttack = []
+
+        manager.events.on('combat.attack', ev => {
+            aLogAttack.push({
+                ev: 'ATTACK',
+                between: [ev.outcome.attacker.id, ev.outcome.target.id],
+                hit: ev.outcome.hit,
+                action: ev.outcome.action && ev.outcome.action.name,
+                weapon: ev.outcome.weapon && ev.outcome.weapon.ref,
+
+            })
+        })
+
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeFalsy()
+        const c = manager.combatManager.startCombat(elfWizard, humanRogue, 5)
+        expect(manager.combatManager.getCombat(elfWizard)).not.toBeNull()
+        expect(manager.combatManager.getCombat(humanRogue)).not.toBeNull()
+        advance()
+        advance()
+        advance()
+        expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeTruthy()
+        manager.combatManager.fleeCombat(elfWizard)
+        console.log('testing', elfWizard.id)
+        expect(manager.combatManager._fighters[elfWizard.id]).not.toBeDefined()
+        expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeFalsy()
+        expect(manager.combatManager.getCombat(elfWizard)).toBeNull()
+        expect(manager.combatManager.getCombat(humanRogue)).toBeNull()
+    })
+})

@@ -65,7 +65,6 @@ class CombatFighterState {
     }
 
     /**
-     *
      * @returns {null|BFStoreStateAction}
      */
     get nextAction () {
@@ -83,6 +82,9 @@ class CombatFighterState {
 
     isActionCoolingDown (oAction, nTurn) {
         const { name: sAction, cooldown: nCooldown } = oAction
+        if (nCooldown === 0) {
+            return false
+        }
         const acd = this._actionCooldown
         if (!(sAction in acd)) {
             return false

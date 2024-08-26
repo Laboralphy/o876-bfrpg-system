@@ -182,6 +182,8 @@ class CombatManager {
      * @param bBothSides {boolean} if true and if this is a one-to-one combat : ends both combats
      */
     endCombat (oCreature, bBothSides = false) {
+        const xx = Math.random()
+        console.log('ending combat of ', oCreature.id, xx)
         if (this.isCreatureFighting(oCreature)) {
             const oCombat = this._fighters[oCreature.id]
             const oDefender = oCombat.defender
@@ -190,12 +192,31 @@ class CombatManager {
                 victory: !oCreature.getters.isDead && oDefender.getters.isDead,
                 defeat: oCreature.getters.isDead && !oDefender.getters.isDead
             }))
+            console.log('deleting', oCreature.id, xx)
             delete this._fighters[oCreature.id]
             if (bBothSides && this.isCreatureFighting(oDefender, oCreature)) {
                 this.endCombat(oDefender)
             }
             oCombat.events.removeAllListeners()
         }
+    }
+
+    /**
+     * A creature is fleeing from combat. Opponent is allowed to attack once during a parting shot
+     * @param oCoward {Creature}
+     */
+    fleeCombat (oCoward) {
+        console.log('fleeCombat 1')
+        this.endCombat(oCoward)
+        this
+            .getOffenders(oCoward)
+            .forEach(offender => {
+                console.log('fleeCombat 2', offender.id)
+                const combat = this.getCombat(offender)
+                combat.playFighterAction(true, true)
+                console.log('fleeCombat 2 ending combat')
+                this.endCombat(offender)
+            })
     }
 
     /**
