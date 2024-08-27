@@ -110,7 +110,7 @@ class CombatManager {
             // If attacker is not attacked back, there is no offender
         }
         this._events.emit('combat.action', this._addManagerToObject(ev))
-        if (!this.isCreatureFighting(ev.target)) {
+        if (!ev.opportunity && !this.isCreatureFighting(ev.target)) {
             this.startCombat(ev.target, ev.attacker, ev.combat.distance)
         }
     }
@@ -182,8 +182,6 @@ class CombatManager {
      * @param bBothSides {boolean} if true and if this is a one-to-one combat : ends both combats
      */
     endCombat (oCreature, bBothSides = false) {
-        const xx = Math.random()
-        console.log('ending combat of ', oCreature.id, xx)
         if (this.isCreatureFighting(oCreature)) {
             const oCombat = this._fighters[oCreature.id]
             const oDefender = oCombat.defender
@@ -192,7 +190,6 @@ class CombatManager {
                 victory: !oCreature.getters.isDead && oDefender.getters.isDead,
                 defeat: oCreature.getters.isDead && !oDefender.getters.isDead
             }))
-            console.log('deleting', oCreature.id, xx)
             delete this._fighters[oCreature.id]
             if (bBothSides && this.isCreatureFighting(oDefender, oCreature)) {
                 this.endCombat(oDefender)
@@ -206,15 +203,12 @@ class CombatManager {
      * @param oCoward {Creature}
      */
     fleeCombat (oCoward) {
-        console.log('fleeCombat 1')
         this.endCombat(oCoward)
         this
             .getOffenders(oCoward)
             .forEach(offender => {
-                console.log('fleeCombat 2', offender.id)
                 const combat = this.getCombat(offender)
-                combat.playFighterAction(true, true)
-                console.log('fleeCombat 2 ending combat')
+                combat.playFighterAction(true)
                 this.endCombat(offender)
             })
     }
@@ -229,10 +223,8 @@ class CombatManager {
      */
     startCombat (oCreature, oTarget, nStartingDistance = null) {
         if (this.isCreatureFighting(oCreature, oTarget)) {
-            // creature is already in fight with target
-            return this._fighters[oCreature.id]
+            this.endCombat(oCreature)
         }
-        this.endCombat(oCreature)
         this._fighters[oCreature.id] = this._createCombat(oCreature, oTarget, nStartingDistance)
         if (!this.isCreatureFighting(oTarget) && oTarget.getCreatureVisibility(oCreature) === CONSTS.CREATURE_VISIBILITY_VISIBLE) {
             this._fighters[oTarget.id] = this._createCombat(oTarget, oCreature, nStartingDistance)

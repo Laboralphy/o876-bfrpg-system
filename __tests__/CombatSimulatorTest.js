@@ -1,4 +1,5 @@
 const Manager = require('../src/Manager')
+const Combat = require('../src/combat/Combat')
 const CONSTS = require("../src/consts");
 
 describe('cooldown', function () {
@@ -19,7 +20,7 @@ describe('cooldown', function () {
         const combatManager = manager.combatManager
         combatManager.startCombat(oLocust, oCentaur)
         const oCombatLocust = combatManager.getCombat(oLocust)
-        oCombatLocust.attacker.setActionCooldown(ACTION_SPIT, 2)
+        oCombatLocust.attacker.checkActionCooldown(ACTION_SPIT, 2)
         expect(oCombatLocust.attacker._actionCooldown).toEqual({ spit: 2 })
         expect(oCombatLocust.attacker.isActionCoolingDown(ACTION_SPIT, 2)).toBeFalsy()
         expect(oCombatLocust.attacker.isActionCoolingDown(ACTION_SPIT, 3)).toBeTruthy()
@@ -1197,7 +1198,7 @@ describe('wands', function () {
 })
 
 describe('fleeing from combat', function () {
-    it('should end combat just after fleeCombat', async function () {
+    it('should delete coward combat when ending its combat', async function () {
         const manager = new Manager()
         await manager.init()
         manager.loadModule('classic')
@@ -1244,14 +1245,104 @@ describe('fleeing from combat', function () {
         advance()
         advance()
         advance()
+        expect(elfWizard.getters.getHitPoints).toBeGreaterThan(0)
+        expect(humanRogue.getters.getHitPoints).toBeGreaterThan(0)
         expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeTruthy()
         expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeTruthy()
-        manager.combatManager.fleeCombat(elfWizard)
-        console.log('testing', elfWizard.id)
+        expect(manager.combatManager.isCreatureFighting(elfWizard, humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue, elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureAttacked(elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureAttacked(humanRogue)).toBeTruthy()
+        expect(manager.combatManager.getOffenders(elfWizard, 5)).toEqual([humanRogue])
+        const n1 = manager.combatManager.combats.length
+        manager.combatManager.endCombat(elfWizard)
+        expect(manager.combatManager.getOffenders(elfWizard, 5)).toEqual([humanRogue])
+        expect(manager.combatManager.getOffenders(humanRogue, 5)).toEqual([])
+        expect(manager.combatManager.combats.length).toBe(n1 - 1)
         expect(manager.combatManager._fighters[elfWizard.id]).not.toBeDefined()
         expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeFalsy()
-        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeTruthy()
         expect(manager.combatManager.getCombat(elfWizard)).toBeNull()
-        expect(manager.combatManager.getCombat(humanRogue)).toBeNull()
+        expect(manager.combatManager.getCombat(humanRogue)).toBeInstanceOf(Combat)
+    })
+    it('should attack when adversary fleeing combat', async function () {
+        const manager = new Manager()
+        await manager.init()
+        manager.loadModule('classic')
+
+        const elfWizard = manager.createCreature({ id: 'elfwizard' })
+        elfWizard.mutations.setClassType({ value: CONSTS.CLASS_TYPE_MAGIC_USER })
+        elfWizard.mutations.setLevel({ value: 10 })
+        elfWizard.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        elfWizard.mutations.setRace({ value: 'RACE_ELF' })
+        elfWizard.mutations.setHitPoints({ value: elfWizard.getters.getMaxHitPoints })
+
+        const humanRogue = manager.createCreature({ id: 'humrogue' })
+        humanRogue.mutations.setClassType({ value: 'CLASS_TYPE_ROGUE' })
+        humanRogue.mutations.setLevel({ value: 10 })
+        humanRogue.mutations.setSpecie({ value: 'SPECIE_HUMANOID' })
+        humanRogue.mutations.setRace({ value: 'RACE_HUMAN' })
+        humanRogue.mutations.setHitPoints({ value: humanRogue.getters.getMaxHitPoints })
+
+        const aLogAttack = []
+
+        manager.events.on('combat.attack', ev => {
+            aLogAttack.push({
+                ev: 'ATTACK',
+                between: [ev.outcome.attacker.id, ev.outcome.target.id],
+                hit: ev.outcome.hit,
+                action: ev.outcome.action && ev.outcome.action.name,
+                weapon: ev.outcome.weapon && ev.outcome.weapon.ref,
+
+            })
+        })
+
+        const advance = function () {
+            manager.processEffects()
+            for (let i = 0, l = manager.combatManager.defaultTickCount; i < l; ++i) {
+                manager.combatManager.processCombats()
+            }
+        }
+
+        expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeFalsy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeFalsy()
+        const c = manager.combatManager.startCombat(elfWizard, humanRogue, 5)
+        expect(manager.combatManager.getCombat(elfWizard)).not.toBeNull()
+        expect(manager.combatManager.getCombat(humanRogue)).not.toBeNull()
+        advance()
+        advance()
+        advance()
+        expect(elfWizard.getters.getHitPoints).toBeGreaterThan(0)
+        expect(humanRogue.getters.getHitPoints).toBeGreaterThan(0)
+        expect(manager.combatManager.isCreatureFighting(elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(elfWizard, humanRogue)).toBeTruthy()
+        expect(manager.combatManager.isCreatureFighting(humanRogue, elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureAttacked(elfWizard)).toBeTruthy()
+        expect(manager.combatManager.isCreatureAttacked(humanRogue)).toBeTruthy()
+        expect(manager.combatManager.getOffenders(elfWizard, 5)).toEqual([humanRogue])
+        const aLog = []
+        manager.combatManager.events.on('combat.end', ev => {
+            aLog.push({ type: 'END', atk: ev.attacker.id })
+        })
+        manager.combatManager.events.on('combat.action', ev => {
+            aLog.push({ type: 'ACTION', atk: ev.attacker.id, def: ev.target.id, action: ev.action.name })
+        })
+        expect(aLog).toEqual([])
+
+        manager.combatManager.fleeCombat(elfWizard)
+        expect(aLog).toEqual([
+            {
+                type: 'END',
+                atk: 'elfwizard'
+            }, {
+                type: 'ACTION',
+                atk: 'humrogue',
+                def: 'elfwizard',
+                action: 'DEFAULT_ACTION_UNARMED'
+            },
+            { type: 'END', atk: 'humrogue' }
+        ])
+        expect(manager.combatManager.combats.length).toBe(0)
     })
 })

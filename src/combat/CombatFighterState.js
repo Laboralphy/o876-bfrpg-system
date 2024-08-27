@@ -71,13 +71,14 @@ class CombatFighterState {
         return this._currentAction
     }
 
-    setActionCooldown (oAction, nTurn) {
+    checkActionCooldown (oAction, nTurn) {
         const { name: sAction } = oAction
         if (this.isActionCoolingDown(oAction, nTurn)) {
-            throw new Error('Action unavailable : cooling down : ' + sAction + ' turn ' + nTurn)
+            return false
         }
         const acd = this._actionCooldown
         acd[sAction] = nTurn
+        return true
     }
 
     isActionCoolingDown (oAction, nTurn) {

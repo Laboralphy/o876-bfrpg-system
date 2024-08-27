@@ -2,5 +2,6 @@
   "defaultCombatDistance": 50,
   "sneakAttackMultiplier": 2,
   "sneakAttackBonus": 4,
-  "undetectableTargetAttackMalus": 4
+  "undetectableTargetAttackMalus": 4,
+  "opportunityAttackBonus": 2
 }

@@ -174,23 +174,18 @@ class Combat {
     /**
      * @param bPartingShot {boolean} si true alors attaque d'opportunité
      */
-    playFighterAction (bPartingShot = false, bDebug = false) {
-        if (bDebug) console.log('playFighterAction')
+    playFighterAction (bPartingShot = false) {
         const attacker = this._attacker
         const nAttackCount = bPartingShot ? 1 : attacker.getAttackCount(this._tick)
         if (nAttackCount > 0) {
-            if (bDebug) console.log('playFighterAction attack count > 0')
             const action = attacker.nextAction
-            if (action) {
-                if (bDebug) console.log('playFighterAction has action')
-                attacker.setActionCooldown(action, this._turn)
+            if (action && attacker.checkActionCooldown(action, this._turn)) {
                 this._events.emit('combat.action', {
                     ...this.defaultPayload,
                     action,
-                    count: nAttackCount
+                    count: nAttackCount,
+                    opportunity: bPartingShot // if true, then no retaliation (start combat back)
                 })
-            } else {
-                if (bDebug) console.log('playFighterAction has no action')
             }
         }
     }

@@ -153,6 +153,7 @@ class Creature {
             failure: '', // reason why attack failed (out of range, condition, etc...)
             sneakable: false, // This attack is made from behind, a rogue may have damage bonus
             visibility: CONSTS.CREATURE_VISIBILITY_VISIBLE,
+            opportunity: false,
             damages: {
                 amount: 0, // amount of damage if attack hit
                 types: {} // amount of damage taken and resisted by type
@@ -287,11 +288,13 @@ class Creature {
      * @param action {BFStoreStateAction}
      * @param distance {number} Distance at which attack is done (default 0 means : we don't mind)
      * @param sneak {boolean} if true then this is a sneak attack
+     * @param opportunity {boolean} if true then this is an attack of opportunity (attack bonus, no retaliation)
      * @returns {BFAttackOutcome}
      */
     attack (oTarget, action, {
         distance = 0,
-        sneak = false
+        sneak = false,
+        opportunity = false
     } = {}) {
         if (!oTarget) {
             throw new Error('Creature.attack target must be defined')
@@ -320,6 +323,7 @@ class Creature {
             distance,
             range,
             sneakable: sneak,
+            opportunity,
             visibility: this.getCreatureVisibility(oTarget)
         })
         if (oAttackOutcome.visibility !== CONSTS.CREATURE_VISIBILITY_VISIBLE) {
@@ -365,6 +369,9 @@ class Creature {
             oAttackOutcome.failed = true
             oAttackOutcome.failure = CONSTS.ATTACK_FAILURE_NO_ACTION
             return oAttackOutcome
+        }
+        if (oAttackOutcome.opportunity) {
+            oAttackOutcome.bonus += this.data.variables.opportunityAttackBonus
         }
         if (oAttackOutcome.sneakable) {
             oAttackOutcome.bonus += this.data.variables.sneakAttackBonus

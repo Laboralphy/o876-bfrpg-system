@@ -141,14 +141,15 @@ class Manager {
      * @private
      */
     _combatAction ({
-       turn,
-       tick,
-       attacker,
-       target,
-       combat,
-       action,
-       count,
-       combatManager
+        turn,
+        tick,
+        attacker,
+        target,
+        combat,
+        action,
+        count,
+        combatManager,
+        opportunity
     }) {
         // action null = target unreachable
 
@@ -161,7 +162,8 @@ class Manager {
             combat,
             action,
             count,
-            combatManager
+            combatManager,
+            opportunity
         })
         // weaponized action is an action that uses standard attack system (roll + bonus vs. ac)
         const bWeaponizedAction = action.name === CONSTS.DEFAULT_ACTION_WEAPON ||
@@ -177,7 +179,8 @@ class Manager {
             const oAttackOutcome = bWeaponizedAction || NEED_ATTACK_ROLL.has(action.attackType)
                 ? attacker.attack(target, action, {
                     distance: combat.distance,
-                    sneak
+                    sneak: sneak && iAtk === 0,
+                    opportunity
                 })
                 : attacker.getNoAttackOutcome(action)
             this.runPropEffectScript(attacker, 'attack', {
