@@ -41,6 +41,14 @@ class ItemBuilder {
         }
     }
 
+    addItemProperty (oItem, { property, amp = 0, data = {} }) {
+        if (oItem.entityType !== CONSTS.ENTITY_TYPE_ITEM) {
+            throw new Error('This function is for items only')
+        }
+        const ip = ItemProperties.build(property, amp, data)
+        oItem.properties.push(ip)
+    }
+
     /**
      * creation d'une armure
      * @param oBlueprint

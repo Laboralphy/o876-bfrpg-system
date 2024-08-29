@@ -16,6 +16,13 @@
     "properties": {
       "type": "array"
     },
-    "material": {}
+    "material": {
+      "type": "string",
+      "pattern": "^MATERIAL_"
+    },
+    "extends": {
+      "description": "This is for blueprint inheritance",
+      "type": "string"
+    }
   }
 }

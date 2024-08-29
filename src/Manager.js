@@ -23,6 +23,7 @@ const RMK_DATA = 'data'
 require('./store/getters.doc')
 require('./store/mutations.doc')
 require('./types.doc')
+const {deepMerge} = require("@laboralphy/object-fusion");
 
 const NEED_ATTACK_ROLL  = new Set([
     CONSTS.ATTACK_TYPE_ANY,
@@ -343,11 +344,17 @@ class Manager {
              * @type {BFItem}
              */
             const oRef = sRef
+            if ('extends' in oRef) {
+                deepMerge(oRef, this.getBlueprint(oRef.extends))
+            }
             if (oRef.entityType === CONSTS.ENTITY_TYPE_ITEM) {
                 this._schemaValidator.validate(oRef, 'blueprint-item')
-                this._validBlueprints[sRef] = sRef
-                return sRef
+                return oRef
+            } else if (oRef.entityType === CONSTS.ENTITY_TYPE_ACTOR) {
+                this._schemaValidator.validate(oRef, 'blueprint-actor')
+                return oRef
             }
+            throw new Error('unknown entityType : ' + oRef.entityType)
         }
         if (typeof sRef !== 'string') {
             throw new TypeError('reference must be a string')
@@ -410,6 +417,21 @@ class Manager {
         }
     }
 
+    addProperties (oEntity, aProperties) {
+        if (oEntity instanceof Creature) {
+            aProperties.forEach(ip => {
+                oEntity.mutations.addCreatureProperty({ property: ItemProperties.build(ip) })
+            })
+        } else if (oEntity.entityType === CONSTS.ENTITY_TYPE_ITEM) {
+            const ib = this._itemBuilder
+            aProperties.forEach(ip => {
+                ib.addItemProperty(oEntity, ip)
+            })
+        } else {
+            throw new TypeError('unknown entity type')
+        }
+    }
+
     /**
      * Create a new creature
      * @param id {string}
@@ -422,7 +444,7 @@ class Manager {
         if (ref) {
             const oBlueprint = this.getBlueprint(ref)
             this._creatureBuilder.buildMonster(oCreature, oBlueprint)
-            oCreature.ref = ref
+            oCreature.ref = typeof ref === 'string' ? ref : ''
             oBlueprint.equipment.forEach(eq => {
                 const oItem = this.createItem({ ref: eq })
                 oCreature.mutations.equipItem({ item: oItem })
@@ -487,11 +509,7 @@ class Manager {
     createItem ({ id = '', ref }) {
         const ib = this._itemBuilder
         const sTypeOfRef = typeof ref
-        const oBlueprint = sTypeOfRef === 'string'
-            ? this.getBlueprint(ref)
-            : sTypeOfRef === 'object'
-                ? ref
-                : null
+        const oBlueprint = this.getBlueprint(ref)
         if (!oBlueprint) {
             throw new Error('Could not evaluate blueprint ' + ref)
         }

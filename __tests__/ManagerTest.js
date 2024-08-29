@@ -425,7 +425,7 @@ describe('PublicAssets', function () {
 })
 
 describe('CreateEntity', function () {
-    it('should create entity when specifying blueprint as object', async function () {
+    it('should create item entities when specifying blueprint either as object or as a resref', async function () {
         const m = new Manager()
         await m.init()
         m.loadModule('classic')
@@ -447,5 +447,67 @@ describe('CreateEntity', function () {
                 ]
             }})
         expect(sword).toBeDefined()
+        expect(sword.ref).toBe('')
+        const sword2 = m.createItem({ id: 'x', ref: 'wpn-longsword'})
+        expect(sword2).toBeDefined()
+        expect(sword2.ref).toBe('wpn-longsword')
+    })
+    it('should create creatures when specifying blueprint either as object or as a resref', async function () {
+        const m = new Manager()
+        await m.init()
+        m.loadModule('classic')
+        const character = m.createCreature({ id: 'x', ref: {
+                "name": "player-base-template",
+                "ac": 11,
+                "classType": "CLASS_TYPE_TOURIST",
+                "actions": [],
+                "properties": [],
+                "equipment": [],
+                "abilities": {
+                    "strength": 10,
+                    "dexterity": 10,
+                    "constitution": 10,
+                    "intelligence": 10,
+                    "wisdom": 10,
+                    "charisma": 10
+                },
+                "specie": "SPECIE_HUMANOID",
+                "race": "RACE_HUMAN",
+                "gender": "GENDER_UNKNOWN",
+                "level": 1,
+                "speed": 30,
+                "entityType": "ENTITY_TYPE_ACTOR"
+            }
+        })
+        expect(character).toBeDefined()
+        expect(character.ref).toBe('')
+        const goblin = m.createCreature({ id: 'x', ref: 'c-goblin' })
+        expect(goblin).toBeDefined()
+        expect(goblin.ref).toBe('c-goblin')
+    })
+    it('should extends blueprint', async function () {
+        const m = new Manager()
+        await m.init()
+        m.loadModule('classic')
+        const sword = m.createItem({ id: 'x', ref: {
+                "extends": "wpn-longsword",
+                "properties": [
+                    {
+                        "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+                        "amp": 1
+                    }
+                ]
+            }})
+        expect(sword.damage).toBe('1d8')
+        expect(sword.entityType).toBe(CONSTS.ENTITY_TYPE_ITEM)
+        expect(sword.itemType).toBe(CONSTS.ITEM_TYPE_WEAPON)
+        expect(sword.weaponType).toBe('WEAPON_TYPE_LONGSWORD')
+        expect(sword.properties).toEqual([{
+            property: 'ITEM_PROPERTY_ATTACK_MODIFIER',
+            amp: 1,
+            data: {
+                attackType: 'ATTACK_TYPE_ANY'
+            }
+        }])
     })
 })
