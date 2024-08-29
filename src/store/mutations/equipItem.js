@@ -46,6 +46,6 @@ module.exports = ({ state, externals }, { item, slot = '', bypassCurse = false }
         previousItem: oPrevItem,
         newItem: item,
         slot: sUseSlot,
-        cursed: true
+        cursed: false
     }
 }

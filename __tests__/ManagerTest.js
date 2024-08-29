@@ -44,7 +44,7 @@ describe('Data', function () {
 describe('createItem', function () {
     it('should create a dagger with id', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         const oDagger = m.createItem({ id: 'dag1', ref: 'wpn-dagger' })
         expect(oDagger.id).toBe('dag1')
@@ -78,6 +78,7 @@ describe('createItem', function () {
             ]
         }
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const oDagger = m.createItem({ id: 'dag1', ref: sd })
         expect(oDagger.id).toBe('dag1')
@@ -110,6 +111,7 @@ describe('createItem', function () {
 describe('disease', function () {
     it('should apply initial effect of disease', function () {
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const c = m.createCreature()
         const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
@@ -139,6 +141,7 @@ describe('disease', function () {
     })
     it('should apply final effect of disease when stage time is lower or equal than disease duration', function () {
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const c = m.createCreature()
         const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
@@ -189,6 +192,7 @@ describe('disease', function () {
     })
     it('should not apply final effect of disease when stage time is greater than disease duration', function () {
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const c = m.createCreature()
         const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
@@ -239,6 +243,7 @@ describe('disease', function () {
     })
     it('should not be able to stack two same diseases', function () {
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const c = m.createCreature()
         const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
@@ -296,6 +301,7 @@ describe('disease', function () {
     })
     it('should periodically apply malus when defining multiple times', function () {
         const m = new Manager()
+        m.init()
         m.loadModule('classic')
         const c = m.createCreature()
         const eDisease = m.createEffect(CONSTS.EFFECT_DISEASE, 0, {
@@ -364,7 +370,7 @@ describe('disease', function () {
 describe('import/export creature', function () {
     it('should export and import creature', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         const c1 = m.createCreature({ id: 'abc' })
         const d1 = c1.state
@@ -415,7 +421,7 @@ describe('import/export creature', function () {
 describe('PublicAssets', function () {
     it('should display public assets', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         expect(m._rm).toBeDefined()
         expect(m._rm.data).toBeDefined()
@@ -427,7 +433,7 @@ describe('PublicAssets', function () {
 describe('CreateEntity', function () {
     it('should create item entities when specifying blueprint either as object or as a resref', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         const sword = m.createItem({ id: 'x', ref: {
                 "entityType": "ENTITY_TYPE_ITEM",
@@ -454,7 +460,7 @@ describe('CreateEntity', function () {
     })
     it('should create creatures when specifying blueprint either as object or as a resref', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         const character = m.createCreature({ id: 'x', ref: {
                 "name": "player-base-template",
@@ -487,7 +493,7 @@ describe('CreateEntity', function () {
     })
     it('should extends blueprint', async function () {
         const m = new Manager()
-        await m.init()
+        m.init()
         m.loadModule('classic')
         const sword = m.createItem({ id: 'x', ref: {
                 "extends": "wpn-longsword",
@@ -510,4 +516,35 @@ describe('CreateEntity', function () {
             }
         }])
     })
+})
+
+describe('equip cursed item', function () {
+    it('should create item entities when specifying blueprint either as object or as a resref', async function () {
+        const m = new Manager()
+        m.init()
+        m.loadModule('classic')
+        const sword = m.createItem({ id: 'x', ref: {
+                "entityType": "ENTITY_TYPE_ITEM",
+                "itemType": "ITEM_TYPE_WEAPON",
+                "weaponType": "WEAPON_TYPE_SHORTSWORD",
+                "properties": [
+                    {
+                        "property": "ITEM_PROPERTY_CURSED"
+                    },
+                    {
+                        "property": "ITEM_PROPERTY_UNIDENTIFIED"
+                    },
+                    {
+                        "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+                        "amp": -2
+                    }
+                ]
+            }})
+        expect(sword).toBeDefined()
+        const player = m.createCreature({ id: 'wielder', ref: '' })
+        const r = player.mutations.equipItem({ item: sword })
+        expect(r.previousItem).toBeNull()
+        expect(r.cursed).toBeFalsy()
+    })
+
 })
