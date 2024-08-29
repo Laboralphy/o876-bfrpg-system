@@ -423,3 +423,29 @@ describe('PublicAssets', function () {
         // console.log(util.inspect(m.publicAssets.types, { depth: 5 }))
     })
 })
+
+describe('CreateEntity', function () {
+    it('should create entity when specifying blueprint as object', async function () {
+        const m = new Manager()
+        await m.init()
+        m.loadModule('classic')
+        const sword = m.createItem({ id: 'x', ref: {
+                "entityType": "ENTITY_TYPE_ITEM",
+                "itemType": "ITEM_TYPE_WEAPON",
+                "weaponType": "WEAPON_TYPE_SHORTSWORD",
+                "properties": [
+                    {
+                        "property": "ITEM_PROPERTY_CURSED"
+                    },
+                    {
+                        "property": "ITEM_PROPERTY_UNIDENTIFIED"
+                    },
+                    {
+                        "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+                        "amp": -2
+                    }
+                ]
+            }})
+        expect(sword).toBeDefined()
+    })
+})
