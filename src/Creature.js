@@ -573,8 +573,8 @@ class Creature {
             return (
                     myProps.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
                     targetProps.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
-                    myEffects.has(CONSTS.ITEM_PROPERTY_LIGHT) ||
-                    targetEffects.has(CONSTS.ITEM_PROPERTY_LIGHT)
+                    myEffects.has(CONSTS.EFFECT_LIGHT) ||
+                    targetEffects.has(CONSTS.EFFECT_LIGHT)
                 )
                 ? CONSTS.CREATURE_VISIBILITY_VISIBLE
                 : CONSTS.CREATURE_VISIBILITY_DARKNESS
