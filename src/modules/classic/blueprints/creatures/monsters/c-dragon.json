@@ -4,7 +4,7 @@
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "claw",
+      "name": "claws",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d8",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
@@ -49,12 +49,11 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_FIRE"
-      }
+      "damageType": "DAMAGE_TYPE_FIRE"
     },
     {
       "property": "ITEM_PROPERTY_ATTACK_MODIFIER",
+      "amp": 0,
       "data": {
         "value": 9
       }

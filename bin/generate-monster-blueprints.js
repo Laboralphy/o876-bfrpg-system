@@ -86,12 +86,18 @@ function changeBlueprintConstants (oInput) {
             changeDataConstants(convey.data)
         })
     })
-    oInput.properties.forEach(ip => {
-        ip.property = searchConst(ip.property.startsWith('ITEM_PROPERTY_')
-            ? ip.property
-            : 'item-property-' + ip.property
-        )
-        changeDataConstants(ip.data)
+    oInput.properties = oInput.properties.map(ip => {
+        const { property, amp = 0, ...data } = ip
+        changeDataConstants(data)
+        const p = {
+            property: searchConst(ip.property.startsWith('ITEM_PROPERTY_')
+                ? ip.property
+                : 'item-property-' + ip.property
+            ),
+            amp,
+            ...data
+        }
+        return p
     })
     oInput.entityType = CONSTS.ENTITY_TYPE_ACTOR
     return oInput

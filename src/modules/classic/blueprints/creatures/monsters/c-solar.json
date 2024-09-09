@@ -7,30 +7,22 @@
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_CHARM"
-      }
+      "immunityType": "IMMUNITY_TYPE_CHARM"
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_PARALYSIS"
-      }
+      "immunityType": "IMMUNITY_TYPE_PARALYSIS"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     },
     {
       "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
       "amp": 0,
-      "data": {
-        "material": "MATERIAL_SILVER"
-      }
+      "material": "MATERIAL_SILVER"
     }
   ],
   "equipment": [],

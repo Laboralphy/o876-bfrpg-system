@@ -4,7 +4,7 @@
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "claw",
+      "name": "claws",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
@@ -43,37 +43,27 @@
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_CHARM"
-      }
+      "immunityType": "IMMUNITY_TYPE_CHARM"
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_STUN"
-      }
+      "immunityType": "IMMUNITY_TYPE_STUN"
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_DAZED"
-      }
+      "immunityType": "IMMUNITY_TYPE_DAZED"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_POISON"
-      }
+      "damageType": "DAMAGE_TYPE_POISON"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     }
   ],
   "equipment": [],

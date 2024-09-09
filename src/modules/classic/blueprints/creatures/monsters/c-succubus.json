@@ -53,58 +53,42 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_POISON"
-      }
+      "damageType": "DAMAGE_TYPE_POISON"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_ELECTRICITY"
-      }
+      "damageType": "DAMAGE_TYPE_ELECTRICITY"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_ACID"
-      }
+      "damageType": "DAMAGE_TYPE_ACID"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_COLD"
-      }
+      "damageType": "DAMAGE_TYPE_COLD"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_FIRE"
-      }
+      "damageType": "DAMAGE_TYPE_FIRE"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     },
     {
       "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
       "amp": 0,
-      "data": {
-        "material": "MATERIAL_SILVER"
-      }
+      "material": "MATERIAL_SILVER"
     },
     {
       "property": "ITEM_PROPERTY_SPECIAL_BEHAVIOR",
       "amp": 0,
-      "data": {
-        "combat": "ai-succubus-level-drain"
-      }
+      "combat": "ai-succubus-level-drain"
     }
   ],
   "equipment": [],

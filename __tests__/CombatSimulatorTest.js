@@ -1025,7 +1025,7 @@ describe('wands', function () {
         expect(wand.properties[0]).toEqual({
           property: 'ITEM_PROPERTY_SPECIAL_BEHAVIOR',
           amp: 0,
-          data: { scripts: { combat: '', damaged: '', attack: 'ai-spell-wand' } }
+          data: { combat: '', damaged: '', attack: 'ai-spell-wand' }
         })
         elfWizard.mutations.equipItem({ item: wand })
 

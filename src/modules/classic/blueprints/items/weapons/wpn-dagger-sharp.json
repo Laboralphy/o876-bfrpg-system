@@ -6,7 +6,7 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
       "amp": 1,
-      "type": "DAMAGE_TYPE_PHYSICAL"
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     }
   ]
 }

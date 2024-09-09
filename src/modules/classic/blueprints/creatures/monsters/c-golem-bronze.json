@@ -17,48 +17,37 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
       "amp": "1d10",
-      "data": {
-        "damageType": "DAMAGE_TYPE_FIRE"
-      }
+      "damageType": "DAMAGE_TYPE_FIRE"
     },
     {
       "property": "ITEM_PROPERTY_SPIKE_DAMAGE",
       "amp": "2d6",
-      "data": {
-        "damageType": "DAMAGE_TYPE_FIRE",
-        "savingThrow": true
-      }
+      "damageType": "DAMAGE_TYPE_FIRE",
+      "savingThrow": true
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_CHARM"
-      }
+      "immunityType": "IMMUNITY_TYPE_CHARM"
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_STUN"
-      }
+      "immunityType": "IMMUNITY_TYPE_STUN"
     },
     {
       "property": "ITEM_PROPERTY_IMMUNITY",
       "amp": 0,
-      "data": {
-        "immunityType": "IMMUNITY_TYPE_DAZED"
-      }
+      "immunityType": "IMMUNITY_TYPE_DAZED"
     },
     {
       "property": "ITEM_PROPERTY_DAMAGE_RESISTANCE",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     },
     {
       "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "amp": 0,
       "data": {
         "value": 13
       }

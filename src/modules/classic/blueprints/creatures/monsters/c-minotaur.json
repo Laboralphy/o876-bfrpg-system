@@ -26,9 +26,7 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
       "amp": 2,
-      "data": {
-        "damageType": "DAMAGE_TYPE_ANY"
-      }
+      "damageType": "DAMAGE_TYPE_ANY"
     }
   ],
   "equipment": [

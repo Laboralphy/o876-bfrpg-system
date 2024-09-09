@@ -426,9 +426,9 @@ describe('Comparator.consider', function () {
         expect(c2.getters.getMeleeActions.length).toBe(1)
         expect(c2.getters.getMeleeActions).toEqual(['strike'])
         expect(Comparator.getAllMeleeActionsStats(c2, c1)).not.toBeNull()
-        expect(c1.getters.getMeleeActions).toEqual(['claw', 'bite', 'horn'])
-        expect(c1.getters.getActions['claw']).toBeDefined()
-        expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['claw'])).toEqual({
+        expect(c1.getters.getMeleeActions).toEqual(['claws', 'bite', 'horn'])
+        expect(c1.getters.getActions['claws']).toBeDefined()
+        expect(Comparator.getActionStats(c1, c2, c1.getters.getActions['claws'])).toEqual({
             attack: 4,
             targetAC: 14,
             targetHP: 32,
@@ -453,12 +453,12 @@ describe('Comparator.consider', function () {
             turns: 26
         })
         expect(
-            Comparator.getActionStats(c1, c2, c1.getters.getActions['claw']).dpt +
+            Comparator.getActionStats(c1, c2, c1.getters.getActions['claws']).dpt +
             Comparator.getActionStats(c1, c2, c1.getters.getActions['bite']).dpt +
             Comparator.getActionStats(c1, c2, c1.getters.getActions['horn']).dpt
         ).toBe(2.5 + 3.5 + 2.5)
         expect(
-            (Comparator.getActionStats(c1, c2, c1.getters.getActions['claw']).dpt +
+            (Comparator.getActionStats(c1, c2, c1.getters.getActions['claws']).dpt +
             Comparator.getActionStats(c1, c2, c1.getters.getActions['bite']).dpt +
             Comparator.getActionStats(c1, c2, c1.getters.getActions['horn']).dpt) / 3
         ).toBeCloseTo(2.8, 1)

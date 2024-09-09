@@ -6,9 +6,7 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_MODIFIER",
       "amp": "1d6",
-      "data": {
-        "damageType": "DAMAGE_TYPE_FIRE"
-      }
+      "damageType": "DAMAGE_TYPE_FIRE"
     }
   ]
 }

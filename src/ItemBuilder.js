@@ -11,7 +11,7 @@ class ItemBuilder {
      * @returns {BFItem}
      */
     mixData(oBlueprint, oData, slots, defaultWeight = 0) {
-        const properties = oBlueprint.properties.map(ip => ItemProperties.build(ip.property, ip.amp || 0, ip))
+        const properties = oBlueprint.properties.map(ip => ItemProperties.build(ip))
         let nExtraWeight = 0
         properties.forEach(p => {
             if (!('data' in p)) {
@@ -41,11 +41,11 @@ class ItemBuilder {
         }
     }
 
-    addItemProperty (oItem, { property, amp = 0, data = {} }) {
+    addItemProperty (oItem, oPropertyDef) {
         if (oItem.entityType !== CONSTS.ENTITY_TYPE_ITEM) {
             throw new Error('This function is for items only')
         }
-        const ip = ItemProperties.build(property, amp, data)
+        const ip = ItemProperties.build(oPropertyDef)
         oItem.properties.push(ip)
     }
 
@@ -118,7 +118,8 @@ class ItemBuilder {
 
     createItemGear (oBlueprint, data) {
         const oItemData = data['item-types'][oBlueprint.itemType]
-        return this.mixData(oBlueprint, oItemData, oItemData.slots, oItemData.defaultWeight)
+        const x = this.mixData(oBlueprint, oItemData, oItemData.slots, oItemData.defaultWeight)
+        return x
     }
 
     createItem (oBlueprint, oData = null) {

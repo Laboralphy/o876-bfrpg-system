@@ -4,7 +4,7 @@
   "classType": "CLASS_TYPE_MONSTER",
   "actions": [
     {
-      "name": "claw",
+      "name": "claws",
       "attackType": "ATTACK_TYPE_MELEE",
       "damage": "1d4",
       "damageType": "DAMAGE_TYPE_PHYSICAL",
@@ -35,16 +35,12 @@
     {
       "property": "ITEM_PROPERTY_DAMAGE_IMMUNITY",
       "amp": 0,
-      "data": {
-        "damageType": "DAMAGE_TYPE_PHYSICAL"
-      }
+      "damageType": "DAMAGE_TYPE_PHYSICAL"
     },
     {
       "property": "ITEM_PROPERTY_MATERIAL_VULNERABILITY",
       "amp": 0,
-      "data": {
-        "material": "MATERIAL_SILVER"
-      }
+      "material": "MATERIAL_SILVER"
     }
   ],
   "equipment": [],

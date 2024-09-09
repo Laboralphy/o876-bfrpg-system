@@ -9,14 +9,15 @@ const ITEM_PROPERTIES = require('./item-properties')
  * @class
  */
 class ItemProperties {
-    static build (sProperty, amp, oParameters) {
+    static build (ip) {
+        const { property: sProperty, amp = 0, ...data } = ip
         if (sProperty in ITEM_PROPERTIES) {
             const oItemProperty = {
                 property: sProperty,
                 amp,
-                data: {}
+                data
             }
-            ItemProperties.runScript(oItemProperty, 'init', oParameters)
+            ItemProperties.runScript(oItemProperty, 'init', data)
             return oItemProperty
         } else {
             throw new Error('Unknown item property : ' + sProperty)

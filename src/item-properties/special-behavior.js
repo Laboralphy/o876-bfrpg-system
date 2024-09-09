@@ -1,5 +1,8 @@
 function init ({ itemProperty, combat = '', damaged = '', attack = '' }) {
-    itemProperty.data.scripts = {
+    if (!combat && !damaged && !attack) {
+        throw new Error('No script defined in Special Behavior property')
+    }
+    itemProperty.data = {
         combat,
         damaged,
         attack
@@ -15,7 +18,7 @@ function init ({ itemProperty, combat = '', damaged = '', attack = '' }) {
  * @param attackOutcome {BFAttackOutcome} the attack outcome
  */
 function attack ({ itemProperty, manager, creature, target, attackOutcome }) {
-    const sScript = itemProperty.data.scripts.attack
+    const sScript = itemProperty.data.attack
     if (sScript) {
         manager.runScript(sScript, {
             manager,
@@ -36,7 +39,7 @@ function attack ({ itemProperty, manager, creature, target, attackOutcome }) {
  * @param resisted {number} number of damage points resisted
  */
 function damaged ({ itemProperty, manager, creature, damageType: sDamageType, amount, resisted }) {
-    const sScript = itemProperty.data.scripts.damaged
+    const sScript = itemProperty.data.damaged
     if (sScript) {
         manager.runScript(sScript, {
             manager,
@@ -57,7 +60,7 @@ function damaged ({ itemProperty, manager, creature, damageType: sDamageType, am
  * @param combat {Combat}
  */
 function combatTurn ({ itemProperty, manager, creature, action, combat }) {
-    const sScript = itemProperty.data.scripts.combat
+    const sScript = itemProperty.data.combat
     if (sScript) {
         manager.runScript(sScript, {
             manager,

@@ -52,6 +52,7 @@
   "properties": [
     {
       "property": "ITEM_PROPERTY_EXTRA_HITPOINTS",
+      "amp": 0,
       "data": {
         "value": 1
       }
