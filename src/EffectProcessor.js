@@ -242,6 +242,8 @@ class EffectProcessor {
                         this.removeEffect(oOldEffect)
                         target.mutations.addEffect({ effect: oEffect })
                         oEffect = null
+                    } else {
+                        oEffect = target.mutations.addEffect({ effect: oEffect })
                     }
                     break
                 }
@@ -251,6 +253,8 @@ class EffectProcessor {
                     if (oOldEffect) {
                         oOldEffect.duration = Math.max(oEffect.duration, oOldEffect.duration)
                         oEffect = null
+                    } else {
+                        oEffect = target.mutations.addEffect({ effect: oEffect })
                     }
                     break
                 }
