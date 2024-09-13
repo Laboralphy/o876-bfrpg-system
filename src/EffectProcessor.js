@@ -239,7 +239,7 @@ class EffectProcessor {
                 case CONSTS.EFFECT_STACKING_RULE_REPLACE: {
                     const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
                     if (oOldEffect) {
-                        this.removeEffect(oOldEffect)
+                        this.removeEffect(oOldEffect, target, source)
                         target.mutations.addEffect({ effect: oEffect })
                         oEffect = null
                     } else {
