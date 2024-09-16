@@ -286,6 +286,19 @@ Occurs when a effect removed from a creature. Either this effect has been dispel
 | target    | Creature | Creature on which the effect is running out |
 | source    | Creature | Creature which produced the effect          |
 
+## creature.effect.immunity
+
+Triggered when an effect is rejected because creature is immune to that effect
+
+### Parameters
+
+| Parameter | Type     | Description                             |
+|-----------|----------|-----------------------------------------|
+| manager   | Manager  | Instance of Manager                     |
+| effect    | BFEffect | The rejected effect because of immunity |
+| target    | Creature | Immune Creature                         |
+
+
 ## creature.roll-skill
 
 Occurs when a creature is rolling a dice to check its skills
@@ -301,3 +314,4 @@ Occurs when a creature is rolling a dice to check its skills
 | difficulty | number   | context adjustment (positive means harder) |
 | roll       | number   | rolledd value                              |
 | success    | boolean  | if true then the roll is a success         |
+

@@ -107,3 +107,24 @@ describe('effect groups', function () {
         expect(c1.getters.getEffects.length).toBe(0)
     })
 })
+
+describe('effect immunity', function () {
+    it('trigger effect immunity event', function () {
+        const c1 = new Creature()
+        const ep = new EffectProcessor()
+        ep.effectPrograms = EFFECTS
+        const aLog = []
+        ep.events.on('effect-immunity', ev => {
+            aLog.push({
+                t: 'effect-immunity',
+                ...ev
+            })
+        })
+        const effImm = ep.createEffect(CONSTS.EFFECT_IMMUNITY, 0, { immunityType: CONSTS.IMMUNITY_TYPE_POISON })
+        const effPoison = ep.createEffect(CONSTS.EFFECT_DAMAGE, 1, { damageType: CONSTS.DAMAGE_TYPE_POISON })
+        ep.applyEffect(effImm, c1, 20)
+        ep.applyEffect(effPoison, c1, 10)
+        expect(aLog).toHaveLength(1)
+        expect(aLog[0].t).toBe('effect-immunity')
+    })
+})
