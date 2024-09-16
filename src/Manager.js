@@ -43,6 +43,7 @@ class Manager {
         const ep = new EffectProcessor()
         ep.effectPrograms = EFFECTS
         ep.events.on('effect-applied', ev => this._effectApplied(ev))
+        ep.events.on('effect-immunity', ev => this._effectImmunity(ev))
         ep.events.on('effect-disposed', ev => this._effectDisposed(ev))
         const ib = new ItemBuilder()
         const cb = new CreatureBuilder()
@@ -106,6 +107,16 @@ class Manager {
             this._effectOptimRegistry[effect.id] = { effect, target, source }
         }
         this.events.emit('creature.effect.applied', { manager: this, effect, target, source })
+    }
+
+    /**
+     * an effect could not be applied to target because of effect immunity
+     * @param effect {BFEffect}
+     * @param target {Creature}
+     * @private
+     */
+    _effectImmunity ({ effect, target }) {
+        this.events.emit('creature.effect.immunity', { manager: this, effect, target })
     }
 
     /**

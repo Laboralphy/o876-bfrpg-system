@@ -222,6 +222,7 @@ class EffectProcessor {
         oEffect.duration = duration
         oEffect.source = source.id
         if (this.isImmuneToEffect(oEffect, target)) {
+            this._events.emit('effect-immunity', { effect: oEffect, target })
             return null
         }
         if (oEffect.duration > 0) {
