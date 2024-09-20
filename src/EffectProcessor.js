@@ -261,6 +261,20 @@ class EffectProcessor {
                 }
 
                 case CONSTS.EFFECT_STACKING_RULE_SPECIAL: {
+                    let bReject = false
+                    const reject = (b = true) => {
+                        bReject = b
+                    }
+                    this._events.emit('effect-stacking-rule-special', {
+                        effect: oEffect,
+                        target,
+                        source,
+                        reject
+                    })
+                    if (bReject) {
+                        oEffect = null
+                        return
+                    }
                     // Will not replace same effect
                     const bFoundRejectingEffect = target
                         .getters

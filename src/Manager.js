@@ -44,6 +44,7 @@ class Manager {
         ep.effectPrograms = EFFECTS
         ep.events.on('effect-applied', ev => this._effectApplied(ev))
         ep.events.on('effect-immunity', ev => this._effectImmunity(ev))
+        ep.events.on('effect-stacking-rule-special', ev => this._effectStackingRuleSpecial(ev))
         ep.events.on('effect-disposed', ev => this._effectDisposed(ev))
         const ib = new ItemBuilder()
         const cb = new CreatureBuilder()
@@ -128,6 +129,10 @@ class Manager {
     _effectDisposed ({ effect, target, source }) {
         this.events.emit('creature.effect.disposed', { manager: this, effect, target, source })
         delete this._effectOptimRegistry[effect.id]
+    }
+
+    _effectStackingRuleSpecial (ev) {
+        this.events.emit('creature.effect.stacking-rule', ev)
     }
 
     /**
