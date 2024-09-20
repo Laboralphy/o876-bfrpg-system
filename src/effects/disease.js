@@ -21,13 +21,9 @@ const CONSTS = require('../consts')
 function init ({ effect, disease, stages }) {
     effect.data.disease = disease
     effect.data.stages = stages
-    effect.stackingRule = CONSTS.EFFECT_STACKING_RULE_SPECIAL
+    effect.stackingRule = CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION
     effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, disease)
-}
-
-function reject ({ effect: eDisease, newEffect: eNewDisease }) {
-    return eDisease.type === eNewDisease.type &&
-        eDisease.data.disease === eNewDisease.data.disease
+    effect.key = disease
 }
 
 function doMutationStage ({ effectProcessor, effect: eDisease, target, source }, oReadyStage) {
@@ -89,6 +85,5 @@ function mutate (payload) {
 
 module.exports = {
     init,
-    mutate,
-    reject
+    mutate
 }

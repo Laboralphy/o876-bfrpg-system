@@ -100,7 +100,8 @@ class EffectProcessor {
                 data: {},
                 stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK,
                 siblings: [],
-                tags: []
+                tags: [],
+                key: '' // Utiliser pour affiner les stacking rules
             }
             this.invokeEffectMethod(oEffect, 'init', null, null, oParams)
             // if ('init' in ept) {
@@ -206,6 +207,12 @@ class EffectProcessor {
         }
     }
 
+    static sameEffects (eff1, eff2) {
+        return eff1.stackingRule = eff2.stackingRule &&
+            eff1.type === eff2.type &&
+            eff1.key === eff2.key
+    }
+
     /**
      * This method apllies effect on target, and return the true applied effect
      * If the effect is rejected (immunity, stacking rules), the method returns null
@@ -229,7 +236,7 @@ class EffectProcessor {
             switch (oEffect.stackingRule) {
                 case CONSTS.EFFECT_STACKING_RULE_NO_STACK: {
                     // Will not replace same effect
-                    if (!target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)) {
+                    if (!target.getters.getEffects.find(eff => EffectProcessor.sameEffects(eff, oEffect))) {
                         oEffect = target.mutations.addEffect({ effect: oEffect })
                     } else {
                         oEffect = null
@@ -238,7 +245,7 @@ class EffectProcessor {
                 }
 
                 case CONSTS.EFFECT_STACKING_RULE_REPLACE: {
-                    const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
+                    const oOldEffect = target.getters.getEffects.find(eff => EffectProcessor.sameEffects(eff, oEffect))
                     if (oOldEffect) {
                         this.removeEffect(oOldEffect, target, source)
                         target.mutations.addEffect({ effect: oEffect })
@@ -250,44 +257,12 @@ class EffectProcessor {
                 }
 
                 case CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION: {
-                    const oOldEffect = target.getters.getEffects.find(eff => eff.stackingRule === oEffect.stackingRule && eff.type === oEffect.type)
+                    const oOldEffect = target.getters.getEffects.find(eff => EffectProcessor.sameEffects(eff, oEffect))
                     if (oOldEffect) {
                         oOldEffect.duration = Math.max(oEffect.duration, oOldEffect.duration)
                         oEffect = null
                     } else {
                         oEffect = target.mutations.addEffect({ effect: oEffect })
-                    }
-                    break
-                }
-
-                case CONSTS.EFFECT_STACKING_RULE_SPECIAL: {
-                    let bReject = false
-                    const reject = (b = true) => {
-                        bReject = b
-                    }
-                    this._events.emit('effect-stacking-rule-special', {
-                        effect: oEffect,
-                        target,
-                        source,
-                        reject
-                    })
-                    if (bReject) {
-                        oEffect = null
-                        return
-                    }
-                    // Will not replace same effect
-                    const bFoundRejectingEffect = target
-                        .getters
-                        .getEffects
-                        .find(eff =>
-                            eff.stackingRule === oEffect.stackingRule &&
-                            eff.type === oEffect.type &&
-                            this.invokeEffectMethod(eff,'reject', target, source, { newEffect: oEffect })
-                        )
-                    if (!bFoundRejectingEffect) {
-                        oEffect = target.mutations.addEffect({ effect: oEffect })
-                    } else {
-                        oEffect = null
                     }
                     break
                 }

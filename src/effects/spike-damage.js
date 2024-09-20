@@ -5,6 +5,7 @@ function init ({ effect, damageType: sDamageType = CONSTS.DAMAGE_TYPE_PHYSICAL, 
     effect.data.damageType = sDamageType
     effect.data.savingThrow = savingThrow
     effect.data.maxDistance = maxDistance
+    effect.key = sDamageType + '::' + savingThrow
 }
 
 function attacked ({ effectProcessor, effect: { amp, data }, attackOutcome }) {

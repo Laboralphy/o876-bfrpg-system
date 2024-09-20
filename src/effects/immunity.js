@@ -5,6 +5,7 @@ function init ({ effect, immunityType }) {
         throw new Error('unknown immunity type ' + immunityType)
     }
     effect.data.immunityType = immunityType
+    effect.key = immunityType
 }
 
 module.exports = {
