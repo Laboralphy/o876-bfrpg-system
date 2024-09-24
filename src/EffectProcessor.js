@@ -208,7 +208,7 @@ class EffectProcessor {
     }
 
     static sameEffects (eff1, eff2) {
-        return eff1.stackingRule = eff2.stackingRule &&
+        return eff1.stackingRule === eff2.stackingRule &&
             eff1.type === eff2.type &&
             eff1.key === eff2.key
     }
@@ -259,7 +259,7 @@ class EffectProcessor {
                 case CONSTS.EFFECT_STACKING_RULE_UPDATE_DURATION: {
                     const oOldEffect = target.getters.getEffects.find(eff => EffectProcessor.sameEffects(eff, oEffect))
                     if (oOldEffect) {
-                        oOldEffect.duration = Math.max(oEffect.duration, oOldEffect.duration)
+                        target.mutations.setEffectDuration({ effect: oOldEffect, duration: Math.max(oEffect.duration, oOldEffect.duration) })
                         oEffect = null
                     } else {
                         oEffect = target.mutations.addEffect({ effect: oEffect })
