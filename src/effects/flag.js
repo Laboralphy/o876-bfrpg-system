@@ -7,6 +7,7 @@
 function init ({ effect, flag, value }) {
     effect.data.flag = flag
     effect.data.value = value
+    effect.key = flag + '::' + value
 }
 
 module.exports = {

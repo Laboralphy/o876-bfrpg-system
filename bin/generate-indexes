@@ -51,3 +51,7 @@ node ./bin/generate-indexes.js ./src/schemas REQUIRE > ./src/schemas/index.js
 
 buildModuleThings classic
 
+echo checking missing resources
+node ./bin/check-missing-resources
+
+echo "done"

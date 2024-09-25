@@ -24,5 +24,11 @@
   "EFFECT_SAVING_THROW_MODIFIER": "Modificateur de jet de sauvegarde",
   "EFFECT_SPEED_FACTOR": "Multiplicateur de vitesse",
   "EFFECT_SPIKE_DAMAGE": "Réflexion des dégâts",
-  "EFFECT_STUN": "Étourdissement"
+  "EFFECT_STUN": "Étourdissement",
+  "EFFECT_DARKVISION": "Vision dans le noir",
+  "EFFECT_INVISIBILITY": "Invisibilité",
+  "EFFECT_LIGHT": "Lumière",
+  "EFFECT_RESURRECT": "Resurrection",
+  "EFFECT_SEE_INVISIBILITY": "Détection de l'invisibilité",
+  "EFFECT_STEALTH": "Furtivité"
 }

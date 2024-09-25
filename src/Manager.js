@@ -514,6 +514,13 @@ class Manager {
             }
             this._events.emit('creature.death', oPayload)
         })
+        oCreature.events.on('revive', ev => {
+            const oPayload = {
+                ...ev,
+                manager: this
+            }
+            this._events.emit('creature.revive', oPayload)
+        })
         return oCreature
     }
 

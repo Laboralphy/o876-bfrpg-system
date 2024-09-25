@@ -25,7 +25,7 @@ class Creature {
         this._events = new EventEmitter()
         this._store = buildStore()
         this._ref = ''
-        this.mutations.setHitPoints({ value: Infinity })
+        this.setHitPoints(Infinity)
     }
 
     set ref (value) {
@@ -199,7 +199,7 @@ class Creature {
      * @param oAttackOutcome {BFAttackOutcome}
      */
     _attackUsingAction (oAttackOutcome) {
-        const { damage, conveys, attackType } = oAttackOutcome.action
+        const { attackType } = oAttackOutcome.action
         const oTarget = oAttackOutcome.target
         const oArmorClass = oTarget.getters.getArmorClass
         oAttackOutcome.bonus += this.getters.getAttackBonus
@@ -243,15 +243,31 @@ class Creature {
         }
     }
 
+    /**
+     * Revive a dead creature
+     */
+    revive () {
+        if (this.getters.isDead) {
+            this.mutations.setHitPoints({ value: 1 })
+            this.events.emit('revive', {
+                creature: this
+            })
+        }
+    }
+
     setHitPoints (hp) {
         const nCurrHP = this.getters.getHitPoints
+        if (this.getters.isDead) {
+            // Cannot heal dead creature. Must call revive prior
+            return
+        }
         const nMaxHP = this.getters.getMaxHitPoints
         hp = Math.max(0, Math.min(hp, nMaxHP))
         if (hp === nCurrHP) {
             return
         }
         this.mutations.setHitPoints({ value: hp })
-        if (hp === 0) {
+        if (hp <= 0) {
             this.events.emit('death', {
                 creature: this
             })

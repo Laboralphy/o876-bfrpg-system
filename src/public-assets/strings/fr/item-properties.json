@@ -13,6 +13,7 @@
   "ITEM_PROPERTY_EXTRA_WEIGHT": "Augmentation du poids",
   "ITEM_PROPERTY_HEALING_FACTOR": "Multiplicateur de soins reçus",
   "ITEM_PROPERTY_IMMUNITY": "Immunité",
+  "ITEM_PROPERTY_LIGHT": "Lumière",
   "ITEM_PROPERTY_MATERIAL_VULNERABILITY": "Vulnérabilité au matériau",
   "ITEM_PROPERTY_REGENERATION": "Régénération",
   "ITEM_PROPERTY_SAVING_THROW_MODIFIER": "Modificateur de jet de sauvegarde",
