@@ -96,6 +96,7 @@ class EffectProcessor {
                 subtype: CONSTS.EFFECT_SUBTYPE_MAGICAL,
                 amp,
                 duration: 0,
+                target: null,
                 source: null,
                 data: {},
                 stackingRule: CONSTS.EFFECT_STACKING_RULE_STACK,
@@ -232,6 +233,7 @@ class EffectProcessor {
         }
         oEffect.duration = duration
         oEffect.source = source.id
+        oEffect.target = target.id
         if (this.isImmuneToEffect(oEffect, target)) {
             this._events.emit('effect-immunity', { effect: oEffect, target })
             return null

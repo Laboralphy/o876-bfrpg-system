@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-09-25T14:57:12.221Z
+// Date : 2024-10-01T13:23:06.690Z
 // List of files in ./src/effects
 
 module.exports = {
@@ -28,7 +28,6 @@ module.exports = {
   'EFFECT_NEGATIVE_LEVEL': require('./negative-level.js'),
   'EFFECT_PARALYSIS': require('./paralysis.js'),
   'EFFECT_PETRIFICATION': require('./petrification.js'),
-  'EFFECT_RESURRECT': require('./resurrect.js'),
   'EFFECT_SAVING_THROW_MODIFIER': require('./saving-throw-modifier.js'),
   'EFFECT_SEE_INVISIBILITY': require('./see-invisibility.js'),
   'EFFECT_SPEED_FACTOR': require('./speed-factor.js'),

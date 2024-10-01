@@ -255,6 +255,10 @@ class Creature {
         }
     }
 
+    modifyHitPoints (n) {
+        this.setHitPoints(this.getters.getHitPoints + n)
+    }
+
     setHitPoints (hp) {
         const nCurrHP = this.getters.getHitPoints
         if (this.getters.isDead) {
@@ -267,12 +271,6 @@ class Creature {
             return
         }
         this.mutations.setHitPoints({ value: hp })
-        if (hp <= 0) {
-            // envoyer l'évènement
-            this.events.emit('death', {
-                creature: this
-            })
-        }
     }
 
     /**

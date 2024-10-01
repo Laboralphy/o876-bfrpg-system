@@ -5,7 +5,7 @@ const CONSTS = require('../consts')
  * @param effect {BFEffect}
  * @param target {Creature}
  */
-function mutate ({ effect: oEffect, target }) {
+function mutate ({ effect: oEffect, target, source }) {
     let nFactor = 1
     const f = ({ amp }) => {
         nFactor *= amp
@@ -19,7 +19,7 @@ function mutate ({ effect: oEffect, target }) {
     // If one single effect applies -100% this is a healing nullifier
     const nHealAmount = oEffect.amp
     const nHealAmountAmplified = Math.floor(nHealAmount * nFactor)
-    target.setHitPoints(target.getters.getHitPoints + nHealAmountAmplified)
+    target.modifyHitPoints(nHealAmountAmplified)
     target.events.emit('heal', {
         amount: nHealAmountAmplified,
         factor: nFactor,

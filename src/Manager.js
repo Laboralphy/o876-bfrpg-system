@@ -590,7 +590,7 @@ class Manager {
         })
         const nRegen = am.sum
         if (oCreature.getters.getHitPoints < oCreature.getters.getMaxHitPoints) {
-            oCreature.setHitPoints(oCreature.getters.getHitPoints + nRegen)
+            oCreature.modifyHitPoints(nRegen)
         }
     }
 
@@ -607,8 +607,14 @@ class Manager {
     }
 
     dispelEffect (effect) {
-        const target = this._horde.creatures(effect.target)
-        const source = this._horde.creatures(effect.source)
+        const target = this._horde.creatures[effect.target]
+        const source = this._horde.creatures[effect.source]
+        if (!target) {
+            throw new Error('this creature (effect target) does not exist ' + effect.target)
+        }
+        if (!source) {
+            throw new Error('this creature (effect source) does not exist ' + effect.source)
+        }
         return this._effectProcessor.removeEffect(effect, target, source)
     }
 

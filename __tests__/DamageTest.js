@@ -17,7 +17,7 @@ describe('damage', function () {
     it('hp should drop from 32 to 22 when using damage mutation with amount 10 damage', function () {
         const c = oManager.createCreature({ id: 'm1', ref: 'c-centaur' })
         expect(c.getters.getHitPoints).toBe(32)
-        c.mutations.damage({ amount: 10 })
+        c.modifyHitPoints(-10)
         expect(c.getters.getHitPoints).toBe(22)
     })
     test('hp should drop from 32 to 22 when applying fire damage effect', function () {

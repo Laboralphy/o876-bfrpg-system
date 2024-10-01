@@ -60,8 +60,14 @@ function mutate ({ effect, target, source }) {
         resisted: effect.data.resistedAmount,
         subtype: effect.subtype
     }
-    target.mutations.damage({ amount: oRecentDamage.amount })
+    target.modifyHitPoints(-oRecentDamage.amount)
     target.events.emit('damaged', oRecentDamage)
+    if (target.getters.isDead) {
+        target.events.emit('death', {
+            creature: target,
+            killer: source
+        })
+    }
 }
 
 module.exports = {
