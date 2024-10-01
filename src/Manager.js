@@ -512,6 +512,14 @@ class Manager {
                 ...ev,
                 manager: this
             }
+            ev
+                .creature
+                .getters
+                .getEffects
+                .filter(effect => effect.subtype !== CONSTS.EFFECT_SUBTYPE_UNYIELDING)
+                .forEach(effect => {
+                    this.dispelEffect(effect)
+                })
             this._events.emit('creature.death', oPayload)
         })
         oCreature.events.on('revive', ev => {

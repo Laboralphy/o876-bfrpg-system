@@ -268,6 +268,7 @@ class Creature {
         }
         this.mutations.setHitPoints({ value: hp })
         if (hp <= 0) {
+            // envoyer l'évènement
             this.events.emit('death', {
                 creature: this
             })

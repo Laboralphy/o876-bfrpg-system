@@ -223,6 +223,10 @@ class EffectProcessor {
      * @returns {*|null}
      */
     applyEffect(oEffect, target, duration = 0, source = null) {
+        if (target.getters.isDead) {
+            // ne pas affecter d'effet si la créature est morte
+            return null
+        }
         if (!source) {
             source = target
         }
