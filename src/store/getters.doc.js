@@ -36,7 +36,7 @@
  * @property getSavingThrowBonus {{[p: string]: number}}
  * @property getSelectedAction {BFStoreStateAction}
  * @property getSelectedWeapon {BFItem|null}
- * @property getSpecie {{ ref: string, living: boolean, mind: boolean }}
+ * @property getSpecie {string}
  * @property getSpeed {number}
  * @property getWeaponSizeRestrictionSet {Set<string>}
  * @property isDead {boolean}

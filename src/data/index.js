@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-04T10:29:25.567Z
+// Date : 2024-10-04T11:12:30.961Z
 // List of files in ./src/data
 
 module.exports = {
@@ -14,7 +14,6 @@ module.exports = {
   'item-types': require('./item-types.json'),
   'materials': require('./materials.json'),
   'races': require('./races.json'),
-  'species': require('./species.json'),
   'variables': require('./variables.json'),
   'weapon-ranges': require('./weapon-ranges.json')
 }

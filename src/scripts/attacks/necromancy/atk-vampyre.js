@@ -7,7 +7,8 @@ const CONSTS = require('../../../consts')
  */
 function main (oActionPayload) {
     const { attacker, target, manager, attackOutcome } = oActionPayload
-    if (target.getters.getSpecie.living) {
+    const bLiving = target.getters.getSpecie !== CONSTS.SPECIE_UNDEAD && target.getters.getSpecie !== CONSTS.SPECIE_CONSTRUCT
+    if (bLiving) {
         const eHeal = manager.createEffect(CONSTS.EFFECT_HEAL, attackOutcome.damages.amount)
         manager.applyEffect(eHeal, attacker)
     }

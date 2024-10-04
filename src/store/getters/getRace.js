@@ -2,7 +2,7 @@
  *
  * @typedef BFRaceData {object}
  * @property maxHdPerLevel {number}
- * @property specie {{ ref: string, living: boolean, mind: boolean }}
+ * @property specie {{ ref: string }}
  * @property abilityRestrictions {Object<string, {min?: number, max?: number}>}
  * @property weaponRestrictions {Object<string, {weaponSize?: string[]}>}
  * @property savingThrows {Object<string, number>}

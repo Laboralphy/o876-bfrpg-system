@@ -15,7 +15,8 @@ function main (oActionPayload) {
         duration = manager.data['durations'].DURATION_DEFAULT,
         potency = 0
     } = data
-    if (target.getters.getSpecie.living && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
+    const bLiving = target.getters.getSpecie !== CONSTS.SPECIE_UNDEAD && target.getters.getSpecie !== CONSTS.SPECIE_CONSTRUCT
+    if (bLiving && !target.rollSavingThrow(CONSTS.SAVING_THROW_DEATH_RAY_POISON, {
         adjustment: potency
     }).success) {
         const eDrain = manager.createEffect(CONSTS.EFFECT_NEGATIVE_LEVEL, attacker.dice.evaluate(amount))
