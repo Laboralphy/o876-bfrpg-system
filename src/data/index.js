@@ -1,14 +1,12 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-01T13:23:06.831Z
+// Date : 2024-10-04T10:29:25.567Z
 // List of files in ./src/data
 
 module.exports = {
   'ability-modifiers': require('./ability-modifiers.json'),
-  'ability-rolls': require('./ability-rolls.json'),
   'carrying-capacity': require('./carrying-capacity.json'),
   'class-types': require('./class-types.json'),
   'damage-factors': require('./damage-factors.json'),
-  'damage-types': require('./damage-types.json'),
   'default-actions': require('./default-actions.json'),
   'diseases': require('./diseases.json'),
   'durations': require('./durations.js'),

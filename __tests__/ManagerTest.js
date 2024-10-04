@@ -123,9 +123,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -2,
                         duration: 10,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 }
             ]
@@ -153,9 +151,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -2,
                         duration: 10,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 }
             ]
@@ -204,9 +200,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -2,
                         duration: 10,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 }
             ]
@@ -255,9 +249,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -2,
                         duration: 10,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 }
             ]
@@ -279,9 +271,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -2,
                         duration: 10,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 }
             ]
@@ -314,9 +304,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -1,
                         duration: DURATION_PERMANENT,
-                        data: {
-                            ability: CONSTS.ABILITY_CHARISMA
-                        }
+                        ability: CONSTS.ABILITY_CHARISMA
                     }
                 },
                 {
@@ -326,9 +314,7 @@ describe('disease', function () {
                         type: CONSTS.EFFECT_ABILITY_MODIFIER,
                         amp: -1,
                         duration: DURATION_PERMANENT,
-                        data: {
-                            ability: CONSTS.ABILITY_STRENGTH
-                        }
+                        ability: CONSTS.ABILITY_STRENGTH
                     }
                 }
             ]

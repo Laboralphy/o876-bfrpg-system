@@ -73,10 +73,30 @@
   },
   {
     "strength": [19],
-    "value": 400
+    "value": 350
   },
   {
     "strength": [20],
+    "value": 400
+  },
+  {
+    "strength": [21],
+    "value": 450
+  },
+  {
+    "strength": [22],
     "value": 500
+  },
+  {
+    "strength": [23],
+    "value": 550
+  },
+  {
+    "strength": [24],
+    "value": 600
+  },
+  {
+    "strength": [25],
+    "value": 650
   }
 ]

@@ -38,8 +38,12 @@ function doMutationStage ({ effectProcessor, effect: eDisease, target, source },
             effectProcessor.removeEffect(eDisease, target, source)
         }
     } else {
-        const { type: sEffectType, amp = 0, duration = 0, data = {} } = oReadyStage.effect
-        const effect = effectProcessor.createEffect(sEffectType, amp, data)
+        const oData = { ...oReadyStage.effect }
+        delete oData.type
+        delete oData.amp
+        delete oData.duration
+        const { type: sEffectType, amp = 0, duration = 0 } = oReadyStage.effect
+        const effect = effectProcessor.createEffect(sEffectType, amp, oData)
         effect.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         effect.tags.push(CONSTS.EFFECT_TAG_DISEASE, eDisease.data.disease)
         // Effects applied by disease are autonomous effects, they keep the disease tag, so they can be removed by cure

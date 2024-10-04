@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-01T13:23:06.690Z
+// Date : 2024-10-04T10:29:25.417Z
 // List of files in ./src/effects
 
 module.exports = {
