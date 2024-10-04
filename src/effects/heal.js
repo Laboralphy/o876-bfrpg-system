@@ -21,6 +21,7 @@ function mutate ({ effect: oEffect, target, source }) {
     const nHealAmountAmplified = Math.floor(nHealAmount * nFactor)
     target.modifyHitPoints(nHealAmountAmplified)
     target.events.emit('heal', {
+        healer: source,
         amount: nHealAmountAmplified,
         factor: nFactor,
         baseAmount: nHealAmount
