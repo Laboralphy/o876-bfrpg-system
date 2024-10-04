@@ -36,7 +36,7 @@ function main (oActionPayload) {
         adjustment: potency
     }).success) {
         const eDisease = manager.createEffect(CONSTS.EFFECT_DISEASE, 0, { disease: oDiseaseDef })
-        eDisease.subtype = CONSTS.EFFECT_SUBTYPE_SUPERNATURAL
+        eDisease.subtype = CONSTS.EFFECT_SUBTYPE_EXTRAORDINARY
         manager.applyEffect(eDisease, target, evaluateDiseaseDuration(oDiseaseDef.stages) + 1, attacker)
     }
 }
