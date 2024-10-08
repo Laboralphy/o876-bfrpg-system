@@ -1,5 +1,5 @@
 const EventEmitter = require('node:events')
-const { getId } = require('./unique-id')
+const {getId} = require('./unique-id')
 const Horde = require("./Horde");
 const Creature = require("./Creature");
 const EffectProcessor = require("./EffectProcessor");
@@ -25,7 +25,7 @@ require('./store/mutations.doc')
 require('./types.doc')
 const {deepMerge} = require("@laboralphy/object-fusion");
 
-const NEED_ATTACK_ROLL  = new Set([
+const NEED_ATTACK_ROLL = new Set([
     CONSTS.ATTACK_TYPE_ANY,
     CONSTS.ATTACK_TYPE_RANGED,
     CONSTS.ATTACK_TYPE_MELEE,
@@ -38,7 +38,7 @@ const NEED_ATTACK_ROLL  = new Set([
  * @class
  */
 class Manager {
-    constructor () {
+    constructor() {
         const h = new Horde()
         const ep = new EffectProcessor()
         ep.effectPrograms = EFFECTS
@@ -92,7 +92,7 @@ class Manager {
         }
     }
 
-    get events () {
+    get events() {
         return this._events
     }
 
@@ -102,11 +102,11 @@ class Manager {
      * @param target {Creature}
      * @param source {Creature}
      */
-    _effectApplied ({ effect, target, source }) {
+    _effectApplied({effect, target, source}) {
         if (effect.duration > 0) {
-            this._effectOptimRegistry[effect.id] = { effect, target, source }
+            this._effectOptimRegistry[effect.id] = {effect, target, source}
         }
-        this.events.emit('creature.effect.applied', { manager: this, effect, target, source })
+        this.events.emit('creature.effect.applied', {manager: this, effect, target, source})
     }
 
     /**
@@ -115,8 +115,8 @@ class Manager {
      * @param target {Creature}
      * @private
      */
-    _effectImmunity ({ effect, target }) {
-        this.events.emit('creature.effect.immunity', { manager: this, effect, target })
+    _effectImmunity({effect, target}) {
+        this.events.emit('creature.effect.immunity', {manager: this, effect, target})
     }
 
     /**
@@ -125,8 +125,8 @@ class Manager {
      * @param target {Creature}
      * @param source {Creature}
      */
-    _effectDisposed ({ effect, target, source }) {
-        this.events.emit('creature.effect.disposed', { manager: this, effect, target, source })
+    _effectDisposed({effect, target, source}) {
+        this.events.emit('creature.effect.disposed', {manager: this, effect, target, source})
         delete this._effectOptimRegistry[effect.id]
     }
 
@@ -137,7 +137,7 @@ class Manager {
      * @param target {Creature}
      * @private
      */
-    _combatTurn ({ turn, attacker, target }) {
+    _combatTurn({turn, attacker, target}) {
         // New combat turn
     }
 
@@ -152,17 +152,17 @@ class Manager {
      * @param count {number}
      * @private
      */
-    _combatAction ({
-        turn,
-        tick,
-        attacker,
-        target,
-        combat,
-        action,
-        count,
-        combatManager,
-        opportunity
-    }) {
+    _combatAction({
+                      turn,
+                      tick,
+                      attacker,
+                      target,
+                      combat,
+                      action,
+                      count,
+                      combatManager,
+                      opportunity
+                  }) {
         // action null = target unreachable
 
         // New combat action
@@ -199,58 +199,64 @@ class Manager {
                 target,
                 attackOutcome: oAttackOutcome
             })
-            if (oAttackOutcome.hit) {
-                    // the attack has landed : rolling damages
-                    const { material: sWeaponMaterial, types: oWeaponDamages} = attacker
-                        .rollDamage(oAttackOutcome)
-                    const aEffects = Object
-                        .entries(oWeaponDamages)
-                        .filter(([, nAmount]) => nAmount > 0)
-                        .map(([sDamageType, nAmount]) => {
-                            const effect = this
-                                .effectProcessor
-                                .createEffect(CONSTS.EFFECT_DAMAGE, nAmount, {
-                                    material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
-                                        ? sWeaponMaterial
-                                        : CONSTS.MATERIAL_UNKNOWN,
-                                    damageType: sDamageType
-                                })
-                            effect.subtype = CONSTS.EFFECT_SUBTYPE_WEAPON
-                            return effect
-                        })
-                    oAttackOutcome.damages = {
-                        amount: 0,
-                        types: {}
-                    }
-                    aEffects.forEach(effect => {
-                        const eAppliedDamage = this.effectProcessor.applyEffect(effect, target, 0, attacker)
-                        const wdrt = oAttackOutcome.damages.types
-                        if (!wdrt[eAppliedDamage.data.damageType]) {
-                            wdrt[eAppliedDamage.data.damageType] = {
-                                amount: 0,
-                                resisted: 0
-                            }
-                        }
-                        const wdrtar = wdrt[eAppliedDamage.data.damageType]
-                        wdrtar.amount += eAppliedDamage.data.appliedAmount
-                        wdrtar.resisted += eAppliedDamage.data.resistedAmount
-                        oAttackOutcome.damages.amount += eAppliedDamage.data.appliedAmount
-                    })
-                    // the target will have penalty of speed
-                    this.runPropEffectScript(target, 'attacked', {
-                        attacker,
-                        creature: target,
-                        attackOutcome: oAttackOutcome
-                    })
-                }
             if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
-                    this._events.emit('combat.attack', {
+                this._events.emit('combat.attack', {
+                    turn, tick, attackIndex: iAtk,
+                    outcome: oAttackOutcome
+                })
+            }
+            if (oAttackOutcome.hit) {
+                // the attack has landed : rolling damages
+                const {material: sWeaponMaterial, types: oWeaponDamages} = attacker
+                    .rollDamage(oAttackOutcome)
+                const aEffects = Object
+                    .entries(oWeaponDamages)
+                    .filter(([, nAmount]) => nAmount > 0)
+                    .map(([sDamageType, nAmount]) => {
+                        const effect = this
+                            .effectProcessor
+                            .createEffect(CONSTS.EFFECT_DAMAGE, nAmount, {
+                                material: sDamageType === CONSTS.DAMAGE_TYPE_PHYSICAL
+                                    ? sWeaponMaterial
+                                    : CONSTS.MATERIAL_UNKNOWN,
+                                damageType: sDamageType
+                            })
+                        effect.subtype = CONSTS.EFFECT_SUBTYPE_WEAPON
+                        return effect
+                    })
+                oAttackOutcome.damages = {
+                    amount: 0,
+                    types: {}
+                }
+                aEffects.forEach(effect => {
+                    const eAppliedDamage = this.effectProcessor.applyEffect(effect, target, 0, attacker)
+                    const wdrt = oAttackOutcome.damages.types
+                    if (!wdrt[eAppliedDamage.data.damageType]) {
+                        wdrt[eAppliedDamage.data.damageType] = {
+                            amount: 0,
+                            resisted: 0
+                        }
+                    }
+                    const wdrtar = wdrt[eAppliedDamage.data.damageType]
+                    wdrtar.amount += eAppliedDamage.data.appliedAmount
+                    wdrtar.resisted += eAppliedDamage.data.resistedAmount
+                    oAttackOutcome.damages.amount += eAppliedDamage.data.appliedAmount
+                })
+                if (oAttackOutcome.failure !== CONSTS.ATTACK_FAILURE_NO_NEED) {
+                    this._events.emit('combat.attack.damaged', {
                         turn, tick, attackIndex: iAtk,
                         outcome: oAttackOutcome
                     })
                 }
+                // the target will have penalty of speed
+                this.runPropEffectScript(target, 'attacked', {
+                    attacker,
+                    creature: target,
+                    attackOutcome: oAttackOutcome
+                })
+            }
             if (action.attackType === CONSTS.ATTACK_TYPE_HOMING || oAttackOutcome.hit) {
-                action.conveys.forEach(({ script: sScriptRef, data }) => {
+                action.conveys.forEach(({script: sScriptRef, data}) => {
                     /**
                      * @type {BFActionPayload}
                      */
@@ -271,7 +277,7 @@ class Manager {
         }
     }
 
-    runScript (sScriptRef, ...aParams) {
+    runScript(sScriptRef, ...aParams) {
         if (sScriptRef in this._scripts) {
             return this._scripts[sScriptRef](...aParams)
         } else {
@@ -279,7 +285,7 @@ class Manager {
         }
     }
 
-    init () {
+    init() {
         this._schemaValidator = new SchemaValidator()
         this._schemaValidator.schemaIndex = SCHEMAS
         this._schemaValidator.init()
@@ -288,29 +294,29 @@ class Manager {
     /**
      * @returns {Horde}
      */
-    get horde () {
+    get horde() {
         return this._horde
     }
 
-    get data () {
+    get data() {
         return this._rm.data[RMK_DATA]
     }
 
-    get blueprints () {
+    get blueprints() {
         return this._rm.data[RMK_BLUEPRINTS]
     }
 
     /**
      * @returns {EffectProcessor}
      */
-    get effectProcessor () {
+    get effectProcessor() {
         return this._effectProcessor
     }
 
     /**
      * @returns {CombatManager}
      */
-    get combatManager () {
+    get combatManager() {
         return this._combatManager
     }
 
@@ -319,12 +325,12 @@ class Manager {
      * @param module {string}
      * @private
      */
-    _requireModule (module) {
-        const { DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name = module } = require('./modules/' + module)
-        this._registerModule({ DATA, BLUEPRINTS, SCRIPTS, name })
+    _requireModule(module) {
+        const {DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name = module} = require('./modules/' + module)
+        this._registerModule({DATA, BLUEPRINTS, SCRIPTS, name})
     }
 
-    _registerModule ({ DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name }) {
+    _registerModule({DATA = {}, BLUEPRINTS = {}, SCRIPTS = {}, name}) {
         this._modules.add(name)
         this._rm.assign('data', DATA)
         this._rm.assign('blueprints', BLUEPRINTS)
@@ -335,7 +341,7 @@ class Manager {
      * Load a module of additional assets (blueprints and data)
      * @param module {string|object} name or structure of module (classic, modern, future)
      */
-    loadModule (module) {
+    loadModule(module) {
         if (typeof module === 'string') {
             this._requireModule(module)
         } else {
@@ -348,7 +354,7 @@ class Manager {
      * @param sRef {string|object}
      * @returns {object}
      */
-    getBlueprint (sRef) {
+    getBlueprint(sRef) {
         const sType = typeof sRef
         if (sType === 'object') {
             /**
@@ -414,7 +420,7 @@ class Manager {
         }
     }
 
-    runPropEffectScript (oCreature, sScript, oParams) {
+    runPropEffectScript(oCreature, sScript, oParams) {
         for (const effect of oCreature.getters.getEffects) {
             const source = this._horde.creatures[effect.source]
             this.effectProcessor.invokeEffectMethod(effect, sScript, oCreature, source, oParams)
@@ -428,10 +434,10 @@ class Manager {
         }
     }
 
-    addProperties (oEntity, aProperties) {
+    addProperties(oEntity, aProperties) {
         if (oEntity instanceof Creature) {
             aProperties.forEach(ip => {
-                oEntity.mutations.addCreatureProperty({ property: ItemProperties.build(ip) })
+                oEntity.mutations.addCreatureProperty({property: ItemProperties.build(ip)})
             })
         } else if (oEntity.entityType === CONSTS.ENTITY_TYPE_ITEM) {
             const ib = this._itemBuilder
@@ -450,19 +456,19 @@ class Manager {
      * @param importData {*}
      * @returns {Creature}
      */
-    createCreature ({ id = '', ref = '', importData = null } = {}) {
+    createCreature({id = '', ref = '', importData = null} = {}) {
         const oCreature = new Creature()
         if (ref) {
             const oBlueprint = this.getBlueprint(ref)
             this._creatureBuilder.buildMonster(oCreature, oBlueprint)
             oCreature.ref = typeof ref === 'string' ? ref : ''
             oBlueprint.equipment.forEach(eq => {
-                const oItem = this.createItem({ ref: eq })
-                oCreature.mutations.equipItem({ item: oItem })
+                const oItem = this.createItem({ref: eq})
+                oCreature.mutations.equipItem({item: oItem})
             })
         }
         if (importData) {
-            oCreature.mutations.importCreatureState({ data: importData })
+            oCreature.mutations.importCreatureState({data: importData})
             if (importData.id) {
                 oCreature.id = importData.id
             }
@@ -532,7 +538,7 @@ class Manager {
         return oCreature
     }
 
-    createItem ({ id = '', ref }) {
+    createItem({id = '', ref}) {
         const ib = this._itemBuilder
         const sTypeOfRef = typeof ref
         const oBlueprint = this.getBlueprint(ref)
@@ -541,7 +547,7 @@ class Manager {
         }
         const oItem = ib.createItem(oBlueprint, this.data)
         oItem.id = id || getId()
-        oItem.ref = sTypeOfRef === 'string' ? ref  : ''
+        oItem.ref = sTypeOfRef === 'string' ? ref : ''
         return oItem
     }
 
@@ -549,7 +555,7 @@ class Manager {
      * Destroy a creatures
      * @param oCreature {Creature}
      */
-    destroyCreature (oCreature) {
+    destroyCreature(oCreature) {
         // all effects cast by this creatures must be ended immediatly
         this._horde.forEach(creature => {
             const aEffects = creature
@@ -559,7 +565,7 @@ class Manager {
             aEffects.forEach(effectToBeDispelled => {
                 creature
                     .mutations
-                    .setEffectDuration({ effect: effectToBeDispelled, value: 0 })
+                    .setEffectDuration({effect: effectToBeDispelled, value: 0})
             })
         })
         this._combatManager.removeFighter(oCreature)
@@ -569,8 +575,8 @@ class Manager {
     /**
      * Processes all effects in the effect optimization registry
      */
-    processEffects () {
-        Object.values(this._effectOptimRegistry).forEach(({ effect, target, source }) => {
+    processEffects() {
+        Object.values(this._effectOptimRegistry).forEach(({effect, target, source}) => {
             this._effectProcessor.processEffect(effect, target, source)
         })
     }
@@ -580,7 +586,7 @@ class Manager {
      * TODO need a better system to deal with periodic item properties
      * @param oCreature {Creature}
      */
-    _processCreaturePassiveProperties (oCreature) {
+    _processCreaturePassiveProperties(oCreature) {
         // regeneration
         const am = oCreature.aggregateModifiers([
             CONSTS.ITEM_PROPERTY_REGENERATION
@@ -594,19 +600,19 @@ class Manager {
         }
     }
 
-    createEffect (sType, amp = 0, oParams = {}) {
+    createEffect(sType, amp = 0, oParams = {}) {
         return this._effectProcessor.createEffect(sType, amp, oParams)
     }
 
-    applyEffect (effect, target, duration = 0, source = null) {
+    applyEffect(effect, target, duration = 0, source = null) {
         return this._effectProcessor.applyEffect(effect, target, duration, source)
     }
 
-    applyEffectGroup (aEffects, tags, target, duration = 0, source = null) {
+    applyEffectGroup(aEffects, tags, target, duration = 0, source = null) {
         return this._effectProcessor.applyEffectGroup(aEffects, tags, target, duration, source)
     }
 
-    dispelEffect (effect) {
+    dispelEffect(effect) {
         const target = this._horde.creatures[effect.target]
         const source = this._horde.creatures[effect.source]
         if (!target) {
@@ -618,7 +624,7 @@ class Manager {
         return this._effectProcessor.removeEffect(effect, target, source)
     }
 
-    get publicAssets () {
+    get publicAssets() {
         const pa = new PublicAssets()
         pa.resourceManager = this._rm
         return pa.publicAssets('fr')

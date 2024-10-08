@@ -946,7 +946,7 @@ describe('wands', function () {
 
         let oOutcomeElf
         let oOutcomeHum
-        manager.events.on('combat.attack', ev => {
+        manager.events.on('combat.attack.damaged', ev => {
             if (ev.outcome.attacker === elfWizard) {
                 oOutcomeElf = ev.outcome
             }

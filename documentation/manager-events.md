@@ -106,16 +106,16 @@ Will occur each time a creature changes its offensive slot (going from melee to 
 
 ## combat.attack
 
-Indicated that a creature used an action.
+Indicated that a creature used an offensive action, but damage has not been resolved yet.
 
 ### parameters
 
-| Parameter   | Type            | Description                                                        |
-|-------------|-----------------|--------------------------------------------------------------------|
-| turn        | number          | Elapsed turns since beginning of combat                            |
-| tick        | number          | Number of ticks since beginning of turn                            |
-| attackIndex | number          | If the creature has several attakcs a turn, this is the nth attack |
-| outcome     | BFAttackOutcome | This complex object details all what happenned during this attack  |
+| Parameter   | Type            | Description                                                                                                            |
+|-------------|-----------------|------------------------------------------------------------------------------------------------------------------------|
+| turn        | number          | Elapsed turns since beginning of combat                                                                                |
+| tick        | number          | Number of ticks since beginning of turn                                                                                |
+| attackIndex | number          | If the creature has several attakcs a turn, this is the nth attack                                                     |
+| outcome     | BFAttackOutcome | This complex object details all what happenned during this attack, in this case the "damage" property will be 0 amount |
 
 ### Types
 
@@ -144,6 +144,33 @@ Indicated that a creature used an action.
  */
 ```
 
+
+#### BFAttackOutcomeDamages
+
+```js
+/**
+ * @typedef BFAttackOutcomeDamages {object}
+ * @property amount {number}
+ * @property resisted {object<string, number>}
+ * @property types {object<string, number>}
+ */
+```
+
+## combat.attack.damaged
+
+Indicated that a creature used an offensive action, and hit and Damage has been resolved.
+This event does not occurs if attack misses.
+
+### parameters
+
+| Parameter   | Type            | Description                                                                                                               |
+|-------------|-----------------|---------------------------------------------------------------------------------------------------------------------------|
+| turn        | number          | Elapsed turns since beginning of combat                                                                                   |
+| tick        | number          | Number of ticks since beginning of turn                                                                                   |
+| attackIndex | number          | If the creature has several attakcs a turn, this is the nth attack                                                        |
+| outcome     | BFAttackOutcome | This complex object details all what happenned during this attack, in this case the "damage" property reflect damage done |
+
+### Types
 
 #### BFAttackOutcomeDamages
 
