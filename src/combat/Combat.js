@@ -2,6 +2,7 @@ const Events = require('events')
 const CombatFighterState = require('./CombatFighterState')
 const CONSTS = require('../consts')
 const DATA = require('../data')
+const { aggregateModifiers } = require('../aggregator')
 
 const { WEAPON_RANGE_MELEE, WEAPON_RANGE_REACH } = DATA['weapon-ranges']
 
@@ -225,7 +226,20 @@ class Combat {
                 }
             })
             if (atkr.nextAction) {
-                atkr.plan = Combat.computePlanning(atkr.nextAction.count, this._tickCount, true)
+                const nAttackCount = aggregateModifiers([
+                    CONSTS.EFFECT_ATTACK_COUNT_MODIFIER,
+                    CONSTS.ITEM_PROPERTY_ATTACK_COUNT_MODIFIER
+                ], this._attacker.creature.getters).sum + atkr.nextAction.count
+                if (nAttackCount > 0) {
+                    atkr.plan = Combat.computePlanning(nAttackCount, this._tickCount, true)
+                } else {
+                    const nRound = 1 - nAttackCount
+                    if (this._turn % nRound === 0) {
+                        atkr.plan = Combat.computePlanning(1, this._tickCount, true)
+                    } else {
+                        atkr.plan = Combat.computePlanning(0, this._tickCount, true)
+                    }
+                }
             } else {
                 this.approachTarget()
             }

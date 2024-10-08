@@ -23,6 +23,9 @@ function getNewCombat () {
 
 
 describe ('computePlanning', function () {
+    it('should return [0, 0, 0, 0, 0, 0] when planning one attack-types over 6 ticks', function () {
+        expect(Combat.computePlanning(0, 6)).toEqual([0, 0, 0, 0, 0, 0])
+    })
     it('should return [1, 0, 0, 0, 0, 0] when planning one attack-types over 6 ticks', function () {
         expect(Combat.computePlanning(1, 6)).toEqual([1, 0, 0, 0, 0, 0])
     })
