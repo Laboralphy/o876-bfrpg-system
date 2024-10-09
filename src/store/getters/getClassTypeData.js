@@ -62,6 +62,7 @@ module.exports = (state, getters, externals) => {
     return {
         ref: state.classType,
         level: nEffectiveLevel,
+        undrainedLevel: nUndrainedLevel,
         maxLevel: nMaxLevel,
         nextLevelExp: bHasLevels && nUndrainedLevel < nMaxLevel ? xpl[nUndrainedLevel] : Infinity,
         hdPerLowerLevel: data.hdPerLowerLevel,
