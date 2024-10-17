@@ -19,7 +19,7 @@ describe('createItemWeapon', function () {
             attributes: [ 'WEAPON_ATTRIBUTE_FINESSE' ],
             itemType: 'ITEM_TYPE_WEAPON',
             weaponType: 'WEAPON_TYPE_DAGGER',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
+            slots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
             material: 'MATERIAL_STEEL'
         })
     })
@@ -42,7 +42,7 @@ describe('createItemWeapon', function () {
             attributes: [ 'WEAPON_ATTRIBUTE_FINESSE' ],
             itemType: 'ITEM_TYPE_WEAPON',
             weaponType: 'WEAPON_TYPE_DAGGER',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
+            slots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
             material: 'MATERIAL_STEEL'
         })
     })
@@ -62,7 +62,7 @@ describe('createItem', function () {
             attributes: [ 'WEAPON_ATTRIBUTE_FINESSE' ],
             itemType: 'ITEM_TYPE_WEAPON',
             weaponType: 'WEAPON_TYPE_DAGGER',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
+            slots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
             material: 'MATERIAL_STEEL'
         })
     })
@@ -76,7 +76,7 @@ describe('createItem', function () {
             weight: 0.1,
             itemType: 'ITEM_TYPE_AMMO',
             ammoType: 'AMMO_TYPE_ARROW',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ],
+            slots: [ 'EQUIPMENT_SLOT_AMMO' ],
             material: 'MATERIAL_IRON'
         })
     })
@@ -90,7 +90,7 @@ describe('createItem', function () {
             weight: 0.15,
             itemType: 'ITEM_TYPE_AMMO',
             ammoType: 'AMMO_TYPE_QUARREL',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_AMMO' ],
+            slots: [ 'EQUIPMENT_SLOT_AMMO' ],
             material: 'MATERIAL_IRON'
         })
     })
@@ -106,7 +106,7 @@ describe('createItem', function () {
             entityType: 'ENTITY_TYPE_ITEM',
             itemType: 'ITEM_TYPE_ARMOR',
             armorType: 'ARMOR_TYPE_CHAIN_MAIL',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_CHEST' ]
+            slots: [ 'EQUIPMENT_SLOT_CHEST' ]
         })
     })
 })

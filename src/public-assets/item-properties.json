@@ -65,5 +65,17 @@
     "amp": "Dice",
     "damageType": "DamageType",
     "savingThrow": "boolean"
-  }
+  },
+  "ITEM_PROPERTY_EXTRA_SPELL_SLOT": {
+    "amp": "integer",
+    "slotLevel": "integer",
+    "spellcastingType": "SpellcastingType"
+  },
+  "ITEM_PROPERTY_ATTACK_COUNT_MODIFIER": {
+    "amp": "integer",
+    "attackType": "AttackType"
+  },
+  "ITEM_PROPERTY_CURSED": {},
+  "ITEM_PROPERTY_LIGHT": {},
+  "ITEM_PROPERTY_UNIDENTIFIED": {}
 }

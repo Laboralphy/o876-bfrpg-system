@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-08T10:46:37.994Z
+// Date : 2024-10-17T15:35:11.354Z
 // List of files in ./src/item-properties
 
 module.exports = {
@@ -15,6 +15,7 @@ module.exports = {
   'ITEM_PROPERTY_DAMAGE_VULNERABILITY': require('./damage-vulnerability.js'),
   'ITEM_PROPERTY_DARKVISION': require('./darkvision.js'),
   'ITEM_PROPERTY_EXTRA_HITPOINTS': require('./extra-hitpoints.js'),
+  'ITEM_PROPERTY_EXTRA_SPELL_SLOT': require('./extra-spell-slot.js'),
   'ITEM_PROPERTY_EXTRA_WEIGHT': require('./extra-weight.js'),
   'ITEM_PROPERTY_HEALING_FACTOR': require('./healing-factor.js'),
   'ITEM_PROPERTY_IMMUNITY': require('./immunity.js'),

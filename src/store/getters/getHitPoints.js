@@ -8,5 +8,5 @@ const CONSTS = require('../../consts')
  * @returns {number}
  */
 module.exports = (state, getters, externals) => {
-    return Math.max(0, Math.min(getters.getMaxHitPoints, state.gauges.hitPoints))
+    return Math.max(0, Math.min(getters.getMaxHitPoints, state.pools.hitPoints))
 }

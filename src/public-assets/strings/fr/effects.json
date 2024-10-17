@@ -29,5 +29,6 @@
   "EFFECT_INVISIBILITY": "Invisibilité",
   "EFFECT_LIGHT": "Lumière",
   "EFFECT_SEE_INVISIBILITY": "Détection de l'invisibilité",
-  "EFFECT_STEALTH": "Furtivité"
+  "EFFECT_STEALTH": "Furtivité",
+  "EFFECT_ATTACK_COUNT_MODIFIER": "Modificateur du nombre d'attaques"
 }

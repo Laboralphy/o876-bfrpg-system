@@ -21,5 +21,7 @@
   "ITEM_PROPERTY_SPEED_FACTOR": "Multiplicateur de vitesse",
   "ITEM_PROPERTY_SPELLCASTING": "Lancement de sorts",
   "ITEM_PROPERTY_SPIKE_DAMAGE": "Reflexion des dégâts",
-  "ITEM_PROPERTY_UNIDENTIFIED": "Non identifié"
+  "ITEM_PROPERTY_UNIDENTIFIED": "Non identifié",
+  "ITEM_PROPERTY_ATTACK_COUNT_MODIFIER": "Modificateur du nombre d'attaques",
+  "ITEM_PROPERTY_EXTRA_SPELL_SLOT": "Emplacement de sort supplémentaire"
 }

@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-08T10:46:37.877Z
+// Date : 2024-10-17T15:35:11.187Z
 // List of files in ./src/store/getters
 
 module.exports = {
@@ -41,6 +41,7 @@ module.exports = {
   'getSelectedWeapon': require('./getSelectedWeapon.js'),
   'getSpecie': require('./getSpecie.js'),
   'getSpeed': require('./getSpeed.js'),
+  'getSpellSlots': require('./getSpellSlots.js'),
   'getWeaponSizeRestrictionSet': require('./getWeaponSizeRestrictionSet.js'),
   'isDead': require('./isDead.js'),
   'isRangedWeaponLoaded': require('./isRangedWeaponLoaded.js'),

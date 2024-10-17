@@ -110,7 +110,7 @@ class Creature {
             level: state.level,
             actions: state.actions,
             selectedAction: state.selectedAction,
-            gauges: state.gauges,
+            pools: state.pools,
             effects: state.effects,
             properties: state.properties,
             offensiveSlot: state.offensiveSlot,

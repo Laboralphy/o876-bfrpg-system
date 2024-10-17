@@ -60,7 +60,7 @@ describe('createItem', function () {
             entityType: 'ENTITY_TYPE_ITEM',
             itemType: 'ITEM_TYPE_WEAPON',
             weaponType: 'WEAPON_TYPE_DAGGER',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
+            slots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
             id: 'dag1'
         })
     })
@@ -102,7 +102,7 @@ describe('createItem', function () {
             material: 'MATERIAL_STEEL',
             itemType: 'ITEM_TYPE_WEAPON',
             weaponType: 'WEAPON_TYPE_DAGGER',
-            equipmentSlots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
+            slots: [ 'EQUIPMENT_SLOT_WEAPON_MELEE' ],
             id: 'dag1'
         })
     })
@@ -380,7 +380,7 @@ describe('import/export creature', function () {
             level: 1,
             actions: {},
             selectedAction: 'DEFAULT_ACTION_WEAPON',
-            gauges: { hitPoints: 4 },
+            pools: { hitPoints: 4 },
             effects: [],
             properties: [],
             offensiveSlot: 'EQUIPMENT_SLOT_WEAPON_MELEE',

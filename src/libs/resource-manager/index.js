@@ -15,7 +15,6 @@ class ResourceManager {
         if (sClassType !== 'string') {
             throw new TypeError('resource class should be string ; ' + sClassType + ' given.')
         }
-        this.defineResourceClass(sClass)
         this._data[sClass] = Object.assign(this.defineResourceClass(sClass), data)
     }
 

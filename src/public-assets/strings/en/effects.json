@@ -29,5 +29,6 @@
   "EFFECT_INVISIBILITY": "Invisibility",
   "EFFECT_LIGHT": "Light",
   "EFFECT_SEE_INVISIBILITY": "See invisibility",
-  "EFFECT_STEALTH": "Stealth"
+  "EFFECT_STEALTH": "Stealth",
+  "EFFECT_ATTACK_COUNT_MODIFIER": "Attack count modifier"
 }

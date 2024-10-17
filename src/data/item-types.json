@@ -36,7 +36,7 @@
     "defaultWeight": 2
   },
   "ITEM_TYPE_RING": {
-    "slots": ["EQUIPMENT_SLOT_LEFT_FINGER", "EQUIPMENT_SLOT_RIGHT_FINGER"],
+    "slots": ["EQUIPMENT_SLOT_FINGER_RIGHT", "EQUIPMENT_SLOT_FINGER_LEFT"],
     "defaultWeight": 0.02
   },
   "ITEM_TYPE_BELT": {

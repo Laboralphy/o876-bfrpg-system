@@ -18,7 +18,7 @@ module.exports = ({ state, getters }, { data }) => {
     state.actions = data.actions
     state.gender = data.gender
     state.selectedAction = data.selectedAction
-    state.gauges = data.gauges
+    state.pools = data.pools
     ArrayMutations.update(state.effects, data.effects)
     ArrayMutations.update(state.properties, data.properties)
     state.offensiveSlot = data.offensiveSlot

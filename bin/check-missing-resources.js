@@ -6,7 +6,8 @@ const oStrings = {
     en: {
         itemProperties: require('../src/public-assets/strings/en/item-properties.json'),
         effects: require('../src/public-assets/strings/en/effects.json')
-    }
+    },
+    ipparams: require('../src/public-assets/item-properties.json')
 }
 
 const oItemProperties = require('../src/item-properties')
@@ -38,3 +39,4 @@ check(oItemProperties, oStrings.fr.itemProperties, 'item properties', 'item prop
 check(oEffects, oStrings.fr.effects, 'effect', 'effect strings (fr)')
 check(oItemProperties, oStrings.en.itemProperties, 'item properties', 'item property strings (en)')
 check(oEffects, oStrings.en.effects, 'effect', 'effect strings (en)')
+check(oItemProperties, oStrings.ipparams, 'item properties', 'item property parameters')

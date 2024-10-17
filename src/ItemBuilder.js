@@ -37,7 +37,7 @@ class ItemBuilder {
             data: {},
             ...oData,
             ...oBlueprintCopy,
-            equipmentSlots: slots,
+            slots
         }
     }
 

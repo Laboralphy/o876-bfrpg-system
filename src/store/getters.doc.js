@@ -38,6 +38,7 @@
  * @property getSelectedWeapon {BFItem|null}
  * @property getSpecie {string}
  * @property getSpeed {number}
+ * @property getSpellSlots {number[]}
  * @property getWeaponSizeRestrictionSet {Set<string>}
  * @property isDead {boolean}
  * @property isRangedWeaponLoaded {boolean}

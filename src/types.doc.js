@@ -10,7 +10,7 @@
  * @property [ammoType] {string}
  * @property properties {[]}
  * @property data {{}}
- * @property equipmentSlots {string[]}
+ * @property slots {string[]}
  * @property weight {number}
  * @property attributes {string[]}
  * @property [size] {string}

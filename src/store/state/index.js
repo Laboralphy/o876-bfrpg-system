@@ -1,7 +1,7 @@
 const CONSTS = require('../../consts')
 
 /**
- * @typedef BFStoreStateGauges {Object}
+ * @typedef BFStoreStatePools {Object}
  * @property hitPoints {number}
  *
  * @typedef BFStoreStateAction {object}
@@ -25,7 +25,7 @@ const CONSTS = require('../../consts')
  * @property gender {string}
  * @property actions {object<string, BFStoreStateAction>}
  * @property selectedAction {string}
- * @property gauges {BFStoreStateGauges}
+ * @property pools {BFStoreStatePools}
  * @property effect {BFEffect[]}
  * @property properties {BFItemProperty[]}
  * @property offensiveSlot {string}
@@ -57,7 +57,7 @@ module.exports = () => ({
     actions: {},
     selectedAction: CONSTS.DEFAULT_ACTION_WEAPON,
     gender: CONSTS.GENDER_NONE,
-    gauges: {
+    pools: {
         hitPoints: 1
     },
     effects: [],

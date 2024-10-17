@@ -102,12 +102,12 @@ function aggregateModifiers (aTags, getters, {
     aFilteredEffects.forEach(({ amp }) => {
         nEffAcc += amp
         nMax = Math.max(nMax, amp)
-        nMin = Math.max(nMin, amp)
+        nMin = Math.min(nMin, amp)
     })
     aFilteredItemProperties.forEach(({ amp }) => {
         nIPAcc += amp
         nMax = Math.max(nMax, amp)
-        nMin = Math.max(nMin, amp)
+        nMin = Math.min(nMin, amp)
     })
     return {
         sum: nEffAcc + nIPAcc,

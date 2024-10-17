@@ -21,5 +21,7 @@
   "ITEM_PROPERTY_SPEED_FACTOR": "Speed factor",
   "ITEM_PROPERTY_SPELLCASTING": "Spellcasting",
   "ITEM_PROPERTY_SPIKE_DAMAGE": "Spike damage",
-  "ITEM_PROPERTY_UNIDENTIFIED": "Unidentified"
+  "ITEM_PROPERTY_UNIDENTIFIED": "Unidentified",
+  "ITEM_PROPERTY_ATTACK_COUNT_MODIFIER": "Attack count modifier",
+  "ITEM_PROPERTY_EXTRA_SPELL_SLOT": "Extra spell slot"
 }
