@@ -1,5 +1,5 @@
 // AUTOMATIC GENERATION : DO NOT MODIFY !
-// Date : 2024-10-17T15:35:11.354Z
+// Date : 2024-10-23T15:26:03.483Z
 // List of files in ./src/item-properties
 
 module.exports = {
