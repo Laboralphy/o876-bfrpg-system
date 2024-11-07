@@ -19,7 +19,21 @@ function extractRegistryLevel (reg, nLevel) {
  * @param state
  * @param getters
  * @param externals
- * @returns {{hdPerLowerLevel: number, hdPerHigherLevel: number, lowerLevelCount: number, rogueSkills: Object<string, number>, savingThrows: Object<string, number>, attackBonus: number}}
+ *
+ * @typedef ClassTypeDataStruct {object}
+ * @property ref {string}
+ * @property level {number}
+ * @property undrainedLevel {number}
+ * @property maxLevel {number}
+ * @property nextLevelExp {number}
+ * @property hdPerLowerLevel {number}
+ * @property hdPerHigherLevel {number}
+ * @property lowerLevelCount {number}
+ * @property attackBonus {number}
+ * @property rogueSkills {Object<string, number>}
+ * @property savingThrows {Object<string, number>}
+ *
+ * @returns {ClassTypeDataStruct}
  */
 module.exports = (state, getters, externals) => {
     const data = externals['class-types'][state.classType]
